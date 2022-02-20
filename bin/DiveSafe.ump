@@ -1,0 +1,77 @@
+class ADProgramAccount
+{
+  accountName;
+  accountPassword;
+  abstract;
+}
+
+class Administrator
+{
+  isA ADProgramAccount;
+}
+
+class User
+{
+  abstract;
+  isA ADProgramAccount;
+  name;
+  Long emergencyContact;
+}
+
+class DivingSeason
+{
+  Date startDate;
+  Date endDate;
+  ArrayList isSafeForDiving;
+  1 <@>- * User;
+}
+
+class Guide
+{
+  isA User;
+  Integer price;
+}
+
+class Member
+{
+  isA User;
+  Integer durationOfExpedition;
+  Boolean withGuide;
+  Boolean withHotel;
+}
+
+//$?[End_of_model]$?
+
+namespace -;
+
+class ADProgramAccount
+{
+  position 411 129 158.062 74.3594;
+}
+
+class Administrator
+{
+  position 203 292 192.219 75.3594;
+}
+
+class User
+{
+  position 666 301 109 57.3594;
+}
+
+class DivingSeason
+{
+  position 319 499 197.625 92.3594;
+  position.association DivingSeason__User 123,0 0,75;
+  position.association DivingSeason__User 120,0 0,36;
+}
+
+class Guide
+{
+  position 610 504 116.328 58.3594;
+}
+
+class Member
+{
+  position 875 500 224.578 92.3594;
+}
