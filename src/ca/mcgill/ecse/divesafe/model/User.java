@@ -4,8 +4,9 @@ package ca.mcgill.ecse.divesafe.model;
 
 
 
-// line 13 "DiveSafe.ump"
-// line 57 "DiveSafe.ump"
+// line 14 "DiveSafe.ump"
+// line 118 "DiveSafe.ump"
+// line 202 "DiveSafe.ump"
 public abstract class User extends ADProgramAccount
 {
 
@@ -15,7 +16,7 @@ public abstract class User extends ADProgramAccount
 
   //User Attributes
   private String name;
-  private Long emergencyContact;
+  private String emergencyContact;
 
   //User Associations
   private DivingSeason divingSeason;
@@ -24,9 +25,9 @@ public abstract class User extends ADProgramAccount
   // CONSTRUCTOR
   //------------------------
 
-  public User(String aAccountName, String aAccountPassword, String aName, Long aEmergencyContact, DivingSeason aDivingSeason)
+  public User(String aAccountName, String aAccountPassword, DiveSafe aDiveSafe, String aName, String aEmergencyContact, DivingSeason aDivingSeason)
   {
-    super(aAccountName, aAccountPassword);
+    super(aAccountName, aAccountPassword, aDiveSafe);
     name = aName;
     emergencyContact = aEmergencyContact;
     boolean didAddDivingSeason = setDivingSeason(aDivingSeason);
@@ -48,7 +49,7 @@ public abstract class User extends ADProgramAccount
     return wasSet;
   }
 
-  public boolean setEmergencyContact(Long aEmergencyContact)
+  public boolean setEmergencyContact(String aEmergencyContact)
   {
     boolean wasSet = false;
     emergencyContact = aEmergencyContact;
@@ -61,7 +62,7 @@ public abstract class User extends ADProgramAccount
     return name;
   }
 
-  public Long getEmergencyContact()
+  public String getEmergencyContact()
   {
     return emergencyContact;
   }

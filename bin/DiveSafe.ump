@@ -2,35 +2,39 @@ class ADProgramAccount
 {
   accountName;
   accountPassword;
-  abstract;
+  * -<@> 1 DiveSafe;
+abstract;
 }
 
 class Administrator
 {
   isA ADProgramAccount;
-}
+  }
 
 class User
 {
   abstract;
   isA ADProgramAccount;
   name;
-  Long emergencyContact;
-}
+  emergencyContact;
+  }
 
 class DivingSeason
 {
   Date startDate;
   Date endDate;
-  ArrayList isSafeForDiving;
   1 <@>- * User;
+  1 <@>- * SafeDivingDay;
+  1 <@>- * Registration;
+  * -<@> 1 DiveSafe;
 }
 
 class Guide
 {
   isA User;
-  Integer price;
-}
+  Integer pricePerWeek;
+  0..1 -- * Member;
+  }
 
 class Member
 {
@@ -38,6 +42,62 @@ class Member
   Integer durationOfExpedition;
   Boolean withGuide;
   Boolean withHotel;
+  1 -- 1 Registration;
+  }
+
+class Registration
+{
+  Integer totalCost;
+  1 -- * SafeDivingDay;
+  * -<@> 1 DiveSafe;
+  }
+
+class SafeDivingDay
+{
+  Date safeDay;
+  Integer safeDayNumber;
+  * -<@> 1 DiveSafe;
+}
+
+class Hotel
+{
+  enum HotelType {villa, resort, suite, inn, motel, hotel, others}
+  name;
+  HotelType type;
+  Integer rating;
+  0..1 -- * Registration;
+  * -<@> 1 DiveSafe;
+}
+
+class Equipment
+{
+  Double weight;
+  Integer pricePerWeek;
+  * -- * Registration;
+  * -<@> 1 DiveSafe;
+}
+
+class Bundle
+{
+  Integer pricePerWeek;
+  Double discount;
+  * -- * Registration;
+  * -- 2..* Equipment;
+  * -<@> 1 DiveSafe;
+}
+
+class Address
+{
+  Integer addressNumber;
+  street;
+  city;
+  regionOfIsland;
+  1..* -- 1 Hotel;
+  * -<@> 1 DiveSafe;
+}
+
+class DiveSafe
+{
 }
 
 //$?[End_of_model]$?
@@ -46,32 +106,157 @@ namespace -;
 
 class ADProgramAccount
 {
-  position 411 129 158.062 74.3594;
+  position 423 21 189.781 91.3594;
+  position.association ADProgramAccount__DiveSafe 68,91 101,0;
 }
 
 class Administrator
 {
-  position 203 292 192.219 75.3594;
+  position 199 167 114.016 41.3594;
 }
 
 class User
 {
-  position 666 301 109 57.3594;
-}
+  position 669 162 192.219 91.3594;
+  }
 
 class DivingSeason
 {
-  position 319 499 197.625 92.3594;
-  position.association DivingSeason__User 123,0 0,75;
+  position 406 201 128.703 75.3594;
+  position.association DivingSeason__User 129,0 0,75;
   position.association DivingSeason__User 120,0 0,36;
+  position.association DivingSeason__User:userBase 129,46 0,59;
+  position.association DivingSeason__SafeDivingDay 0,36 172,0;
+  position.association DivingSeason__SafeDivingDay:safeDivingD 0,10 46,0;
+  position.association DivingSeason__SafeDivingDay:safeDivingDays 0,10 191,1;
+  position.association DivingSeason__Registration 48,65 58,0;
+  position.association DivingSeason__Registration:correspondingRegistrations 33,75 65,0;
+  position.association DiveSafe__DivingSeason 93,75 97,0;
 }
 
 class Guide
 {
-  position 610 504 116.328 58.3594;
+  position 535 309 173.969 58.3594;
+  position.association Guide__Member 174,54 0,42;
+  position.association Guide__Member:assignedMember 174,8 0,10;
+  }
+
+class Member
+{
+  position 915 305 224.578 92.3594;
+  position.association Member__Registration 0,76 144,19;
+  position.association Member__Registration:registration 0,57 144,47;
+  position.association Member__Registration:registrationProcess 26,92 144,68;
+  }
+
+class Registration
+{
+  position 321 408 109 75.3594;
+  position.association Registration__SafeDivingDay 0,41 114,75;
+}
+
+class SafeDivingDay
+{
+  position 79 295 190.734 75.3594;
+}
+
+class Hotel
+{
+  position 451 556 129.953 92.3594;
+  position.association Hotel__Registration 12,0 101,92;
+  position.association DiveSafe__Hotel 130,35 49,0;
+}
+
+class Equipment
+{
+  position 648 560 174.562 75.3594;
+  position.association Equipment__Registration 0,5 144,92;
+  position.association DiveSafe__Equipment 174,6 71,0;
+}
+
+class Bundle
+{
+  position 845 453 173.969 75.3594;
+  position.association Bundle__Registration 0,10 144,77;
+  position.association Bundle__Equipment 0,23 167,0;
+  position.association Bundle__DiveSafe 70,75 100,0;
+}
+
+class Address
+{
+  position 192 561 189.234 109.359;
+  position.association Address__Hotel 190,48 0,59;
+  position.association Address__DiveSafe 190,32 0,35;
+}
+
+class ADProgramAccount
+{
+  position 423 21 0 0;
+}
+
+class Administrator
+{
+  position 199 167 0 0;
+  }
+
+class User
+{
+  position 669 162 192.219 91.3594;
+  }
+
+class DivingSeason
+{
+  position 406 201 128.703 75.3594;
+}
+
+class Guide
+{
+  position 535 309 0 0;
 }
 
 class Member
 {
-  position 875 500 224.578 92.3594;
+  position 915 305 0 0;
+}
+
+class Registration
+{
+  position 321 408 109 75.3594;
+  position.association DivingSeason:sivingSeasonConsidered__Registration 5,0 0,30;
+  position.association DivingSeason:divingSeasonConsidered__Registration 5,0 0,30;
+  position.association Registration__SafeDivingDay 0,41 114,75;
+    position.association DiveSafe__Registration 144,55 0,15;
+}
+
+class SafeDivingDay
+{
+  position 79 295 190.734 75.3594;
+  position.association DivingSeason__SafeDivingDay 150,0 0,31;
+  position.association DivingSeason:correspondingSeason__SafeDivingDay 191,2 0,30;
+  position.association DiveSafe__SafeDivingDay 191,75 0,26;
+}
+
+class Hotel
+{
+  position 451 556 129.953 92.3594;
+}
+
+class Equipment
+{
+  position 648 560 174.562 75.3594;
+}
+
+class Bundle
+{
+  position 845 453 173.969 75.3594;
+}
+
+class Address
+{
+  position 192 561 189.234 109.359;
+}
+
+class DiveSafe
+{
+  position 918 617 109 41.3594;
 }

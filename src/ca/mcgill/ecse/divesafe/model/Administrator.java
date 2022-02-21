@@ -4,8 +4,9 @@ package ca.mcgill.ecse.divesafe.model;
 
 
 
-// line 8 "DiveSafe.ump"
-// line 52 "DiveSafe.ump"
+// line 9 "DiveSafe.ump"
+// line 113 "DiveSafe.ump"
+// line 197 "DiveSafe.ump"
 public class Administrator extends ADProgramAccount
 {
 
@@ -17,9 +18,9 @@ public class Administrator extends ADProgramAccount
   // CONSTRUCTOR
   //------------------------
 
-  public Administrator(String aAccountName, String aAccountPassword)
+  public Administrator(String aAccountName, String aAccountPassword, DiveSafe aDiveSafe)
   {
-    super(aAccountName, aAccountPassword);
+    super(aAccountName, aAccountPassword, aDiveSafe);
   }
 
   //------------------------
