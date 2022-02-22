@@ -7,8 +7,8 @@ import java.util.*;
 import java.sql.Date;
 
 // line 48 "DiveSafe.ump"
-// line 152 "DiveSafe.ump"
-// line 222 "DiveSafe.ump"
+// line 156 "DiveSafe.ump"
+// line 236 "DiveSafe.ump"
 public class Registration
 {
 
@@ -20,22 +20,22 @@ public class Registration
   private int totalCost;
 
   //Registration Associations
-  private List<SafeDivingDay> safeDivingDaies;
+  private List<SafeDivingDay> safeDivingDays;
   private DiveSafe diveSafe;
   private DivingSeason divingSeason;
-  private Member member;
-  private Hotel hotel;
-  private List<Equipment> equipment;
-  private List<Bundle> bundles;
+  private Member associatedMember;
+  private Hotel bookedHotel;
+  private List<Equipment> rentedEquipment;
+  private List<Bundle> rentedBundle;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Registration(int aTotalCost, DiveSafe aDiveSafe, DivingSeason aDivingSeason, Member aMember)
+  public Registration(int aTotalCost, DiveSafe aDiveSafe, DivingSeason aDivingSeason, Member aAssociatedMember)
   {
     totalCost = aTotalCost;
-    safeDivingDaies = new ArrayList<SafeDivingDay>();
+    safeDivingDays = new ArrayList<SafeDivingDay>();
     boolean didAddDiveSafe = setDiveSafe(aDiveSafe);
     if (!didAddDiveSafe)
     {
@@ -44,21 +44,21 @@ public class Registration
     boolean didAddDivingSeason = setDivingSeason(aDivingSeason);
     if (!didAddDivingSeason)
     {
-      throw new RuntimeException("Unable to create registration due to divingSeason. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create correspondingRegistration due to divingSeason. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
-    if (aMember == null || aMember.getRegistration() != null)
+    if (aAssociatedMember == null || aAssociatedMember.getRegistration() != null)
     {
-      throw new RuntimeException("Unable to create Registration due to aMember. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create Registration due to aAssociatedMember. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
-    member = aMember;
-    equipment = new ArrayList<Equipment>();
-    bundles = new ArrayList<Bundle>();
+    associatedMember = aAssociatedMember;
+    rentedEquipment = new ArrayList<Equipment>();
+    rentedBundle = new ArrayList<Bundle>();
   }
 
-  public Registration(int aTotalCost, DiveSafe aDiveSafe, DivingSeason aDivingSeason, String aAccountNameForMember, String aAccountPasswordForMember, DiveSafe aDiveSafeForMember, String aNameForMember, String aEmergencyContactForMember, DivingSeason aDivingSeasonForMember, int aDurationOfExpeditionForMember, boolean aWithGuideForMember, boolean aWithHotelForMember)
+  public Registration(int aTotalCost, DiveSafe aDiveSafe, DivingSeason aDivingSeason, String aAccountNameForAssociatedMember, String aAccountPasswordForAssociatedMember, DiveSafe aDiveSafeForAssociatedMember, String aNameForAssociatedMember, String aEmergencyContactForAssociatedMember, DivingSeason aDivingSeasonForAssociatedMember, int aDurationOfExpeditionForAssociatedMember, boolean aWithGuideForAssociatedMember, boolean aWithHotelForAssociatedMember)
   {
     totalCost = aTotalCost;
-    safeDivingDaies = new ArrayList<SafeDivingDay>();
+    safeDivingDays = new ArrayList<SafeDivingDay>();
     boolean didAddDiveSafe = setDiveSafe(aDiveSafe);
     if (!didAddDiveSafe)
     {
@@ -67,11 +67,11 @@ public class Registration
     boolean didAddDivingSeason = setDivingSeason(aDivingSeason);
     if (!didAddDivingSeason)
     {
-      throw new RuntimeException("Unable to create registration due to divingSeason. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create correspondingRegistration due to divingSeason. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
-    member = new Member(aAccountNameForMember, aAccountPasswordForMember, aDiveSafeForMember, aNameForMember, aEmergencyContactForMember, aDivingSeasonForMember, aDurationOfExpeditionForMember, aWithGuideForMember, aWithHotelForMember, this);
-    equipment = new ArrayList<Equipment>();
-    bundles = new ArrayList<Bundle>();
+    associatedMember = new Member(aAccountNameForAssociatedMember, aAccountPasswordForAssociatedMember, aDiveSafeForAssociatedMember, aNameForAssociatedMember, aEmergencyContactForAssociatedMember, aDivingSeasonForAssociatedMember, aDurationOfExpeditionForAssociatedMember, aWithGuideForAssociatedMember, aWithHotelForAssociatedMember, this);
+    rentedEquipment = new ArrayList<Equipment>();
+    rentedBundle = new ArrayList<Bundle>();
   }
 
   //------------------------
@@ -93,31 +93,31 @@ public class Registration
   /* Code from template association_GetMany */
   public SafeDivingDay getSafeDivingDay(int index)
   {
-    SafeDivingDay aSafeDivingDay = safeDivingDaies.get(index);
+    SafeDivingDay aSafeDivingDay = safeDivingDays.get(index);
     return aSafeDivingDay;
   }
 
-  public List<SafeDivingDay> getSafeDivingDaies()
+  public List<SafeDivingDay> getSafeDivingDays()
   {
-    List<SafeDivingDay> newSafeDivingDaies = Collections.unmodifiableList(safeDivingDaies);
-    return newSafeDivingDaies;
+    List<SafeDivingDay> newSafeDivingDays = Collections.unmodifiableList(safeDivingDays);
+    return newSafeDivingDays;
   }
 
-  public int numberOfSafeDivingDaies()
+  public int numberOfSafeDivingDays()
   {
-    int number = safeDivingDaies.size();
+    int number = safeDivingDays.size();
     return number;
   }
 
-  public boolean hasSafeDivingDaies()
+  public boolean hasSafeDivingDays()
   {
-    boolean has = safeDivingDaies.size() > 0;
+    boolean has = safeDivingDays.size() > 0;
     return has;
   }
 
   public int indexOfSafeDivingDay(SafeDivingDay aSafeDivingDay)
   {
-    int index = safeDivingDaies.indexOf(aSafeDivingDay);
+    int index = safeDivingDays.indexOf(aSafeDivingDay);
     return index;
   }
   /* Code from template association_GetOne */
@@ -131,83 +131,83 @@ public class Registration
     return divingSeason;
   }
   /* Code from template association_GetOne */
-  public Member getMember()
+  public Member getAssociatedMember()
   {
-    return member;
+    return associatedMember;
   }
   /* Code from template association_GetOne */
-  public Hotel getHotel()
+  public Hotel getBookedHotel()
   {
-    return hotel;
+    return bookedHotel;
   }
 
-  public boolean hasHotel()
+  public boolean hasBookedHotel()
   {
-    boolean has = hotel != null;
+    boolean has = bookedHotel != null;
     return has;
   }
   /* Code from template association_GetMany */
-  public Equipment getEquipment(int index)
+  public Equipment getRentedEquipment(int index)
   {
-    Equipment aEquipment = equipment.get(index);
-    return aEquipment;
+    Equipment aRentedEquipment = rentedEquipment.get(index);
+    return aRentedEquipment;
   }
 
-  public List<Equipment> getEquipment()
+  public List<Equipment> getRentedEquipment()
   {
-    List<Equipment> newEquipment = Collections.unmodifiableList(equipment);
-    return newEquipment;
+    List<Equipment> newRentedEquipment = Collections.unmodifiableList(rentedEquipment);
+    return newRentedEquipment;
   }
 
-  public int numberOfEquipment()
+  public int numberOfRentedEquipment()
   {
-    int number = equipment.size();
+    int number = rentedEquipment.size();
     return number;
   }
 
-  public boolean hasEquipment()
+  public boolean hasRentedEquipment()
   {
-    boolean has = equipment.size() > 0;
+    boolean has = rentedEquipment.size() > 0;
     return has;
   }
 
-  public int indexOfEquipment(Equipment aEquipment)
+  public int indexOfRentedEquipment(Equipment aRentedEquipment)
   {
-    int index = equipment.indexOf(aEquipment);
+    int index = rentedEquipment.indexOf(aRentedEquipment);
     return index;
   }
   /* Code from template association_GetMany */
-  public Bundle getBundle(int index)
+  public Bundle getRentedBundle(int index)
   {
-    Bundle aBundle = bundles.get(index);
-    return aBundle;
+    Bundle aRentedBundle = rentedBundle.get(index);
+    return aRentedBundle;
   }
 
-  public List<Bundle> getBundles()
+  public List<Bundle> getRentedBundle()
   {
-    List<Bundle> newBundles = Collections.unmodifiableList(bundles);
-    return newBundles;
+    List<Bundle> newRentedBundle = Collections.unmodifiableList(rentedBundle);
+    return newRentedBundle;
   }
 
-  public int numberOfBundles()
+  public int numberOfRentedBundle()
   {
-    int number = bundles.size();
+    int number = rentedBundle.size();
     return number;
   }
 
-  public boolean hasBundles()
+  public boolean hasRentedBundle()
   {
-    boolean has = bundles.size() > 0;
+    boolean has = rentedBundle.size() > 0;
     return has;
   }
 
-  public int indexOfBundle(Bundle aBundle)
+  public int indexOfRentedBundle(Bundle aRentedBundle)
   {
-    int index = bundles.indexOf(aBundle);
+    int index = rentedBundle.indexOf(aRentedBundle);
     return index;
   }
   /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfSafeDivingDaies()
+  public static int minimumNumberOfSafeDivingDays()
   {
     return 0;
   }
@@ -220,7 +220,7 @@ public class Registration
   public boolean addSafeDivingDay(SafeDivingDay aSafeDivingDay)
   {
     boolean wasAdded = false;
-    if (safeDivingDaies.contains(aSafeDivingDay)) { return false; }
+    if (safeDivingDays.contains(aSafeDivingDay)) { return false; }
     Registration existingRegistration = aSafeDivingDay.getRegistration();
     boolean isNewRegistration = existingRegistration != null && !this.equals(existingRegistration);
     if (isNewRegistration)
@@ -229,7 +229,7 @@ public class Registration
     }
     else
     {
-      safeDivingDaies.add(aSafeDivingDay);
+      safeDivingDays.add(aSafeDivingDay);
     }
     wasAdded = true;
     return wasAdded;
@@ -241,7 +241,7 @@ public class Registration
     //Unable to remove aSafeDivingDay, as it must always have a registration
     if (!this.equals(aSafeDivingDay.getRegistration()))
     {
-      safeDivingDaies.remove(aSafeDivingDay);
+      safeDivingDays.remove(aSafeDivingDay);
       wasRemoved = true;
     }
     return wasRemoved;
@@ -253,9 +253,9 @@ public class Registration
     if(addSafeDivingDay(aSafeDivingDay))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfSafeDivingDaies()) { index = numberOfSafeDivingDaies() - 1; }
-      safeDivingDaies.remove(aSafeDivingDay);
-      safeDivingDaies.add(index, aSafeDivingDay);
+      if(index > numberOfSafeDivingDays()) { index = numberOfSafeDivingDays() - 1; }
+      safeDivingDays.remove(aSafeDivingDay);
+      safeDivingDays.add(index, aSafeDivingDay);
       wasAdded = true;
     }
     return wasAdded;
@@ -264,12 +264,12 @@ public class Registration
   public boolean addOrMoveSafeDivingDayAt(SafeDivingDay aSafeDivingDay, int index)
   {
     boolean wasAdded = false;
-    if(safeDivingDaies.contains(aSafeDivingDay))
+    if(safeDivingDays.contains(aSafeDivingDay))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfSafeDivingDaies()) { index = numberOfSafeDivingDaies() - 1; }
-      safeDivingDaies.remove(aSafeDivingDay);
-      safeDivingDaies.add(index, aSafeDivingDay);
+      if(index > numberOfSafeDivingDays()) { index = numberOfSafeDivingDays() - 1; }
+      safeDivingDays.remove(aSafeDivingDay);
+      safeDivingDays.add(index, aSafeDivingDay);
       wasAdded = true;
     } 
     else 
@@ -310,199 +310,199 @@ public class Registration
     divingSeason = aDivingSeason;
     if (existingDivingSeason != null && !existingDivingSeason.equals(aDivingSeason))
     {
-      existingDivingSeason.removeRegistration(this);
+      existingDivingSeason.removeCorrespondingRegistration(this);
     }
-    divingSeason.addRegistration(this);
+    divingSeason.addCorrespondingRegistration(this);
     wasSet = true;
     return wasSet;
   }
   /* Code from template association_SetOptionalOneToMany */
-  public boolean setHotel(Hotel aHotel)
+  public boolean setBookedHotel(Hotel aBookedHotel)
   {
     boolean wasSet = false;
-    Hotel existingHotel = hotel;
-    hotel = aHotel;
-    if (existingHotel != null && !existingHotel.equals(aHotel))
+    Hotel existingBookedHotel = bookedHotel;
+    bookedHotel = aBookedHotel;
+    if (existingBookedHotel != null && !existingBookedHotel.equals(aBookedHotel))
     {
-      existingHotel.removeRegistration(this);
+      existingBookedHotel.removeHotelClient(this);
     }
-    if (aHotel != null)
+    if (aBookedHotel != null)
     {
-      aHotel.addRegistration(this);
+      aBookedHotel.addHotelClient(this);
     }
     wasSet = true;
     return wasSet;
   }
   /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfEquipment()
+  public static int minimumNumberOfRentedEquipment()
   {
     return 0;
   }
   /* Code from template association_AddManyToManyMethod */
-  public boolean addEquipment(Equipment aEquipment)
+  public boolean addRentedEquipment(Equipment aRentedEquipment)
   {
     boolean wasAdded = false;
-    if (equipment.contains(aEquipment)) { return false; }
-    equipment.add(aEquipment);
-    if (aEquipment.indexOfRegistration(this) != -1)
+    if (rentedEquipment.contains(aRentedEquipment)) { return false; }
+    rentedEquipment.add(aRentedEquipment);
+    if (aRentedEquipment.indexOfEquipmentRenter(this) != -1)
     {
       wasAdded = true;
     }
     else
     {
-      wasAdded = aEquipment.addRegistration(this);
+      wasAdded = aRentedEquipment.addEquipmentRenter(this);
       if (!wasAdded)
       {
-        equipment.remove(aEquipment);
+        rentedEquipment.remove(aRentedEquipment);
       }
     }
     return wasAdded;
   }
   /* Code from template association_RemoveMany */
-  public boolean removeEquipment(Equipment aEquipment)
+  public boolean removeRentedEquipment(Equipment aRentedEquipment)
   {
     boolean wasRemoved = false;
-    if (!equipment.contains(aEquipment))
+    if (!rentedEquipment.contains(aRentedEquipment))
     {
       return wasRemoved;
     }
 
-    int oldIndex = equipment.indexOf(aEquipment);
-    equipment.remove(oldIndex);
-    if (aEquipment.indexOfRegistration(this) == -1)
+    int oldIndex = rentedEquipment.indexOf(aRentedEquipment);
+    rentedEquipment.remove(oldIndex);
+    if (aRentedEquipment.indexOfEquipmentRenter(this) == -1)
     {
       wasRemoved = true;
     }
     else
     {
-      wasRemoved = aEquipment.removeRegistration(this);
+      wasRemoved = aRentedEquipment.removeEquipmentRenter(this);
       if (!wasRemoved)
       {
-        equipment.add(oldIndex,aEquipment);
+        rentedEquipment.add(oldIndex,aRentedEquipment);
       }
     }
     return wasRemoved;
   }
   /* Code from template association_AddIndexControlFunctions */
-  public boolean addEquipmentAt(Equipment aEquipment, int index)
+  public boolean addRentedEquipmentAt(Equipment aRentedEquipment, int index)
   {  
     boolean wasAdded = false;
-    if(addEquipment(aEquipment))
+    if(addRentedEquipment(aRentedEquipment))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfEquipment()) { index = numberOfEquipment() - 1; }
-      equipment.remove(aEquipment);
-      equipment.add(index, aEquipment);
+      if(index > numberOfRentedEquipment()) { index = numberOfRentedEquipment() - 1; }
+      rentedEquipment.remove(aRentedEquipment);
+      rentedEquipment.add(index, aRentedEquipment);
       wasAdded = true;
     }
     return wasAdded;
   }
 
-  public boolean addOrMoveEquipmentAt(Equipment aEquipment, int index)
+  public boolean addOrMoveRentedEquipmentAt(Equipment aRentedEquipment, int index)
   {
     boolean wasAdded = false;
-    if(equipment.contains(aEquipment))
+    if(rentedEquipment.contains(aRentedEquipment))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfEquipment()) { index = numberOfEquipment() - 1; }
-      equipment.remove(aEquipment);
-      equipment.add(index, aEquipment);
+      if(index > numberOfRentedEquipment()) { index = numberOfRentedEquipment() - 1; }
+      rentedEquipment.remove(aRentedEquipment);
+      rentedEquipment.add(index, aRentedEquipment);
       wasAdded = true;
     } 
     else 
     {
-      wasAdded = addEquipmentAt(aEquipment, index);
+      wasAdded = addRentedEquipmentAt(aRentedEquipment, index);
     }
     return wasAdded;
   }
   /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfBundles()
+  public static int minimumNumberOfRentedBundle()
   {
     return 0;
   }
   /* Code from template association_AddManyToManyMethod */
-  public boolean addBundle(Bundle aBundle)
+  public boolean addRentedBundle(Bundle aRentedBundle)
   {
     boolean wasAdded = false;
-    if (bundles.contains(aBundle)) { return false; }
-    bundles.add(aBundle);
-    if (aBundle.indexOfRegistration(this) != -1)
+    if (rentedBundle.contains(aRentedBundle)) { return false; }
+    rentedBundle.add(aRentedBundle);
+    if (aRentedBundle.indexOfBundleRenter(this) != -1)
     {
       wasAdded = true;
     }
     else
     {
-      wasAdded = aBundle.addRegistration(this);
+      wasAdded = aRentedBundle.addBundleRenter(this);
       if (!wasAdded)
       {
-        bundles.remove(aBundle);
+        rentedBundle.remove(aRentedBundle);
       }
     }
     return wasAdded;
   }
   /* Code from template association_RemoveMany */
-  public boolean removeBundle(Bundle aBundle)
+  public boolean removeRentedBundle(Bundle aRentedBundle)
   {
     boolean wasRemoved = false;
-    if (!bundles.contains(aBundle))
+    if (!rentedBundle.contains(aRentedBundle))
     {
       return wasRemoved;
     }
 
-    int oldIndex = bundles.indexOf(aBundle);
-    bundles.remove(oldIndex);
-    if (aBundle.indexOfRegistration(this) == -1)
+    int oldIndex = rentedBundle.indexOf(aRentedBundle);
+    rentedBundle.remove(oldIndex);
+    if (aRentedBundle.indexOfBundleRenter(this) == -1)
     {
       wasRemoved = true;
     }
     else
     {
-      wasRemoved = aBundle.removeRegistration(this);
+      wasRemoved = aRentedBundle.removeBundleRenter(this);
       if (!wasRemoved)
       {
-        bundles.add(oldIndex,aBundle);
+        rentedBundle.add(oldIndex,aRentedBundle);
       }
     }
     return wasRemoved;
   }
   /* Code from template association_AddIndexControlFunctions */
-  public boolean addBundleAt(Bundle aBundle, int index)
+  public boolean addRentedBundleAt(Bundle aRentedBundle, int index)
   {  
     boolean wasAdded = false;
-    if(addBundle(aBundle))
+    if(addRentedBundle(aRentedBundle))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfBundles()) { index = numberOfBundles() - 1; }
-      bundles.remove(aBundle);
-      bundles.add(index, aBundle);
+      if(index > numberOfRentedBundle()) { index = numberOfRentedBundle() - 1; }
+      rentedBundle.remove(aRentedBundle);
+      rentedBundle.add(index, aRentedBundle);
       wasAdded = true;
     }
     return wasAdded;
   }
 
-  public boolean addOrMoveBundleAt(Bundle aBundle, int index)
+  public boolean addOrMoveRentedBundleAt(Bundle aRentedBundle, int index)
   {
     boolean wasAdded = false;
-    if(bundles.contains(aBundle))
+    if(rentedBundle.contains(aRentedBundle))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfBundles()) { index = numberOfBundles() - 1; }
-      bundles.remove(aBundle);
-      bundles.add(index, aBundle);
+      if(index > numberOfRentedBundle()) { index = numberOfRentedBundle() - 1; }
+      rentedBundle.remove(aRentedBundle);
+      rentedBundle.add(index, aRentedBundle);
       wasAdded = true;
     } 
     else 
     {
-      wasAdded = addBundleAt(aBundle, index);
+      wasAdded = addRentedBundleAt(aRentedBundle, index);
     }
     return wasAdded;
   }
 
   public void delete()
   {
-    for(int i=safeDivingDaies.size(); i > 0; i--)
+    for(int i=safeDivingDays.size(); i > 0; i--)
     {
-      SafeDivingDay aSafeDivingDay = safeDivingDaies.get(i - 1);
+      SafeDivingDay aSafeDivingDay = safeDivingDays.get(i - 1);
       aSafeDivingDay.delete();
     }
     DiveSafe placeholderDiveSafe = diveSafe;
@@ -515,31 +515,31 @@ public class Registration
     this.divingSeason = null;
     if(placeholderDivingSeason != null)
     {
-      placeholderDivingSeason.removeRegistration(this);
+      placeholderDivingSeason.removeCorrespondingRegistration(this);
     }
-    Member existingMember = member;
-    member = null;
-    if (existingMember != null)
+    Member existingAssociatedMember = associatedMember;
+    associatedMember = null;
+    if (existingAssociatedMember != null)
     {
-      existingMember.delete();
+      existingAssociatedMember.delete();
     }
-    if (hotel != null)
+    if (bookedHotel != null)
     {
-      Hotel placeholderHotel = hotel;
-      this.hotel = null;
-      placeholderHotel.removeRegistration(this);
+      Hotel placeholderBookedHotel = bookedHotel;
+      this.bookedHotel = null;
+      placeholderBookedHotel.removeHotelClient(this);
     }
-    ArrayList<Equipment> copyOfEquipment = new ArrayList<Equipment>(equipment);
-    equipment.clear();
-    for(Equipment aEquipment : copyOfEquipment)
+    ArrayList<Equipment> copyOfRentedEquipment = new ArrayList<Equipment>(rentedEquipment);
+    rentedEquipment.clear();
+    for(Equipment aRentedEquipment : copyOfRentedEquipment)
     {
-      aEquipment.removeRegistration(this);
+      aRentedEquipment.removeEquipmentRenter(this);
     }
-    ArrayList<Bundle> copyOfBundles = new ArrayList<Bundle>(bundles);
-    bundles.clear();
-    for(Bundle aBundle : copyOfBundles)
+    ArrayList<Bundle> copyOfRentedBundle = new ArrayList<Bundle>(rentedBundle);
+    rentedBundle.clear();
+    for(Bundle aRentedBundle : copyOfRentedBundle)
     {
-      aBundle.removeRegistration(this);
+      aRentedBundle.removeBundleRenter(this);
     }
   }
 
@@ -550,7 +550,7 @@ public class Registration
             "totalCost" + ":" + getTotalCost()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "diveSafe = "+(getDiveSafe()!=null?Integer.toHexString(System.identityHashCode(getDiveSafe())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "divingSeason = "+(getDivingSeason()!=null?Integer.toHexString(System.identityHashCode(getDivingSeason())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "member = "+(getMember()!=null?Integer.toHexString(System.identityHashCode(getMember())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "hotel = "+(getHotel()!=null?Integer.toHexString(System.identityHashCode(getHotel())):"null");
+            "  " + "associatedMember = "+(getAssociatedMember()!=null?Integer.toHexString(System.identityHashCode(getAssociatedMember())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "bookedHotel = "+(getBookedHotel()!=null?Integer.toHexString(System.identityHashCode(getBookedHotel())):"null");
   }
 }

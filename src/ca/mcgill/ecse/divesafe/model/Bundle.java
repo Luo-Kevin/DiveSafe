@@ -6,8 +6,8 @@ package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
 // line 80 "DiveSafe.ump"
-// line 177 "DiveSafe.ump"
-// line 249 "DiveSafe.ump"
+// line 184 "DiveSafe.ump"
+// line 265 "DiveSafe.ump"
 public class Bundle
 {
 
@@ -20,24 +20,24 @@ public class Bundle
   private double discount;
 
   //Bundle Associations
-  private List<Registration> registrations;
-  private List<Equipment> equipment;
+  private List<Registration> bundleRenters;
+  private List<Equipment> piece;
   private DiveSafe diveSafe;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Bundle(int aPricePerWeek, double aDiscount, DiveSafe aDiveSafe, Equipment... allEquipment)
+  public Bundle(int aPricePerWeek, double aDiscount, DiveSafe aDiveSafe, Equipment... allPiece)
   {
     pricePerWeek = aPricePerWeek;
     discount = aDiscount;
-    registrations = new ArrayList<Registration>();
-    equipment = new ArrayList<Equipment>();
-    boolean didAddEquipment = setEquipment(allEquipment);
-    if (!didAddEquipment)
+    bundleRenters = new ArrayList<Registration>();
+    piece = new ArrayList<Equipment>();
+    boolean didAddPiece = setPiece(allPiece);
+    if (!didAddPiece)
     {
-      throw new RuntimeException("Unable to create Bundle, must have at least 2 equipment. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create Bundle, must have at least 2 piece. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     boolean didAddDiveSafe = setDiveSafe(aDiveSafe);
     if (!didAddDiveSafe)
@@ -76,63 +76,63 @@ public class Bundle
     return discount;
   }
   /* Code from template association_GetMany */
-  public Registration getRegistration(int index)
+  public Registration getBundleRenter(int index)
   {
-    Registration aRegistration = registrations.get(index);
-    return aRegistration;
+    Registration aBundleRenter = bundleRenters.get(index);
+    return aBundleRenter;
   }
 
-  public List<Registration> getRegistrations()
+  public List<Registration> getBundleRenters()
   {
-    List<Registration> newRegistrations = Collections.unmodifiableList(registrations);
-    return newRegistrations;
+    List<Registration> newBundleRenters = Collections.unmodifiableList(bundleRenters);
+    return newBundleRenters;
   }
 
-  public int numberOfRegistrations()
+  public int numberOfBundleRenters()
   {
-    int number = registrations.size();
+    int number = bundleRenters.size();
     return number;
   }
 
-  public boolean hasRegistrations()
+  public boolean hasBundleRenters()
   {
-    boolean has = registrations.size() > 0;
+    boolean has = bundleRenters.size() > 0;
     return has;
   }
 
-  public int indexOfRegistration(Registration aRegistration)
+  public int indexOfBundleRenter(Registration aBundleRenter)
   {
-    int index = registrations.indexOf(aRegistration);
+    int index = bundleRenters.indexOf(aBundleRenter);
     return index;
   }
   /* Code from template association_GetMany */
-  public Equipment getEquipment(int index)
+  public Equipment getPiece(int index)
   {
-    Equipment aEquipment = equipment.get(index);
-    return aEquipment;
+    Equipment aPiece = piece.get(index);
+    return aPiece;
   }
 
-  public List<Equipment> getEquipment()
+  public List<Equipment> getPiece()
   {
-    List<Equipment> newEquipment = Collections.unmodifiableList(equipment);
-    return newEquipment;
+    List<Equipment> newPiece = Collections.unmodifiableList(piece);
+    return newPiece;
   }
 
-  public int numberOfEquipment()
+  public int numberOfPiece()
   {
-    int number = equipment.size();
+    int number = piece.size();
     return number;
   }
 
-  public boolean hasEquipment()
+  public boolean hasPiece()
   {
-    boolean has = equipment.size() > 0;
+    boolean has = piece.size() > 0;
     return has;
   }
 
-  public int indexOfEquipment(Equipment aEquipment)
+  public int indexOfPiece(Equipment aPiece)
   {
-    int index = equipment.indexOf(aEquipment);
+    int index = piece.indexOf(aPiece);
     return index;
   }
   /* Code from template association_GetOne */
@@ -141,218 +141,218 @@ public class Bundle
     return diveSafe;
   }
   /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfRegistrations()
+  public static int minimumNumberOfBundleRenters()
   {
     return 0;
   }
   /* Code from template association_AddManyToManyMethod */
-  public boolean addRegistration(Registration aRegistration)
+  public boolean addBundleRenter(Registration aBundleRenter)
   {
     boolean wasAdded = false;
-    if (registrations.contains(aRegistration)) { return false; }
-    registrations.add(aRegistration);
-    if (aRegistration.indexOfBundle(this) != -1)
+    if (bundleRenters.contains(aBundleRenter)) { return false; }
+    bundleRenters.add(aBundleRenter);
+    if (aBundleRenter.indexOfRentedBundle(this) != -1)
     {
       wasAdded = true;
     }
     else
     {
-      wasAdded = aRegistration.addBundle(this);
+      wasAdded = aBundleRenter.addRentedBundle(this);
       if (!wasAdded)
       {
-        registrations.remove(aRegistration);
+        bundleRenters.remove(aBundleRenter);
       }
     }
     return wasAdded;
   }
   /* Code from template association_RemoveMany */
-  public boolean removeRegistration(Registration aRegistration)
+  public boolean removeBundleRenter(Registration aBundleRenter)
   {
     boolean wasRemoved = false;
-    if (!registrations.contains(aRegistration))
+    if (!bundleRenters.contains(aBundleRenter))
     {
       return wasRemoved;
     }
 
-    int oldIndex = registrations.indexOf(aRegistration);
-    registrations.remove(oldIndex);
-    if (aRegistration.indexOfBundle(this) == -1)
+    int oldIndex = bundleRenters.indexOf(aBundleRenter);
+    bundleRenters.remove(oldIndex);
+    if (aBundleRenter.indexOfRentedBundle(this) == -1)
     {
       wasRemoved = true;
     }
     else
     {
-      wasRemoved = aRegistration.removeBundle(this);
+      wasRemoved = aBundleRenter.removeRentedBundle(this);
       if (!wasRemoved)
       {
-        registrations.add(oldIndex,aRegistration);
+        bundleRenters.add(oldIndex,aBundleRenter);
       }
     }
     return wasRemoved;
   }
   /* Code from template association_AddIndexControlFunctions */
-  public boolean addRegistrationAt(Registration aRegistration, int index)
+  public boolean addBundleRenterAt(Registration aBundleRenter, int index)
   {  
     boolean wasAdded = false;
-    if(addRegistration(aRegistration))
+    if(addBundleRenter(aBundleRenter))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfRegistrations()) { index = numberOfRegistrations() - 1; }
-      registrations.remove(aRegistration);
-      registrations.add(index, aRegistration);
+      if(index > numberOfBundleRenters()) { index = numberOfBundleRenters() - 1; }
+      bundleRenters.remove(aBundleRenter);
+      bundleRenters.add(index, aBundleRenter);
       wasAdded = true;
     }
     return wasAdded;
   }
 
-  public boolean addOrMoveRegistrationAt(Registration aRegistration, int index)
+  public boolean addOrMoveBundleRenterAt(Registration aBundleRenter, int index)
   {
     boolean wasAdded = false;
-    if(registrations.contains(aRegistration))
+    if(bundleRenters.contains(aBundleRenter))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfRegistrations()) { index = numberOfRegistrations() - 1; }
-      registrations.remove(aRegistration);
-      registrations.add(index, aRegistration);
+      if(index > numberOfBundleRenters()) { index = numberOfBundleRenters() - 1; }
+      bundleRenters.remove(aBundleRenter);
+      bundleRenters.add(index, aBundleRenter);
       wasAdded = true;
     } 
     else 
     {
-      wasAdded = addRegistrationAt(aRegistration, index);
+      wasAdded = addBundleRenterAt(aBundleRenter, index);
     }
     return wasAdded;
   }
   /* Code from template association_IsNumberOfValidMethod */
-  public boolean isNumberOfEquipmentValid()
+  public boolean isNumberOfPieceValid()
   {
-    boolean isValid = numberOfEquipment() >= minimumNumberOfEquipment();
+    boolean isValid = numberOfPiece() >= minimumNumberOfPiece();
     return isValid;
   }
   /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfEquipment()
+  public static int minimumNumberOfPiece()
   {
     return 2;
   }
   /* Code from template association_AddManyToManyMethod */
-  public boolean addEquipment(Equipment aEquipment)
+  public boolean addPiece(Equipment aPiece)
   {
     boolean wasAdded = false;
-    if (equipment.contains(aEquipment)) { return false; }
-    equipment.add(aEquipment);
-    if (aEquipment.indexOfBundle(this) != -1)
+    if (piece.contains(aPiece)) { return false; }
+    piece.add(aPiece);
+    if (aPiece.indexOfPack(this) != -1)
     {
       wasAdded = true;
     }
     else
     {
-      wasAdded = aEquipment.addBundle(this);
+      wasAdded = aPiece.addPack(this);
       if (!wasAdded)
       {
-        equipment.remove(aEquipment);
+        piece.remove(aPiece);
       }
     }
     return wasAdded;
   }
   /* Code from template association_AddMStarToMany */
-  public boolean removeEquipment(Equipment aEquipment)
+  public boolean removePiece(Equipment aPiece)
   {
     boolean wasRemoved = false;
-    if (!equipment.contains(aEquipment))
+    if (!piece.contains(aPiece))
     {
       return wasRemoved;
     }
 
-    if (numberOfEquipment() <= minimumNumberOfEquipment())
+    if (numberOfPiece() <= minimumNumberOfPiece())
     {
       return wasRemoved;
     }
 
-    int oldIndex = equipment.indexOf(aEquipment);
-    equipment.remove(oldIndex);
-    if (aEquipment.indexOfBundle(this) == -1)
+    int oldIndex = piece.indexOf(aPiece);
+    piece.remove(oldIndex);
+    if (aPiece.indexOfPack(this) == -1)
     {
       wasRemoved = true;
     }
     else
     {
-      wasRemoved = aEquipment.removeBundle(this);
+      wasRemoved = aPiece.removePack(this);
       if (!wasRemoved)
       {
-        equipment.add(oldIndex,aEquipment);
+        piece.add(oldIndex,aPiece);
       }
     }
     return wasRemoved;
   }
   /* Code from template association_SetMStarToMany */
-  public boolean setEquipment(Equipment... newEquipment)
+  public boolean setPiece(Equipment... newPiece)
   {
     boolean wasSet = false;
-    ArrayList<Equipment> verifiedEquipment = new ArrayList<Equipment>();
-    for (Equipment aEquipment : newEquipment)
+    ArrayList<Equipment> verifiedPiece = new ArrayList<Equipment>();
+    for (Equipment aPiece : newPiece)
     {
-      if (verifiedEquipment.contains(aEquipment))
+      if (verifiedPiece.contains(aPiece))
       {
         continue;
       }
-      verifiedEquipment.add(aEquipment);
+      verifiedPiece.add(aPiece);
     }
 
-    if (verifiedEquipment.size() != newEquipment.length || verifiedEquipment.size() < minimumNumberOfEquipment())
+    if (verifiedPiece.size() != newPiece.length || verifiedPiece.size() < minimumNumberOfPiece())
     {
       return wasSet;
     }
 
-    ArrayList<Equipment> oldEquipment = new ArrayList<Equipment>(equipment);
-    equipment.clear();
-    for (Equipment aNewEquipment : verifiedEquipment)
+    ArrayList<Equipment> oldPiece = new ArrayList<Equipment>(piece);
+    piece.clear();
+    for (Equipment aNewPiece : verifiedPiece)
     {
-      equipment.add(aNewEquipment);
-      if (oldEquipment.contains(aNewEquipment))
+      piece.add(aNewPiece);
+      if (oldPiece.contains(aNewPiece))
       {
-        oldEquipment.remove(aNewEquipment);
+        oldPiece.remove(aNewPiece);
       }
       else
       {
-        aNewEquipment.addBundle(this);
+        aNewPiece.addPack(this);
       }
     }
 
-    for (Equipment anOldEquipment : oldEquipment)
+    for (Equipment anOldPiece : oldPiece)
     {
-      anOldEquipment.removeBundle(this);
+      anOldPiece.removePack(this);
     }
     wasSet = true;
     return wasSet;
   }
   /* Code from template association_AddIndexControlFunctions */
-  public boolean addEquipmentAt(Equipment aEquipment, int index)
+  public boolean addPieceAt(Equipment aPiece, int index)
   {  
     boolean wasAdded = false;
-    if(addEquipment(aEquipment))
+    if(addPiece(aPiece))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfEquipment()) { index = numberOfEquipment() - 1; }
-      equipment.remove(aEquipment);
-      equipment.add(index, aEquipment);
+      if(index > numberOfPiece()) { index = numberOfPiece() - 1; }
+      piece.remove(aPiece);
+      piece.add(index, aPiece);
       wasAdded = true;
     }
     return wasAdded;
   }
 
-  public boolean addOrMoveEquipmentAt(Equipment aEquipment, int index)
+  public boolean addOrMovePieceAt(Equipment aPiece, int index)
   {
     boolean wasAdded = false;
-    if(equipment.contains(aEquipment))
+    if(piece.contains(aPiece))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfEquipment()) { index = numberOfEquipment() - 1; }
-      equipment.remove(aEquipment);
-      equipment.add(index, aEquipment);
+      if(index > numberOfPiece()) { index = numberOfPiece() - 1; }
+      piece.remove(aPiece);
+      piece.add(index, aPiece);
       wasAdded = true;
     } 
     else 
     {
-      wasAdded = addEquipmentAt(aEquipment, index);
+      wasAdded = addPieceAt(aPiece, index);
     }
     return wasAdded;
   }
@@ -378,17 +378,17 @@ public class Bundle
 
   public void delete()
   {
-    ArrayList<Registration> copyOfRegistrations = new ArrayList<Registration>(registrations);
-    registrations.clear();
-    for(Registration aRegistration : copyOfRegistrations)
+    ArrayList<Registration> copyOfBundleRenters = new ArrayList<Registration>(bundleRenters);
+    bundleRenters.clear();
+    for(Registration aBundleRenter : copyOfBundleRenters)
     {
-      aRegistration.removeBundle(this);
+      aBundleRenter.removeRentedBundle(this);
     }
-    ArrayList<Equipment> copyOfEquipment = new ArrayList<Equipment>(equipment);
-    equipment.clear();
-    for(Equipment aEquipment : copyOfEquipment)
+    ArrayList<Equipment> copyOfPiece = new ArrayList<Equipment>(piece);
+    piece.clear();
+    for(Equipment aPiece : copyOfPiece)
     {
-      aEquipment.removeBundle(this);
+      aPiece.removePack(this);
     }
     DiveSafe placeholderDiveSafe = diveSafe;
     this.diveSafe = null;

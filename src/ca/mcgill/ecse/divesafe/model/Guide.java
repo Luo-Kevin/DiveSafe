@@ -6,8 +6,8 @@ package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
 // line 32 "DiveSafe.ump"
-// line 137 "DiveSafe.ump"
-// line 212 "DiveSafe.ump"
+// line 138 "DiveSafe.ump"
+// line 226 "DiveSafe.ump"
 public class Guide extends User
 {
 
@@ -19,7 +19,7 @@ public class Guide extends User
   private int pricePerWeek;
 
   //Guide Associations
-  private List<Member> members;
+  private List<Member> assignedMember;
 
   //------------------------
   // CONSTRUCTOR
@@ -29,7 +29,7 @@ public class Guide extends User
   {
     super(aAccountName, aAccountPassword, aDiveSafe, aName, aEmergencyContact, aDivingSeason);
     pricePerWeek = aPricePerWeek;
-    members = new ArrayList<Member>();
+    assignedMember = new ArrayList<Member>();
   }
 
   //------------------------
@@ -49,112 +49,112 @@ public class Guide extends User
     return pricePerWeek;
   }
   /* Code from template association_GetMany */
-  public Member getMember(int index)
+  public Member getAssignedMember(int index)
   {
-    Member aMember = members.get(index);
-    return aMember;
+    Member aAssignedMember = assignedMember.get(index);
+    return aAssignedMember;
   }
 
-  public List<Member> getMembers()
+  public List<Member> getAssignedMember()
   {
-    List<Member> newMembers = Collections.unmodifiableList(members);
-    return newMembers;
+    List<Member> newAssignedMember = Collections.unmodifiableList(assignedMember);
+    return newAssignedMember;
   }
 
-  public int numberOfMembers()
+  public int numberOfAssignedMember()
   {
-    int number = members.size();
+    int number = assignedMember.size();
     return number;
   }
 
-  public boolean hasMembers()
+  public boolean hasAssignedMember()
   {
-    boolean has = members.size() > 0;
+    boolean has = assignedMember.size() > 0;
     return has;
   }
 
-  public int indexOfMember(Member aMember)
+  public int indexOfAssignedMember(Member aAssignedMember)
   {
-    int index = members.indexOf(aMember);
+    int index = assignedMember.indexOf(aAssignedMember);
     return index;
   }
   /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfMembers()
+  public static int minimumNumberOfAssignedMember()
   {
     return 0;
   }
   /* Code from template association_AddManyToOptionalOne */
-  public boolean addMember(Member aMember)
+  public boolean addAssignedMember(Member aAssignedMember)
   {
     boolean wasAdded = false;
-    if (members.contains(aMember)) { return false; }
-    Guide existingGuide = aMember.getGuide();
-    if (existingGuide == null)
+    if (assignedMember.contains(aAssignedMember)) { return false; }
+    Guide existingAssignedGuide = aAssignedMember.getAssignedGuide();
+    if (existingAssignedGuide == null)
     {
-      aMember.setGuide(this);
+      aAssignedMember.setAssignedGuide(this);
     }
-    else if (!this.equals(existingGuide))
+    else if (!this.equals(existingAssignedGuide))
     {
-      existingGuide.removeMember(aMember);
-      addMember(aMember);
+      existingAssignedGuide.removeAssignedMember(aAssignedMember);
+      addAssignedMember(aAssignedMember);
     }
     else
     {
-      members.add(aMember);
+      assignedMember.add(aAssignedMember);
     }
     wasAdded = true;
     return wasAdded;
   }
 
-  public boolean removeMember(Member aMember)
+  public boolean removeAssignedMember(Member aAssignedMember)
   {
     boolean wasRemoved = false;
-    if (members.contains(aMember))
+    if (assignedMember.contains(aAssignedMember))
     {
-      members.remove(aMember);
-      aMember.setGuide(null);
+      assignedMember.remove(aAssignedMember);
+      aAssignedMember.setAssignedGuide(null);
       wasRemoved = true;
     }
     return wasRemoved;
   }
   /* Code from template association_AddIndexControlFunctions */
-  public boolean addMemberAt(Member aMember, int index)
+  public boolean addAssignedMemberAt(Member aAssignedMember, int index)
   {  
     boolean wasAdded = false;
-    if(addMember(aMember))
+    if(addAssignedMember(aAssignedMember))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfMembers()) { index = numberOfMembers() - 1; }
-      members.remove(aMember);
-      members.add(index, aMember);
+      if(index > numberOfAssignedMember()) { index = numberOfAssignedMember() - 1; }
+      assignedMember.remove(aAssignedMember);
+      assignedMember.add(index, aAssignedMember);
       wasAdded = true;
     }
     return wasAdded;
   }
 
-  public boolean addOrMoveMemberAt(Member aMember, int index)
+  public boolean addOrMoveAssignedMemberAt(Member aAssignedMember, int index)
   {
     boolean wasAdded = false;
-    if(members.contains(aMember))
+    if(assignedMember.contains(aAssignedMember))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfMembers()) { index = numberOfMembers() - 1; }
-      members.remove(aMember);
-      members.add(index, aMember);
+      if(index > numberOfAssignedMember()) { index = numberOfAssignedMember() - 1; }
+      assignedMember.remove(aAssignedMember);
+      assignedMember.add(index, aAssignedMember);
       wasAdded = true;
     } 
     else 
     {
-      wasAdded = addMemberAt(aMember, index);
+      wasAdded = addAssignedMemberAt(aAssignedMember, index);
     }
     return wasAdded;
   }
 
   public void delete()
   {
-    while( !members.isEmpty() )
+    while( !assignedMember.isEmpty() )
     {
-      members.get(0).setGuide(null);
+      assignedMember.get(0).setAssignedGuide(null);
     }
     super.delete();
   }

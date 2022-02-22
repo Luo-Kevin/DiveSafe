@@ -8,7 +8,7 @@ import java.util.*;
 
 // line 22 "DiveSafe.ump"
 // line 123 "DiveSafe.ump"
-// line 207 "DiveSafe.ump"
+// line 221 "DiveSafe.ump"
 public class DivingSeason
 {
 
@@ -21,9 +21,9 @@ public class DivingSeason
   private Date endDate;
 
   //DivingSeason Associations
-  private List<User> users;
-  private List<SafeDivingDay> safeDivingDaies;
-  private List<Registration> registrations;
+  private List<User> userBase;
+  private List<SafeDivingDay> safeDivindDays;
+  private List<Registration> correspondingRegistrations;
   private DiveSafe diveSafe;
 
   //------------------------
@@ -34,9 +34,9 @@ public class DivingSeason
   {
     startDate = aStartDate;
     endDate = aEndDate;
-    users = new ArrayList<User>();
-    safeDivingDaies = new ArrayList<SafeDivingDay>();
-    registrations = new ArrayList<Registration>();
+    userBase = new ArrayList<User>();
+    safeDivindDays = new ArrayList<SafeDivingDay>();
+    correspondingRegistrations = new ArrayList<Registration>();
     boolean didAddDiveSafe = setDiveSafe(aDiveSafe);
     if (!didAddDiveSafe)
     {
@@ -74,93 +74,93 @@ public class DivingSeason
     return endDate;
   }
   /* Code from template association_GetMany */
-  public User getUser(int index)
+  public User getUserBase(int index)
   {
-    User aUser = users.get(index);
-    return aUser;
+    User aUserBase = userBase.get(index);
+    return aUserBase;
   }
 
-  public List<User> getUsers()
+  public List<User> getUserBase()
   {
-    List<User> newUsers = Collections.unmodifiableList(users);
-    return newUsers;
+    List<User> newUserBase = Collections.unmodifiableList(userBase);
+    return newUserBase;
   }
 
-  public int numberOfUsers()
+  public int numberOfUserBase()
   {
-    int number = users.size();
+    int number = userBase.size();
     return number;
   }
 
-  public boolean hasUsers()
+  public boolean hasUserBase()
   {
-    boolean has = users.size() > 0;
+    boolean has = userBase.size() > 0;
     return has;
   }
 
-  public int indexOfUser(User aUser)
+  public int indexOfUserBase(User aUserBase)
   {
-    int index = users.indexOf(aUser);
+    int index = userBase.indexOf(aUserBase);
     return index;
   }
   /* Code from template association_GetMany */
-  public SafeDivingDay getSafeDivingDay(int index)
+  public SafeDivingDay getSafeDivindDay(int index)
   {
-    SafeDivingDay aSafeDivingDay = safeDivingDaies.get(index);
-    return aSafeDivingDay;
+    SafeDivingDay aSafeDivindDay = safeDivindDays.get(index);
+    return aSafeDivindDay;
   }
 
-  public List<SafeDivingDay> getSafeDivingDaies()
+  public List<SafeDivingDay> getSafeDivindDays()
   {
-    List<SafeDivingDay> newSafeDivingDaies = Collections.unmodifiableList(safeDivingDaies);
-    return newSafeDivingDaies;
+    List<SafeDivingDay> newSafeDivindDays = Collections.unmodifiableList(safeDivindDays);
+    return newSafeDivindDays;
   }
 
-  public int numberOfSafeDivingDaies()
+  public int numberOfSafeDivindDays()
   {
-    int number = safeDivingDaies.size();
+    int number = safeDivindDays.size();
     return number;
   }
 
-  public boolean hasSafeDivingDaies()
+  public boolean hasSafeDivindDays()
   {
-    boolean has = safeDivingDaies.size() > 0;
+    boolean has = safeDivindDays.size() > 0;
     return has;
   }
 
-  public int indexOfSafeDivingDay(SafeDivingDay aSafeDivingDay)
+  public int indexOfSafeDivindDay(SafeDivingDay aSafeDivindDay)
   {
-    int index = safeDivingDaies.indexOf(aSafeDivingDay);
+    int index = safeDivindDays.indexOf(aSafeDivindDay);
     return index;
   }
   /* Code from template association_GetMany */
-  public Registration getRegistration(int index)
+  public Registration getCorrespondingRegistration(int index)
   {
-    Registration aRegistration = registrations.get(index);
-    return aRegistration;
+    Registration aCorrespondingRegistration = correspondingRegistrations.get(index);
+    return aCorrespondingRegistration;
   }
 
-  public List<Registration> getRegistrations()
+  public List<Registration> getCorrespondingRegistrations()
   {
-    List<Registration> newRegistrations = Collections.unmodifiableList(registrations);
-    return newRegistrations;
+    List<Registration> newCorrespondingRegistrations = Collections.unmodifiableList(correspondingRegistrations);
+    return newCorrespondingRegistrations;
   }
 
-  public int numberOfRegistrations()
+  public int numberOfCorrespondingRegistrations()
   {
-    int number = registrations.size();
+    int number = correspondingRegistrations.size();
     return number;
   }
 
-  public boolean hasRegistrations()
+  public boolean hasCorrespondingRegistrations()
   {
-    boolean has = registrations.size() > 0;
+    boolean has = correspondingRegistrations.size() > 0;
     return has;
   }
 
-  public int indexOfRegistration(Registration aRegistration)
+  public int indexOfCorrespondingRegistration(Registration aCorrespondingRegistration)
   {
-    int index = registrations.indexOf(aRegistration);
+    int index = correspondingRegistrations.indexOf(aCorrespondingRegistration);
     return index;
   }
   /* Code from template association_GetOne */
@@ -169,215 +169,215 @@ public class DivingSeason
     return diveSafe;
   }
   /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfUsers()
+  public static int minimumNumberOfUserBase()
   {
     return 0;
   }
   /* Code from template association_AddManyToOne */
 
 
-  public boolean addUser(User aUser)
+  public boolean addUserBase(User aUserBase)
   {
     boolean wasAdded = false;
-    if (users.contains(aUser)) { return false; }
-    DivingSeason existingDivingSeason = aUser.getDivingSeason();
+    if (userBase.contains(aUserBase)) { return false; }
+    DivingSeason existingDivingSeason = aUserBase.getDivingSeason();
     boolean isNewDivingSeason = existingDivingSeason != null && !this.equals(existingDivingSeason);
     if (isNewDivingSeason)
     {
-      aUser.setDivingSeason(this);
+      aUserBase.setDivingSeason(this);
     }
     else
     {
-      users.add(aUser);
+      userBase.add(aUserBase);
     }
     wasAdded = true;
     return wasAdded;
   }
 
-  public boolean removeUser(User aUser)
+  public boolean removeUserBase(User aUserBase)
   {
     boolean wasRemoved = false;
-    //Unable to remove aUser, as it must always have a divingSeason
-    if (!this.equals(aUser.getDivingSeason()))
+    //Unable to remove aUserBase, as it must always have a divingSeason
+    if (!this.equals(aUserBase.getDivingSeason()))
     {
-      users.remove(aUser);
+      userBase.remove(aUserBase);
       wasRemoved = true;
     }
     return wasRemoved;
   }
   /* Code from template association_AddIndexControlFunctions */
-  public boolean addUserAt(User aUser, int index)
+  public boolean addUserBaseAt(User aUserBase, int index)
   {  
     boolean wasAdded = false;
-    if(addUser(aUser))
+    if(addUserBase(aUserBase))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfUsers()) { index = numberOfUsers() - 1; }
-      users.remove(aUser);
-      users.add(index, aUser);
+      if(index > numberOfUserBase()) { index = numberOfUserBase() - 1; }
+      userBase.remove(aUserBase);
+      userBase.add(index, aUserBase);
       wasAdded = true;
     }
     return wasAdded;
   }
 
-  public boolean addOrMoveUserAt(User aUser, int index)
+  public boolean addOrMoveUserBaseAt(User aUserBase, int index)
   {
     boolean wasAdded = false;
-    if(users.contains(aUser))
+    if(userBase.contains(aUserBase))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfUsers()) { index = numberOfUsers() - 1; }
-      users.remove(aUser);
-      users.add(index, aUser);
+      if(index > numberOfUserBase()) { index = numberOfUserBase() - 1; }
+      userBase.remove(aUserBase);
+      userBase.add(index, aUserBase);
       wasAdded = true;
     } 
     else 
     {
-      wasAdded = addUserAt(aUser, index);
+      wasAdded = addUserBaseAt(aUserBase, index);
     }
     return wasAdded;
   }
   /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfSafeDivingDaies()
+  public static int minimumNumberOfSafeDivindDays()
   {
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public SafeDivingDay addSafeDivingDay(Date aSafeDay, int aSafeDayNumber, DiveSafe aDiveSafe, Registration aRegistration)
+  public SafeDivingDay addSafeDivindDay(Date aSafeDay, int aSafeDayNumber, DiveSafe aDiveSafe, Registration aRegistration)
   {
     return new SafeDivingDay(aSafeDay, aSafeDayNumber, aDiveSafe, this, aRegistration);
   }
 
-  public boolean addSafeDivingDay(SafeDivingDay aSafeDivingDay)
+  public boolean addSafeDivindDay(SafeDivingDay aSafeDivindDay)
   {
     boolean wasAdded = false;
-    if (safeDivingDaies.contains(aSafeDivingDay)) { return false; }
-    DivingSeason existingDivingSeason = aSafeDivingDay.getDivingSeason();
+    if (safeDivindDays.contains(aSafeDivindDay)) { return false; }
+    DivingSeason existingDivingSeason = aSafeDivindDay.getDivingSeason();
     boolean isNewDivingSeason = existingDivingSeason != null && !this.equals(existingDivingSeason);
     if (isNewDivingSeason)
     {
-      aSafeDivingDay.setDivingSeason(this);
+      aSafeDivindDay.setDivingSeason(this);
     }
     else
     {
-      safeDivingDaies.add(aSafeDivingDay);
+      safeDivindDays.add(aSafeDivindDay);
     }
     wasAdded = true;
     return wasAdded;
   }
 
-  public boolean removeSafeDivingDay(SafeDivingDay aSafeDivingDay)
+  public boolean removeSafeDivindDay(SafeDivingDay aSafeDivindDay)
   {
     boolean wasRemoved = false;
-    //Unable to remove aSafeDivingDay, as it must always have a divingSeason
-    if (!this.equals(aSafeDivingDay.getDivingSeason()))
+    //Unable to remove aSafeDivindDay, as it must always have a divingSeason
+    if (!this.equals(aSafeDivindDay.getDivingSeason()))
     {
-      safeDivingDaies.remove(aSafeDivingDay);
+      safeDivindDays.remove(aSafeDivindDay);
       wasRemoved = true;
     }
     return wasRemoved;
   }
   /* Code from template association_AddIndexControlFunctions */
-  public boolean addSafeDivingDayAt(SafeDivingDay aSafeDivingDay, int index)
+  public boolean addSafeDivindDayAt(SafeDivingDay aSafeDivindDay, int index)
   {  
     boolean wasAdded = false;
-    if(addSafeDivingDay(aSafeDivingDay))
+    if(addSafeDivindDay(aSafeDivindDay))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfSafeDivingDaies()) { index = numberOfSafeDivingDaies() - 1; }
-      safeDivingDaies.remove(aSafeDivingDay);
-      safeDivingDaies.add(index, aSafeDivingDay);
+      if(index > numberOfSafeDivindDays()) { index = numberOfSafeDivindDays() - 1; }
+      safeDivindDays.remove(aSafeDivindDay);
+      safeDivindDays.add(index, aSafeDivindDay);
       wasAdded = true;
     }
     return wasAdded;
   }
 
-  public boolean addOrMoveSafeDivingDayAt(SafeDivingDay aSafeDivingDay, int index)
+  public boolean addOrMoveSafeDivindDayAt(SafeDivingDay aSafeDivindDay, int index)
   {
     boolean wasAdded = false;
-    if(safeDivingDaies.contains(aSafeDivingDay))
+    if(safeDivindDays.contains(aSafeDivindDay))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfSafeDivingDaies()) { index = numberOfSafeDivingDaies() - 1; }
-      safeDivingDaies.remove(aSafeDivingDay);
-      safeDivingDaies.add(index, aSafeDivingDay);
+      if(index > numberOfSafeDivindDays()) { index = numberOfSafeDivindDays() - 1; }
+      safeDivindDays.remove(aSafeDivindDay);
+      safeDivindDays.add(index, aSafeDivindDay);
       wasAdded = true;
     } 
     else 
     {
-      wasAdded = addSafeDivingDayAt(aSafeDivingDay, index);
+      wasAdded = addSafeDivindDayAt(aSafeDivindDay, index);
     }
     return wasAdded;
   }
   /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfRegistrations()
+  public static int minimumNumberOfCorrespondingRegistrations()
   {
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Registration addRegistration(int aTotalCost, DiveSafe aDiveSafe, Member aMember)
+  public Registration addCorrespondingRegistration(int aTotalCost, DiveSafe aDiveSafe, Member aAssociatedMember)
   {
-    return new Registration(aTotalCost, aDiveSafe, this, aMember);
+    return new Registration(aTotalCost, aDiveSafe, this, aAssociatedMember);
   }
 
-  public boolean addRegistration(Registration aRegistration)
+  public boolean addCorrespondingRegistration(Registration aCorrespondingRegistration)
   {
     boolean wasAdded = false;
-    if (registrations.contains(aRegistration)) { return false; }
-    DivingSeason existingDivingSeason = aRegistration.getDivingSeason();
+    if (correspondingRegistrations.contains(aCorrespondingRegistration)) { return false; }
+    DivingSeason existingDivingSeason = aCorrespondingRegistration.getDivingSeason();
     boolean isNewDivingSeason = existingDivingSeason != null && !this.equals(existingDivingSeason);
     if (isNewDivingSeason)
     {
-      aRegistration.setDivingSeason(this);
+      aCorrespondingRegistration.setDivingSeason(this);
     }
     else
     {
-      registrations.add(aRegistration);
+      correspondingRegistrations.add(aCorrespondingRegistration);
     }
     wasAdded = true;
     return wasAdded;
   }
 
-  public boolean removeRegistration(Registration aRegistration)
+  public boolean removeCorrespondingRegistration(Registration aCorrespondingRegistration)
   {
     boolean wasRemoved = false;
-    //Unable to remove aRegistration, as it must always have a divingSeason
-    if (!this.equals(aRegistration.getDivingSeason()))
+    //Unable to remove aCorrespondingRegistration, as it must always have a divingSeason
+    if (!this.equals(aCorrespondingRegistration.getDivingSeason()))
     {
-      registrations.remove(aRegistration);
+      correspondingRegistrations.remove(aCorrespondingRegistration);
       wasRemoved = true;
     }
     return wasRemoved;
   }
   /* Code from template association_AddIndexControlFunctions */
-  public boolean addRegistrationAt(Registration aRegistration, int index)
+  public boolean addCorrespondingRegistrationAt(Registration aCorrespondingRegistration, int index)
   {  
     boolean wasAdded = false;
-    if(addRegistration(aRegistration))
+    if(addCorrespondingRegistration(aCorrespondingRegistration))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfRegistrations()) { index = numberOfRegistrations() - 1; }
-      registrations.remove(aRegistration);
-      registrations.add(index, aRegistration);
+      if(index > numberOfCorrespondingRegistrations()) { index = numberOfCorrespondingRegistrations() - 1; }
+      correspondingRegistrations.remove(aCorrespondingRegistration);
+      correspondingRegistrations.add(index, aCorrespondingRegistration);
       wasAdded = true;
     }
     return wasAdded;
   }
 
-  public boolean addOrMoveRegistrationAt(Registration aRegistration, int index)
+  public boolean addOrMoveCorrespondingRegistrationAt(Registration aCorrespondingRegistration, int index)
   {
     boolean wasAdded = false;
-    if(registrations.contains(aRegistration))
+    if(correspondingRegistrations.contains(aCorrespondingRegistration))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfRegistrations()) { index = numberOfRegistrations() - 1; }
-      registrations.remove(aRegistration);
-      registrations.add(index, aRegistration);
+      if(index > numberOfCorrespondingRegistrations()) { index = numberOfCorrespondingRegistrations() - 1; }
+      correspondingRegistrations.remove(aCorrespondingRegistration);
+      correspondingRegistrations.add(index, aCorrespondingRegistration);
       wasAdded = true;
     } 
     else 
     {
-      wasAdded = addRegistrationAt(aRegistration, index);
+      wasAdded = addCorrespondingRegistrationAt(aCorrespondingRegistration, index);
     }
     return wasAdded;
   }
@@ -403,25 +403,25 @@ public class DivingSeason
 
   public void delete()
   {
-    while (users.size() > 0)
+    while (userBase.size() > 0)
     {
-      User aUser = users.get(users.size() - 1);
-      aUser.delete();
-      users.remove(aUser);
+      User aUserBase = userBase.get(userBase.size() - 1);
+      aUserBase.delete();
+      userBase.remove(aUserBase);
     }
     
-    while (safeDivingDaies.size() > 0)
+    while (safeDivindDays.size() > 0)
     {
-      SafeDivingDay aSafeDivingDay = safeDivingDaies.get(safeDivingDaies.size() - 1);
-      aSafeDivingDay.delete();
-      safeDivingDaies.remove(aSafeDivingDay);
+      SafeDivingDay aSafeDivindDay = safeDivindDays.get(safeDivindDays.size() - 1);
+      aSafeDivindDay.delete();
+      safeDivindDays.remove(aSafeDivindDay);
     }
     
-    while (registrations.size() > 0)
+    while (correspondingRegistrations.size() > 0)
     {
-      Registration aRegistration = registrations.get(registrations.size() - 1);
-      aRegistration.delete();
-      registrations.remove(aRegistration);
+      Registration aCorrespondingRegistration = correspondingRegistrations.get(correspondingRegistrations.size() - 1);
+      aCorrespondingRegistration.delete();
+      correspondingRegistrations.remove(aCorrespondingRegistration);
     }
     
     DiveSafe placeholderDiveSafe = diveSafe;

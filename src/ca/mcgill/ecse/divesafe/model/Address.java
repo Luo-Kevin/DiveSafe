@@ -5,8 +5,8 @@ package ca.mcgill.ecse.divesafe.model;
 
 
 // line 89 "DiveSafe.ump"
-// line 185 "DiveSafe.ump"
-// line 254 "DiveSafe.ump"
+// line 197 "DiveSafe.ump"
+// line 270 "DiveSafe.ump"
 public class Address
 {
 
@@ -37,7 +37,7 @@ public class Address
     boolean didAddHotel = setHotel(aHotel);
     if (!didAddHotel)
     {
-      throw new RuntimeException("Unable to create address due to hotel. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create hotelAddress due to hotel. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     boolean didAddDiveSafe = setDiveSafe(aDiveSafe);
     if (!didAddDiveSafe)
@@ -115,13 +115,13 @@ public class Address
   public boolean setHotel(Hotel aHotel)
   {
     boolean wasSet = false;
-    //Must provide hotel to address
+    //Must provide hotel to hotelAddress
     if (aHotel == null)
     {
       return wasSet;
     }
 
-    if (hotel != null && hotel.numberOfAddresses() <= Hotel.minimumNumberOfAddresses())
+    if (hotel != null && hotel.numberOfHotelAddress() <= Hotel.minimumNumberOfHotelAddress())
     {
       return wasSet;
     }
@@ -130,14 +130,14 @@ public class Address
     hotel = aHotel;
     if (existingHotel != null && !existingHotel.equals(aHotel))
     {
-      boolean didRemove = existingHotel.removeAddress(this);
+      boolean didRemove = existingHotel.removeHotelAddress(this);
       if (!didRemove)
       {
         hotel = existingHotel;
         return wasSet;
       }
     }
-    hotel.addAddress(this);
+    hotel.addHotelAddress(this);
     wasSet = true;
     return wasSet;
   }
@@ -167,7 +167,7 @@ public class Address
     this.hotel = null;
     if(placeholderHotel != null)
     {
-      placeholderHotel.removeAddress(this);
+      placeholderHotel.removeHotelAddress(this);
     }
     DiveSafe placeholderDiveSafe = diveSafe;
     this.diveSafe = null;

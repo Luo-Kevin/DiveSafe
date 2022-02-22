@@ -6,8 +6,8 @@ package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
 // line 62 "DiveSafe.ump"
-// line 163 "DiveSafe.ump"
-// line 239 "DiveSafe.ump"
+// line 167 "DiveSafe.ump"
+// line 255 "DiveSafe.ump"
 public class Hotel
 {
 
@@ -27,9 +27,9 @@ public class Hotel
   private int rating;
 
   //Hotel Associations
-  private List<Registration> registrations;
+  private List<Registration> hotelClients;
   private DiveSafe diveSafe;
-  private List<Address> addresses;
+  private List<Address> hotelAddress;
 
   //------------------------
   // CONSTRUCTOR
@@ -40,13 +40,13 @@ public class Hotel
     name = aName;
     type = aType;
     rating = aRating;
-    registrations = new ArrayList<Registration>();
+    hotelClients = new ArrayList<Registration>();
     boolean didAddDiveSafe = setDiveSafe(aDiveSafe);
     if (!didAddDiveSafe)
     {
       throw new RuntimeException("Unable to create hotel due to diveSafe. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
-    addresses = new ArrayList<Address>();
+    hotelAddress = new ArrayList<Address>();
   }
 
   //------------------------
@@ -92,33 +92,33 @@ public class Hotel
     return rating;
   }
   /* Code from template association_GetMany */
-  public Registration getRegistration(int index)
+  public Registration getHotelClient(int index)
   {
-    Registration aRegistration = registrations.get(index);
-    return aRegistration;
+    Registration aHotelClient = hotelClients.get(index);
+    return aHotelClient;
   }
 
-  public List<Registration> getRegistrations()
+  public List<Registration> getHotelClients()
   {
-    List<Registration> newRegistrations = Collections.unmodifiableList(registrations);
-    return newRegistrations;
+    List<Registration> newHotelClients = Collections.unmodifiableList(hotelClients);
+    return newHotelClients;
   }
 
-  public int numberOfRegistrations()
+  public int numberOfHotelClients()
   {
-    int number = registrations.size();
+    int number = hotelClients.size();
     return number;
   }
 
-  public boolean hasRegistrations()
+  public boolean hasHotelClients()
   {
-    boolean has = registrations.size() > 0;
+    boolean has = hotelClients.size() > 0;
     return has;
   }
 
-  public int indexOfRegistration(Registration aRegistration)
+  public int indexOfHotelClient(Registration aHotelClient)
   {
-    int index = registrations.indexOf(aRegistration);
+    int index = hotelClients.indexOf(aHotelClient);
     return index;
   }
   /* Code from template association_GetOne */
@@ -127,103 +127,103 @@ public class Hotel
     return diveSafe;
   }
   /* Code from template association_GetMany */
-  public Address getAddress(int index)
+  public Address getHotelAddress(int index)
   {
-    Address aAddress = addresses.get(index);
-    return aAddress;
+    Address aHotelAddress = hotelAddress.get(index);
+    return aHotelAddress;
   }
 
-  public List<Address> getAddresses()
+  public List<Address> getHotelAddress()
   {
-    List<Address> newAddresses = Collections.unmodifiableList(addresses);
-    return newAddresses;
+    List<Address> newHotelAddress = Collections.unmodifiableList(hotelAddress);
+    return newHotelAddress;
   }
 
-  public int numberOfAddresses()
+  public int numberOfHotelAddress()
   {
-    int number = addresses.size();
+    int number = hotelAddress.size();
     return number;
   }
 
-  public boolean hasAddresses()
+  public boolean hasHotelAddress()
   {
-    boolean has = addresses.size() > 0;
+    boolean has = hotelAddress.size() > 0;
     return has;
   }
 
-  public int indexOfAddress(Address aAddress)
+  public int indexOfHotelAddress(Address aHotelAddress)
   {
-    int index = addresses.indexOf(aAddress);
+    int index = hotelAddress.indexOf(aHotelAddress);
     return index;
   }
   /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfRegistrations()
+  public static int minimumNumberOfHotelClients()
   {
     return 0;
   }
   /* Code from template association_AddManyToOptionalOne */
-  public boolean addRegistration(Registration aRegistration)
+  public boolean addHotelClient(Registration aHotelClient)
   {
     boolean wasAdded = false;
-    if (registrations.contains(aRegistration)) { return false; }
-    Hotel existingHotel = aRegistration.getHotel();
-    if (existingHotel == null)
+    if (hotelClients.contains(aHotelClient)) { return false; }
+    Hotel existingBookedHotel = aHotelClient.getBookedHotel();
+    if (existingBookedHotel == null)
     {
-      aRegistration.setHotel(this);
+      aHotelClient.setBookedHotel(this);
     }
-    else if (!this.equals(existingHotel))
+    else if (!this.equals(existingBookedHotel))
     {
-      existingHotel.removeRegistration(aRegistration);
-      addRegistration(aRegistration);
+      existingBookedHotel.removeHotelClient(aHotelClient);
+      addHotelClient(aHotelClient);
     }
     else
     {
-      registrations.add(aRegistration);
+      hotelClients.add(aHotelClient);
     }
     wasAdded = true;
     return wasAdded;
   }
 
-  public boolean removeRegistration(Registration aRegistration)
+  public boolean removeHotelClient(Registration aHotelClient)
   {
     boolean wasRemoved = false;
-    if (registrations.contains(aRegistration))
+    if (hotelClients.contains(aHotelClient))
     {
-      registrations.remove(aRegistration);
-      aRegistration.setHotel(null);
+      hotelClients.remove(aHotelClient);
+      aHotelClient.setBookedHotel(null);
       wasRemoved = true;
     }
     return wasRemoved;
   }
   /* Code from template association_AddIndexControlFunctions */
-  public boolean addRegistrationAt(Registration aRegistration, int index)
+  public boolean addHotelClientAt(Registration aHotelClient, int index)
   {  
     boolean wasAdded = false;
-    if(addRegistration(aRegistration))
+    if(addHotelClient(aHotelClient))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfRegistrations()) { index = numberOfRegistrations() - 1; }
-      registrations.remove(aRegistration);
-      registrations.add(index, aRegistration);
+      if(index > numberOfHotelClients()) { index = numberOfHotelClients() - 1; }
+      hotelClients.remove(aHotelClient);
+      hotelClients.add(index, aHotelClient);
       wasAdded = true;
     }
     return wasAdded;
   }
 
-  public boolean addOrMoveRegistrationAt(Registration aRegistration, int index)
+  public boolean addOrMoveHotelClientAt(Registration aHotelClient, int index)
   {
     boolean wasAdded = false;
-    if(registrations.contains(aRegistration))
+    if(hotelClients.contains(aHotelClient))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfRegistrations()) { index = numberOfRegistrations() - 1; }
-      registrations.remove(aRegistration);
-      registrations.add(index, aRegistration);
+      if(index > numberOfHotelClients()) { index = numberOfHotelClients() - 1; }
+      hotelClients.remove(aHotelClient);
+      hotelClients.add(index, aHotelClient);
       wasAdded = true;
     } 
     else 
     {
-      wasAdded = addRegistrationAt(aRegistration, index);
+      wasAdded = addHotelClientAt(aHotelClient, index);
     }
     return wasAdded;
   }
@@ -247,103 +247,103 @@ public class Hotel
     return wasSet;
   }
   /* Code from template association_IsNumberOfValidMethod */
-  public boolean isNumberOfAddressesValid()
+  public boolean isNumberOfHotelAddressValid()
   {
-    boolean isValid = numberOfAddresses() >= minimumNumberOfAddresses();
+    boolean isValid = numberOfHotelAddress() >= minimumNumberOfHotelAddress();
     return isValid;
   }
   /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfAddresses()
+  public static int minimumNumberOfHotelAddress()
   {
     return 1;
   }
   /* Code from template association_AddMandatoryManyToOne */
-  public Address addAddress(int aAddressNumber, String aStreet, String aCity, String aRegionOfIsland, DiveSafe aDiveSafe)
+  public Address addHotelAddress(int aAddressNumber, String aStreet, String aCity, String aRegionOfIsland, DiveSafe aDiveSafe)
   {
-    Address aNewAddress = new Address(aAddressNumber, aStreet, aCity, aRegionOfIsland, this, aDiveSafe);
-    return aNewAddress;
+    Address aNewHotelAddress = new Address(aAddressNumber, aStreet, aCity, aRegionOfIsland, this, aDiveSafe);
+    return aNewHotelAddress;
   }
 
-  public boolean addAddress(Address aAddress)
+  public boolean addHotelAddress(Address aHotelAddress)
   {
     boolean wasAdded = false;
-    if (addresses.contains(aAddress)) { return false; }
-    Hotel existingHotel = aAddress.getHotel();
+    if (hotelAddress.contains(aHotelAddress)) { return false; }
+    Hotel existingHotel = aHotelAddress.getHotel();
     boolean isNewHotel = existingHotel != null && !this.equals(existingHotel);
 
-    if (isNewHotel && existingHotel.numberOfAddresses() <= minimumNumberOfAddresses())
+    if (isNewHotel && existingHotel.numberOfHotelAddress() <= minimumNumberOfHotelAddress())
     {
       return wasAdded;
     }
     if (isNewHotel)
     {
-      aAddress.setHotel(this);
+      aHotelAddress.setHotel(this);
     }
     else
     {
-      addresses.add(aAddress);
+      hotelAddress.add(aHotelAddress);
     }
     wasAdded = true;
     return wasAdded;
   }
 
-  public boolean removeAddress(Address aAddress)
+  public boolean removeHotelAddress(Address aHotelAddress)
   {
     boolean wasRemoved = false;
-    //Unable to remove aAddress, as it must always have a hotel
-    if (this.equals(aAddress.getHotel()))
+    //Unable to remove aHotelAddress, as it must always have a hotel
+    if (this.equals(aHotelAddress.getHotel()))
     {
       return wasRemoved;
     }
 
     //hotel already at minimum (1)
-    if (numberOfAddresses() <= minimumNumberOfAddresses())
+    if (numberOfHotelAddress() <= minimumNumberOfHotelAddress())
     {
       return wasRemoved;
     }
 
-    addresses.remove(aAddress);
+    hotelAddress.remove(aHotelAddress);
     wasRemoved = true;
     return wasRemoved;
   }
   /* Code from template association_AddIndexControlFunctions */
-  public boolean addAddressAt(Address aAddress, int index)
+  public boolean addHotelAddressAt(Address aHotelAddress, int index)
   {  
     boolean wasAdded = false;
-    if(addAddress(aAddress))
+    if(addHotelAddress(aHotelAddress))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfAddresses()) { index = numberOfAddresses() - 1; }
-      addresses.remove(aAddress);
-      addresses.add(index, aAddress);
+      if(index > numberOfHotelAddress()) { index = numberOfHotelAddress() - 1; }
+      hotelAddress.remove(aHotelAddress);
+      hotelAddress.add(index, aHotelAddress);
       wasAdded = true;
     }
     return wasAdded;
   }
 
-  public boolean addOrMoveAddressAt(Address aAddress, int index)
+  public boolean addOrMoveHotelAddressAt(Address aHotelAddress, int index)
   {
     boolean wasAdded = false;
-    if(addresses.contains(aAddress))
+    if(hotelAddress.contains(aHotelAddress))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfAddresses()) { index = numberOfAddresses() - 1; }
-      addresses.remove(aAddress);
-      addresses.add(index, aAddress);
+      if(index > numberOfHotelAddress()) { index = numberOfHotelAddress() - 1; }
+      hotelAddress.remove(aHotelAddress);
+      hotelAddress.add(index, aHotelAddress);
       wasAdded = true;
     } 
     else 
     {
-      wasAdded = addAddressAt(aAddress, index);
+      wasAdded = addHotelAddressAt(aHotelAddress, index);
     }
     return wasAdded;
   }
 
   public void delete()
   {
-    while( !registrations.isEmpty() )
+    while( !hotelClients.isEmpty() )
     {
-      registrations.get(0).setHotel(null);
+      hotelClients.get(0).setBookedHotel(null);
     }
     DiveSafe placeholderDiveSafe = diveSafe;
     this.diveSafe = null;
@@ -351,10 +351,10 @@ public class Hotel
     {
       placeholderDiveSafe.removeHotel(this);
     }
-    for(int i=addresses.size(); i > 0; i--)
+    for(int i=hotelAddress.size(); i > 0; i--)
     {
-      Address aAddress = addresses.get(i - 1);
-      aAddress.delete();
+      Address aHotelAddress = hotelAddress.get(i - 1);
+      aHotelAddress.delete();
     }
   }
 

@@ -5,8 +5,8 @@ package ca.mcgill.ecse.divesafe.model;
 
 
 // line 39 "DiveSafe.ump"
-// line 144 "DiveSafe.ump"
-// line 217 "DiveSafe.ump"
+// line 147 "DiveSafe.ump"
+// line 231 "DiveSafe.ump"
 public class Member extends User
 {
 
@@ -21,7 +21,7 @@ public class Member extends User
 
   //Member Associations
   private Registration registration;
-  private Guide guide;
+  private Guide assignedGuide;
 
   //------------------------
   // CONSTRUCTOR
@@ -33,7 +33,7 @@ public class Member extends User
     durationOfExpedition = aDurationOfExpedition;
     withGuide = aWithGuide;
     withHotel = aWithHotel;
-    if (aRegistration == null || aRegistration.getMember() != null)
+    if (aRegistration == null || aRegistration.getAssociatedMember() != null)
     {
       throw new RuntimeException("Unable to create Member due to aRegistration. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
@@ -107,29 +107,29 @@ public class Member extends User
     return registration;
   }
   /* Code from template association_GetOne */
-  public Guide getGuide()
+  public Guide getAssignedGuide()
   {
-    return guide;
+    return assignedGuide;
   }
 
-  public boolean hasGuide()
+  public boolean hasAssignedGuide()
   {
-    boolean has = guide != null;
+    boolean has = assignedGuide != null;
     return has;
   }
   /* Code from template association_SetOptionalOneToMany */
-  public boolean setGuide(Guide aGuide)
+  public boolean setAssignedGuide(Guide aAssignedGuide)
   {
     boolean wasSet = false;
-    Guide existingGuide = guide;
-    guide = aGuide;
-    if (existingGuide != null && !existingGuide.equals(aGuide))
+    Guide existingAssignedGuide = assignedGuide;
+    assignedGuide = aAssignedGuide;
+    if (existingAssignedGuide != null && !existingAssignedGuide.equals(aAssignedGuide))
     {
-      existingGuide.removeMember(this);
+      existingAssignedGuide.removeAssignedMember(this);
     }
-    if (aGuide != null)
+    if (aAssignedGuide != null)
     {
-      aGuide.addMember(this);
+      aAssignedGuide.addAssignedMember(this);
     }
     wasSet = true;
     return wasSet;
@@ -143,11 +143,11 @@ public class Member extends User
     {
       existingRegistration.delete();
     }
-    if (guide != null)
+    if (assignedGuide != null)
     {
-      Guide placeholderGuide = guide;
-      this.guide = null;
-      placeholderGuide.removeMember(this);
+      Guide placeholderAssignedGuide = assignedGuide;
+      this.assignedGuide = null;
+      placeholderAssignedGuide.removeAssignedMember(this);
     }
     super.delete();
   }
@@ -160,6 +160,6 @@ public class Member extends User
             "withGuide" + ":" + getWithGuide()+ "," +
             "withHotel" + ":" + getWithHotel()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "registration = "+(getRegistration()!=null?Integer.toHexString(System.identityHashCode(getRegistration())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "guide = "+(getGuide()!=null?Integer.toHexString(System.identityHashCode(getGuide())):"null");
+            "  " + "assignedGuide = "+(getAssignedGuide()!=null?Integer.toHexString(System.identityHashCode(getAssignedGuide())):"null");
   }
 }

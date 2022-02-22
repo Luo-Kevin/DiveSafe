@@ -7,7 +7,7 @@ import java.util.*;
 import java.sql.Date;
 
 // line 99 "DiveSafe.ump"
-// line 259 "DiveSafe.ump"
+// line 275 "DiveSafe.ump"
 public class DiveSafe
 {
 
@@ -431,9 +431,9 @@ public class DiveSafe
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Registration addRegistration(int aTotalCost, DivingSeason aDivingSeason, Member aMember)
+  public Registration addRegistration(int aTotalCost, DivingSeason aDivingSeason, Member aAssociatedMember)
   {
-    return new Registration(aTotalCost, this, aDivingSeason, aMember);
+    return new Registration(aTotalCost, this, aDivingSeason, aAssociatedMember);
   }
 
   public boolean addRegistration(Registration aRegistration)
@@ -719,9 +719,9 @@ public class DiveSafe
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Bundle addBundle(int aPricePerWeek, double aDiscount, Equipment... allEquipment)
+  public Bundle addBundle(int aPricePerWeek, double aDiscount, Equipment... allPiece)
   {
-    return new Bundle(aPricePerWeek, aDiscount, this, allEquipment);
+    return new Bundle(aPricePerWeek, aDiscount, this, allPiece);
   }
 
   public boolean addBundle(Bundle aBundle)

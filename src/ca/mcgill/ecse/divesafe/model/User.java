@@ -6,7 +6,7 @@ package ca.mcgill.ecse.divesafe.model;
 
 // line 14 "DiveSafe.ump"
 // line 118 "DiveSafe.ump"
-// line 202 "DiveSafe.ump"
+// line 216 "DiveSafe.ump"
 public abstract class User extends ADProgramAccount
 {
 
@@ -33,7 +33,7 @@ public abstract class User extends ADProgramAccount
     boolean didAddDivingSeason = setDivingSeason(aDivingSeason);
     if (!didAddDivingSeason)
     {
-      throw new RuntimeException("Unable to create user due to divingSeason. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create userBase due to divingSeason. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
 
@@ -84,9 +84,9 @@ public abstract class User extends ADProgramAccount
     divingSeason = aDivingSeason;
     if (existingDivingSeason != null && !existingDivingSeason.equals(aDivingSeason))
     {
-      existingDivingSeason.removeUser(this);
+      existingDivingSeason.removeUserBase(this);
     }
-    divingSeason.addUser(this);
+    divingSeason.addUserBase(this);
     wasSet = true;
     return wasSet;
   }
@@ -97,7 +97,7 @@ public abstract class User extends ADProgramAccount
     this.divingSeason = null;
     if(placeholderDivingSeason != null)
     {
-      placeholderDivingSeason.removeUser(this);
+      placeholderDivingSeason.removeUserBase(this);
     }
     super.delete();
   }

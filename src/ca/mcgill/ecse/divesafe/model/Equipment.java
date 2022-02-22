@@ -6,8 +6,8 @@ package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
 // line 72 "DiveSafe.ump"
-// line 170 "DiveSafe.ump"
-// line 244 "DiveSafe.ump"
+// line 175 "DiveSafe.ump"
+// line 260 "DiveSafe.ump"
 public class Equipment
 {
 
@@ -20,9 +20,9 @@ public class Equipment
   private int pricePerWeek;
 
   //Equipment Associations
-  private List<Registration> registrations;
+  private List<Registration> equipmentRenters;
   private DiveSafe diveSafe;
-  private List<Bundle> bundles;
+  private List<Bundle> pack;
 
   //------------------------
   // CONSTRUCTOR
@@ -32,13 +32,13 @@ public class Equipment
   {
     weight = aWeight;
     pricePerWeek = aPricePerWeek;
-    registrations = new ArrayList<Registration>();
+    equipmentRenters = new ArrayList<Registration>();
     boolean didAddDiveSafe = setDiveSafe(aDiveSafe);
     if (!didAddDiveSafe)
     {
       throw new RuntimeException("Unable to create equipment due to diveSafe. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
-    bundles = new ArrayList<Bundle>();
+    pack = new ArrayList<Bundle>();
   }
 
   //------------------------
@@ -71,33 +71,33 @@ public class Equipment
     return pricePerWeek;
   }
   /* Code from template association_GetMany */
-  public Registration getRegistration(int index)
+  public Registration getEquipmentRenter(int index)
   {
-    Registration aRegistration = registrations.get(index);
-    return aRegistration;
+    Registration aEquipmentRenter = equipmentRenters.get(index);
+    return aEquipmentRenter;
   }
 
-  public List<Registration> getRegistrations()
+  public List<Registration> getEquipmentRenters()
   {
-    List<Registration> newRegistrations = Collections.unmodifiableList(registrations);
-    return newRegistrations;
+    List<Registration> newEquipmentRenters = Collections.unmodifiableList(equipmentRenters);
+    return newEquipmentRenters;
   }
 
-  public int numberOfRegistrations()
+  public int numberOfEquipmentRenters()
   {
-    int number = registrations.size();
+    int number = equipmentRenters.size();
     return number;
   }
 
-  public boolean hasRegistrations()
+  public boolean hasEquipmentRenters()
   {
-    boolean has = registrations.size() > 0;
+    boolean has = equipmentRenters.size() > 0;
     return has;
   }
 
-  public int indexOfRegistration(Registration aRegistration)
+  public int indexOfEquipmentRenter(Registration aEquipmentRenter)
   {
-    int index = registrations.indexOf(aRegistration);
+    int index = equipmentRenters.indexOf(aEquipmentRenter);
     return index;
   }
   /* Code from template association_GetOne */
@@ -106,114 +106,114 @@ public class Equipment
     return diveSafe;
   }
   /* Code from template association_GetMany */
-  public Bundle getBundle(int index)
+  public Bundle getPack(int index)
   {
-    Bundle aBundle = bundles.get(index);
-    return aBundle;
+    Bundle aPack = pack.get(index);
+    return aPack;
   }
 
-  public List<Bundle> getBundles()
+  public List<Bundle> getPack()
   {
-    List<Bundle> newBundles = Collections.unmodifiableList(bundles);
-    return newBundles;
+    List<Bundle> newPack = Collections.unmodifiableList(pack);
+    return newPack;
   }
 
-  public int numberOfBundles()
+  public int numberOfPack()
   {
-    int number = bundles.size();
+    int number = pack.size();
     return number;
   }
 
-  public boolean hasBundles()
+  public boolean hasPack()
   {
-    boolean has = bundles.size() > 0;
+    boolean has = pack.size() > 0;
     return has;
   }
 
-  public int indexOfBundle(Bundle aBundle)
+  public int indexOfPack(Bundle aPack)
   {
-    int index = bundles.indexOf(aBundle);
+    int index = pack.indexOf(aPack);
     return index;
   }
   /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfRegistrations()
+  public static int minimumNumberOfEquipmentRenters()
   {
     return 0;
   }
   /* Code from template association_AddManyToManyMethod */
-  public boolean addRegistration(Registration aRegistration)
+  public boolean addEquipmentRenter(Registration aEquipmentRenter)
   {
     boolean wasAdded = false;
-    if (registrations.contains(aRegistration)) { return false; }
-    registrations.add(aRegistration);
-    if (aRegistration.indexOfEquipment(this) != -1)
+    if (equipmentRenters.contains(aEquipmentRenter)) { return false; }
+    equipmentRenters.add(aEquipmentRenter);
+    if (aEquipmentRenter.indexOfRentedEquipment(this) != -1)
     {
       wasAdded = true;
     }
     else
     {
-      wasAdded = aRegistration.addEquipment(this);
+      wasAdded = aEquipmentRenter.addRentedEquipment(this);
       if (!wasAdded)
       {
-        registrations.remove(aRegistration);
+        equipmentRenters.remove(aEquipmentRenter);
       }
     }
     return wasAdded;
   }
   /* Code from template association_RemoveMany */
-  public boolean removeRegistration(Registration aRegistration)
+  public boolean removeEquipmentRenter(Registration aEquipmentRenter)
   {
     boolean wasRemoved = false;
-    if (!registrations.contains(aRegistration))
+    if (!equipmentRenters.contains(aEquipmentRenter))
     {
       return wasRemoved;
     }
 
-    int oldIndex = registrations.indexOf(aRegistration);
-    registrations.remove(oldIndex);
-    if (aRegistration.indexOfEquipment(this) == -1)
+    int oldIndex = equipmentRenters.indexOf(aEquipmentRenter);
+    equipmentRenters.remove(oldIndex);
+    if (aEquipmentRenter.indexOfRentedEquipment(this) == -1)
     {
       wasRemoved = true;
     }
     else
     {
-      wasRemoved = aRegistration.removeEquipment(this);
+      wasRemoved = aEquipmentRenter.removeRentedEquipment(this);
       if (!wasRemoved)
       {
-        registrations.add(oldIndex,aRegistration);
+        equipmentRenters.add(oldIndex,aEquipmentRenter);
       }
     }
     return wasRemoved;
   }
   /* Code from template association_AddIndexControlFunctions */
-  public boolean addRegistrationAt(Registration aRegistration, int index)
+  public boolean addEquipmentRenterAt(Registration aEquipmentRenter, int index)
   {  
     boolean wasAdded = false;
-    if(addRegistration(aRegistration))
+    if(addEquipmentRenter(aEquipmentRenter))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfRegistrations()) { index = numberOfRegistrations() - 1; }
-      registrations.remove(aRegistration);
-      registrations.add(index, aRegistration);
+      if(index > numberOfEquipmentRenters()) { index = numberOfEquipmentRenters() - 1; }
+      equipmentRenters.remove(aEquipmentRenter);
+      equipmentRenters.add(index, aEquipmentRenter);
       wasAdded = true;
     }
     return wasAdded;
   }
 
-  public boolean addOrMoveRegistrationAt(Registration aRegistration, int index)
+  public boolean addOrMoveEquipmentRenterAt(Registration aEquipmentRenter, int index)
   {
     boolean wasAdded = false;
-    if(registrations.contains(aRegistration))
+    if(equipmentRenters.contains(aEquipmentRenter))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfRegistrations()) { index = numberOfRegistrations() - 1; }
-      registrations.remove(aRegistration);
-      registrations.add(index, aRegistration);
+      if(index > numberOfEquipmentRenters()) { index = numberOfEquipmentRenters() - 1; }
+      equipmentRenters.remove(aEquipmentRenter);
+      equipmentRenters.add(index, aEquipmentRenter);
       wasAdded = true;
     } 
     else 
     {
-      wasAdded = addRegistrationAt(aRegistration, index);
+      wasAdded = addEquipmentRenterAt(aEquipmentRenter, index);
     }
     return wasAdded;
   }
@@ -237,95 +237,95 @@ public class Equipment
     return wasSet;
   }
   /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfBundles()
+  public static int minimumNumberOfPack()
   {
     return 0;
   }
   /* Code from template association_AddManyToManyMethod */
-  public boolean addBundle(Bundle aBundle)
+  public boolean addPack(Bundle aPack)
   {
     boolean wasAdded = false;
-    if (bundles.contains(aBundle)) { return false; }
-    bundles.add(aBundle);
-    if (aBundle.indexOfEquipment(this) != -1)
+    if (pack.contains(aPack)) { return false; }
+    pack.add(aPack);
+    if (aPack.indexOfPiece(this) != -1)
     {
       wasAdded = true;
     }
     else
     {
-      wasAdded = aBundle.addEquipment(this);
+      wasAdded = aPack.addPiece(this);
       if (!wasAdded)
       {
-        bundles.remove(aBundle);
+        pack.remove(aPack);
       }
     }
     return wasAdded;
   }
   /* Code from template association_RemoveMany */
-  public boolean removeBundle(Bundle aBundle)
+  public boolean removePack(Bundle aPack)
   {
     boolean wasRemoved = false;
-    if (!bundles.contains(aBundle))
+    if (!pack.contains(aPack))
     {
       return wasRemoved;
     }
 
-    int oldIndex = bundles.indexOf(aBundle);
-    bundles.remove(oldIndex);
-    if (aBundle.indexOfEquipment(this) == -1)
+    int oldIndex = pack.indexOf(aPack);
+    pack.remove(oldIndex);
+    if (aPack.indexOfPiece(this) == -1)
     {
       wasRemoved = true;
     }
     else
     {
-      wasRemoved = aBundle.removeEquipment(this);
+      wasRemoved = aPack.removePiece(this);
       if (!wasRemoved)
       {
-        bundles.add(oldIndex,aBundle);
+        pack.add(oldIndex,aPack);
       }
     }
     return wasRemoved;
   }
   /* Code from template association_AddIndexControlFunctions */
-  public boolean addBundleAt(Bundle aBundle, int index)
+  public boolean addPackAt(Bundle aPack, int index)
   {  
     boolean wasAdded = false;
-    if(addBundle(aBundle))
+    if(addPack(aPack))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfBundles()) { index = numberOfBundles() - 1; }
-      bundles.remove(aBundle);
-      bundles.add(index, aBundle);
+      if(index > numberOfPack()) { index = numberOfPack() - 1; }
+      pack.remove(aPack);
+      pack.add(index, aPack);
       wasAdded = true;
     }
     return wasAdded;
   }
 
-  public boolean addOrMoveBundleAt(Bundle aBundle, int index)
+  public boolean addOrMovePackAt(Bundle aPack, int index)
   {
     boolean wasAdded = false;
-    if(bundles.contains(aBundle))
+    if(pack.contains(aPack))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfBundles()) { index = numberOfBundles() - 1; }
-      bundles.remove(aBundle);
-      bundles.add(index, aBundle);
+      if(index > numberOfPack()) { index = numberOfPack() - 1; }
+      pack.remove(aPack);
+      pack.add(index, aPack);
       wasAdded = true;
     } 
     else 
     {
-      wasAdded = addBundleAt(aBundle, index);
+      wasAdded = addPackAt(aPack, index);
     }
     return wasAdded;
   }
 
   public void delete()
   {
-    ArrayList<Registration> copyOfRegistrations = new ArrayList<Registration>(registrations);
-    registrations.clear();
-    for(Registration aRegistration : copyOfRegistrations)
+    ArrayList<Registration> copyOfEquipmentRenters = new ArrayList<Registration>(equipmentRenters);
+    equipmentRenters.clear();
+    for(Registration aEquipmentRenter : copyOfEquipmentRenters)
     {
-      aRegistration.removeEquipment(this);
+      aEquipmentRenter.removeRentedEquipment(this);
     }
     DiveSafe placeholderDiveSafe = diveSafe;
     this.diveSafe = null;
@@ -333,17 +333,17 @@ public class Equipment
     {
       placeholderDiveSafe.removeEquipment(this);
     }
-    ArrayList<Bundle> copyOfBundles = new ArrayList<Bundle>(bundles);
-    bundles.clear();
-    for(Bundle aBundle : copyOfBundles)
+    ArrayList<Bundle> copyOfPack = new ArrayList<Bundle>(pack);
+    pack.clear();
+    for(Bundle aPack : copyOfPack)
     {
-      if (aBundle.numberOfEquipment() <= Bundle.minimumNumberOfEquipment())
+      if (aPack.numberOfPiece() <= Bundle.minimumNumberOfPiece())
       {
-        aBundle.delete();
+        aPack.delete();
       }
       else
       {
-        aBundle.removeEquipment(this);
+        aPack.removePiece(this);
       }
     }
   }

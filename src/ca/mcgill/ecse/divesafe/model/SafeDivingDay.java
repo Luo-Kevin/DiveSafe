@@ -6,8 +6,8 @@ package ca.mcgill.ecse.divesafe.model;
 import java.sql.Date;
 
 // line 55 "DiveSafe.ump"
-// line 158 "DiveSafe.ump"
-// line 231 "DiveSafe.ump"
+// line 162 "DiveSafe.ump"
+// line 247 "DiveSafe.ump"
 public class SafeDivingDay
 {
 
@@ -40,7 +40,7 @@ public class SafeDivingDay
     boolean didAddDivingSeason = setDivingSeason(aDivingSeason);
     if (!didAddDivingSeason)
     {
-      throw new RuntimeException("Unable to create safeDivingDay due to divingSeason. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create safeDivindDay due to divingSeason. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     boolean didAddRegistration = setRegistration(aRegistration);
     if (!didAddRegistration)
@@ -125,9 +125,9 @@ public class SafeDivingDay
     divingSeason = aDivingSeason;
     if (existingDivingSeason != null && !existingDivingSeason.equals(aDivingSeason))
     {
-      existingDivingSeason.removeSafeDivingDay(this);
+      existingDivingSeason.removeSafeDivindDay(this);
     }
-    divingSeason.addSafeDivingDay(this);
+    divingSeason.addSafeDivindDay(this);
     wasSet = true;
     return wasSet;
   }
@@ -163,7 +163,7 @@ public class SafeDivingDay
     this.divingSeason = null;
     if(placeholderDivingSeason != null)
     {
-      placeholderDivingSeason.removeSafeDivingDay(this);
+      placeholderDivingSeason.removeSafeDivindDay(this);
     }
     Registration placeholderRegistration = registration;
     this.registration = null;

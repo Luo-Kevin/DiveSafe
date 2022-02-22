@@ -6,7 +6,7 @@ package ca.mcgill.ecse.divesafe.model;
 
 // line 1 "DiveSafe.ump"
 // line 107 "DiveSafe.ump"
-// line 192 "DiveSafe.ump"
+// line 206 "DiveSafe.ump"
 public abstract class ADProgramAccount
 {
 

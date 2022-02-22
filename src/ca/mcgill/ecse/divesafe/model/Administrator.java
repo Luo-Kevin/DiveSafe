@@ -6,7 +6,7 @@ package ca.mcgill.ecse.divesafe.model;
 
 // line 9 "DiveSafe.ump"
 // line 113 "DiveSafe.ump"
-// line 197 "DiveSafe.ump"
+// line 211 "DiveSafe.ump"
 public class Administrator extends ADProgramAccount
 {
 
