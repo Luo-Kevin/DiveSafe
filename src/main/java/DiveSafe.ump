@@ -1,0 +1,114 @@
+namespace ca.mcgill.ecse.divesafe.model;
+
+class DiveSafe {
+  Date startDate;
+  Integer numDays;
+  Integer priceOfGuidePerDay;
+  1 <@>- 0..1 Administrator administrator;
+  1 <@>- * Guide guides;
+  1 <@>- * Member members;
+  1 <@>- * ItemBooking itemBookings;
+  1 <@>- * Equipment equipments;
+  1 <@>- * EquipmentBundle bundles;
+  1 <@>- * BundleItem bundleItems;
+  1 <@>- * Hotel hotels;
+  1 <@>- * Assignment assignments;
+}
+
+class User {
+  abstract;
+  unique email;
+  // In general, passwords must not be stored as plaintext strings for security reasons. We will do this for simplicity. 
+  password;
+}
+
+class Administrator {
+  isA User;
+}
+
+class NamedUser {
+  abstract;
+  isA User;
+  name;
+  emergencyContact;
+}
+
+class Guide {
+  isA NamedUser;
+  
+  public static Guide getWithEmail(String email) {
+    if (User.getWithEmail(email) instanceof Guide guide) {
+      return guide;
+    }
+    return null;
+  }
+  
+  public static boolean hasWithEmail(String email) {
+    return getWithEmail(email) != null;
+  }
+}
+
+class Member {
+  isA NamedUser;
+  Integer numDays;
+  Boolean guideRequired;
+  Boolean hotelRequired;
+  
+  public static Member getWithEmail(String email) {
+    if (User.getWithEmail(email) instanceof Member member) {
+      return member;
+    }
+    return null;
+  }
+  
+  public static boolean hasWithEmail(String email) {
+    return getWithEmail(email) != null;
+  }
+}
+
+associationClass ItemBooking {
+  Integer quantity;
+  * Member member;
+  * Item item;
+}
+
+class Item {
+  abstract;
+  unique name;
+}
+
+class Equipment {
+  isA Item;
+  Integer weight;
+  Integer pricePerDay;
+}
+
+class EquipmentBundle {
+  isA Item;
+  Integer discount;
+}
+
+associationClass BundleItem {
+  Integer quantity;
+  * EquipmentBundle bundle;
+  * Equipment equipment;
+}
+
+class Hotel {
+  enum HotelType { Villa, Resort, Hostel }
+  unique name;
+  address;
+  Integer rating;
+  HotelType type;
+} 
+
+class Assignment {
+  Integer startDay;
+  Integer endDay;
+  0..1 -- 1 Member member;
+  * -- 0..1 Guide guide;
+  * -- 0..1 Hotel hotel;
+}
+
+// Generate transfer objects at the very end in another namespace
+use DiveSafeTransferObjects.ump;
