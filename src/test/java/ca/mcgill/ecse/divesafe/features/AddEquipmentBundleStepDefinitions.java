@@ -23,29 +23,36 @@ public class AddEquipmentBundleStepDefinitions {
    * @author Siger Ma
    */
   @Given("the following DiveSafe system exists: \\(p2)")
-  public void the_following_dive_safe_system_exists_p2(io.cucumber.datatable.DataTable dataTable) {
+  public void the_following_dive_safe_system_exists_p2 (io.cucumber.datatable.DataTable dataTable) {
 
     List<Map<String, String>> rows = dataTable.asMaps();
     
     Date aStartDate = (Date) Date.valueOf(rows.get(0).get("startDate"));
     int aNumDays = Integer.parseInt(rows.get(0).get("numDays"));
     int aPriceOfGuidePerDay = Integer.parseInt(rows.get(0).get("priceOfGuidePerDay"));
-    
+
     divesafe = new DiveSafe(aStartDate, aNumDays, aPriceOfGuidePerDay);
     
   }
 
+  /**
+   * @author Siger Ma
+   */
   @Given("the following equipment exists in the system: \\(p2)")
-  public void the_following_equipment_exists_in_the_system_p2(
-      io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+  public void the_following_equipment_exists_in_the_system_p2 (io.cucumber.datatable.DataTable dataTable) {
+
+    List<Map<String, String>> rows = dataTable.asMaps();
+
+    for (var row:rows) {
+      
+      String aName = row.get("name");
+      int aWeight = Integer.parseInt(row.get("weight"));
+      int aPricePerDay = Integer.parseInt(row.get("pricePerDay"));
+
+      divesafe.addEquipment(aName, aWeight, aPricePerDay);
+
+    }
+
   }
 
   @When("the administrator attempts to add an equipment bundle with name {string}, discount {string}, items {string}, and quantities {string} \\(p2)")
