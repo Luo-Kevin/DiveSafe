@@ -8,6 +8,10 @@ import io.cucumber.java.en.When;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
 
 public class AddEquipmentBundleStepDefinitions {
@@ -15,16 +19,20 @@ public class AddEquipmentBundleStepDefinitions {
   // Instance Variables
   private DiveSafe divesafe;
   
+  /**
+   * @author Siger Ma
+   */
   @Given("the following DiveSafe system exists: \\(p2)")
   public void the_following_dive_safe_system_exists_p2(io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+
+    List<Map<String, String>> rows = dataTable.asMaps();
+    
+    Date aStartDate = (Date) Date.valueOf(rows.get(0).get("startDate"));
+    int aNumDays = Integer.parseInt(rows.get(0).get("numDays"));
+    int aPriceOfGuidePerDay = Integer.parseInt(rows.get(0).get("priceOfGuidePerDay"));
+    
+    divesafe = new DiveSafe(aStartDate, aNumDays, aPriceOfGuidePerDay);
+    
   }
 
   @Given("the following equipment exists in the system: \\(p2)")
