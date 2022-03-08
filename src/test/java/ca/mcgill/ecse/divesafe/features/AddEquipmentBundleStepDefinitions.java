@@ -9,10 +9,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
+import org.checkerframework.checker.units.qual.C;
+
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
+import ca.mcgill.ecse.divesafe.model.Equipment;
+import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
+import ca.mcgill.ecse.divesafe.model.Item;
 
 public class AddEquipmentBundleStepDefinitions {
 
@@ -93,17 +97,37 @@ public class AddEquipmentBundleStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
 
+  /**
+   * @author Siger Ma
+   */
   @Given("the following equipment bundles exist in the system: \\(p2)")
-  public void the_following_equipment_bundles_exist_in_the_system_p2(
-      io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+  public void the_following_equipment_bundles_exist_in_the_system_p2 (io.cucumber.datatable.DataTable dataTable) {
+
+    List<Map<String, String>> rows = dataTable.asMaps();
+    
+    // Create bundle
+
+    String aName = rows.get(0).get("name");
+    int aDiscount = Integer.parseInt(rows.get(0).get("discount"));
+    
+    EquipmentBundle aBundle = divesafe.addBundle(aName, aDiscount);
+
+    // Fill bundle
+
+    String Items = rows.get(0).get("items");
+    String Quantities = rows.get(0).get("quantities");
+    String[] EquipmentArrayToAdd = Items.split(",");
+    String[] QuantityArray = Quantities.split(",");
+
+    for (int i = 0; i < EquipmentArrayToAdd.length; i++) {
+
+      Equipment aEquipment = (Equipment) Item.getWithName(EquipmentArrayToAdd[i]);
+      int aQuantity = Integer.parseInt(QuantityArray[i]);
+
+      divesafe.addBundleItem(aQuantity, aBundle, aEquipment);
+
+    }
+
   }
 
   /**
