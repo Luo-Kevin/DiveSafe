@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse.divesafe.controller;
 
-// line 3 "../../../../../DiveSafeTransferObjects.ump"
+// line 3 "../../../../../../DiveSafeTransferObjects.ump"
 public class TOAssignment
 {
 

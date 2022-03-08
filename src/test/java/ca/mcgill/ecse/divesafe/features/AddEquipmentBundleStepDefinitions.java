@@ -1,10 +1,20 @@
 package ca.mcgill.ecse.divesafe.features;
 
+import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import ca.mcgill.ecse.divesafe.model.DiveSafe;
+
 public class AddEquipmentBundleStepDefinitions {
+
+  // Instance Variables
+  private DiveSafe divesafe;
+  
   @Given("the following DiveSafe system exists: \\(p2)")
   public void the_following_dive_safe_system_exists_p2(io.cucumber.datatable.DataTable dataTable) {
     // Write code here that turns the phrase above into concrete actions
@@ -80,4 +90,13 @@ public class AddEquipmentBundleStepDefinitions {
     // For other transformations you can register a DataTableType.
     throw new io.cucumber.java.PendingException();
   }
+
+  /**
+   * @author Siger Ma
+   */
+  @After
+  public void tearDown() {
+  divesafe.delete();
+  }
+  
 }
