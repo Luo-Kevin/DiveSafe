@@ -21,11 +21,13 @@ public class AddEquipmentBundleStepDefinitions {
   // Instance Variables
   private DiveSafe divesafe;
   private String error;
+
   /**
    * @author Siger Ma
    */
+
   @Given("the following DiveSafe system exists: \\(p2)")
-  public void the_following_dive_safe_system_exists_p2 (io.cucumber.datatable.DataTable dataTable) {
+  public void the_following_dive_safe_system_exists_p2(io.cucumber.datatable.DataTable dataTable) {
 
     List<Map<String, String>> rows = dataTable.asMaps();
 
@@ -34,20 +36,21 @@ public class AddEquipmentBundleStepDefinitions {
     int aPriceOfGuidePerDay = Integer.parseInt(rows.get(0).get("priceOfGuidePerDay"));
 
     divesafe = new DiveSafe(aStartDate, aNumDays, aPriceOfGuidePerDay);
-    error = ""; //Ask question !!!
+    error = ""; // Ask question !!!
 
   }
 
   /**
    * @author Siger Ma
    */
+
   @Given("the following equipment exists in the system: \\(p2)")
-  public void the_following_equipment_exists_in_the_system_p2 (io.cucumber.datatable.DataTable dataTable) {
+  public void the_following_equipment_exists_in_the_system_p2(io.cucumber.datatable.DataTable dataTable) {
 
     List<Map<String, String>> rows = dataTable.asMaps();
 
-    for (var row:rows) {
-      
+    for (var row : rows) {
+
       String aName = row.get("name");
       int aWeight = Integer.parseInt(row.get("weight"));
       int aPricePerDay = Integer.parseInt(row.get("pricePerDay"));
@@ -57,22 +60,29 @@ public class AddEquipmentBundleStepDefinitions {
     }
 
   }
+
   /**
    * @author Eric Joung
    */
+
   @When("the administrator attempts to add an equipment bundle with name {string}, discount {string}, items {string}, and quantities {string} \\(p2)")
   public void the_administrator_attempts_to_add_an_equipment_bundle_with_name_discount_items_and_quantities_p2(
       String string, String string2, String string3, String string4) {
+
     // Convert items(string3) to an arraylist<String> itemList
     List<String> itemList = new ArrayList<String>(Arrays.asList(string3.split(",")));
+
     // Convert quantities(string4) to an arraylist<Integer> quantitiesList
     String[] quantitiesAsArray = string4.split(",");
     List<Integer> quantitiesList = new ArrayList<Integer>();
+
     for (int i = 0; i < quantitiesAsArray.length; i++) {
       Integer quantitiesAsInt = Integer.valueOf(quantitiesAsArray[i]);
       quantitiesList.add(quantitiesAsInt);
     }
+
     BundleController.addEquipmentBundle(string, Integer.parseInt(string2), itemList, quantitiesList);
+
   }
 
   /**
@@ -82,7 +92,6 @@ public class AddEquipmentBundleStepDefinitions {
   @Then("the number of equipment bundles in the system shall be {string} \\(p2)")
   public void the_number_of_equipment_bundles_in_the_system_shall_be_p2(String numberOfBundles) {
     assertEquals(Integer.parseInt(numberOfBundles), divesafe.getBundles().size());
-
   }
 
   /**
@@ -97,10 +106,10 @@ public class AddEquipmentBundleStepDefinitions {
   /**
    * @author Kevin Luo
    */
+
   @Then("the equipment bundle {string} shall contain the items {string} with quantities {string} \\(p2)")
-  public void the_equipment_bundle_shall_contain_the_items_with_quantities_p2(String bundleName,
-      String bundleItems, String equipmentQuantities) {
-    // Write code here that turns the phrase above into concrete actions
+  public void the_equipment_bundle_shall_contain_the_items_with_quantities_p2(String bundleName, String bundleItems,
+      String equipmentQuantities) {
 
     assertEquals(bundleItems.split(","), divesafe.getBundle(0).getBundleItems());
 
@@ -116,6 +125,7 @@ public class AddEquipmentBundleStepDefinitions {
     }
 
     assertEquals(equipmentQuantities, quantityItem);
+
   }
 
   /**
@@ -142,15 +152,15 @@ public class AddEquipmentBundleStepDefinitions {
    */
 
   @Given("the following equipment bundles exist in the system: \\(p2)")
-  public void the_following_equipment_bundles_exist_in_the_system_p2 (io.cucumber.datatable.DataTable dataTable) {
+  public void the_following_equipment_bundles_exist_in_the_system_p2(io.cucumber.datatable.DataTable dataTable) {
 
     List<Map<String, String>> rows = dataTable.asMaps();
-    
+
     // Create bundle
 
     String aName = rows.get(0).get("name");
     int aDiscount = Integer.parseInt(rows.get(0).get("discount"));
-    
+
     EquipmentBundle aBundle = divesafe.addBundle(aName, aDiscount);
 
     // Fill bundle
@@ -174,11 +184,12 @@ public class AddEquipmentBundleStepDefinitions {
   /**
    * @author Siger Ma
    */
+
   @After
   public void tearDown() {
     divesafe.delete();
   }
 
-    //callController method??
+  // callController method??
 
 }
