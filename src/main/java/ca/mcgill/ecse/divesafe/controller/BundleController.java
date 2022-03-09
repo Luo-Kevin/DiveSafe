@@ -15,6 +15,20 @@ public class BundleController {
 
   public static String addEquipmentBundle(String name, int discount, List<String> equipmentNames, List<Integer> equipmentQuantities) {
     
+    var error = "";
+      
+    if(discount < 0) {
+      error = "The discount must be greater than zero. "; 
+    }
+
+    if(discount > 100) {
+      error = "The discount must be less than one hundred. ";
+    }
+
+    if(!error.isEmpty()) {
+      return error.trim();
+    }
+
     // Create bundle by SM
     EquipmentBundle aBundle = divesafe.addBundle(name, discount);
 
