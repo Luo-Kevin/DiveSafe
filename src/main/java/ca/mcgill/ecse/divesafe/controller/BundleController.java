@@ -1,6 +1,7 @@
 package ca.mcgill.ecse.divesafe.controller;
 
-import java.util.List;
+import java.util.*;
+
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
 import ca.mcgill.ecse.divesafe.model.Equipment;
@@ -74,11 +75,13 @@ public class BundleController {
         divesafe.addBundleItem(aQuantity, aBundle, aEquipment);
       }
 
+      return error;
+
     } catch (Exception e) {
       return e.getMessage();
     }
     
-    return error;
+    
   }
 
   public static String updateEquipmentBundle(String oldName, String newName, int newDiscount,

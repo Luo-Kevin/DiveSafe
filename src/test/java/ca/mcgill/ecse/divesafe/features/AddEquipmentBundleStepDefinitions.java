@@ -11,8 +11,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.sql.Date;
 import java.util.*;
 import ca.mcgill.ecse.divesafe.controller.BundleController;
+import ca.mcgill.ecse.divesafe.model.BundleItem;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
+import ca.mcgill.ecse.divesafe.model.Equipment;
 import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
+import ca.mcgill.ecse.divesafe.model.Item;
 
 public class AddEquipmentBundleStepDefinitions {
 
@@ -102,30 +105,28 @@ public class AddEquipmentBundleStepDefinitions {
   }
 
   /**
-   * @author Kevin Luo
+   * @author Kevin Luo, Siger Ma
    */
 
   @Then("the equipment bundle {string} shall contain the items {string} with quantities {string} \\(p2)")
-  public void the_equipment_bundle_shall_contain_the_items_with_quantities_p2(String bundleName, String bundleItems,
-      String equipmentQuantities) {
-        
-    EquipmentBundle bundle = (EquipmentBundle) EquipmentBundle.getWithName(bundleName);
-    List<String> bundleItemsList = new ArrayList<String>(Arrays.asList(bundleItems.split(",")));
-    assertEquals(bundleItemsList, bundle.getBundleItems()); // not sure, what if items in different order, good way to compare lists?
-     
+  public void the_equipment_bundle_shall_contain_the_items_with_quantities_p2(String bundleName, String bundleItems, String equipmentQuantities) {
 
-    var equipmentInBundle =  bundle.getBundleItems();
-    var totalTypeItem = equipmentInBundle.size();
-    var quantityItem = "";
+    EquipmentBundle actualBundle = (EquipmentBundle) EquipmentBundle.getWithName(bundleName);
+    List<BundleItem> actualBundleItemsList = actualBundle.getBundleItems();
+    String actualBundleItems = "";
+    String actualEquipmentQuantities = "";
 
-    for (int i = 0; i < totalTypeItem; i++) {
-      quantityItem += bundle.getBundleItem(i).getQuantity();
-      if (i != totalTypeItem - 1) {
-        quantityItem += ",";
+    for (int i = 0; i < actualBundleItemsList.size(); i++) {
+      actualBundleItems = actualBundleItems + actualBundleItemsList.get(i).getEquipment().getName();
+      actualEquipmentQuantities = actualEquipmentQuantities + String.valueOf(actualBundleItemsList.get(i).getQuantity());
+      if (i < actualBundleItemsList.size() - 1) {
+        actualBundleItems = actualBundleItems + ",";
+        actualEquipmentQuantities = actualEquipmentQuantities + ",";
       }
     }
 
-    assertEquals(equipmentQuantities, quantityItem);
+    assertEquals(bundleItems, actualBundleItems);
+    assertEquals(equipmentQuantities, actualEquipmentQuantities);
 
   }
 
