@@ -91,7 +91,7 @@ public class AddEquipmentBundleStepDefinitions {
 
   @Then("the number of equipment bundles in the system shall be {string} \\(p2)")
   public void the_number_of_equipment_bundles_in_the_system_shall_be_p2(String numberOfBundles) {
-    assertEquals(Integer.parseInt(numberOfBundles), divesafe.getBundles().size());
+    assertEquals(Integer.parseInt(numberOfBundles), divesafe.numberOfBundles());
   }
 
   /**
@@ -110,6 +110,8 @@ public class AddEquipmentBundleStepDefinitions {
   @Then("the equipment bundle {string} shall contain the items {string} with quantities {string} \\(p2)")
   public void the_equipment_bundle_shall_contain_the_items_with_quantities_p2(String bundleName, String bundleItems,
       String equipmentQuantities) {
+
+
 
     assertEquals(bundleItems.split(","), divesafe.getBundle(0).getBundleItems());
 
@@ -156,21 +158,28 @@ public class AddEquipmentBundleStepDefinitions {
 
     List<Map<String, String>> rows = dataTable.asMaps();
 
-    // Get variables
+    // Create bundle
+
     String aName = rows.get(0).get("name");
     int aDiscount = Integer.parseInt(rows.get(0).get("discount"));
-    String items = rows.get(0).get("items");
-    String quantities = rows.get(0).get("quantities");
-    List<String> equipmentList = new ArrayList<String>(Arrays.asList(items.split(",")));
-    String[] quantityArray = quantities.split(",");
-    List<Integer> quantityList = new ArrayList<Integer>();
-    for (int i = 0; i < quantityArray.length; i++) {
-      Integer aQuantity = Integer.valueOf(quantityArray[i]);
-      quantityList.add(aQuantity);
-    }
 
-    // Create bundle
-    BundleController.addEquipmentBundle(aName, aDiscount, equipmentList, quantityList);
+    EquipmentBundle aBundle = divesafe.addBundle(aName, aDiscount);
+
+    // Fill bundle
+
+    String Items = rows.get(0).get("items");
+    String Quantities = rows.get(0).get("quantities");
+    String[] EquipmentArrayToAdd = Items.split(",");
+    String[] QuantityArray = Quantities.split(",");
+
+    for (int i = 0; i < EquipmentArrayToAdd.length; i++) {
+
+      Equipment aEquipment = (Equipment) Item.getWithName(EquipmentArrayToAdd[i]);
+      int aQuantity = Integer.parseInt(QuantityArray[i]);
+
+      divesafe.addBundleItem(aQuantity, aBundle, aEquipment);
+
+    }
 
   }
 

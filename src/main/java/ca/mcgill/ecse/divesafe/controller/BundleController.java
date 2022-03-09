@@ -1,6 +1,7 @@
 package ca.mcgill.ecse.divesafe.controller;
 
 import java.util.List;
+import org.checkerframework.checker.units.qual.A;
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
 import ca.mcgill.ecse.divesafe.model.Equipment;
@@ -70,7 +71,7 @@ public class BundleController {
 
         Equipment aEquipment = (Equipment) Item.getWithName(equipmentNames.get(i));
         int aQuantity = equipmentQuantities.get(i);
-
+          
         divesafe.addBundleItem(aQuantity, aBundle, aEquipment);
       }
 
