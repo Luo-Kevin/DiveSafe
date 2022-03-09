@@ -12,3 +12,4 @@ bin
 
 #Ignore VSCode settings
 .vscode
+.DS_Store
