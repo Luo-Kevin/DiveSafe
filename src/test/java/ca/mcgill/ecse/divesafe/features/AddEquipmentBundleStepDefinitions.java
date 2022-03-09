@@ -12,9 +12,7 @@ import java.sql.Date;
 import java.util.*;
 import ca.mcgill.ecse.divesafe.controller.BundleController;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
-import ca.mcgill.ecse.divesafe.model.Equipment;
 import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
-import ca.mcgill.ecse.divesafe.model.Item;
 
 public class AddEquipmentBundleStepDefinitions {
 
@@ -91,7 +89,7 @@ public class AddEquipmentBundleStepDefinitions {
 
   @Then("the number of equipment bundles in the system shall be {string} \\(p2)")
   public void the_number_of_equipment_bundles_in_the_system_shall_be_p2(String numberOfBundles) {
-    assertEquals(Integer.parseInt(numberOfBundles), divesafe.getBundles().size());
+    assertEquals(Integer.parseInt(numberOfBundles), divesafe.numberOfBundles());
   }
 
   /**
@@ -100,8 +98,7 @@ public class AddEquipmentBundleStepDefinitions {
 
   @Then("the equipment bundle {string} shall exist in the system \\(p2)")
   public void the_equipment_bundle_shall_exist_in_the_system_p2(String bundleName) {
-    EquipmentBundle bundle = (EquipmentBundle) EquipmentBundle.getWithName(bundleName);
-    assertEquals(bundleName, bundle);
+    assertTrue(EquipmentBundle.hasWithName(bundleName));
   }
 
   /**
@@ -112,8 +109,9 @@ public class AddEquipmentBundleStepDefinitions {
   public void the_equipment_bundle_shall_contain_the_items_with_quantities_p2(String bundleName, String bundleItems,
       String equipmentQuantities) {
         
-      EquipmentBundle bundle = (EquipmentBundle) EquipmentBundle.getWithName(bundleName);
-      assertEquals(bundleItems.split(","), bundle.getBundleItems());
+    EquipmentBundle bundle = (EquipmentBundle) EquipmentBundle.getWithName(bundleName);
+    List<String> bundleItemsList = new ArrayList<String>(Arrays.asList(bundleItems.split(",")));
+    assertEquals(bundleItemsList, bundle.getBundleItems()); // not sure, what if items in different order, good way to compare lists?
      
 
     var equipmentInBundle =  bundle.getBundleItems();
@@ -138,8 +136,7 @@ public class AddEquipmentBundleStepDefinitions {
   @Then("the equipment bundle {string} shall have a discount of {string} \\(p2)")
   public void the_equipment_bundle_shall_have_a_discount_of_p2(String bundleName, String bundleDiscount) {
     EquipmentBundle bundle = (EquipmentBundle) EquipmentBundle.getWithName(bundleName);
-    assertEquals(bundleName, bundle);
-    assertEquals(bundleDiscount, bundle.getDiscount());
+    assertEquals(Integer.parseInt(bundleDiscount), bundle.getDiscount());
   }
 
   /**
