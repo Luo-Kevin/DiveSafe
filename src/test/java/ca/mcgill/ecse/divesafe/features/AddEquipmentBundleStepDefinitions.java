@@ -83,7 +83,7 @@ public class AddEquipmentBundleStepDefinitions {
       quantitiesList.add(quantitiesAsInt);
     }
 
-    BundleController.addEquipmentBundle(bundleName, Integer.parseInt(bundleDiscount), itemList, quantitiesList);
+    error = BundleController.addEquipmentBundle(bundleName, Integer.parseInt(bundleDiscount), itemList, quantitiesList);
 
   }
 

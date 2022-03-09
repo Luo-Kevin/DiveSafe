@@ -32,19 +32,19 @@ public class BundleController {
     // Constraints JZ and KL
     
     if (discount < 0) {
-      error = "The discount must be greater than zero. ";
+      error = "Discount must be at least 0";
     }
 
     if (discount > 100) {
-      error = "The discount must be less than one hundred. ";
+      error = "Discount must be no more than 100";
     }
 
     if (equipmentQuantities.size() <= 0) {
-      error = "The number quantity of items must be greater than zero. ";
+      error = "Each bundle item must have quantity greater than or equal to 1";
     }
 
     if (equipmentNames.size() <= 1) {
-      error = "A bundle must contain at least two different kinds of equipment. ";
+      error = "Equipment bundle must contain at least two distinct types of equipment";
     } else {
       String firstEquipmentName = equipmentNames.get(0);
       for(int i = 0; i < equipmentNames.size(); i++){
@@ -52,13 +52,13 @@ public class BundleController {
           error = "";
           break;
         } else {
-          error = "A bundle must contain at least two different kinds of equipment. ";
+          error = "Equipment bundle must contain at least two distinct types of equipment";
         }
       }
     }
 
     if (!error.isEmpty()) {
-      return error.trim();
+      return error;
     }
 
     try {
