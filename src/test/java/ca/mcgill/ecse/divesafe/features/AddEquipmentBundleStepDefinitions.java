@@ -10,9 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Date;
 import java.util.*;
-
-import org.checkerframework.checker.units.qual.C;
-
+import ca.mcgill.ecse.divesafe.controller.BundleController;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
 import ca.mcgill.ecse.divesafe.model.Equipment;
 import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
@@ -58,12 +56,26 @@ public class AddEquipmentBundleStepDefinitions {
     }
 
   }
-
+  /**
+   * @author Eric Joung
+   * @param string
+   * @param string2
+   * @param string3
+   * @param string4
+   */
   @When("the administrator attempts to add an equipment bundle with name {string}, discount {string}, items {string}, and quantities {string} \\(p2)")
   public void the_administrator_attempts_to_add_an_equipment_bundle_with_name_discount_items_and_quantities_p2(
       String string, String string2, String string3, String string4) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    // Convert items(string3) to an arraylist<String> itemList
+    List<String> itemList = new ArrayList<String>(Arrays.asList(string3.split(",")));
+    // Convert quantities(string4) to an arraylist<Integer> quantitiesList
+    String[] quantitiesAsArray = string4.split(",");
+    List<Integer> quantitiesList = new ArrayList<Integer>();
+    for (int i = 0; i < quantitiesAsArray.length; i++) {
+      Integer quantitiesAsInt = Integer.valueOf(quantitiesAsArray[i]);
+      quantitiesList.add(quantitiesAsInt);
+    }
+    BundleController.addEquipmentBundle(string, Integer.parseInt(string2), itemList, quantitiesList);
   }
 
   @Then("the number of equipment bundles in the system shall be {string} \\(p2)")
