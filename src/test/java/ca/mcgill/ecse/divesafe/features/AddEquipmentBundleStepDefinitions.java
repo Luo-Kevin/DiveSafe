@@ -67,13 +67,13 @@ public class AddEquipmentBundleStepDefinitions {
 
   @When("the administrator attempts to add an equipment bundle with name {string}, discount {string}, items {string}, and quantities {string} \\(p2)")
   public void the_administrator_attempts_to_add_an_equipment_bundle_with_name_discount_items_and_quantities_p2(
-      String string, String string2, String string3, String string4) {
+      String bundleName, String bundleDiscount, String bundleItem, String itemQuantities) {
 
-    // Convert items(string3) to an arraylist<String> itemList
-    List<String> itemList = new ArrayList<String>(Arrays.asList(string3.split(",")));
+    // Convert items(bundleItem) to an arraylist<String> itemList
+    List<String> itemList = new ArrayList<String>(Arrays.asList(bundleItem.split(",")));
 
-    // Convert quantities(string4) to an arraylist<Integer> quantitiesList
-    String[] quantitiesAsArray = string4.split(",");
+    // Convert quantities(itemQuantities) to an arraylist<Integer> quantitiesList
+    String[] quantitiesAsArray = itemQuantities.split(",");
     List<Integer> quantitiesList = new ArrayList<Integer>();
 
     for (int i = 0; i < quantitiesAsArray.length; i++) {
@@ -81,7 +81,7 @@ public class AddEquipmentBundleStepDefinitions {
       quantitiesList.add(quantitiesAsInt);
     }
 
-    BundleController.addEquipmentBundle(string, Integer.parseInt(string2), itemList, quantitiesList);
+    BundleController.addEquipmentBundle(bundleName, Integer.parseInt(bundleDiscount), itemList, quantitiesList);
 
   }
 
