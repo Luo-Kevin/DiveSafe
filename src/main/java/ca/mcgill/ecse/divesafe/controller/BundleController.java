@@ -8,7 +8,7 @@ import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
 import ca.mcgill.ecse.divesafe.model.Item;
 
 public class BundleController {
- 
+
   // Instance variables
   private static DiveSafe divesafe = DiveSafeApplication.getDiveSafe();
 
@@ -22,48 +22,63 @@ public class BundleController {
    * @return String
    */
 
-  public static String addEquipmentBundle(String name, int discount, List<String> equipmentNames, List<Integer> equipmentQuantities) {
+  public static String addEquipmentBundle(String name, int discount, List<String> equipmentNames,
+      List<Integer> equipmentQuantities) {
 
 
+// Constraints JZ and KL
     var error = "";
-      
-    if(discount < 0) {
-      error = "The discount must be greater than zero. "; 
+
+    if (discount < 0) {
+      error = "The discount must be greater than zero. ";
     }
 
-    if(discount > 100) {
+    if (discount > 100) {
       error = "The discount must be less than one hundred. ";
     }
 
-    if(equipmentQuantities.size() <= 0){
-             error = "The number of a route must be greater than zero. ";
-           }
+    if (equipmentQuantities.size() <= 0) {
+      error = "The number quantity of items must be greater than zero. ";
+    }
 
-    if(!error.isEmpty()) {
+    if (equipmentNames.size() <= 1) {
+      error = "A bundle must contain at least two different kinds of equipment. ";
+    } else {
+      String firstEquipmentName = equipmentNames.get(0);
+      for(int i = 0; i < equipmentNames.size(); i++){
+        if(!(equipmentNames.get(i).equals(firstEquipmentName))) { 
+          error = "";
+          break;
+        } else {
+          error = "A bundle must contain at least two different kinds of equipment. ";
+        }
+      }
+    }
+
+    if (!error.isEmpty()) {
       return error.trim();
     }
 
     try {
-      //TO REVIEW!
+      // TO REVIEW!
 
       // Create bundle by SM
       EquipmentBundle aBundle = divesafe.addBundle(name, discount);
 
       // Add bundle items by SM
       for (int i = 0; i < equipmentNames.size(); i++) {
-  
+
         Equipment aEquipment = (Equipment) Item.getWithName(equipmentNames.get(i));
         int aQuantity = equipmentQuantities.get(i);
-  
+
         divesafe.addBundleItem(aQuantity, aBundle, aEquipment);
       }
-      
+
     } catch (Exception e) {
       return e.getMessage();
     }
-
-
-    return "";
+    
+    return error;
   }
 
   public static String updateEquipmentBundle(String oldName, String newName, int newDiscount,
@@ -73,3 +88,4 @@ public class BundleController {
 
   public static void deleteEquipmentBundle(String name) {}
 }
+
