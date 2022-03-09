@@ -43,6 +43,10 @@ public class BundleController {
       error = "The number quantity of items must be greater than zero. ";
     }
 
+    if(name.isBlank()) {
+      error = "Equipment bundle name cannot be empty";
+    }
+
     if (equipmentNames.size() <= 1) {
       error = "A bundle must contain at least two different kinds of equipment. ";
     } else {
@@ -57,6 +61,12 @@ public class BundleController {
       }
     }
 
+    for(String equipment: equipmentNames){
+      if(!(Item.hasWithName(equipment))){
+        error = String.format("Equipment %s does not exist", name);
+      }
+   
+      
     if (!error.isEmpty()) {
       return error.trim();
     }
