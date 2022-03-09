@@ -5,12 +5,15 @@
 # Ignore Gradle build output directory
 build
 
-#Ignore Eclipse-specific files
+# Ignore Eclipse-specific files
 .classpath
 .project
 .settings
 bin
 
-#Ignore VSCode settings
+# Ignore VSCode settings
 .vscode
 *.DS_Store
+
+# Ignore IntelliJ settings
+.idea

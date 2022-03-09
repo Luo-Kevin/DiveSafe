@@ -21,4 +21,17 @@ public class DiveSafeApplication {
     
     return diveSafe;
   }
+
+  /**
+   * This is the setter to create a new Dive Safe season in the application.
+   * 
+   * @author Siger Ma
+   * @param aStartDate - Start date of the season
+   * @param aNumDays - Duration of the season
+   * @param aPriceOfGuidePerDay - Price of a guide for the season
+   */
+
+  public static void setDiveSafe(Date aStartDate, int aNumDays, int aPriceOfGuidePerDay) {
+    diveSafe = new DiveSafe(aStartDate, aNumDays, aPriceOfGuidePerDay);
+  }
 }

@@ -10,12 +10,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Date;
 import java.util.*;
+
+import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.controller.BundleController;
 import ca.mcgill.ecse.divesafe.model.BundleItem;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
-import ca.mcgill.ecse.divesafe.model.Equipment;
 import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
-import ca.mcgill.ecse.divesafe.model.Item;
 
 public class AddEquipmentBundleStepDefinitions {
 
@@ -36,7 +36,8 @@ public class AddEquipmentBundleStepDefinitions {
     int aNumDays = Integer.parseInt(rows.get(0).get("numDays"));
     int aPriceOfGuidePerDay = Integer.parseInt(rows.get(0).get("priceOfGuidePerDay"));
 
-    divesafe = new DiveSafe(aStartDate, aNumDays, aPriceOfGuidePerDay);
+    DiveSafeApplication.setDiveSafe(aStartDate, aNumDays, aPriceOfGuidePerDay);
+    divesafe = DiveSafeApplication.getDiveSafe();
     error = ""; // Ask question !!!
 
   }

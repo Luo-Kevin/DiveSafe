@@ -20,15 +20,13 @@ public class BundleController {
    * @param discount - Discount applied on the bundle
    * @param equipmentNames - Name of the equipments in the bundle
    * @param equipmentQuantities - Quantities of item in the bundle
-   * @return String
+   * @return String - Nothing if no errors or error message if there is one
    */
 
-  public static String addEquipmentBundle(String name, int discount, List<String> equipmentNames,
-      List<Integer> equipmentQuantities) {
+  public static String addEquipmentBundle(String name, int discount, List<String> equipmentNames, List<Integer> equipmentQuantities) {
 
-
-// Constraints JZ and KL
-    var error = "";
+    // Constraints JZ and KL
+    String error = "";
 
     if (discount < 0) {
       error = "The discount must be greater than zero. ";
@@ -80,7 +78,6 @@ public class BundleController {
     } catch (Exception e) {
       return e.getMessage();
     }
-    
     
   }
 
