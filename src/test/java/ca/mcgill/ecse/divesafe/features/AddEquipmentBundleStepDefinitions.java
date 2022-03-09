@@ -11,14 +11,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
+import java.util.ArrayList;
+import ca.mcgill.ecse.divesafe.model.Administrator;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
 
 public class AddEquipmentBundleStepDefinitions {
 
   // Instance Variables
   private DiveSafe divesafe;
-  
+
   /**
    * @author Siger Ma
    */
@@ -26,13 +27,13 @@ public class AddEquipmentBundleStepDefinitions {
   public void the_following_dive_safe_system_exists_p2(io.cucumber.datatable.DataTable dataTable) {
 
     List<Map<String, String>> rows = dataTable.asMaps();
-    
+
     Date aStartDate = (Date) Date.valueOf(rows.get(0).get("startDate"));
     int aNumDays = Integer.parseInt(rows.get(0).get("numDays"));
     int aPriceOfGuidePerDay = Integer.parseInt(rows.get(0).get("priceOfGuidePerDay"));
-    
+
     divesafe = new DiveSafe(aStartDate, aNumDays, aPriceOfGuidePerDay);
-    
+
   }
 
   @Given("the following equipment exists in the system: \\(p2)")
@@ -52,13 +53,19 @@ public class AddEquipmentBundleStepDefinitions {
   public void the_administrator_attempts_to_add_an_equipment_bundle_with_name_discount_items_and_quantities_p2(
       String string, String string2, String string3, String string4) {
     // Write code here that turns the phrase above into concrete actions
+
     throw new io.cucumber.java.PendingException();
   }
 
   @Then("the number of equipment bundles in the system shall be {string} \\(p2)")
-  public void the_number_of_equipment_bundles_in_the_system_shall_be_p2(String string) {
+  public void the_number_of_equipment_bundles_in_the_system_shall_be_p2(String numberOfBundles) {
     // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+
+    /**
+     * @author Kevin Luo
+     */
+    assertEquals(Integer.parseInt(numberOfBundles), divesafe.getBundles().size());
+
   }
 
   @Then("the equipment bundle {string} shall exist in the system \\(p2)")
@@ -68,10 +75,28 @@ public class AddEquipmentBundleStepDefinitions {
   }
 
   @Then("the equipment bundle {string} shall contain the items {string} with quantities {string} \\(p2)")
-  public void the_equipment_bundle_shall_contain_the_items_with_quantities_p2(String string,
-      String string2, String string3) {
+  public void the_equipment_bundle_shall_contain_the_items_with_quantities_p2(String bundleName,
+      /**
+       * @author Kevin Luo
+       */
+      String bundleItems, String equipmentQuantities) {
     // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+
+    assertEquals(bundleItems.split(","), divesafe.getBundle(0).getBundleItems());
+
+    var equipmentInBundle = divesafe.getBundle(0);
+    var totalTypeItem = equipmentInBundle.getBundleItems().size();
+    var quantityItem = "";
+
+    for (int i = 0; i < totalTypeItem; i++) {
+      quantityItem += equipmentInBundle.getBundleItem(i).getQuantity();
+      if (i != totalTypeItem - 1) {
+        quantityItem += ",";
+      }
+    }
+
+    assertEquals(equipmentQuantities, quantityItem);
+
   }
 
   @Then("the equipment bundle {string} shall have a discount of {string} \\(p2)")
@@ -83,6 +108,8 @@ public class AddEquipmentBundleStepDefinitions {
   @Then("the error {string} shall be raised \\(p2)")
   public void the_error_shall_be_raised_p2(String string) {
     // Write code here that turns the phrase above into concrete actions
+
+
     throw new io.cucumber.java.PendingException();
   }
 
@@ -104,7 +131,7 @@ public class AddEquipmentBundleStepDefinitions {
    */
   @After
   public void tearDown() {
-  divesafe.delete();
+    divesafe.delete();
   }
-  
+
 }
