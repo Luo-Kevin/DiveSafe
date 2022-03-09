@@ -11,7 +11,7 @@ import ca.mcgill.ecse.divesafe.model.Item;
 public class BundleController {
 
   // Instance variables
-  private static DiveSafe divesafe = DiveSafeApplication.getDiveSafe();
+  private static DiveSafe divesafe;
 
   /**
    * 
@@ -25,9 +25,12 @@ public class BundleController {
 
   public static String addEquipmentBundle(String name, int discount, List<String> equipmentNames, List<Integer> equipmentQuantities) {
 
-    // Constraints JZ and KL
+    // Variables
+    divesafe = DiveSafeApplication.getDiveSafe();
     String error = "";
-
+    
+    // Constraints JZ and KL
+    
     if (discount < 0) {
       error = "The discount must be greater than zero. ";
     }
