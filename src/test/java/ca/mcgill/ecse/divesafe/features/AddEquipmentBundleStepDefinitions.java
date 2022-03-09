@@ -156,28 +156,21 @@ public class AddEquipmentBundleStepDefinitions {
 
     List<Map<String, String>> rows = dataTable.asMaps();
 
-    // Create bundle
-
+    // Get variables
     String aName = rows.get(0).get("name");
     int aDiscount = Integer.parseInt(rows.get(0).get("discount"));
-
-    EquipmentBundle aBundle = divesafe.addBundle(aName, aDiscount);
-
-    // Fill bundle
-
-    String Items = rows.get(0).get("items");
-    String Quantities = rows.get(0).get("quantities");
-    String[] EquipmentArrayToAdd = Items.split(",");
-    String[] QuantityArray = Quantities.split(",");
-
-    for (int i = 0; i < EquipmentArrayToAdd.length; i++) {
-
-      Equipment aEquipment = (Equipment) Item.getWithName(EquipmentArrayToAdd[i]);
-      int aQuantity = Integer.parseInt(QuantityArray[i]);
-
-      divesafe.addBundleItem(aQuantity, aBundle, aEquipment);
-
+    String items = rows.get(0).get("items");
+    String quantities = rows.get(0).get("quantities");
+    List<String> equipmentList = new ArrayList<String>(Arrays.asList(items.split(",")));
+    String[] quantityArray = quantities.split(",");
+    List<Integer> quantityList = new ArrayList<Integer>();
+    for (int i = 0; i < quantityArray.length; i++) {
+      Integer aQuantity = Integer.valueOf(quantityArray[i]);
+      quantityList.add(aQuantity);
     }
+
+    // Create bundle
+    BundleController.addEquipmentBundle(aName, aDiscount, equipmentList, quantityList);
 
   }
 
