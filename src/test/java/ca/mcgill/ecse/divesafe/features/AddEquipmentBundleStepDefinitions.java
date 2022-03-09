@@ -100,7 +100,8 @@ public class AddEquipmentBundleStepDefinitions {
 
   @Then("the equipment bundle {string} shall exist in the system \\(p2)")
   public void the_equipment_bundle_shall_exist_in_the_system_p2(String bundleName) {
-    assertEquals(bundleName, divesafe.getBundle(0));
+    EquipmentBundle bundle = (EquipmentBundle) EquipmentBundle.getWithName(bundleName);
+    assertEquals(bundleName, bundle);
   }
 
   /**
@@ -112,15 +113,15 @@ public class AddEquipmentBundleStepDefinitions {
       String equipmentQuantities) {
 
 
+    EquipmentBundle bundle = (EquipmentBundle) EquipmentBundle.getWithName(bundleName);
+    assertEquals(bundleItems.split(","), bundle.getBundleItems());
 
-    assertEquals(bundleItems.split(","), divesafe.getBundle(0).getBundleItems());
-
-    var equipmentInBundle = divesafe.getBundle(0);
-    var totalTypeItem = equipmentInBundle.getBundleItems().size();
+    var equipmentInBundle =  bundle.getBundleItems();
+    var totalTypeItem = equipmentInBundle.size();
     var quantityItem = "";
 
     for (int i = 0; i < totalTypeItem; i++) {
-      quantityItem += equipmentInBundle.getBundleItem(i).getQuantity();
+      quantityItem += bundle.getBundleItem(i).getQuantity();
       if (i != totalTypeItem - 1) {
         quantityItem += ",";
       }
@@ -136,8 +137,9 @@ public class AddEquipmentBundleStepDefinitions {
 
   @Then("the equipment bundle {string} shall have a discount of {string} \\(p2)")
   public void the_equipment_bundle_shall_have_a_discount_of_p2(String bundleName, String bundleDiscount) {
-    assertEquals(bundleName, divesafe.getBundle(0));
-    assertEquals(bundleDiscount, divesafe.getBundle(0).getDiscount());
+    EquipmentBundle bundle = (EquipmentBundle) EquipmentBundle.getWithName(bundleName);
+    assertEquals(bundleName, bundle);
+    assertEquals(bundleDiscount, bundle.getDiscount());
   }
 
   /**
