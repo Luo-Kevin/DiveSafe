@@ -30,6 +30,7 @@ public class BundleController {
     divesafe = DiveSafeApplication.getDiveSafe();
     String error = "";
 
+    // Might be better implementation(?) 03/09 10pm
     // Constraints JZ and KL
     if (equipmentNames.size() <= 1) {
       error = "Equipment bundle must contain at least two distinct types of equipment";
@@ -81,10 +82,21 @@ public class BundleController {
       }
     }
 
-    // Constraints KL
+    // Constraint to check for duplicates EJ
+    List<EquipmentBundle> equipmentBundles = divesafe.getBundles();
+    for (EquipmentBundle bundle : equipmentBundles) {
+      if (name.equals(bundle.getName())) {
+        error = String.format("A bookable item called %s already exists", name);
+        break;
+      }
+    }
+
+    // If error return KL
     if (!error.isEmpty()) {
       return error;
     }
+
+
 
     // Try-catch KL
     try {
