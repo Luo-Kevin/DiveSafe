@@ -79,13 +79,13 @@ public class AddEquipmentBundleStepDefinitions {
     List<Integer> quantitiesList = new ArrayList<Integer>();
 
     try {
-    for (int i = 0; i < quantitiesAsArray.length; i++) {
-      Integer quantitiesAsInt = Integer.valueOf(quantitiesAsArray[i]);
-      quantitiesList.add(quantitiesAsInt);
-    }
-    } catch(NumberFormatException ex) {
-
+      for (int i = 0; i < quantitiesAsArray.length; i++) {
+        Integer quantitiesAsInt = Integer.valueOf(quantitiesAsArray[i]);
+        quantitiesList.add(quantitiesAsInt);
       }
+    } catch (NumberFormatException ex) {
+
+    }
 
     error = BundleController.addEquipmentBundle(bundleName, Integer.parseInt(bundleDiscount), itemList, quantitiesList);
 
@@ -114,7 +114,8 @@ public class AddEquipmentBundleStepDefinitions {
    */
 
   @Then("the equipment bundle {string} shall contain the items {string} with quantities {string} \\(p2)")
-  public void the_equipment_bundle_shall_contain_the_items_with_quantities_p2(String bundleName, String bundleItems, String equipmentQuantities) {
+  public void the_equipment_bundle_shall_contain_the_items_with_quantities_p2(String bundleName, String bundleItems,
+      String equipmentQuantities) {
 
     EquipmentBundle actualBundle = (EquipmentBundle) EquipmentBundle.getWithName(bundleName);
     List<BundleItem> actualBundleItemsList = actualBundle.getBundleItems();
@@ -123,7 +124,8 @@ public class AddEquipmentBundleStepDefinitions {
 
     for (int i = 0; i < actualBundleItemsList.size(); i++) {
       actualBundleItems = actualBundleItems + actualBundleItemsList.get(i).getEquipment().getName();
-      actualEquipmentQuantities = actualEquipmentQuantities + String.valueOf(actualBundleItemsList.get(i).getQuantity());
+      actualEquipmentQuantities = actualEquipmentQuantities
+          + String.valueOf(actualBundleItemsList.get(i).getQuantity());
       if (i < actualBundleItemsList.size() - 1) {
         actualBundleItems = actualBundleItems + ",";
         actualEquipmentQuantities = actualEquipmentQuantities + ",";
