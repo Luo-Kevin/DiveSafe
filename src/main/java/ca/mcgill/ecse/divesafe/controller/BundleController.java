@@ -43,6 +43,7 @@ public class BundleController {
       error = "Each bundle item must have quantity greater than or equal to 1";
     }
 
+    //Does not work
     if(name.isBlank() || name == null){
       error = "Equipment bundle name cannot be empty";
     }
