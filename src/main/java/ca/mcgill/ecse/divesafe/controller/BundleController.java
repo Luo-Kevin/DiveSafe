@@ -15,7 +15,7 @@ public class BundleController {
 
   /**
    * 
-   * @author Jiahao Zhao, Siger Ma, Kevin Luo
+   * @author Jiahao Zhao, Siger Ma, Kevin Luo, Eric Joung
    * @param name                - Name of the bundle
    * @param discount            - Discount applied on the bundle
    * @param equipmentNames      - Name of the equipments in the bundle
@@ -84,8 +84,18 @@ public class BundleController {
 
     // Constraint to check for duplicates EJ
     List<EquipmentBundle> equipmentBundles = divesafe.getBundles();
+    List<Equipment> itemNames = divesafe.getEquipments();
+
     for (EquipmentBundle bundle : equipmentBundles) {
       if (name.equals(bundle.getName())) {
+        error = String.format("A bookable item called %s already exists", name);
+        break;
+      }
+    }
+
+    // Constraint JZ and KL
+    for(Equipment equipment : itemNames) {
+      if (name.equals(equipment.getName())) {
         error = String.format("A bookable item called %s already exists", name);
         break;
       }
