@@ -32,23 +32,23 @@ public class BundleController {
     // Constraints JZ and KL
     
     if (discount < 0) {
-      error = "The discount must be greater than zero. ";
+      error = "Discount must be at least 0";
     }
 
     if (discount > 100) {
-      error = "The discount must be less than one hundred. ";
+      error = "Discount must be no more than 100";
     }
 
     if (equipmentQuantities.size() <= 0) {
-      error = "The number quantity of items must be greater than zero. ";
+      error = "Each bundle item must have quantity greater than or equal to 1";
     }
 
-    if(name.isBlank()) {
+    if(name.isBlank() || name == null){
       error = "Equipment bundle name cannot be empty";
     }
 
     if (equipmentNames.size() <= 1) {
-      error = "A bundle must contain at least two different kinds of equipment. ";
+      error = "Equipment bundle must contain at least two distinct types of equipment";
     } else {
       String firstEquipmentName = equipmentNames.get(0);
       for(int i = 0; i < equipmentNames.size(); i++){
@@ -56,19 +56,20 @@ public class BundleController {
           error = "";
           break;
         } else {
-          error = "A bundle must contain at least two different kinds of equipment. ";
+          error = "Equipment bundle must contain at least two distinct types of equipment";
         }
       }
     }
 
     for(String equipment: equipmentNames){
       if(!(Item.hasWithName(equipment))){
-        error = String.format("Equipment %s does not exist", name);
+        error = String.format("Equipment %s does not exist", equipment);
+        break;
       }
-   
+    }
       
     if (!error.isEmpty()) {
-      return error.trim();
+      return error;
     }
 
     try {
@@ -91,6 +92,7 @@ public class BundleController {
     } catch (Exception e) {
       return e.getMessage();
     }
+  
     
   }
 
