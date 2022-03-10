@@ -30,9 +30,9 @@ public class BundleController {
     String error = "";
     
     // Constraints JZ and KL
-    
     if (equipmentNames.size() <= 1) {
       error = "Equipment bundle must contain at least two distinct types of equipment";
+      return error;
     } else {
       String firstEquipmentName = equipmentNames.get(0);
       for(int i = 0; i < equipmentNames.size(); i++){
@@ -45,14 +45,17 @@ public class BundleController {
       }
     }
     
+    // Constraints JZ
     if (discount < 0) {
       error = "Discount must be at least 0";
     }
 
+    // Constraints JZ
     if (discount > 100) {
       error = "Discount must be no more than 100";
     }
 
+    // Constraints SM and KL
     if (equipmentQuantities.size() <= 0) {
       error = "Each bundle item must have quantity greater than or equal to 1";
     } else {
@@ -64,11 +67,12 @@ public class BundleController {
       }
     }
 
-    //Does not work
+    // Constraints KL
     if(name.isBlank() || name == null){
       error = "Equipment bundle name cannot be empty";
     }
 
+    // Constraints KL
     for(String equipment: equipmentNames){
       if(!(Item.hasWithName(equipment))){
         error = String.format("Equipment %s does not exist", equipment);
@@ -76,13 +80,13 @@ public class BundleController {
       }
     }
       
+    // Constraints KL
     if (!error.isEmpty()) {
       return error;
     }
 
+    // Try-catch KL
     try {
-      // TO REVIEW!
-
       // Create bundle by SM
       EquipmentBundle aBundle = divesafe.addBundle(name, discount);
 
