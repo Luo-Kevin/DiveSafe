@@ -31,6 +31,20 @@ public class BundleController {
     
     // Constraints JZ and KL
     
+    if (equipmentNames.size() <= 1) {
+      error = "Equipment bundle must contain at least two distinct types of equipment";
+    } else {
+      String firstEquipmentName = equipmentNames.get(0);
+      for(int i = 0; i < equipmentNames.size(); i++){
+        if(!(equipmentNames.get(i).equals(firstEquipmentName))) { 
+          error = "";
+          break;
+        } else {
+          error = "Equipment bundle must contain at least two distinct types of equipment";
+        }
+      }
+    }
+    
     if (discount < 0) {
       error = "Discount must be at least 0";
     }
@@ -53,20 +67,6 @@ public class BundleController {
     //Does not work
     if(name.isBlank() || name == null){
       error = "Equipment bundle name cannot be empty";
-    }
-
-    if (equipmentNames.size() <= 1) {
-      error = "Equipment bundle must contain at least two distinct types of equipment";
-    } else {
-      String firstEquipmentName = equipmentNames.get(0);
-      for(int i = 0; i < equipmentNames.size(); i++){
-        if(!(equipmentNames.get(i).equals(firstEquipmentName))) { 
-          error = "";
-          break;
-        } else {
-          error = "Equipment bundle must contain at least two distinct types of equipment";
-        }
-      }
     }
 
     for(String equipment: equipmentNames){
