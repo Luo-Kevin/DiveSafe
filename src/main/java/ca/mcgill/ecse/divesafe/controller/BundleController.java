@@ -37,7 +37,7 @@ public class BundleController {
       return error;
     } else {
       String firstEquipmentName = equipmentNames.get(0);
-      for (int i = 0; i < equipmentNames.size(); i++) {
+      for (int i = 1; i < equipmentNames.size(); i++) {
         if (!(equipmentNames.get(i).equals(firstEquipmentName))) {
           error = "";
           break;
