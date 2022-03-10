@@ -41,6 +41,13 @@ public class BundleController {
 
     if (equipmentQuantities.size() <= 0) {
       error = "Each bundle item must have quantity greater than or equal to 1";
+    } else {
+      for (Integer quantity:equipmentQuantities) {
+        if (quantity < 1) {
+          error = "Each bundle item must have quantity greater than or equal to 1";
+          break;
+        }
+      }
     }
 
     if (equipmentNames.size() <= 1) {
