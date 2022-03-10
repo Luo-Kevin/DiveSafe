@@ -198,7 +198,7 @@ public class DiveSafe
     return aEquipment;
   }
 
-  public List<Equipment> getEquipments()
+  public boolean getEquipments()
   {
     List<Equipment> newEquipments = Collections.unmodifiableList(equipments);
     return newEquipments;

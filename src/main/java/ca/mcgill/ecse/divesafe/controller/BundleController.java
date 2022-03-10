@@ -50,6 +50,11 @@ public class BundleController {
       }
     }
 
+    //Does not work
+    if(name.isBlank() || name == null){
+      error = "Equipment bundle name cannot be empty";
+    }
+
     if (equipmentNames.size() <= 1) {
       error = "Equipment bundle must contain at least two distinct types of equipment";
     } else {
@@ -64,6 +69,13 @@ public class BundleController {
       }
     }
 
+    for(String equipment: equipmentNames){
+      if(!(Item.hasWithName(equipment))){
+        error = String.format("Equipment %s does not exist", equipment);
+        break;
+      }
+    }
+      
     if (!error.isEmpty()) {
       return error;
     }
@@ -88,6 +100,7 @@ public class BundleController {
     } catch (Exception e) {
       return e.getMessage();
     }
+  
     
   }
 

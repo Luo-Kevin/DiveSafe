@@ -78,10 +78,14 @@ public class AddEquipmentBundleStepDefinitions {
     String[] quantitiesAsArray = itemQuantities.split(",");
     List<Integer> quantitiesList = new ArrayList<Integer>();
 
+    try {
     for (int i = 0; i < quantitiesAsArray.length; i++) {
       Integer quantitiesAsInt = Integer.valueOf(quantitiesAsArray[i]);
       quantitiesList.add(quantitiesAsInt);
     }
+    } catch(NumberFormatException ex) {
+
+      }
 
     error = BundleController.addEquipmentBundle(bundleName, Integer.parseInt(bundleDiscount), itemList, quantitiesList);
 
