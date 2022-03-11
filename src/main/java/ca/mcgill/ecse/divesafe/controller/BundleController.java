@@ -34,7 +34,6 @@ public class BundleController {
     // Constraint 1 :   (by JZ and KL)
     if (equipmentNames.size() <= 1) {
       error = "Equipment bundle must contain at least two distinct types of equipment";
-      return error;
     } else {
       String firstEquipmentName = equipmentNames.get(0);
       for (int i = 1; i < equipmentNames.size(); i++) {
@@ -58,7 +57,8 @@ public class BundleController {
     }
 
     // Constraints SM and KL
-    if (equipmentQuantities.size() <= 0) {
+    // Taking into consideration that if (equipmentNames.size <= 1) it is another error
+    if ((equipmentQuantities.size() <= 0) && (equipmentNames.size() > 1)) {
       error = "Each bundle item must have quantity greater than or equal to 1";
     } else {
       for (Integer quantity : equipmentQuantities) {
@@ -75,17 +75,19 @@ public class BundleController {
     }
 
     // Constraints KL
-    for (String equipment : equipmentNames) {
-      if (!(Item.hasWithName(equipment))) {
-        error = String.format("Equipment %s does not exist", equipment);
-        break;
+    // Taking into consideration that if (equipmentNames.size <= 1) it is another error
+    if (equipmentNames.size() > 1) {
+      for (String equipment : equipmentNames) {
+        if (!(Item.hasWithName(equipment))) {
+          error = String.format("Equipment %s does not exist", equipment);
+          break;
+        }
       }
     }
 
     // Constraint to check for duplicates EJ
     List<EquipmentBundle> equipmentBundles = divesafe.getBundles();
     List<Equipment> itemNames = divesafe.getEquipments();
-
     for (EquipmentBundle bundle : equipmentBundles) {
       if (name.equals(bundle.getName())) {
         error = String.format("A bookable item called %s already exists", name);
@@ -93,23 +95,18 @@ public class BundleController {
       }
     }
 
-  
-
-
-     //Constraint JZ and KL
-    for(Equipment equipment : itemNames) {
-       if (name.equals(equipment.getName())) {
-         error = String.format("A bookable item called %s already exists", name);
-         break;
-       }
-     }
+    // Constraint JZ and KL
+    for (Equipment equipment : itemNames) {
+      if (name.equals(equipment.getName())) {
+        error = String.format("A bookable item called %s already exists", name);
+        break;
+      }
+    }
 
     // If error return KL
     if (!error.isEmpty()) {
       return error;
     }
-
-
 
     // Try-catch KL
     try {

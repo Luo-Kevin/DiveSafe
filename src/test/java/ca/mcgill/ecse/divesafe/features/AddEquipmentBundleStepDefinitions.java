@@ -153,7 +153,7 @@ public class AddEquipmentBundleStepDefinitions {
 
   @Then("the error {string} shall be raised \\(p2)")
   public void the_error_shall_be_raised_p2(String errorMsg) {
-    assertTrue(error.contains(errorMsg));
+    assertEquals(errorMsg, error);
   }
 
   /**
