@@ -14,13 +14,13 @@ public class BundleController {
   private static DiveSafe divesafe;
 
   /**
-   * 
-   * @author Jiahao Zhao, Siger Ma, Kevin Luo, Eric Joung
+   * addEquipmentBundle : A method to verify if all constraints are respected before adding a bundle 
+   * @author Jiahao Zhao, Siger Ma, Kevin Luo, Eric Joung, Zahra Landou
    * @param name                - Name of the bundle
    * @param discount            - Discount applied on the bundle
    * @param equipmentNames      - Name of the equipments in the bundle
    * @param equipmentQuantities - Quantities of item in the bundle
-   * @return String - Nothing if no errors or error message if there is one
+   * @return String error - Nothing if no errors encountered or error message if there is one
    */
 
   public static String addEquipmentBundle(String name, int discount, List<String> equipmentNames,
@@ -30,13 +30,13 @@ public class BundleController {
     divesafe = DiveSafeApplication.getDiveSafe();
     String error = "";
 
-    // Might be better implementation(?) 03/09 10pm
-    // Constraint 1 :   (by JZ and KL)
+    // Constraint 1 : equiments in bundle must be of at least two distinct types  (done by JZ and KL)
     if (equipmentNames.size() <= 1) {
       error = "Equipment bundle must contain at least two distinct types of equipment";
     } else {
       String firstEquipmentName = equipmentNames.get(0);
       for (int i = 1; i < equipmentNames.size(); i++) {
+        //check if the first equipment's name matches  name of another equipment in the list
         if (!(equipmentNames.get(i).equals(firstEquipmentName))) {
           error = "";
           break;
@@ -51,12 +51,11 @@ public class BundleController {
       error = "Discount must be at least 0";
     }
 
-    // Constraints JZ
     if (discount > 100) {
       error = "Discount must be no more than 100";
     }
 
-    // Constraints SM and KL
+    // Constraint 3: Bundle items' quantity must be at least 1 (done by SM and KL)
     // Taking into consideration that if (equipmentNames.size <= 1) it is another error
     if ((equipmentQuantities.size() <= 0) && (equipmentNames.size() > 1)) {
       error = "Each bundle item must have quantity greater than or equal to 1";
@@ -69,12 +68,12 @@ public class BundleController {
       }
     }
 
-    // Constraints KL
+    // Constraint 4: Invalid name for bundle (done by KL)
     if (name.isBlank() || name == null) {
       error = "Equipment bundle name cannot be empty";
     }
 
-    // Constraints KL
+    // Constraint 5: Invalid equipment  (done by KL)
     // Taking into consideration that if (equipmentNames.size <= 1) it is another error
     if (equipmentNames.size() > 1) {
       for (String equipment : equipmentNames) {
@@ -85,7 +84,7 @@ public class BundleController {
       }
     }
 
-    // Constraint to check for duplicates EJ
+    // Constraint 6 : Check for duplicates (done by EJ)
     List<EquipmentBundle> equipmentBundles = divesafe.getBundles();
     List<Equipment> itemNames = divesafe.getEquipments();
     for (EquipmentBundle bundle : equipmentBundles) {
