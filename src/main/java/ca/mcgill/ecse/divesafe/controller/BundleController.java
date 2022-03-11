@@ -84,7 +84,7 @@ public class BundleController {
       }
     }
 
-    // Constraint 6 : Check for duplicates (done by EJ)
+    // Constraint 6 : bundles' name has to be distinct   (done by EJ)
     List<EquipmentBundle> equipmentBundles = divesafe.getBundles();
     List<Equipment> itemNames = divesafe.getEquipments();
     for (EquipmentBundle bundle : equipmentBundles) {
@@ -94,7 +94,7 @@ public class BundleController {
       }
     }
 
-    // Constraint JZ and KL
+    // Constraint 7 : bundle's name must be distinct from equipment's name (done by JZ and KL)
     for (Equipment equipment : itemNames) {
       if (name.equals(equipment.getName())) {
         error = String.format("A bookable item called %s already exists", name);
@@ -102,17 +102,17 @@ public class BundleController {
       }
     }
 
-    // If error return KL
+    // If error return (by KL)
     if (!error.isEmpty()) {
       return error;
     }
 
-    // Try-catch KL
+    // Try-catch (by KL)
     try {
-      // Create bundle by SM
+      // Create bundle (by SM)
       EquipmentBundle aBundle = divesafe.addBundle(name, discount);
 
-      // Add bundle items by SM
+      // Add bundle items (by SM)
       for (int i = 0; i < equipmentNames.size(); i++) {
 
         Equipment aEquipment = (Equipment) Item.getWithName(equipmentNames.get(i));
@@ -128,12 +128,23 @@ public class BundleController {
     }
 
   }
-
+/**
+ * updateEquipmentBundle : A method to update a bundle (not yet implemented)
+ * @param oldName - actual name of the bundle
+ * @param newName - bundle's new name
+ * @param newDiscount - bundle's new discount
+ * @param newEquipmentNames -bundle's new list of equipments
+ * @param newEquipmentQuantities - bundle new equipments' quantities
+ * @return null
+ */
   public static String updateEquipmentBundle(String oldName, String newName, int newDiscount,
       List<String> newEquipmentNames, List<Integer> newEquipmentQuantities) {
     return null;
   }
-
+/**
+ * deleteEquipmentBundle : A method to delete a bundle (not yet implemented)
+ * @param name - bundle's name
+ */
   public static void deleteEquipmentBundle(String name) {
   }
 }
