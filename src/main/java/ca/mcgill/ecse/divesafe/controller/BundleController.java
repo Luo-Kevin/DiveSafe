@@ -31,7 +31,7 @@ public class BundleController {
     String error = "";
 
     // Might be better implementation(?) 03/09 10pm
-    // Constraints JZ and KL
+    // Constraint 1 :   (by JZ and KL)
     if (equipmentNames.size() <= 1) {
       error = "Equipment bundle must contain at least two distinct types of equipment";
       return error;
@@ -47,7 +47,7 @@ public class BundleController {
       }
     }
 
-    // Constraints JZ
+    // Constraint 2 : Check if discount is in the range (0,100) (done by JZ )
     if (discount < 0) {
       error = "Discount must be at least 0";
     }
@@ -93,13 +93,16 @@ public class BundleController {
       }
     }
 
-    // Constraint JZ and KL
+  
+
+
+     //Constraint JZ and KL
     for(Equipment equipment : itemNames) {
-      if (name.equals(equipment.getName())) {
-        error = String.format("A bookable item called %s already exists", name);
-        break;
-      }
-    }
+       if (name.equals(equipment.getName())) {
+         error = String.format("A bookable item called %s already exists", name);
+         break;
+       }
+     }
 
     // If error return KL
     if (!error.isEmpty()) {
