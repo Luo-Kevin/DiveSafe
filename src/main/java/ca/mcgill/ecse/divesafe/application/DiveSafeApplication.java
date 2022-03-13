@@ -23,7 +23,7 @@ public class DiveSafeApplication {
   }
 
   /**
-   * This is the setter to create a new Dive Safe season in the application.
+   * This is the setter to create a new Dive Safe season in the application with the required parameters.
    * 
    * @author Siger Ma
    * @param aStartDate - Start date of the season

@@ -14,13 +14,17 @@ public class BundleController {
   private static DiveSafe divesafe;
 
   /**
-   * addEquipmentBundle : A method to verify if all constraints are respected before adding a bundle 
+   * Controller method to create a bundle with its bundle items and add it to the
+   * instance of Dive Safe in the application. Before doing so, the method catches
+   * errors from constraints, invalid inputs and duplicates.
+   * 
    * @author Jiahao Zhao, Siger Ma, Kevin Luo, Eric Joung, Zahra Landou
    * @param name                - Name of the bundle
    * @param discount            - Discount applied on the bundle
    * @param equipmentNames      - Name of the equipments in the bundle
-   * @param equipmentQuantities - Quantities of item in the bundle
-   * @return String error - Nothing if no errors encountered or error message if there is one
+   * @param equipmentQuantities - Quantities of bundle items in the bundle
+   * @return String error - Empty if no errors encountered or error message if
+   *         there is one
    */
 
   public static String addEquipmentBundle(String name, int discount, List<String> equipmentNames,
@@ -30,13 +34,15 @@ public class BundleController {
     divesafe = DiveSafeApplication.getDiveSafe();
     String error = "";
 
-    // Constraint 1 : equiments in bundle must be of at least two distinct types  (done by JZ and KL)
+    // Constraint 1 : equiments in bundle must be of at least two distinct types
+    // (done by JZ and KL)
     if (equipmentNames.size() <= 1) {
       error = "Equipment bundle must contain at least two distinct types of equipment";
     } else {
       String firstEquipmentName = equipmentNames.get(0);
       for (int i = 1; i < equipmentNames.size(); i++) {
-        //check if the first equipment's name matches  name of another equipment in the list
+        // check if the first equipment's name matches name of another equipment in the
+        // list
         if (!(equipmentNames.get(i).equals(firstEquipmentName))) {
           error = "";
           break;
@@ -56,7 +62,8 @@ public class BundleController {
     }
 
     // Constraint 3: Bundle items' quantity must be at least 1 (done by SM and KL)
-    // Taking into consideration that if (equipmentNames.size <= 1) it is another error
+    // Taking into consideration that if (equipmentNames.size <= 1) it is another
+    // error
     if ((equipmentQuantities.size() <= 0) && (equipmentNames.size() > 1)) {
       error = "Each bundle item must have quantity greater than or equal to 1";
     } else {
@@ -73,8 +80,9 @@ public class BundleController {
       error = "Equipment bundle name cannot be empty";
     }
 
-    // Constraint 5: Invalid equipment  (done by KL)
-    // Taking into consideration that if (equipmentNames.size <= 1) it is another error
+    // Constraint 5: Invalid equipment (done by KL)
+    // Taking into consideration that if (equipmentNames.size <= 1) it is another
+    // error
     if (equipmentNames.size() > 1) {
       for (String equipment : equipmentNames) {
         if (!(Item.hasWithName(equipment))) {
@@ -84,7 +92,7 @@ public class BundleController {
       }
     }
 
-    // Constraint 6 : bundles' name has to be distinct   (done by EJ)
+    // Constraint 6 : bundles' name has to be distinct (done by EJ)
     List<EquipmentBundle> equipmentBundles = divesafe.getBundles();
     List<Equipment> itemNames = divesafe.getEquipments();
     for (EquipmentBundle bundle : equipmentBundles) {
@@ -94,7 +102,8 @@ public class BundleController {
       }
     }
 
-    // Constraint 7 : bundle's name must be distinct from equipment's name (done by JZ and KL)
+    // Constraint 7 : bundle's name must be distinct from equipment's name (done by
+    // JZ and KL)
     for (Equipment equipment : itemNames) {
       if (name.equals(equipment.getName())) {
         error = String.format("A bookable item called %s already exists", name);
@@ -128,23 +137,27 @@ public class BundleController {
     }
 
   }
-/**
- * updateEquipmentBundle : A method to update a bundle (not yet implemented)
- * @param oldName - actual name of the bundle
- * @param newName - bundle's new name
- * @param newDiscount - bundle's new discount
- * @param newEquipmentNames -bundle's new list of equipments
- * @param newEquipmentQuantities - bundle new equipments' quantities
- * @return null
- */
+
+  /**
+   * Controller method to update a bundle (not yet implemented since it is not part of our group's assignment)
+   * 
+   * @param oldName                - Old name of the bundle
+   * @param newName                - New name of the bundle
+   * @param newDiscount            - New discount of the bundle
+   * @param newEquipmentNames      - New list of equipments for the bundle
+   * @param newEquipmentQuantities - New equipments' quantities for the bundle
+   * @return null
+   */
   public static String updateEquipmentBundle(String oldName, String newName, int newDiscount,
       List<String> newEquipmentNames, List<Integer> newEquipmentQuantities) {
     return null;
   }
-/**
- * deleteEquipmentBundle : A method to delete a bundle (not yet implemented)
- * @param name - bundle's name
- */
+
+  /**
+   * Controller method to delete a bundle (not yet implemented since it is not part of our group's assignment)
+   * 
+   * @param name - Name of bundle
+   */
   public static void deleteEquipmentBundle(String name) {
   }
 }
