@@ -34,25 +34,27 @@ public class BundleController {
     divesafe = DiveSafeApplication.getDiveSafe();
     String error = "";
 
-    // Constraint 1 : equiments in bundle must be of at least two distinct types
-    // (done by JZ and KL)
+    // Constraint 1: Equiments in bundle must be of at least two distinct types (by
+    // JZ and KL)
     if (equipmentNames.size() <= 1) {
       error = "Equipment bundle must contain at least two distinct types of equipment";
     } else {
       String firstEquipmentName = equipmentNames.get(0);
+
       for (int i = 1; i < equipmentNames.size(); i++) {
-        // check if the first equipment's name matches name of another equipment in the
-        // list
+
+        // check if the first equipment matches another equipment
         if (!(equipmentNames.get(i).equals(firstEquipmentName))) {
           error = "";
-          break;
+          break; // No error and break if at least 2 different
         } else {
           error = "Equipment bundle must contain at least two distinct types of equipment";
         }
+
       }
     }
 
-    // Constraint 2 : Check if discount is in the range (0,100) (done by JZ )
+    // Constraints 2-3: Check if discount is in the range [0,100] (by JZ )
     if (discount < 0) {
       error = "Discount must be at least 0";
     }
@@ -61,7 +63,7 @@ public class BundleController {
       error = "Discount must be no more than 100";
     }
 
-    // Constraint 3: Bundle items' quantity must be at least 1 (done by SM and KL)
+    // Constraint 4: Bundle items' quantity must be at least 1 (by SM and KL)
     // Taking into consideration that if (equipmentNames.size <= 1) it is another
     // error
     if ((equipmentQuantities.size() <= 0) && (equipmentNames.size() > 1)) {
@@ -75,12 +77,12 @@ public class BundleController {
       }
     }
 
-    // Constraint 4: Invalid name for bundle (done by KL)
+    // Constraint 5: Invalid name for bundle where it is empty (by KL)
     if (name.isBlank() || name == null) {
       error = "Equipment bundle name cannot be empty";
     }
 
-    // Constraint 5: Invalid equipment (done by KL)
+    // Constraint 6: Invalid name for equipment where it does not exist (by KL)
     // Taking into consideration that if (equipmentNames.size <= 1) it is another
     // error
     if (equipmentNames.size() > 1) {
@@ -92,7 +94,7 @@ public class BundleController {
       }
     }
 
-    // Constraint 6 : bundles' name has to be distinct (done by EJ)
+    // Constraint 7: Name of bundle has to be distinct (by EJ)
     List<EquipmentBundle> equipmentBundles = divesafe.getBundles();
     List<Equipment> itemNames = divesafe.getEquipments();
     for (EquipmentBundle bundle : equipmentBundles) {
@@ -102,8 +104,8 @@ public class BundleController {
       }
     }
 
-    // Constraint 7 : bundle's name must be distinct from equipment's name (done by
-    // JZ and KL)
+    // Constraint 8: Name of bundle must be distinct from bookable equipments' name
+    // (by JZ and KL)
     for (Equipment equipment : itemNames) {
       if (name.equals(equipment.getName())) {
         error = String.format("A bookable item called %s already exists", name);
@@ -139,7 +141,8 @@ public class BundleController {
   }
 
   /**
-   * Controller method to update a bundle (not yet implemented since it is not part of our group's assignment)
+   * Controller method to update a bundle (not yet implemented since it is not
+   * part of our group's assignment)
    * 
    * @param oldName                - Old name of the bundle
    * @param newName                - New name of the bundle
@@ -154,7 +157,8 @@ public class BundleController {
   }
 
   /**
-   * Controller method to delete a bundle (not yet implemented since it is not part of our group's assignment)
+   * Controller method to delete a bundle (not yet implemented since it is not
+   * part of our group's assignment)
    * 
    * @param name - Name of bundle
    */
