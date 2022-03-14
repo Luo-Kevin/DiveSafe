@@ -1,20 +1,21 @@
 package ca.mcgill.ecse.divesafe.features;
 
-
 import java.util.*;
 import java.sql.Date;
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
+import ca.mcgill.ecse.divesafe.model.Item;
+import ca.mcgill.ecse.divesafe.model.ItemBooking;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class DeleteEquipmentBundleStepDefinitions {
-//Instance variables
-private DiveSafe divesafe;
-private String error;
+  // Instance variables
+  private DiveSafe divesafe;
+  private String error;
 
-/**
+  /**
    * @author Zahra Landou
    */
 
@@ -22,25 +23,25 @@ private String error;
   public void the_following_dive_safe_system_exists_p6(io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> rows = dataTable.asMaps();
 
-    Date aStartDate = (Date)Date.valueOf(rows.get(0).get("startDate"));
+    Date aStartDate = (Date) Date.valueOf(rows.get(0).get("startDate"));
     int aNumDays = Integer.parseInt(rows.get(0).get("numDays"));
     int aPriceOfGuidePerDay = Integer.parseInt(rows.get(0).get("priceOfGuidePerDay"));
 
     DiveSafeApplication.setDiveSafe(aStartDate, aNumDays, aPriceOfGuidePerDay);
     divesafe = DiveSafeApplication.getDiveSafe();
     error = "";
-   // throw new io.cucumber.java.PendingException();
+   
   }
 
-/**
- * 
- * @author Zahra Landou
- */
+  /**
+   * 
+   * @author Zahra Landou
+   */
 
   @Given("the following equipment exists in the system: \\(p6)")
   public void the_following_equipment_exists_in_the_system_p6(
       io.cucumber.datatable.DataTable dataTable) {
-    List<Map<String,String>> rows = dataTable.asMaps();
+    List<Map<String, String>> rows = dataTable.asMaps();
     for (var row : rows) {
 
       String aName = row.get("name");
@@ -50,47 +51,77 @@ private String error;
       divesafe.addEquipment(aName, aWeight, aPricePerDay);
 
     }
-    
-  //  throw new io.cucumber.java.PendingException();
+
+    // throw new io.cucumber.java.PendingException();
   }
-   /**
-    * 
-    * @author Zahra Landou
-    */
+
+  /**
+   * 
+   * @author Zahra Landou
+   */
 
   @Given("the following equipment bundles exist in the system: \\(p6)")
   public void the_following_equipment_bundles_exist_in_the_system_p6(
       io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> rows = dataTable.asMaps();
 
-  
-
-
-    //throw new io.cucumber.java.PendingException();
+    
   }
+
   /**
    * 
    * @author Zahra Landou
    */
 
-
   @Given("the following members exist in the system: \\(p6)")
   public void the_following_members_exist_in_the_system_p6(
       io.cucumber.datatable.DataTable dataTable) {
-    
+
     List<Map<String, String>> rows = dataTable.asMaps();
     String aEmail = rows.get(0).get("email");
     String aPassword = rows.get(0).get("password");
     String aName = rows.get(0).get("name");
-    String aEmergencyContact =  rows.get(0).get("emergencyContact");
+    String aEmergencyContact = rows.get(0).get("emergencyContact");
     int aNumDays = Integer.parseInt(rows.get(0).get("numDays"));
     boolean aGuideRequired = Boolean.parseBoolean(rows.get(0).get("guideRequired"));
     boolean aHotelRequired = Boolean.parseBoolean(rows.get(0).get("hotelRequired"));
-    
+   //create a member
     divesafe.addMember(aEmail, aPassword, aName, aEmergencyContact, aNumDays, aGuideRequired, aHotelRequired);
     
-    //List <String> itemBookList = new ArrayList<String>(Arrays.asList(arg0))
     
+    //arraylist with itemBooking
+     String [] itemforBookingAsString = rows.get(0).get("itemBookings").split(",");
+    List<Item> itemforBookings = new ArrayList<Item>();
+    try {
+      for (int i=0; i< itemforBookingAsString.length; i++){
+        itemforBookings.add(Item.getWithName(itemforBookingAsString[i]));
+      }
+    }
+    catch(Exception e){
+
+    }
+     
+
+    //create an arraylist with quantity of each itemBooking
+    String [] quantityString = rows.get(0).get("quantity").split(",");
+    List<Integer> quantityList = new ArrayList<Integer>(); 
+    try{
+
+      for (int i= 0; i<quantityString.length;i++){
+      Integer quantityAsInt = Integer.valueOf(quantityString[i]);
+      quantityList.add(quantityAsInt);
+      
+      }
+    }
+      catch(NumberFormatException exception){
+
+      }
+      for(int i=0; i< itemforBookings.size();i++) {
+        divesafe.getMember(0).addItemBooking(quantityList.get(i), divesafe, itemforBookings.get(i));
+  
+      }
+
+
   }
 
   @When("the administrator attempts to delete the equipment bundle {string} \\(p6)")
@@ -108,22 +139,21 @@ private String error;
   @Then("the equipment bundle {string} shall not exist in the system \\(p6)")
   public void the_equipment_bundle_shall_not_exist_in_the_system_p6(String string) {
     // Write code here that turns the phrase above into concrete actions
-   // throw new io.cucumber.java.PendingException();
+    // throw new io.cucumber.java.PendingException();
   }
 
   @Then("the equipment bundle {string} shall preserve the following properties: \\(p6)")
   public void the_equipment_bundle_shall_preserve_the_following_properties_p6(String string,
       io.cucumber.datatable.DataTable dataTable) {
-    
-    //throw new io.cucumber.java.PendingException();
+
+    // throw new io.cucumber.java.PendingException();
   }
 
   @Then("the member {string} shall have the following bookable items: \\(p6)")
   public void the_member_shall_have_the_following_bookable_items_p6(String string,
       io.cucumber.datatable.DataTable dataTable) {
-   
 
-    //throw new io.cucumber.java.PendingException();
+    // throw new io.cucumber.java.PendingException();
   }
 
   @Then("the number of pieces of equipment in the system shall be {string} \\(p6)")
