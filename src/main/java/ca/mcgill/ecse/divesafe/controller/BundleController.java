@@ -162,6 +162,6 @@ public class BundleController {
    * 
    * @param name - Name of bundle
    */
-  public static void deleteEquipmentBundle(String name) {
+  public static void deleteEquipmentBundle(String name) {    
   }
 }

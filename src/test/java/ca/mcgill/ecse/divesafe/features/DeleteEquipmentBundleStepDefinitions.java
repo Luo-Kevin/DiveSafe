@@ -2,9 +2,19 @@ package ca.mcgill.ecse.divesafe.features;
 
 
 import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import java.sql.Date;
+import java.sql.Driver;
+
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
+import ca.mcgill.ecse.divesafe.controller.BundleController;
+import ca.mcgill.ecse.divesafe.model.BundleItem;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
+import ca.mcgill.ecse.divesafe.model.Equipment;
+import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -93,29 +103,73 @@ private String error;
     
   }
 
+  /**
+   * @author Eric Joung
+   */
+
   @When("the administrator attempts to delete the equipment bundle {string} \\(p6)")
   public void the_administrator_attempts_to_delete_the_equipment_bundle_p6(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    // BundleController calls the deleteEquipmentBundle(string) method 
+    // method returns void so simply call method
+    BundleController.deleteEquipmentBundle(string);
   }
 
+  /**
+   * 
+   * @author Eric Joung
+   */
   @Then("the number of equipment bundles in the system shall be {string} \\(p6)")
   public void the_number_of_equipment_bundles_in_the_system_shall_be_p6(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    Integer numberOfBundles = divesafe.getBundles().size();
+    String numberOfBundlesSTR = numberOfBundles.toString();
+    assertEquals(numberOfBundlesSTR, string);
   }
 
+  /**
+   * 
+   * @author Eric Joung
+   */
   @Then("the equipment bundle {string} shall not exist in the system \\(p6)")
   public void the_equipment_bundle_shall_not_exist_in_the_system_p6(String string) {
-    // Write code here that turns the phrase above into concrete actions
-   // throw new io.cucumber.java.PendingException();
-  }
+    // IDK if this works --> Item.hasWithName is a static method
+    boolean doesEquipmentBundleSTRexist = EquipmentBundle.hasWithName(string); 
+    assertFalse(doesEquipmentBundleSTRexist);
+    }
+     
+  
 
   @Then("the equipment bundle {string} shall preserve the following properties: \\(p6)")
   public void the_equipment_bundle_shall_preserve_the_following_properties_p6(String string,
       io.cucumber.datatable.DataTable dataTable) {
-    
-    //throw new io.cucumber.java.PendingException();
+        EquipmentBundle equipmentBundle = (EquipmentBundle) EquipmentBundle.getWithName(string);
+
+      List<Map<String, String>> rows = dataTable.asMaps();
+      for(Map<String, String> rowOfEquipmentBundle : rows) {
+        if(rowOfEquipmentBundle.get("name").equals(string)) {
+          // properties of bundle
+          //discount
+          int discount = Integer.parseInt(rowOfEquipmentBundle.get("discount"));
+          // items
+          // Have to make items in a List<BundleItems>
+          // String itemsAsSTR = rowOfEquipmentBundle.get("items");
+          // String[] itemsAsArray = itemsAsSTR.split(",");
+          // for(String itemAsString : itemsAsArray) {
+          //   BundleItem itemInBundle = BundleItem.getWithName();
+          // }
+          // quantities
+          String quantitiesAsSTR = rowOfEquipmentBundle.get("quantities");
+          String[] quantitiesAsArray = quantitiesAsSTR.split(",");
+          List<Integer> quantitiesList = new ArrayList<Integer>();
+          for(String quantity : quantitiesAsArray) {
+            Integer quantityAsInt = Integer.valueOf(quantity);
+            quantitiesList.add(quantityAsInt);
+          }
+          // Assert equals test for properties
+          assertEquals(equipmentBundle.getDiscount(), discount);
+
+        }
+      } 
+
   }
 
   @Then("the member {string} shall have the following bookable items: \\(p6)")
