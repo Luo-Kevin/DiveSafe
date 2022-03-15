@@ -150,12 +150,15 @@ private String error;
           //discount
           int discount = Integer.parseInt(rowOfEquipmentBundle.get("discount"));
           // items
-          // Have to make items in a List<BundleItems>
-          // String itemsAsSTR = rowOfEquipmentBundle.get("items");
-          // String[] itemsAsArray = itemsAsSTR.split(",");
-          // for(String itemAsString : itemsAsArray) {
-          //   BundleItem itemInBundle = BundleItem.getWithName();
-          // }
+          String itemsAsSTR = rowOfEquipmentBundle.get("items");
+          String[] itemsAsArray = itemsAsSTR.split(",");
+          List<BundleItem> bundleItemList = new ArrayList<BundleItem>();
+          for(String item : itemsAsArray) {
+            Equipment aEquipment = (Equipment) Equipment.getWithName(item);
+            BundleItem equipmentAsBundleItem = 
+            bundleItemList.add
+            
+          }
           // quantities
           String quantitiesAsSTR = rowOfEquipmentBundle.get("quantities");
           String[] quantitiesAsArray = quantitiesAsSTR.split(",");
@@ -166,6 +169,7 @@ private String error;
           }
           // Assert equals test for properties
           assertEquals(equipmentBundle.getDiscount(), discount);
+          //assertEquals(equipmentBundle.getBundleItems())
 
         }
       } 
