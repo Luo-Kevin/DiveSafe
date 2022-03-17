@@ -18,16 +18,16 @@ for each User:
    email.indexOf("@") < email.lastIndexOf(".") - 1
    email.lastIndexOf(".") < email.length() - 1
 
-   // email cannot be admin@nmc.nt unless it is for the administrator
-   (not (self instanceof Administrator)) implies (email <> "admin@nmc.nt")
+   // email cannot be admin@ad.atl unless it is for the administrator
+   (not (self instanceof Administrator)) implies (email <> "admin@ad.atl")
 
    // password must not be empty or null
    password <> ""
    password <> null
 
 for each Administrator:
-   // email has to be admin@nmc.nt
-   email = "admin@nmc.nt"
+   // email has to be admin@ad.atl
+   email = "admin@ad.atl"
 
 for each NamedUser:
    // name must not be empty or null

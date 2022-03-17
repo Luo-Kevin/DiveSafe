@@ -1,8 +1,10 @@
 package ca.mcgill.ecse.divesafe.controller;
 
-import java.util.*;
-
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
+import ca.mcgill.ecse.divesafe.model.BundleItem;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
 import ca.mcgill.ecse.divesafe.model.Equipment;
 import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
@@ -10,158 +12,121 @@ import ca.mcgill.ecse.divesafe.model.Item;
 
 public class BundleController {
 
-  // Instance variables
-  private static DiveSafe divesafe;
+  private static DiveSafe diveSafe = DiveSafeApplication.getDiveSafe();
+
+  private static final int MAX_DISCOUNT = 100;
+
+  private BundleController() {}
 
   /**
-   * Controller method to create a bundle with its bundle items and add it to the
-   * instance of Dive Safe in the application. Before doing so, the method catches
-   * errors from constraints, invalid inputs and duplicates.
-   * 
-   * @author Jiahao Zhao, Siger Ma, Kevin Luo, Eric Joung, Zahra Landou
-   * @param name                - Name of the bundle
-   * @param discount            - Discount applied on the bundle
-   * @param equipmentNames      - Name of the equipments in the bundle
-   * @param equipmentQuantities - Quantities of bundle items in the bundle
-   * @return String error - Empty if no errors encountered or error message if
-   *         there is one
+   * @author Runge (Karen) Fu This method creates an equipment bundle
+   * @param name the name of the new equipment bundle
+   * @param discount the discount of the new equipment bundle
+   * @param equipmentNames list of equipment names that need to be add
+   * @param equipmentQuantities list of equipment quantities which need to be add
+   * @throws InvalidInputException if an input exception occurred
    */
-
   public static String addEquipmentBundle(String name, int discount, List<String> equipmentNames,
       List<Integer> equipmentQuantities) {
+    // test for illegal inputs
+    String error = checkCommonConditions(name, discount, equipmentNames, equipmentQuantities);
 
-    // Variables
-    divesafe = DiveSafeApplication.getDiveSafe();
-    String error = "";
-
-    // Constraint 1: Equiments in bundle must be of at least two distinct types (by
-    // JZ and KL)
-    if (equipmentNames.size() <= 1) {
-      error = "Equipment bundle must contain at least two distinct types of equipment";
-    } else {
-      String firstEquipmentName = equipmentNames.get(0);
-
-      for (int i = 1; i < equipmentNames.size(); i++) {
-
-        // check if the first equipment matches another equipment
-        if (!(equipmentNames.get(i).equals(firstEquipmentName))) {
-          error = "";
-          break; // No error and break if at least 2 different
-        } else {
-          error = "Equipment bundle must contain at least two distinct types of equipment";
-        }
-
-      }
+    if (Item.hasWithName(name)) {
+      error = "A bookable item called " + name + " already exists";
     }
 
-    // Constraints 2-3: Check if discount is in the range [0,100] (by JZ )
-    if (discount < 0) {
-      error = "Discount must be at least 0";
+    if (!error.isBlank()) {
+      return error.trim();
     }
 
-    if (discount > 100) {
-      error = "Discount must be no more than 100";
+    EquipmentBundle bundle = diveSafe.addBundle(name, discount);
+    for (int i = 0; i < equipmentNames.size(); i++) {
+      String equipmentName = equipmentNames.get(i);
+      int equipmentQuantity = equipmentQuantities.get(i);
+      BundleItem bundleItem =
+          diveSafe.addBundleItem(equipmentQuantity, bundle, Equipment.getWithName(equipmentName));
+      bundle.addBundleItem(bundleItem);
     }
 
-    // Constraint 4: Bundle items' quantity must be at least 1 (by SM and KL)
-    // Taking into consideration that if (equipmentNames.size <= 1) it is another
-    // error
-    if ((equipmentQuantities.size() <= 0) && (equipmentNames.size() > 1)) {
-      error = "Each bundle item must have quantity greater than or equal to 1";
-    } else {
-      for (Integer quantity : equipmentQuantities) {
-        if (quantity < 1) {
-          error = "Each bundle item must have quantity greater than or equal to 1";
-          break;
-        }
-      }
-    }
-
-    // Constraint 5: Invalid name for bundle where it is empty (by KL)
-    if (name.isBlank() || name == null) {
-      error = "Equipment bundle name cannot be empty";
-    }
-
-    // Constraint 6: Invalid name for equipment where it does not exist (by KL)
-    // Taking into consideration that if (equipmentNames.size <= 1) it is another
-    // error
-    if (equipmentNames.size() > 1) {
-      for (String equipment : equipmentNames) {
-        if (!(Item.hasWithName(equipment))) {
-          error = String.format("Equipment %s does not exist", equipment);
-          break;
-        }
-      }
-    }
-
-    // Constraint 7: Name of bundle has to be distinct (by EJ)
-    List<EquipmentBundle> equipmentBundles = divesafe.getBundles();
-    List<Equipment> itemNames = divesafe.getEquipments();
-    for (EquipmentBundle bundle : equipmentBundles) {
-      if (name.equals(bundle.getName())) {
-        error = String.format("A bookable item called %s already exists", name);
-        break;
-      }
-    }
-
-    // Constraint 8: Name of bundle must be distinct from bookable equipments' name
-    // (by JZ and KL)
-    for (Equipment equipment : itemNames) {
-      if (name.equals(equipment.getName())) {
-        error = String.format("A bookable item called %s already exists", name);
-        break;
-      }
-    }
-
-    // If error return (by KL)
-    if (!error.isEmpty()) {
-      return error;
-    }
-
-    // Try-catch (by KL)
-    try {
-      // Create bundle (by SM)
-      EquipmentBundle aBundle = divesafe.addBundle(name, discount);
-
-      // Add bundle items (by SM)
-      for (int i = 0; i < equipmentNames.size(); i++) {
-
-        Equipment aEquipment = (Equipment) Item.getWithName(equipmentNames.get(i));
-        int aQuantity = equipmentQuantities.get(i);
-
-        divesafe.addBundleItem(aQuantity, aBundle, aEquipment);
-      }
-
-      return error;
-
-    } catch (Exception e) {
-      return e.getMessage();
-    }
-
+    return "";
   }
 
   /**
-   * Controller method to update a bundle (not yet implemented since it is not
-   * part of our group's assignment)
-   * 
-   * @param oldName                - Old name of the bundle
-   * @param newName                - New name of the bundle
-   * @param newDiscount            - New discount of the bundle
-   * @param newEquipmentNames      - New list of equipments for the bundle
-   * @param newEquipmentQuantities - New equipments' quantities for the bundle
-   * @return null
+   * @author Runge (Karen) Fu This method updates the equipment bundle
+   * @param oldName name of the equipment bundle which will be updated
+   * @param newName new name for the equipment bundle which will be updated
+   * @param newDiscount new discount for the equipment bundle
+   * @param newEquipmentNames list of equipment names that need to be updated
+   * @param newEquipmentQuantities list of equipment quantities that need to be updated
+   * @throws InvalidInputException if an input exception occurred
    */
   public static String updateEquipmentBundle(String oldName, String newName, int newDiscount,
       List<String> newEquipmentNames, List<Integer> newEquipmentQuantities) {
-    return null;
+
+    String error =
+        checkCommonConditions(newName, newDiscount, newEquipmentNames, newEquipmentQuantities);
+    var foundBundle = EquipmentBundle.getWithName(oldName);
+
+    if (!oldName.equals(newName) && Item.hasWithName(newName)) {
+      error = "A bookable item called " + newName + " already exists";
+    }
+
+    if (foundBundle == null) {
+      error = "Equipment bundle " + oldName + " does not exist";
+    }
+
+    if (!error.isBlank()) {
+      return error.trim();
+    }
+
+    while (foundBundle.getBundleItems().size() > 0) {
+      foundBundle.getBundleItem(0).delete();
+    }
+
+    foundBundle.setName(newName);
+    foundBundle.setDiscount(newDiscount);
+    for (int i = 0; i < newEquipmentNames.size(); i++) {
+      var equipment = Equipment.getWithName(newEquipmentNames.get(i));
+      foundBundle.addBundleItem(newEquipmentQuantities.get(i), diveSafe, equipment);
+    }
+
+    return "";
   }
 
-  /**
-   * Controller method to delete a bundle (not yet implemented since it is not
-   * part of our group's assignment)
-   * 
-   * @param name - Name of bundle
-   */
-  public static void deleteEquipmentBundle(String name) {    
+  public static String deleteEquipmentBundle(String name) {
+    var foundBundle = EquipmentBundle.getWithName(name);
+
+    if (foundBundle != null) {
+      foundBundle.delete();
+    }
+
+    return "";
   }
+
+  private static String checkCommonConditions(String bundleName, int discount,
+      List<String> equipmentNames, List<Integer> equipmentQuantities) {
+    if (discount < 0) {
+      return "Discount must be at least 0";
+    } else if (discount > MAX_DISCOUNT) {
+      return "Discount must be no more than " + MAX_DISCOUNT;
+    } else if (bundleName.isEmpty()) {
+      return "Equipment bundle name cannot be empty";
+    } else if (equipmentQuantities.isEmpty() || new HashSet<>(equipmentNames).size() <= 1) {
+      return "Equipment bundle must contain at least two distinct types of equipment";
+    }
+
+    // check if there is any equipment with quantity less than 1
+    if (Collections.min(equipmentQuantities) < 1) {
+      return "Each bundle item must have quantity greater than or equal to 1";
+    }
+
+    for (String equipmentName : equipmentNames) {
+      if (!Equipment.hasWithName(equipmentName)) {
+        return "Equipment " + equipmentName + " does not exist";
+      }
+    }
+
+    return ""; // no error
+  }
+
 }

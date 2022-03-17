@@ -3,7 +3,8 @@
 
 package ca.mcgill.ecse.divesafe.model;
 
-// line 69 "../../../../../DiveSafe.ump"
+// line 71 "../../../../../DiveSafe.ump"
+// line 196 "../../../../../DiveSafe.ump"
 public class ItemBooking
 {
 

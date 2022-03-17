@@ -1,5 +1,5 @@
 Feature: Delete Equipment Bundle (p6)
-  As an administrator, I wish to delete equipment bundles so that I can keep diveers up to date.
+  As an administrator, I wish to delete equipment bundles so that I can keep divers up to date.
 
   Background: 
     Given the following DiveSafe system exists: (p6)

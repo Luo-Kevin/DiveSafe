@@ -31,7 +31,7 @@ Feature: Register Guide (p3)
 
     Examples: 
       | email            | password | name  | emergencyContact | error                                    |
-      | admin@nmc.nt     | pass1    | Paul  | (111)111-1111    | Email cannot be admin@nmc.nt             |
+      | admin@ad.atl     | pass1    | Paul  | (111)111-1111    | Email cannot be admin@ad.atl             |
       | jeff@email.com   | pass2    | Jeff  | (111)777-7777    | Email already linked to a guide account  |
       | peter@email.com  | pass1    | peter | (666)555-5555    | Email already linked to a member account |
       | bart @ email.com | pass3    | Bart  | (444)666-6666    | Email must not contain any spaces        |

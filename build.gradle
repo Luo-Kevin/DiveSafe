@@ -20,6 +20,10 @@ dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:29.0-jre'
 
+    // Persistence dependencies, used to save data to files and load it back again
+    implementation 'com.thoughtworks.xstream:xstream:1.4.19'
+    implementation 'org.codehaus.jettison:jettison:1.4.1'
+
 	// cucumber.io dependencies
     testImplementation "io.cucumber:cucumber-java:6.6.0"
     testImplementation "io.cucumber:cucumber-junit:6.6.0"

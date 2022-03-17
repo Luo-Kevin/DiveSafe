@@ -5,7 +5,9 @@ package ca.mcgill.ecse.divesafe.model;
 import java.sql.Date;
 import java.util.*;
 
-// line 3 "../../../../../DiveSafe.ump"
+// line 1 "../../../../../DiveSafePersistence.ump"
+// line 5 "../../../../../DiveSafe.ump"
+// line 155 "../../../../../DiveSafe.ump"
 public class DiveSafe
 {
 
@@ -1010,6 +1012,13 @@ public class DiveSafe
       assignments.remove(aAssignment);
     }
     
+  }
+
+  // line 3 "../../../../../DiveSafePersistence.ump"
+   public void reinitialize(){
+    User.reinitializeUniqueEmail(getAdministrator(), getGuides(), getMembers());
+    Item.reinitializeUniqueName(getEquipments(), getBundles());
+    Hotel.reinitializeUniqueName(getHotels());
   }
 
 

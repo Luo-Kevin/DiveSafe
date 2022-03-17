@@ -1,5 +1,5 @@
 Feature: Add Equipment (p4)
-  As an administrator, I want to add equipment in the system so that it can be rented to diveers.
+  As an administrator, I want to add equipment in the system so that it can be rented to divers.
 
   Background: 
     Given the following DiveSafe system exists: (p4)
