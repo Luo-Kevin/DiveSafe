@@ -57,10 +57,6 @@ public class DeleteEquipmentBundleStepDefinitions {
       diveSafe.addEquipment(name, weight, pricePerDay);
     }
   }
-   /**
-    * 
-    * @author Zahra Landou
-    */
 
   /**
    * @author Theodore Glavas
@@ -86,11 +82,6 @@ public class DeleteEquipmentBundleStepDefinitions {
       }
     }
   }
-  /**
-   * 
-   * @author Zahra Landou
-   */
-
 
   /**
    * @author Theodore Glavas

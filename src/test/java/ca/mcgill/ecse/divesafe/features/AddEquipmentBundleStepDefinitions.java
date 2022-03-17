@@ -17,18 +17,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.sql.Date;
-import java.util.*;
-
-import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
-import ca.mcgill.ecse.divesafe.controller.BundleController;
-import ca.mcgill.ecse.divesafe.model.BundleItem;
-import ca.mcgill.ecse.divesafe.model.DiveSafe;
-import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
-
 public class AddEquipmentBundleStepDefinitions {
 
   private DiveSafe diveSafe;
@@ -50,7 +38,7 @@ public class AddEquipmentBundleStepDefinitions {
   // @author Danny Tu
   @Given("the following equipment exists in the system: \\(p2)")
   public void the_following_equipment_exists_in_the_system_p2(
-      io.cucumber.datatable.DataTable dataTable) {
+          io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> rows = dataTable.asMaps();
     for (var row : rows) {
       String name = row.get("name");
@@ -63,7 +51,7 @@ public class AddEquipmentBundleStepDefinitions {
   // @author Salim Benchekroun
   @When("the administrator attempts to add an equipment bundle with name {string}, discount {string}, items {string}, and quantities {string} \\(p2)")
   public void the_administrator_attempts_to_add_an_equipment_bundle_with_name_discount_items_and_quantities_p2(
-      String name, String discountString, String items, String quantities) {
+          String name, String discountString, String items, String quantities) {
     int discount = Integer.parseInt(discountString);
     List<Integer> quantityList = new ArrayList<Integer>();
     List<String> itemList = new ArrayList<String>();
@@ -91,7 +79,7 @@ public class AddEquipmentBundleStepDefinitions {
   // @author Runge (Karen) Fu
   @Then("the equipment bundle {string} shall contain the items {string} with quantities {string} \\(p2)")
   public void the_equipment_bundle_shall_contain_the_items_with_quantities_p2(String name,
-      String items, String quantities) {
+                                                                              String items, String quantities) {
     var bundle = EquipmentBundle.getWithName(name);
     List<String> itemList = new ArrayList<String>();
     List<Integer> quantityList = new ArrayList<Integer>();
@@ -124,7 +112,7 @@ public class AddEquipmentBundleStepDefinitions {
   // @author Peini Cheng
   @Given("the following equipment bundles exist in the system: \\(p2)")
   public void the_following_equipment_bundles_exist_in_the_system_p2(
-      io.cucumber.datatable.DataTable dataTable) {
+          io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> rows = dataTable.asMaps();
     for (var row : rows) {
       var bundle = diveSafe.addBundle(row.get("name"), Integer.parseInt(row.get("discount")));
