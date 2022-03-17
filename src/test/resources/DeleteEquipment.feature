@@ -1,5 +1,5 @@
 Feature: Delete Equipment (p7)
-  As an administrator, I want to delete existing equipment in the system so that I can restrict the equipment available to diveers.
+  As an administrator, I want to delete existing equipment in the system so that I can restrict the equipment available to divers.
 
   Background: 
     Given the following DiveSafe system exists: (p7)

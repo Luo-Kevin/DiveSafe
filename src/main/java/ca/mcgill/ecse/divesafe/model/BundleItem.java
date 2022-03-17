@@ -3,7 +3,8 @@
 
 package ca.mcgill.ecse.divesafe.model;
 
-// line 91 "../../../../../DiveSafe.ump"
+// line 115 "../../../../../DiveSafe.ump"
+// line 218 "../../../../../DiveSafe.ump"
 public class BundleItem
 {
 

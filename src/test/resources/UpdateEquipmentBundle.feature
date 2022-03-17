@@ -1,5 +1,5 @@
 Feature: Update Equipment Bundle (p8)
-  As an administrator, I wish to update existing equipment bundles so that I can keep diveers up to date.
+  As an administrator, I wish to update existing equipment bundles so that I can keep divers up to date.
 
   Background: 
     Given the following DiveSafe system exists: (p8)

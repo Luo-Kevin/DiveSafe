@@ -1,5 +1,5 @@
 Feature: Update Equipment (p1)
-  As an administrator, I want to update existing equipment in the system so that I can reflect changes to the equipment available to diveers.
+  As an administrator, I want to update existing equipment in the system so that I can reflect changes to the equipment available to divers.
 
   Background: 
     Given the following DiveSafe system exists: (p1)

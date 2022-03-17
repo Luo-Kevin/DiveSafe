@@ -1,5 +1,5 @@
 Feature: Delete Hotel (p16)
-  As an administrator, I want to delete an existing hotel in the system so that I can restrict the hotels available to diveers.
+  As an administrator, I want to delete an existing hotel in the system so that I can restrict the hotels available to divers.
 
   Background: 
     Given the following DiveSafe system exists: (p16)

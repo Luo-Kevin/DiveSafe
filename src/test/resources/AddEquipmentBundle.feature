@@ -1,5 +1,5 @@
 Feature: Add equipment bundle (p2)
-  As the administrator, I wish to add equipment bundles to the system so that diveers can rent them.
+  As the administrator, I wish to add equipment bundles to the system so that divers can rent them.
 
   Background: 
     Given the following DiveSafe system exists: (p2)

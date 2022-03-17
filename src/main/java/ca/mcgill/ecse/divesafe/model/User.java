@@ -4,7 +4,9 @@
 package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
-// line 18 "../../../../../DiveSafe.ump"
+// line 9 "../../../../../DiveSafePersistence.ump"
+// line 20 "../../../../../DiveSafe.ump"
+// line 171 "../../../../../DiveSafe.ump"
 public abstract class User
 {
 
@@ -92,6 +94,18 @@ public abstract class User
   public void delete()
   {
     usersByEmail.remove(getEmail());
+  }
+
+  // line 11 "../../../../../DiveSafePersistence.ump"
+   public static  void reinitializeUniqueEmail(Administrator admin, List<Guide> guides, List<Member> members){
+    usersByEmail.clear();
+    usersByEmail.put(admin.getEmail(), admin);
+    for (var guide : guides) {
+      usersByEmail.put(guide.getEmail(), guide);
+    }
+    for (var member : members) {
+      usersByEmail.put(member.getEmail(), member);
+    }
   }
 
 

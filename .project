@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>ca.mcgill.ecse.divesafe</name>
-	<comment>Project ca.mcgill.ecse.divesafe-dev created by Buildship.</comment>
+	<comment>Project ca.mcgill.ecse.divesafe created by Buildship.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -19,5 +19,6 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
+		<nature>cucumber.eclipse.nature</nature>
 	</natures>
 </projectDescription>

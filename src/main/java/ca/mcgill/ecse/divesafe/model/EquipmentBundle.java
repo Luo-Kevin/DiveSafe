@@ -4,7 +4,8 @@
 package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
-// line 86 "../../../../../DiveSafe.ump"
+// line 99 "../../../../../DiveSafe.ump"
+// line 213 "../../../../../DiveSafe.ump"
 public class EquipmentBundle extends Item
 {
 
@@ -192,6 +193,19 @@ public class EquipmentBundle extends Item
       aBundleItem.delete();
     }
     super.delete();
+  }
+
+  // line 104 "../../../../../DiveSafe.ump"
+   public static  EquipmentBundle getWithName(String name){
+    if (Item.getWithName(name) instanceof EquipmentBundle bundle) {
+      return bundle;
+   	}
+   	return null;
+  }
+
+  // line 111 "../../../../../DiveSafe.ump"
+   public static  boolean hasWithName(String name){
+    return getWithName(name) != null;
   }
 
 
