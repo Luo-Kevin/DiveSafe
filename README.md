@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-DiveSafe is the application for the Atlantis Diving (AD) program on the island country of Atlantis. It allows visitors to book and plan their diving trip on the island. Our team is implementing the Add Equipment Bundle feature.
+DiveSafe is the application for the Atlantis Diving (AD) program on the island country of Atlantis. It allows visitors to book and plan their diving trip on the island.
 
 For more information about the DiveSafe application, please consult the [wiki](../../wiki).
 
