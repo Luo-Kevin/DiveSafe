@@ -4,55 +4,105 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.sql.Date;
+import java.util.List;
+import java.util.Map;
+
+import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
+import ca.mcgill.ecse.divesafe.controller.BundleController;
+import ca.mcgill.ecse.divesafe.model.BundleItem;
+import ca.mcgill.ecse.divesafe.model.DiveSafe;
+import ca.mcgill.ecse.divesafe.model.Equipment;
+import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
+import ca.mcgill.ecse.divesafe.model.Item;
+
 public class AssignmentFeatureStepDefinitions {
+
+  private DiveSafe diveSafe;
+  private String error;
+
   @Given("the following DiveSafe system exists:")
   public void the_following_dive_safe_system_exists(io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+
+    // initial error message empty
+    error = "";
+    List<Map<String, String>> rows = dataTable.asMaps();
+    for (var row : rows) {
+
+      // Extracting the components of the table
+      Date startDate = Date.valueOf(row.get("startDate"));
+      int numDays = Integer.parseInt(row.get("numDays"));
+      int priceOfGuidePerDay = Integer.parseInt(row.get("priceOfGuidePerDay"));
+
+      // Initialize new diveSafe system
+      diveSafe = DiveSafeApplication.getDiveSafe();
+
+      diveSafe.setNumDays(numDays);
+      diveSafe.setStartDate(startDate);
+      diveSafe.setPriceOfGuidePerDay(priceOfGuidePerDay);
+    }
+
   }
 
   @Given("the following pieces of equipment exist in the system:")
   public void the_following_pieces_of_equipment_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+
+    List<Map<String, String>> rows = dataTable.asMaps();
+    for (var row : rows) {
+
+      // Extract inputs from table, then adding equipment into diveSafe
+
+      String name = row.get("name");
+      int weight = Integer.parseInt(row.get("weight"));
+      int pricePerDay = Integer.parseInt(row.get("pricePerDay"));
+      diveSafe.addEquipment(name, weight, pricePerDay);
+    }
   }
 
   @Given("the following equipment bundles exist in the system:")
   public void the_following_equipment_bundles_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+
+    List<Map<String, String>> rows = dataTable.asMaps();
+    
+    for (var row: rows) {
+
+      //Extract inputs from table, then adding equipment bundles into diveSafe
+      String name = row.get("name");
+      int discount = Integer.parseInt(row.get("discount"));
+      String[] items = row.get("items").split(",");
+      String[] quantity = row.get("quantity").split(",");
+
+      //Create the Bundle
+      EquipmentBundle bundle = new EquipmentBundle(name, discount, diveSafe);
+      
+      //Fill the bundle 
+      for (int i = 0; i < quantity.length; i++){
+        var bundleItem = new BundleItem(Integer.parseInt(quantity[i]), diveSafe, bundle, 
+        (Equipment) Item.getWithName(items[i]));
+        bundle.addBundleItem(bundleItem);
+      }
+
+      //Add bundle to system
+      diveSafe.addBundle(bundle);
+
+    }
   }
 
   @Given("the following guides exist in the system:")
   public void the_following_guides_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+
+    List<Map<String, String>> rows = dataTable.asMaps();
+    for(var row : rows){
+    String email = row.get("email");
+    String password = row.get("password");
+    String name = row.get("name");
+    int emergencyContract = Integer.parseInt(row.get("emergencyContact"));
+
+    
+
+    }
   }
 
   @Given("the following members exist in the system:")
