@@ -3,8 +3,8 @@
 
 package ca.mcgill.ecse.divesafe.model;
 
-// line 129 "../../../../../DiveSafe.ump"
-// line 230 "../../../../../DiveSafe.ump"
+// line 130 "../../../../../DiveSafe.ump"
+// line 231 "../../../../../DiveSafe.ump"
 public class Assignment
 {
 

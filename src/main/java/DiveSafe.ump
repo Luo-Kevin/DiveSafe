@@ -1,6 +1,7 @@
 namespace ca.mcgill.ecse.divesafe.model;
 
 use DiveSafePersistence.ump;
+use AssignmentStates.ump;
 
 class DiveSafe {
   Date startDate;

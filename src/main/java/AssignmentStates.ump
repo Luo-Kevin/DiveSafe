@@ -1,0 +1,27 @@
+class Guide {
+  AvailableStatus {
+    Available {
+      book(Integer numOfDays) [availableForPeriod() >= numOfDays] -> Available;
+      [availableForPeriod() == 0] -> Taken;
+    }
+  }
+  
+  // @author Siger Ma
+  // Method to count the number of days the guide is still available
+  public int availableForPeriod() {
+    int numOfDaysAvailable = 0;
+    int daysTaken = 0;
+    int numOfDaysInSeason = DiveSafeApplication.getDiveSafe().getNumDays();
+    List <Assignment> currentAssignments = getAssignments();
+
+    for (Assignment assignment : currentAssignments) {
+      int startDate = assignment.getStartDay()
+      int endDate = assignment.getEndDay()
+      daysTaken = daysTaken + (endDate - startDate);
+    }
+
+    numOfDaysAvailable = numOfDaysInSeason - daysTaken;
+    return numOfDaysAvailable;
+  }
+
+}

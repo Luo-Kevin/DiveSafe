@@ -4,8 +4,8 @@
 package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
-// line 27 "../../../../../DiveSafe.ump"
-// line 176 "../../../../../DiveSafe.ump"
+// line 28 "../../../../../DiveSafe.ump"
+// line 177 "../../../../../DiveSafe.ump"
 public class Administrator extends User
 {
 

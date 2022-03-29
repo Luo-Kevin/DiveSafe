@@ -5,8 +5,8 @@ package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
 // line 9 "../../../../../DiveSafePersistence.ump"
-// line 20 "../../../../../DiveSafe.ump"
-// line 171 "../../../../../DiveSafe.ump"
+// line 21 "../../../../../DiveSafe.ump"
+// line 172 "../../../../../DiveSafe.ump"
 public abstract class User
 {
 

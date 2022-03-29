@@ -4,8 +4,8 @@
 package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
-// line 53 "../../../../../DiveSafe.ump"
-// line 191 "../../../../../DiveSafe.ump"
+// line 54 "../../../../../DiveSafe.ump"
+// line 192 "../../../../../DiveSafe.ump"
 public class Member extends NamedUser
 {
 
@@ -280,7 +280,7 @@ public class Member extends NamedUser
     super.delete();
   }
 
-  // line 60 "../../../../../DiveSafe.ump"
+  // line 61 "../../../../../DiveSafe.ump"
    public static  Member getWithEmail(String email){
     if (User.getWithEmail(email) instanceof Member member) {
       return member;
@@ -288,7 +288,7 @@ public class Member extends NamedUser
     return null;
   }
 
-  // line 67 "../../../../../DiveSafe.ump"
+  // line 68 "../../../../../DiveSafe.ump"
    public static  boolean hasWithEmail(String email){
     return getWithEmail(email) != null;
   }
