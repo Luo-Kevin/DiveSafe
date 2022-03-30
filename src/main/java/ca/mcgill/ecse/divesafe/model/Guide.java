@@ -259,12 +259,12 @@ public class Guide extends NamedUser
    public int availableForPeriod(){
     int numOfDaysAvailable = 0;
     int daysTaken = 0;
-    int numOfDaysInSeason = DiveSafeApplication.getDiveSafe().getNumDays();
+    int numOfDaysInSeason = getDiveSafe().getNumDays();
     List <Assignment> currentAssignments = getAssignments();
 
     for (Assignment assignment : currentAssignments) {
-      int startDate = assignment.getStartDay()
-      int endDate = assignment.getEndDay()
+      int startDate = assignment.getStartDay();
+      int endDate = assignment.getEndDay();
       daysTaken = daysTaken + (endDate - startDate);
     }
 
