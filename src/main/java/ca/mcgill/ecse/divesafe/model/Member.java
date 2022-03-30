@@ -4,7 +4,7 @@
 package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
-// line 49 "../../../../../AssignmentStates.ump"
+// line 52 "../../../../../AssignmentStates.ump"
 // line 54 "../../../../../DiveSafe.ump"
 // line 192 "../../../../../DiveSafe.ump"
 public class Member extends NamedUser
@@ -147,7 +147,7 @@ public class Member extends NamedUser
     {
       case Unassigned:
         exitMemberStatusRegistered();
-        // line 56 "../../../../../AssignmentStates.ump"
+        // line 59 "../../../../../AssignmentStates.ump"
         doAssign(guide);
         setMemberStatusRegistered(MemberStatusRegistered.Assigned);
         wasEventProcessed = true;
@@ -528,10 +528,11 @@ public class Member extends NamedUser
 
 
   /**
+   * Method for the members to be assigned to their schedule and to their guide if they asked for one.
    * @author Siger Ma
-   * Method for the members to be assigned
+   * @param guide Guide to be assigned to the member if he asked for one
    */
-  // line 81 "../../../../../AssignmentStates.ump"
+  // line 86 "../../../../../AssignmentStates.ump"
    public void doAssign(Guide guide){
     int numDaysRequest = getNumDays();
     boolean needGuide = getGuideRequired();

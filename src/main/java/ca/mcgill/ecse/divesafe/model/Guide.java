@@ -250,10 +250,10 @@ public class Guide extends NamedUser
 
 
   /**
-   * @author Siger Ma
    * Method to count the number of days the guide is already taken
+   * @author Siger Ma
    */
-  // line 15 "../../../../../AssignmentStates.ump"
+  // line 16 "../../../../../AssignmentStates.ump"
    public int takenForPeriod(){
     int daysTaken = 0;
       List <Assignment> currentAssignments = getAssignments();
@@ -269,10 +269,10 @@ public class Guide extends NamedUser
 
 
   /**
-   * @author Siger Ma
    * Method to count the number of days the guide is still available
+   * @author Siger Ma
    */
-  // line 30 "../../../../../AssignmentStates.ump"
+  // line 32 "../../../../../AssignmentStates.ump"
    public int availableForPeriod(){
     int numOfDaysAvailable = 0;
     int daysTaken = takenForPeriod();
@@ -284,10 +284,10 @@ public class Guide extends NamedUser
 
 
   /**
+   * Method for the guides to be booked and be assigned to members
    * @author Siger Ma
-   * Method for the guides to be booked
    */
-  // line 41 "../../../../../AssignmentStates.ump"
+  // line 44 "../../../../../AssignmentStates.ump"
    public void doBookGuide(){
     List<Member> currentMembers = getDiveSafe().getMembers();
     for (Member member : currentMembers) {

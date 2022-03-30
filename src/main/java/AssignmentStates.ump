@@ -9,8 +9,9 @@ class Guide {
     Taken{}
   }
   
-  // @author Siger Ma
   // Method to count the number of days the guide is already taken
+  // @author Siger Ma
+
   public int takenForPeriod() {
       int daysTaken = 0;
       List <Assignment> currentAssignments = getAssignments();
@@ -24,8 +25,9 @@ class Guide {
       return daysTaken;
   }
   
-  // @author Siger Ma
   // Method to count the number of days the guide is still available
+  // @author Siger Ma
+  
   public int availableForPeriod() {
     int numOfDaysAvailable = 0;
     int daysTaken = takenForPeriod();
@@ -35,8 +37,9 @@ class Guide {
     return numOfDaysAvailable;
   }
 
+  // Method for the guides to be booked and be assigned to members
   // @author Siger Ma
-  // Method for the guides to be booked
+
   public void doBookGuide() {
     List<Member> currentMembers = getDiveSafe().getMembers();
     for (Member member : currentMembers) {
@@ -75,8 +78,10 @@ class Member {
     Banned{}
   }
 
+  // Method for the members to be assigned to their schedule and to their guide if they asked for one.
   // @author Siger Ma
-  // Method for the members to be assigned
+  // @param guide Guide to be assigned to the member if he asked for one
+  
   public void doAssign(Guide guide) {
     int numDaysRequest = getNumDays();
     boolean needGuide = getGuideRequired();
