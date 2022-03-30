@@ -65,26 +65,26 @@ public class AssignmentFeatureStepDefinitions {
       io.cucumber.datatable.DataTable dataTable) {
 
     List<Map<String, String>> rows = dataTable.asMaps();
-    
-    for (var row: rows) {
 
-      //Extract inputs from table, then adding equipment bundles into diveSafe
+    for (var row : rows) {
+
+      // Extract inputs from table, then adding equipment bundles into diveSafe
       String name = row.get("name");
       int discount = Integer.parseInt(row.get("discount"));
       String[] items = row.get("items").split(",");
       String[] quantity = row.get("quantity").split(",");
 
-      //Create the Bundle
+      // Create the Bundle
       EquipmentBundle bundle = new EquipmentBundle(name, discount, diveSafe);
-      
-      //Fill the bundle 
-      for (int i = 0; i < quantity.length; i++){
-        var bundleItem = new BundleItem(Integer.parseInt(quantity[i]), diveSafe, bundle, 
-        (Equipment) Item.getWithName(items[i]));
+
+      // Fill the bundle
+      for (int i = 0; i < quantity.length; i++) {
+        var bundleItem = new BundleItem(Integer.parseInt(quantity[i]), diveSafe, bundle,
+            (Equipment) Item.getWithName(items[i]));
         bundle.addBundleItem(bundleItem);
       }
 
-      //Add bundle to system
+      // Add bundle to system
       diveSafe.addBundle(bundle);
 
     }
@@ -94,14 +94,18 @@ public class AssignmentFeatureStepDefinitions {
   public void the_following_guides_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
 
     List<Map<String, String>> rows = dataTable.asMaps();
-    for(var row : rows){
-    String email = row.get("email");
-    String password = row.get("password");
-    String name = row.get("name");
-    int emergencyContract = Integer.parseInt(row.get("emergencyContact"));
 
-    
+    //extract information about guides from table
 
+    for (var row : rows) {
+      String email = row.get("email");
+      String password = row.get("password");
+      String name = row.get("name");
+      String emergencyContract = row.get("emergencyContact");
+
+      // add guides to divesafe
+
+      diveSafe.addGuide(email, password, name, emergencyContract);
     }
   }
 
