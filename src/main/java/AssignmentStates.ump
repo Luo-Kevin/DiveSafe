@@ -1,14 +1,17 @@
 class Guide {
   AvailableStatus {
     Available {
-      bookGuide(Integer numOfDays) [availableForPeriod() >= numOfDays] -> Available;
-      [availableForPeriod() == 0] -> Taken;
+      bookGuide / {
+        doBookGuide();
+      }-> Available;
+      [availableForPeriod() <= 0] -> Taken;
     }
     Taken{}
   }
   
-  // @author Siger Ma
   // Method to count the number of days the guide is already taken
+  // @author Siger Ma
+
   public int takenForPeriod() {
       int daysTaken = 0;
       List <Assignment> currentAssignments = getAssignments();
@@ -22,8 +25,9 @@ class Guide {
       return daysTaken;
   }
   
-  // @author Siger Ma
   // Method to count the number of days the guide is still available
+  // @author Siger Ma
+  
   public int availableForPeriod() {
     int numOfDaysAvailable = 0;
     int daysTaken = takenForPeriod();
@@ -33,16 +37,28 @@ class Guide {
     return numOfDaysAvailable;
   }
 
+  // Method for the guides to be booked and be assigned to members
+  // @author Siger Ma
+
+  public void doBookGuide() {
+    List<Member> currentMembers = getDiveSafe().getMembers();
+    for (Member member : currentMembers) {
+      member.assign(this);
+    }
+  }
+
 }
 
 class Member {
   MemberStatus {
     Unregistered {
-      register -> Registered;        
+      register -> Registered;
     }
     Registered {
       Unassigned {
-        assign -> Assigned;
+        assign (Guide guide) / {
+          doAssign(guide);
+        }-> Assigned;
       }
       Assigned {
         pay -> Paid;
@@ -60,5 +76,22 @@ class Member {
     }
     TripFinish{}
     Banned{}
+  }
+
+  // Method for the members to be assigned to their schedule and to their guide if they asked for one.
+  // @author Siger Ma
+  // @param guide Guide to be assigned to the member if he asked for one
+  
+  public void doAssign(Guide guide) {
+    int numDaysRequest = getNumDays();
+    boolean needGuide = getGuideRequired();
+    if (!needGuide) {
+      new Assignment(1, numDaysRequest, this, getDiveSafe());
+    } else if (guide != null) {
+      if (numDaysRequest <= guide.availableForPeriod()) {
+        Assignment assignment = new Assignment(guide.takenForPeriod() + 1, guide.takenForPeriod() + numDaysRequest, this, diveSafe);
+        assignment.setGuide(guide);
+      }
+    }
   }
 }
