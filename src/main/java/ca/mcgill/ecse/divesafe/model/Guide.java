@@ -53,7 +53,7 @@ public class Guide extends NamedUser
     return availableStatus;
   }
 
-  public boolean book(Integer numOfDays)
+  public boolean bookGuide(Integer numOfDays)
   {
     boolean wasEventProcessed = false;
     
@@ -255,7 +255,7 @@ public class Guide extends NamedUser
    * @author Siger Ma
    * Method to count the number of days the guide is still available
    */
-  // line 12 "../../../../../AssignmentStates.ump"
+  // line 13 "../../../../../AssignmentStates.ump"
    public int availableForPeriod(){
     int numOfDaysAvailable = 0;
     int daysTaken = 0;

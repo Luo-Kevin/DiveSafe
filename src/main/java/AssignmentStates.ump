@@ -1,9 +1,10 @@
 class Guide {
   AvailableStatus {
     Available {
-      book(Integer numOfDays) [availableForPeriod() >= numOfDays] -> Available;
+      bookGuide(Integer numOfDays) [availableForPeriod() >= numOfDays] -> Available;
       [availableForPeriod() == 0] -> Taken;
     }
+    Taken{}
   }
   
   // @author Siger Ma
@@ -24,4 +25,33 @@ class Guide {
     return numOfDaysAvailable;
   }
 
+}
+
+class Member {
+  MemberStatus {
+    Unregistered {
+      register -> Registered;        
+    }
+    Registered {
+      Unassigned {
+        assignNoGuide -> Assigned;
+        assignYesGuide -> Assigned;
+      }
+      Assigned {
+        pay -> Paid;
+        cancelNoPenalty -> Unregistered;
+        ban -> Banned;
+      }
+      Paid {
+        start -> TripStart;
+        cancelFiftyRefund -> Unregistered;
+      }
+      TripStart {
+        finish -> TripFinish;
+        cancelTenRefund -> Unregistered;
+      }
+    }
+    TripFinish{}
+    Banned{}
+  }
 }
