@@ -53,7 +53,7 @@ public class Guide extends NamedUser
     return availableStatus;
   }
 
-  public boolean bookGuide(Integer numOfDays)
+  public boolean bookGuide()
   {
     boolean wasEventProcessed = false;
     
@@ -61,12 +61,10 @@ public class Guide extends NamedUser
     switch (aAvailableStatus)
     {
       case Available:
-        if (availableForPeriod()>=numOfDays)
-        {
-          setAvailableStatus(AvailableStatus.Available);
-          wasEventProcessed = true;
-          break;
-        }
+        // line 4 "../../../../../AssignmentStates.ump"
+        doBookGuide();
+        setAvailableStatus(AvailableStatus.Available);
+        wasEventProcessed = true;
         break;
       default:
         // Other states do respond to this event
@@ -83,7 +81,7 @@ public class Guide extends NamedUser
     switch (aAvailableStatus)
     {
       case Available:
-        if (availableForPeriod()==0)
+        if (availableForPeriod()<=0)
         {
           setAvailableStatus(AvailableStatus.Taken);
           wasEventProcessed = true;
@@ -255,7 +253,7 @@ public class Guide extends NamedUser
    * @author Siger Ma
    * Method to count the number of days the guide is already taken
    */
-  // line 13 "../../../../../AssignmentStates.ump"
+  // line 15 "../../../../../AssignmentStates.ump"
    public int takenForPeriod(){
     int daysTaken = 0;
       List <Assignment> currentAssignments = getAssignments();
@@ -274,7 +272,7 @@ public class Guide extends NamedUser
    * @author Siger Ma
    * Method to count the number of days the guide is still available
    */
-  // line 28 "../../../../../AssignmentStates.ump"
+  // line 30 "../../../../../AssignmentStates.ump"
    public int availableForPeriod(){
     int numOfDaysAvailable = 0;
     int daysTaken = takenForPeriod();
@@ -282,6 +280,19 @@ public class Guide extends NamedUser
 
     numOfDaysAvailable = numOfDaysInSeason - daysTaken;
     return numOfDaysAvailable;
+  }
+
+
+  /**
+   * @author Siger Ma
+   * Method for the guides to be booked
+   */
+  // line 41 "../../../../../AssignmentStates.ump"
+   public void doBookGuide(){
+    List<Member> currentMembers = getDiveSafe().getMembers();
+    for (Member member : currentMembers) {
+      member.assign(this);
+    }
   }
 
   // line 43 "../../../../../DiveSafe.ump"

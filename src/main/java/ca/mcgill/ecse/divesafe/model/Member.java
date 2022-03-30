@@ -4,7 +4,7 @@
 package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
-// line 38 "../../../../../AssignmentStates.ump"
+// line 49 "../../../../../AssignmentStates.ump"
 // line 54 "../../../../../DiveSafe.ump"
 // line 192 "../../../../../DiveSafe.ump"
 public class Member extends NamedUser
@@ -138,7 +138,7 @@ public class Member extends NamedUser
     return wasEventProcessed;
   }
 
-  public boolean assign()
+  public boolean assign(Guide guide)
   {
     boolean wasEventProcessed = false;
     
@@ -147,6 +147,8 @@ public class Member extends NamedUser
     {
       case Unassigned:
         exitMemberStatusRegistered();
+        // line 56 "../../../../../AssignmentStates.ump"
+        doAssign(guide);
         setMemberStatusRegistered(MemberStatusRegistered.Assigned);
         wasEventProcessed = true;
         break;
@@ -522,6 +524,25 @@ public class Member extends NamedUser
       aItemBooking.delete();
     }
     super.delete();
+  }
+
+
+  /**
+   * @author Siger Ma
+   * Method for the members to be assigned
+   */
+  // line 81 "../../../../../AssignmentStates.ump"
+   public void doAssign(Guide guide){
+    int numDaysRequest = getNumDays();
+    boolean needGuide = getGuideRequired();
+    if (!needGuide) {
+      new Assignment(1, numDaysRequest, this, getDiveSafe());
+    } else if (guide != null) {
+      if (numDaysRequest <= guide.availableForPeriod()) {
+        Assignment assignment = new Assignment(guide.takenForPeriod() + 1, guide.takenForPeriod() + numDaysRequest, this, diveSafe);
+        assignment.setGuide(guide);
+      }
+    }
   }
 
   // line 61 "../../../../../DiveSafe.ump"

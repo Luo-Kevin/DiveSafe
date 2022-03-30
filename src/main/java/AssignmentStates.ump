@@ -1,8 +1,10 @@
 class Guide {
   AvailableStatus {
     Available {
-      bookGuide(Integer numOfDays) [availableForPeriod() >= numOfDays] -> Available;
-      [availableForPeriod() == 0] -> Taken;
+      bookGuide / {
+        doBookGuide();
+      }-> Available;
+      [availableForPeriod() <= 0] -> Taken;
     }
     Taken{}
   }
@@ -33,16 +35,27 @@ class Guide {
     return numOfDaysAvailable;
   }
 
+  // @author Siger Ma
+  // Method for the guides to be booked
+  public void doBookGuide() {
+    List<Member> currentMembers = getDiveSafe().getMembers();
+    for (Member member : currentMembers) {
+      member.assign(this);
+    }
+  }
+
 }
 
 class Member {
   MemberStatus {
     Unregistered {
-      register -> Registered;        
+      register -> Registered;
     }
     Registered {
       Unassigned {
-        assign -> Assigned;
+        assign (Guide guide) / {
+          doAssign(guide);
+        }-> Assigned;
       }
       Assigned {
         pay -> Paid;
@@ -60,5 +73,20 @@ class Member {
     }
     TripFinish{}
     Banned{}
+  }
+
+  // @author Siger Ma
+  // Method for the members to be assigned
+  public void doAssign(Guide guide) {
+    int numDaysRequest = getNumDays();
+    boolean needGuide = getGuideRequired();
+    if (!needGuide) {
+      new Assignment(1, numDaysRequest, this, getDiveSafe());
+    } else if (guide != null) {
+      if (numDaysRequest <= guide.availableForPeriod()) {
+        Assignment assignment = new Assignment(guide.takenForPeriod() + 1, guide.takenForPeriod() + numDaysRequest, this, diveSafe);
+        assignment.setGuide(guide);
+      }
+    }
   }
 }

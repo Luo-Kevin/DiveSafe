@@ -39,33 +39,15 @@ public class AssignmentController {
    */
 
   public static String initiateAssignment() {
-
-    // get data
     List<Guide> currentGuides = diveSafe.getGuides();
-    List<Member> currentMembers = diveSafe.getMembers();
-
-    for (Guide guide : currentGuides) {
+    if (currentGuides.isEmpty() || currentGuides == null) {
+      List<Member> currentMembers = diveSafe.getMembers();
       for (Member member : currentMembers) {
-        if (guide.getAvailableStatus() == AvailableStatus.Available
-            && member.getMemberStatusRegistered() == MemberStatusRegistered.Unassigned) {
-
-          // get data about member
-          int numDaysRequest = member.getNumDays();
-          boolean needGuide = member.getGuideRequired();
-
-          // Assignment
-          member.assign();
-          if (!needGuide) {
-            new Assignment(1, numDaysRequest, member, diveSafe);
-          } else {
-            if (guide.bookGuide(numDaysRequest)) {
-              Assignment assignment = new Assignment(guide.takenForPeriod() + 1,
-                  guide.takenForPeriod() + numDaysRequest, member, diveSafe);
-              assignment.setGuide(guide);
-            }
-          }
-
-        }
+        member.assign(null);
+      }
+    } else {
+      for (Guide guide : currentGuides) {
+        guide.bookGuide();
       }
     }
 
