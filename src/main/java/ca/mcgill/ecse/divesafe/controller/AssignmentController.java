@@ -55,10 +55,12 @@ public class AssignmentController {
           // Assignment
           if (!needGuide) {
             member.assignNoGuide();
+            new Assignment(1, numDaysRequest, member, diveSafe);
           }
           else {
             if (guide.bookGuide(numDaysRequest)) {
-              Assignment assignment = member.assignYesGuide();
+              member.assignYesGuide();
+              Assignment assignment = new Assignment(guide.takenForPeriod() + 1, guide.takenForPeriod() + numDaysRequest, member, diveSafe);
               assignment.setGuide(guide);
             }
           }
