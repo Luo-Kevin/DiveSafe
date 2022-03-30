@@ -4,8 +4,9 @@
 package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
-// line 53 "../../../../../DiveSafe.ump"
-// line 191 "../../../../../DiveSafe.ump"
+// line 38 "../../../../../AssignmentStates.ump"
+// line 54 "../../../../../DiveSafe.ump"
+// line 192 "../../../../../DiveSafe.ump"
 public class Member extends NamedUser
 {
 
@@ -17,6 +18,12 @@ public class Member extends NamedUser
   private int numDays;
   private boolean guideRequired;
   private boolean hotelRequired;
+
+  //Member State Machines
+  public enum MemberStatus { Unregistered, Registered, TripFinish, Banned }
+  public enum MemberStatusRegistered { Null, Unassigned, Assigned, Paid, TripStart }
+  private MemberStatus memberStatus;
+  private MemberStatusRegistered memberStatusRegistered;
 
   //Member Associations
   private DiveSafe diveSafe;
@@ -39,6 +46,8 @@ public class Member extends NamedUser
       throw new RuntimeException("Unable to create member due to diveSafe. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     itemBookings = new ArrayList<ItemBooking>();
+    setMemberStatusRegistered(MemberStatusRegistered.Null);
+    setMemberStatus(MemberStatus.Unregistered);
   }
 
   //------------------------
@@ -92,6 +101,241 @@ public class Member extends NamedUser
   public boolean isHotelRequired()
   {
     return hotelRequired;
+  }
+
+  public String getMemberStatusFullName()
+  {
+    String answer = memberStatus.toString();
+    if (memberStatusRegistered != MemberStatusRegistered.Null) { answer += "." + memberStatusRegistered.toString(); }
+    return answer;
+  }
+
+  public MemberStatus getMemberStatus()
+  {
+    return memberStatus;
+  }
+
+  public MemberStatusRegistered getMemberStatusRegistered()
+  {
+    return memberStatusRegistered;
+  }
+
+  public boolean register()
+  {
+    boolean wasEventProcessed = false;
+    
+    MemberStatus aMemberStatus = memberStatus;
+    switch (aMemberStatus)
+    {
+      case Unregistered:
+        setMemberStatus(MemberStatus.Registered);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean assign()
+  {
+    boolean wasEventProcessed = false;
+    
+    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
+    switch (aMemberStatusRegistered)
+    {
+      case Unassigned:
+        exitMemberStatusRegistered();
+        setMemberStatusRegistered(MemberStatusRegistered.Assigned);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean pay()
+  {
+    boolean wasEventProcessed = false;
+    
+    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
+    switch (aMemberStatusRegistered)
+    {
+      case Assigned:
+        exitMemberStatusRegistered();
+        setMemberStatusRegistered(MemberStatusRegistered.Paid);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean cancelNoPenalty()
+  {
+    boolean wasEventProcessed = false;
+    
+    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
+    switch (aMemberStatusRegistered)
+    {
+      case Assigned:
+        exitMemberStatus();
+        setMemberStatus(MemberStatus.Unregistered);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean ban()
+  {
+    boolean wasEventProcessed = false;
+    
+    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
+    switch (aMemberStatusRegistered)
+    {
+      case Assigned:
+        exitMemberStatus();
+        setMemberStatus(MemberStatus.Banned);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean start()
+  {
+    boolean wasEventProcessed = false;
+    
+    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
+    switch (aMemberStatusRegistered)
+    {
+      case Paid:
+        exitMemberStatusRegistered();
+        setMemberStatusRegistered(MemberStatusRegistered.TripStart);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean cancelFiftyRefund()
+  {
+    boolean wasEventProcessed = false;
+    
+    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
+    switch (aMemberStatusRegistered)
+    {
+      case Paid:
+        exitMemberStatus();
+        setMemberStatus(MemberStatus.Unregistered);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean finish()
+  {
+    boolean wasEventProcessed = false;
+    
+    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
+    switch (aMemberStatusRegistered)
+    {
+      case TripStart:
+        exitMemberStatus();
+        setMemberStatus(MemberStatus.TripFinish);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean cancelTenRefund()
+  {
+    boolean wasEventProcessed = false;
+    
+    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
+    switch (aMemberStatusRegistered)
+    {
+      case TripStart:
+        exitMemberStatus();
+        setMemberStatus(MemberStatus.Unregistered);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  private void exitMemberStatus()
+  {
+    switch(memberStatus)
+    {
+      case Registered:
+        exitMemberStatusRegistered();
+        break;
+    }
+  }
+
+  private void setMemberStatus(MemberStatus aMemberStatus)
+  {
+    memberStatus = aMemberStatus;
+
+    // entry actions and do activities
+    switch(memberStatus)
+    {
+      case Registered:
+        if (memberStatusRegistered == MemberStatusRegistered.Null) { setMemberStatusRegistered(MemberStatusRegistered.Unassigned); }
+        break;
+    }
+  }
+
+  private void exitMemberStatusRegistered()
+  {
+    switch(memberStatusRegistered)
+    {
+      case Unassigned:
+        setMemberStatusRegistered(MemberStatusRegistered.Null);
+        break;
+      case Assigned:
+        setMemberStatusRegistered(MemberStatusRegistered.Null);
+        break;
+      case Paid:
+        setMemberStatusRegistered(MemberStatusRegistered.Null);
+        break;
+      case TripStart:
+        setMemberStatusRegistered(MemberStatusRegistered.Null);
+        break;
+    }
+  }
+
+  private void setMemberStatusRegistered(MemberStatusRegistered aMemberStatusRegistered)
+  {
+    memberStatusRegistered = aMemberStatusRegistered;
+    if (memberStatus != MemberStatus.Registered && aMemberStatusRegistered != MemberStatusRegistered.Null) { setMemberStatus(MemberStatus.Registered); }
   }
   /* Code from template association_GetOne */
   public DiveSafe getDiveSafe()
@@ -280,7 +524,7 @@ public class Member extends NamedUser
     super.delete();
   }
 
-  // line 60 "../../../../../DiveSafe.ump"
+  // line 61 "../../../../../DiveSafe.ump"
    public static  Member getWithEmail(String email){
     if (User.getWithEmail(email) instanceof Member member) {
       return member;
@@ -288,7 +532,7 @@ public class Member extends NamedUser
     return null;
   }
 
-  // line 67 "../../../../../DiveSafe.ump"
+  // line 68 "../../../../../DiveSafe.ump"
    public static  boolean hasWithEmail(String email){
     return getWithEmail(email) != null;
   }

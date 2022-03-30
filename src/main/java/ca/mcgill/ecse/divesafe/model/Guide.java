@@ -4,14 +4,19 @@
 package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
-// line 38 "../../../../../DiveSafe.ump"
-// line 186 "../../../../../DiveSafe.ump"
+// line 1 "../../../../../AssignmentStates.ump"
+// line 39 "../../../../../DiveSafe.ump"
+// line 187 "../../../../../DiveSafe.ump"
 public class Guide extends NamedUser
 {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
+
+  //Guide State Machines
+  public enum AvailableStatus { Available, Taken }
+  private AvailableStatus availableStatus;
 
   //Guide Associations
   private DiveSafe diveSafe;
@@ -30,11 +35,80 @@ public class Guide extends NamedUser
       throw new RuntimeException("Unable to create guide due to diveSafe. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     assignments = new ArrayList<Assignment>();
+    setAvailableStatus(AvailableStatus.Available);
   }
 
   //------------------------
   // INTERFACE
   //------------------------
+
+  public String getAvailableStatusFullName()
+  {
+    String answer = availableStatus.toString();
+    return answer;
+  }
+
+  public AvailableStatus getAvailableStatus()
+  {
+    return availableStatus;
+  }
+
+  public boolean bookGuide(Integer numOfDays)
+  {
+    boolean wasEventProcessed = false;
+    
+    AvailableStatus aAvailableStatus = availableStatus;
+    switch (aAvailableStatus)
+    {
+      case Available:
+        if (availableForPeriod()>=numOfDays)
+        {
+          setAvailableStatus(AvailableStatus.Available);
+          wasEventProcessed = true;
+          break;
+        }
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  private boolean __autotransition1__()
+  {
+    boolean wasEventProcessed = false;
+    
+    AvailableStatus aAvailableStatus = availableStatus;
+    switch (aAvailableStatus)
+    {
+      case Available:
+        if (availableForPeriod()==0)
+        {
+          setAvailableStatus(AvailableStatus.Taken);
+          wasEventProcessed = true;
+          break;
+        }
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  private void setAvailableStatus(AvailableStatus aAvailableStatus)
+  {
+    availableStatus = aAvailableStatus;
+
+    // entry actions and do activities
+    switch(availableStatus)
+    {
+      case Available:
+        __autotransition1__();
+        break;
+    }
+  }
   /* Code from template association_GetOne */
   public DiveSafe getDiveSafe()
   {
@@ -176,7 +250,41 @@ public class Guide extends NamedUser
     super.delete();
   }
 
-  // line 42 "../../../../../DiveSafe.ump"
+
+  /**
+   * @author Siger Ma
+   * Method to count the number of days the guide is already taken
+   */
+  // line 13 "../../../../../AssignmentStates.ump"
+   public int takenForPeriod(){
+    int daysTaken = 0;
+      List <Assignment> currentAssignments = getAssignments();
+
+      for (Assignment assignment : currentAssignments) {
+        int startDate = assignment.getStartDay();
+        int endDate = assignment.getEndDay();
+        daysTaken = daysTaken + (endDate - startDate);
+      }
+
+      return daysTaken;
+  }
+
+
+  /**
+   * @author Siger Ma
+   * Method to count the number of days the guide is still available
+   */
+  // line 28 "../../../../../AssignmentStates.ump"
+   public int availableForPeriod(){
+    int numOfDaysAvailable = 0;
+    int daysTaken = takenForPeriod();
+    int numOfDaysInSeason = getDiveSafe().getNumDays();
+
+    numOfDaysAvailable = numOfDaysInSeason - daysTaken;
+    return numOfDaysAvailable;
+  }
+
+  // line 43 "../../../../../DiveSafe.ump"
    public static  Guide getWithEmail(String email){
     if (User.getWithEmail(email) instanceof Guide guide) {
       return guide;
@@ -184,7 +292,7 @@ public class Guide extends NamedUser
     return null;
   }
 
-  // line 49 "../../../../../DiveSafe.ump"
+  // line 50 "../../../../../DiveSafe.ump"
    public static  boolean hasWithEmail(String email){
     return getWithEmail(email) != null;
   }

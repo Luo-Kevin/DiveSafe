@@ -4,8 +4,8 @@
 package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
-// line 31 "../../../../../DiveSafe.ump"
-// line 181 "../../../../../DiveSafe.ump"
+// line 32 "../../../../../DiveSafe.ump"
+// line 182 "../../../../../DiveSafe.ump"
 public abstract class NamedUser extends User
 {
 

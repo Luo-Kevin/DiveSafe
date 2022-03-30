@@ -5,8 +5,8 @@ package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
 // line 22 "../../../../../DiveSafePersistence.ump"
-// line 77 "../../../../../DiveSafe.ump"
-// line 203 "../../../../../DiveSafe.ump"
+// line 78 "../../../../../DiveSafe.ump"
+// line 204 "../../../../../DiveSafe.ump"
 public abstract class Item
 {
 
