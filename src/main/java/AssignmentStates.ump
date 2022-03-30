@@ -42,8 +42,7 @@ class Member {
     }
     Registered {
       Unassigned {
-        assignNoGuide -> Assigned;
-        assignYesGuide -> Assigned;
+        assign -> Assigned;
       }
       Assigned {
         pay -> Paid;

@@ -138,26 +138,7 @@ public class Member extends NamedUser
     return wasEventProcessed;
   }
 
-  public boolean assignNoGuide()
-  {
-    boolean wasEventProcessed = false;
-    
-    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
-    switch (aMemberStatusRegistered)
-    {
-      case Unassigned:
-        exitMemberStatusRegistered();
-        setMemberStatusRegistered(MemberStatusRegistered.Assigned);
-        wasEventProcessed = true;
-        break;
-      default:
-        // Other states do respond to this event
-    }
-
-    return wasEventProcessed;
-  }
-
-  public boolean assignYesGuide()
+  public boolean assign()
   {
     boolean wasEventProcessed = false;
     
