@@ -10,11 +10,15 @@ import java.util.Map;
 
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.controller.BundleController;
+import ca.mcgill.ecse.divesafe.model.Assignment;
 import ca.mcgill.ecse.divesafe.model.BundleItem;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
 import ca.mcgill.ecse.divesafe.model.Equipment;
 import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
+import ca.mcgill.ecse.divesafe.model.Guide;
 import ca.mcgill.ecse.divesafe.model.Item;
+import ca.mcgill.ecse.divesafe.model.Member;
+import ca.mcgill.ecse.divesafe.model.User;
 
 public class AssignmentFeatureStepDefinitions {
 
@@ -48,11 +52,10 @@ public class AssignmentFeatureStepDefinitions {
   public void the_following_pieces_of_equipment_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
 
+      //Extract inputs from table, then adding equipment into diveSafe
+
     List<Map<String, String>> rows = dataTable.asMaps();
     for (var row : rows) {
-
-      // Extract inputs from table, then adding equipment into diveSafe
-
       String name = row.get("name");
       int weight = Integer.parseInt(row.get("weight"));
       int pricePerDay = Integer.parseInt(row.get("pricePerDay"));
@@ -98,26 +101,43 @@ public class AssignmentFeatureStepDefinitions {
     //extract information about guides from table
 
     for (var row : rows) {
-      String email = row.get("email");
-      String password = row.get("password");
-      String name = row.get("name");
-      String emergencyContract = row.get("emergencyContact");
-
+      String guideEmail = row.get("email");
+      String guidePassword = row.get("password");
+      String guideName = row.get("name");
+      String guideEmergencyContract = row.get("emergencyContact");
+      
       // add guides to divesafe
-
-      diveSafe.addGuide(email, password, name, emergencyContract);
+      diveSafe.addGuide(guideEmail, guidePassword, guideName, guideEmergencyContract);
     }
   }
 
   @Given("the following members exist in the system:")
   public void the_following_members_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
+   
+
+    List<Map<String,String>> rows = dataTable.asMaps();
+
+    // extract member information from datatable
+
+    for(var row : rows) {
+      String memberEmail = row.get("email");
+      String memberPassword = row.get("password");
+      String memberName = row.get("name");
+      String memberEmergencyContact = row.get("emergencyContact");
+      int memberNumDays = Integer.parseInt(row.get("numDays"));
+      boolean memberGuideRequired = Boolean.parseBoolean(row.get("guideRequired"));
+      boolean memberHotelRequired = Boolean.parseBoolean(row.get("hotelRequired"));
+
+      String[] memberItemBookings = row.get("itemBookings").split(",");
+      String[] itemBookingQuantity = row.get("itemBookingQuantities").split(",");
+      // Create member
+      Member aMember = new Member(memberEmail, memberPassword, memberName, memberEmergencyContact, memberNumDays, memberGuideRequired, memberHotelRequired, diveSafe);
+      diveSafe.addMember(aMember);
+      //add member's item booking
+      for (int i = 0; i < itemBookingQuantity.length; i++) {
+        aMember.addItemBooking(Integer.parseInt(itemBookingQuantity[i]), diveSafe, Item.getWithName(memberItemBookings[i]));
+      }
+    }
     throw new io.cucumber.java.PendingException();
   }
 
@@ -161,13 +181,21 @@ public class AssignmentFeatureStepDefinitions {
   @Given("the following assignments exist in the system:")
   public void the_following_assignments_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
+        // Extract all information from dataTable
+
+        List<Map<String, String>> rows = dataTable.asMaps();
+        for(var row : rows) { 
+          String memberEmail = row.get("memberEmail");
+          String guideEmail = row.get("guideEmail");
+          int startDay = Integer.parseInt(row.get("startDay"));
+          int endDay = Integer.parseInt(row.get("endDay"));
+          Member assignedMember = (Member) User.getWithEmail(memberEmail);
+          Guide assignedGuide = (Guide) User.getWithEmail(guideEmail);
+          
+          Assignment newAssignment = diveSafe.addAssignment(startDay, endDay, assignedMember);
+          newAssignment.setGuide(assignedGuide);
+        }
+
     throw new io.cucumber.java.PendingException();
   }
 
