@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
+import ca.mcgill.ecse.divesafe.controller.AssignmentController;
 import ca.mcgill.ecse.divesafe.controller.BundleController;
 import ca.mcgill.ecse.divesafe.model.Assignment;
 import ca.mcgill.ecse.divesafe.model.BundleItem;
@@ -181,6 +182,7 @@ public class AssignmentFeatureStepDefinitions {
   @Given("the following assignments exist in the system:")
   public void the_following_assignments_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
+
         // Extract all information from dataTable
 
         List<Map<String, String>> rows = dataTable.asMaps();
@@ -192,25 +194,24 @@ public class AssignmentFeatureStepDefinitions {
           Member assignedMember = (Member) User.getWithEmail(memberEmail);
           Guide assignedGuide = (Guide) User.getWithEmail(guideEmail);
           
+          //Creating new Assignment and adding start and end day, member along with their assigned guide
           Assignment newAssignment = diveSafe.addAssignment(startDay, endDay, assignedMember);
           newAssignment.setGuide(assignedGuide);
         }
-
-    throw new io.cucumber.java.PendingException();
   }
 
   @When("the administrator attempts to confirm payment for {string} using authorization code {string}")
   public void the_administrator_attempts_to_confirm_payment_for_using_authorization_code(
-      String string, String string2) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+      String userEmail, String authorizationCode) {
+        error = AssignmentController.confirmPayment(userEmail, authorizationCode);
   }
 
   @Then("the assignment for {string} shall record the authorization code {string}")
-  public void the_assignment_for_shall_record_the_authorization_code(String string,
-      String string2) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_assignment_for_shall_record_the_authorization_code(String userEmail,
+      String authorizationCode) {
+
+        //make changes to the ump file to allow for authorization of code
+      
   }
 
   @Then("the member account with the email {string} does not exist")
