@@ -21,10 +21,19 @@ import ca.mcgill.ecse.divesafe.model.Item;
 import ca.mcgill.ecse.divesafe.model.Member;
 import ca.mcgill.ecse.divesafe.model.User;
 
+
+
 public class AssignmentFeatureStepDefinitions {
 
   private DiveSafe diveSafe;
   private String error;
+
+  /**
+   * Making sure that the specified DiveSafe system exists, i.e. start date, number of days
+   * and price of guide per day match.
+   * @author Jiahao Zhao
+   * @param dataTable Table that contains inputs specified in the feature files
+   */
 
   @Given("the following DiveSafe system exists:")
   public void the_following_dive_safe_system_exists(io.cucumber.datatable.DataTable dataTable) {
@@ -49,6 +58,13 @@ public class AssignmentFeatureStepDefinitions {
 
   }
 
+  /**
+   * Add the pieces of equipment that should be present in the system before evaluating @When clause
+   *
+   * @author Jiahao Zhao
+   * @param dataTable Table that contains inputs specified in the feature files
+   */
+
   @Given("the following pieces of equipment exist in the system:")
   public void the_following_pieces_of_equipment_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
@@ -63,6 +79,13 @@ public class AssignmentFeatureStepDefinitions {
       diveSafe.addEquipment(name, weight, pricePerDay);
     }
   }
+
+  /**
+   * Add the bundles that should exist in the system before evaluating @When clause
+   *
+   * @author Jiahao Zhao
+   * @param dataTable Table that contains inputs specified in the feature files
+   */
 
   @Given("the following equipment bundles exist in the system:")
   public void the_following_equipment_bundles_exist_in_the_system(
@@ -94,6 +117,12 @@ public class AssignmentFeatureStepDefinitions {
     }
   }
 
+  /**
+   * Add the guides that should exist in the system before evaluating @When clause
+   *
+   * @author Jiahao Zhao
+   * @param dataTable Table that contains inputs specified in the feature files
+   */
   @Given("the following guides exist in the system:")
   public void the_following_guides_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
 
@@ -112,9 +141,15 @@ public class AssignmentFeatureStepDefinitions {
     }
   }
 
+  /**
+   * Add members that should exist in diveSafe prior to evaluating the @When clause
+   *
+   * @author Jiahao Zhao
+   * @param dataTable
+   */
+
   @Given("the following members exist in the system:")
   public void the_following_members_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
-   
 
     List<Map<String,String>> rows = dataTable.asMaps();
 
@@ -178,6 +213,13 @@ public class AssignmentFeatureStepDefinitions {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
   }
+
+  /**
+   * Add assignments that should exist in the system prior to evaluating @When clause
+   *
+   * @author Jiahao Zhao
+   * @param dataTable
+   */
 
   @Given("the following assignments exist in the system:")
   public void the_following_assignments_exist_in_the_system(
