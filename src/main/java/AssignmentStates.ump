@@ -8,18 +8,26 @@ class Guide {
   }
   
   // @author Siger Ma
+  // Method to count the number of days the guide is already taken
+  public int takenForPeriod() {
+      int daysTaken = 0;
+      List <Assignment> currentAssignments = getAssignments();
+
+      for (Assignment assignment : currentAssignments) {
+        int startDate = assignment.getStartDay();
+        int endDate = assignment.getEndDay();
+        daysTaken = daysTaken + (endDate - startDate);
+      }
+
+      return daysTaken;
+  }
+  
+  // @author Siger Ma
   // Method to count the number of days the guide is still available
   public int availableForPeriod() {
     int numOfDaysAvailable = 0;
-    int daysTaken = 0;
+    int daysTaken = takenForPeriod();
     int numOfDaysInSeason = getDiveSafe().getNumDays();
-    List <Assignment> currentAssignments = getAssignments();
-
-    for (Assignment assignment : currentAssignments) {
-      int startDate = assignment.getStartDay();
-      int endDate = assignment.getEndDay();
-      daysTaken = daysTaken + (endDate - startDate);
-    }
 
     numOfDaysAvailable = numOfDaysInSeason - daysTaken;
     return numOfDaysAvailable;

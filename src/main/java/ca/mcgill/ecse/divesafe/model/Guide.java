@@ -253,20 +253,32 @@ public class Guide extends NamedUser
 
   /**
    * @author Siger Ma
-   * Method to count the number of days the guide is still available
+   * Method to count the number of days the guide is already taken
    */
   // line 13 "../../../../../AssignmentStates.ump"
+   public int takenForPeriod(){
+    int daysTaken = 0;
+      List <Assignment> currentAssignments = getAssignments();
+
+      for (Assignment assignment : currentAssignments) {
+        int startDate = assignment.getStartDay();
+        int endDate = assignment.getEndDay();
+        daysTaken = daysTaken + (endDate - startDate);
+      }
+
+      return daysTaken;
+  }
+
+
+  /**
+   * @author Siger Ma
+   * Method to count the number of days the guide is still available
+   */
+  // line 28 "../../../../../AssignmentStates.ump"
    public int availableForPeriod(){
     int numOfDaysAvailable = 0;
-    int daysTaken = 0;
+    int daysTaken = takenForPeriod();
     int numOfDaysInSeason = getDiveSafe().getNumDays();
-    List <Assignment> currentAssignments = getAssignments();
-
-    for (Assignment assignment : currentAssignments) {
-      int startDate = assignment.getStartDay();
-      int endDate = assignment.getEndDay();
-      daysTaken = daysTaken + (endDate - startDate);
-    }
 
     numOfDaysAvailable = numOfDaysInSeason - daysTaken;
     return numOfDaysAvailable;
