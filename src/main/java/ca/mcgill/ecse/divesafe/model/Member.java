@@ -4,7 +4,7 @@
 package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
-// line 30 "../../../../../AssignmentStates.ump"
+// line 38 "../../../../../AssignmentStates.ump"
 // line 54 "../../../../../DiveSafe.ump"
 // line 192 "../../../../../DiveSafe.ump"
 public class Member extends NamedUser
