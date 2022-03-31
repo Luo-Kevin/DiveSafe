@@ -217,18 +217,21 @@ public class AssignmentFeatureStepDefinitions {
     }
   }
 
+  // @author Siger Ma
   @Then("the assignment for {string} shall be marked as {string}")
   public void the_assignment_for_shall_be_marked_as(String email, String state) {
     Member member = Member.getWithEmail(email);
     assertEquals(state, member.getMemberStatusFullName());
   }
 
+  // @author Siger Ma
   @Then("the number of assignments in the system shall be {string}")
   public void the_number_of_assignments_in_the_system_shall_be(String numOfAssignments) {
     int currentNumOfAssignments = diveSafe.numberOfAssignments();
     assertEquals(Integer.parseInt(numOfAssignments), currentNumOfAssignments);
   }
 
+  // @author Siger Ma
   @Then("the system shall raise the error {string}")
   public void the_system_shall_raise_the_error(String expectedError) {
     assertEquals(expectedError, error);
