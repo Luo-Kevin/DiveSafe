@@ -12,6 +12,8 @@ import ca.mcgill.ecse.divesafe.model.Item;
 import ca.mcgill.ecse.divesafe.model.Member;
 import ca.mcgill.ecse.divesafe.model.Guide.AvailableStatus;
 import ca.mcgill.ecse.divesafe.model.Member.MemberStatusRegistered;
+import ca.mcgill.ecse.divesafe.model.User;
+
 
 public class AssignmentController {
   private static DiveSafe diveSafe = DiveSafeApplication.getDiveSafe();
@@ -66,7 +68,31 @@ public class AssignmentController {
     return null;
   }
 
+  /**
+   * Method confirms payment for user and updates their MemberStatus
+   * @param userEmail - email related to payment
+   * @param authorizationCode - authorization code related to payment
+   * @return error message related to user input
+   * @author Kevin Luo
+   */
+
   public static String confirmPayment(String userEmail, String authorizationCode) {
+    //Checks email exist
+    if(!User.hasWithEmail(userEmail)){
+      return String.format("Member with email adress %s does not exist yet", userEmail);
+    }
+
+    //Checks authorization code validity
+    if(authorizationCode.isBlank()){
+      return "Invalid authorization code";
+    }
+
+    //Update user payment status
+    if(User.hasWithEmail(userEmail) && !(authorizationCode.isBlank())){
+      Member.getWithEmail(userEmail).pay();
+      return "";
+    }
+
     return null;
   }
 
