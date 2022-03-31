@@ -14,12 +14,12 @@ class Guide {
 
   public int takenForPeriod() {
       int daysTaken = 0;
-      List <Assignment> currentAssignments = getAssignments();
+      List <Assignment> currentAssignments = this.getAssignments();
 
       for (Assignment assignment : currentAssignments) {
         int startDate = assignment.getStartDay();
         int endDate = assignment.getEndDay();
-        daysTaken = daysTaken + (endDate - startDate);
+        daysTaken = daysTaken + (endDate - startDate + 1);
       }
 
       return daysTaken;
@@ -30,7 +30,7 @@ class Guide {
   
   public int availableForPeriod() {
     int numOfDaysAvailable = 0;
-    int daysTaken = takenForPeriod();
+    int daysTaken = this.takenForPeriod();
     int numOfDaysInSeason = getDiveSafe().getNumDays();
 
     numOfDaysAvailable = numOfDaysInSeason - daysTaken;
@@ -51,53 +51,61 @@ class Guide {
 
 class Member {
   MemberStatus {
-    Unregistered {
-      register -> Registered;
+    Unassigned {
+      assign (Guide guide) [doAssign(guide)] -> Assigned;
     }
-    Registered {
-      Unassigned {
-        assign (Guide guide) / {
-          doAssign(guide);
-        }-> Assigned;
-      }
+    MemberStatusRegistered {
+      cancelTrip -> Cancelled;
       Assigned {
-        pay -> Paid;
-        cancelNoPenalty -> Unregistered;
-        ban -> Banned;
+        confirmPayment -> Paid;
+        startTrip [!paid()] -> Banned;
+        finishTrip -> Assigned;
       }
       Paid {
-        start -> TripStart;
-        cancelFiftyRefund -> Unregistered;
+        startTrip [paid()] -> Started;
+        finishTrip -> Paid;
       }
-      TripStart {
-        finish / {
-          doFinishTrip (member);
-        } -> TripFinish;
-        cancelTenRefund -> Unregistered;
+      Started {
+        finishTrip -> Finished;
+        confirmPayment -> Started;
       }
     }
-    TripFinish{}
-    Banned{}
+    Finished{
+      confirmPayment -> Finished;
+      startTrip -> Finished;
+      cancelTrip -> Finished;
+    }
+    Banned{
+      confirmPayment -> Banned;
+      startTrip -> Banned;
+      cancelTrip -> Banned;
+      finishTrip -> Banned;
+    }
+    Cancelled{
+      confirmPayment -> Cancelled;
+      startTrip -> Cancelled;
+      finishTrip -> Cancelled;
+    }
   }
 
   // Method for the members to be assigned to their schedule and to their guide if they asked for one.
   // @author Siger Ma
   // @param guide Guide to be assigned to the member if he asked for one
   
-  public void doAssign(Guide guide) {
-    int numDaysRequest = getNumDays();
-    boolean needGuide = getGuideRequired();
+  public boolean doAssign(Guide guide) {
+    int numDaysRequest = this.getNumDays();
+    boolean needGuide = this.getGuideRequired();
     if (!needGuide) {
-      new Assignment(1, numDaysRequest, this, getDiveSafe());
-    } else if (guide != null) {
+      diveSafe.addAssignment(1, numDaysRequest, this);
+      return true;
+    } else {
       if (numDaysRequest <= guide.availableForPeriod()) {
-        Assignment assignment = new Assignment(guide.takenForPeriod() + 1, guide.takenForPeriod() + numDaysRequest, this, diveSafe);
+        Assignment assignment = diveSafe.addAssignment(guide.takenForPeriod() + 1, guide.takenForPeriod() + numDaysRequest, this);
         assignment.setGuide(guide);
+        return true;
       }
     }
+    return false;
   }
 
-  public void doFinishTrip(Member member) {
-
-  }
 }
