@@ -91,6 +91,15 @@ public class AssignmentController {
       // }
       // }
       member.startTrip(day);
+      if(member.getMemberStatusFullName().equals("Banned")){
+        error =  "Cannot start the trip due to a ban";
+      }
+      if(member.getMemberStatusFullName().equals("Cancelled")){
+        error = "Cannot start a trip which has been cancelled";
+      }
+      if(member.getMemberStatusFullName().equals("Finished")) {
+        error = "Cannot start a trip which has finished";
+      }
     }
     return error;
   }
