@@ -135,7 +135,7 @@ Feature: Process assignments
 
   Scenario: Attempt to start a trip for a banned member
     Given the member with "emily@hotmail.ca" is banned
-    When the administrator attempts to start the trips for day  "4"
+    When the administrator attempts to start the trips for day "4"
     Then the error "Cannot start the trip due to a ban" shall be raised
     Then the member with email "emily@hotmail.ca" shall be "Banned"
 
@@ -159,7 +159,7 @@ Feature: Process assignments
 
   Scenario: Attempt to start a trip for a cancelled assignment
     Given the member with "emily@hotmail.ca" has cancelled their trip
-    When the administrator attempts to start the trips for day  "4"
+    When the administrator attempts to start the trips for day "4"
     Then the error "Cannot start a trip which has been cancelled" shall be raised
     Then the assignment for "emily@hotmail.ca" shall be marked as "Cancelled"
 
@@ -177,7 +177,7 @@ Feature: Process assignments
 
   Scenario: Attempt to start a trip for a finished assignment
     Given the member with "emily@hotmail.ca" has finished their trip
-    When the administrator attempts to start the trips for day  "4"
+    When the administrator attempts to start the trips for day "4"
     Then the error "Cannot start a trip which has finished" shall be raised
     Then the assignment for "emily@hotmail.ca" shall be marked as "Finished"
 
@@ -189,7 +189,7 @@ Feature: Process assignments
 
   Scenario: Administrator starts trips
     Given the member with "alice@gmail.com" has paid for their trip
-    When the administrator attempts to start the trips for day  "1"
+    When the administrator attempts to start the trips for day "1"
     Then the assignment for "alice@gmail.com" shall be marked as "Started"
     Then the member with email "charlie@hotmail.ca" shall be "Banned"
     Then the member with email "john@hotmail.ca" shall be "Banned"
