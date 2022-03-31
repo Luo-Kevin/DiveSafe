@@ -54,7 +54,7 @@ class Member {
     Unassigned {
       assign (Guide guide) [doAssign(guide)] -> Assigned;
     }
-    MemberStatusRegistered {
+    Registered {
       cancelTrip -> Cancelled;
       Assigned {
         confirmPayment -> Paid;

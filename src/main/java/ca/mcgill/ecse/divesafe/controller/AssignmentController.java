@@ -68,11 +68,24 @@ public class AssignmentController {
   }
 
   public static String finishTrip(String userEmail) {
+
+    String error = "";
+    
     Member aMember = Member.getWithEmail(userEmail);
-    if (aMember.getMemberStatusRegistered().name().equals("TripStart")) {
-      
-    }
-    return null;
+    aMember.finishTrip();
+    String statusRegistered = aMember.getMemberStatusRegistered().name();
+      if (statusRegistered.equals("Assigned") || statusRegistered.equals("Paid")) {
+        return error = "Cannot finish a trip which has not started";
+      }
+    String statusMember = aMember.getMemberStatus().name();
+      if (statusMember.equals("Banned")) {
+        return error = "Cannot finish the trip due to a ban";
+      }
+      else if (statusMember.equals("Cancelled")) {
+        return error = "Cannot finish a trip which has been cancelled";
+      }
+    
+    return error;
   }
 
   public static String startTripsForDay(int day) {
