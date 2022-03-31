@@ -54,10 +54,10 @@ public class DiveSafe
   // INTERFACE
   //------------------------
 
-  public boolean setStartDate(Date aStartDate)
+  public boolean setStartDate(Date date)
   {
     boolean wasSet = false;
-    startDate = aStartDate;
+    startDate = date;
     wasSet = true;
     return wasSet;
   }
