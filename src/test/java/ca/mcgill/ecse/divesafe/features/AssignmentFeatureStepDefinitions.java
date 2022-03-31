@@ -4,9 +4,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.sql.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.controller.AssignmentController;
@@ -21,16 +22,28 @@ import ca.mcgill.ecse.divesafe.model.Item;
 import ca.mcgill.ecse.divesafe.model.Member;
 import ca.mcgill.ecse.divesafe.model.User;
 
+
+
 public class AssignmentFeatureStepDefinitions {
 
   private DiveSafe diveSafe;
   private String error;
 
+  /**
+   * Making sure that the specified DiveSafe system exists, i.e. start date, number of days
+   * and price of guide per day match.
+   * @author Jiahao Zhao
+   * @param dataTable Table that contains inputs specified in the feature files
+   */
+
   @Given("the following DiveSafe system exists:")
   public void the_following_dive_safe_system_exists(io.cucumber.datatable.DataTable dataTable) {
+    // Initialize new diveSafe system
+    diveSafe = DiveSafeApplication.getDiveSafe();
 
     // initial error message empty
     error = "";
+    
     List<Map<String, String>> rows = dataTable.asMaps();
     for (var row : rows) {
 
@@ -39,15 +52,19 @@ public class AssignmentFeatureStepDefinitions {
       int numDays = Integer.parseInt(row.get("numDays"));
       int priceOfGuidePerDay = Integer.parseInt(row.get("priceOfGuidePerDay"));
 
-      // Initialize new diveSafe system
-      diveSafe = DiveSafeApplication.getDiveSafe();
-
       diveSafe.setNumDays(numDays);
       diveSafe.setStartDate(startDate);
       diveSafe.setPriceOfGuidePerDay(priceOfGuidePerDay);
     }
 
   }
+
+  /**
+   * Add the pieces of equipment that should be present in the system before evaluating @When clause
+   *
+   * @author Jiahao Zhao
+   * @param dataTable Table that contains inputs specified in the feature files
+   */
 
   @Given("the following pieces of equipment exist in the system:")
   public void the_following_pieces_of_equipment_exist_in_the_system(
@@ -63,6 +80,13 @@ public class AssignmentFeatureStepDefinitions {
       diveSafe.addEquipment(name, weight, pricePerDay);
     }
   }
+
+  /**
+   * Add the bundles that should exist in the system before evaluating @When clause
+   *
+   * @author Jiahao Zhao
+   * @param dataTable Table that contains inputs specified in the feature files
+   */
 
   @Given("the following equipment bundles exist in the system:")
   public void the_following_equipment_bundles_exist_in_the_system(
@@ -94,6 +118,12 @@ public class AssignmentFeatureStepDefinitions {
     }
   }
 
+  /**
+   * Add the guides that should exist in the system before evaluating @When clause
+   *
+   * @author Jiahao Zhao
+   * @param dataTable Table that contains inputs specified in the feature files
+   */
   @Given("the following guides exist in the system:")
   public void the_following_guides_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
 
@@ -112,9 +142,15 @@ public class AssignmentFeatureStepDefinitions {
     }
   }
 
+  /**
+   * Add members that should exist in diveSafe prior to evaluating the @When clause
+   *
+   * @author Jiahao Zhao
+   * @param dataTable
+   */
+
   @Given("the following members exist in the system:")
   public void the_following_members_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
-   
 
     List<Map<String,String>> rows = dataTable.asMaps();
 
@@ -139,45 +175,71 @@ public class AssignmentFeatureStepDefinitions {
         aMember.addItemBooking(Integer.parseInt(itemBookingQuantity[i]), diveSafe, Item.getWithName(memberItemBookings[i]));
       }
     }
-    throw new io.cucumber.java.PendingException();
   }
 
+  // @author Siger Ma
   @When("the administrator attempts to initiate the assignment process")
   public void the_administrator_attempts_to_initiate_the_assignment_process() {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    error = AssignmentController.initiateAssignment();
   }
 
+  // @author Siger Ma
   @Then("the following assignments shall exist in the system:")
-  public void the_following_assignments_shall_exist_in_the_system(
-      io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+  public void the_following_assignments_shall_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
+    
+    // Extracting the information from the data table
+    List <Map<String, String>> rows = dataTable.asMaps();
+    List <String> memberEmailList = new ArrayList <String>();
+    List <String> guideEmailList = new ArrayList <String>();
+    List <Integer> startDayList = new ArrayList <Integer>();
+    List <Integer> endDayList = new ArrayList <Integer>();
+    for (var row : rows) {
+      String memberEmail = row.get("memberEmail");
+      String guideEmail = row.get("guideEmail");
+      Integer startDay = Integer.valueOf(row.get("startDay"));
+      Integer endDay = Integer.valueOf(row.get("endDay"));
+      memberEmailList.add(memberEmail);
+      guideEmailList.add(guideEmail);
+      startDayList.add(startDay);
+      endDayList.add(endDay);
+    }
+
+    // Get assignments
+    List <Assignment> currentAssignmentList = diveSafe.getAssignments();
+
+    // Check correct assignments
+    for (int i = 0; i < memberEmailList.size(); i++) {
+      Assignment currentAssignment = currentAssignmentList.get(i);
+      assertEquals(Member.getWithEmail(memberEmailList.get(i)), currentAssignment.getMember());
+      assertEquals(Guide.getWithEmail(guideEmailList.get(i)), currentAssignment.getGuide());
+      assertEquals(startDayList.get(i), currentAssignment.getStartDay());
+      assertEquals(endDayList.get(i), currentAssignment.getEndDay());
+    }
   }
 
   @Then("the assignment for {string} shall be marked as {string}")
-  public void the_assignment_for_shall_be_marked_as(String string, String string2) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_assignment_for_shall_be_marked_as(String email, String state) {
+    Member member = Member.getWithEmail(email);
+    assertEquals(state, member.getMemberStatusFullName());
   }
 
   @Then("the number of assignments in the system shall be {string}")
-  public void the_number_of_assignments_in_the_system_shall_be(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_number_of_assignments_in_the_system_shall_be(String numOfAssignments) {
+    int currentNumOfAssignments = diveSafe.numberOfAssignments();
+    assertEquals(Integer.parseInt(numOfAssignments), currentNumOfAssignments);
   }
 
   @Then("the system shall raise the error {string}")
-  public void the_system_shall_raise_the_error(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_system_shall_raise_the_error(String expectedError) {
+    assertEquals(expectedError, error);
   }
+
+  /**
+   * Add assignments that should exist in the system prior to evaluating @When clause
+   *
+   * @author Jiahao Zhao
+   * @param dataTable
+   */
 
   @Given("the following assignments exist in the system:")
   public void the_following_assignments_exist_in_the_system(
@@ -293,4 +355,5 @@ public class AssignmentFeatureStepDefinitions {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
   }
+
 }

@@ -20,10 +20,8 @@ public class Member extends NamedUser
   private boolean hotelRequired;
 
   //Member State Machines
-  public enum MemberStatus { Unregistered, Registered, TripFinish, Banned }
-  public enum MemberStatusRegistered { Null, Unassigned, Assigned, Paid, TripStart }
+  public enum MemberStatus { Unassigned, Assigned, Paid, TripStart, TripFinish, Banned, Cancelled }
   private MemberStatus memberStatus;
-  private MemberStatusRegistered memberStatusRegistered;
 
   //Member Associations
   private DiveSafe diveSafe;
@@ -46,8 +44,7 @@ public class Member extends NamedUser
       throw new RuntimeException("Unable to create member due to diveSafe. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     itemBookings = new ArrayList<ItemBooking>();
-    setMemberStatusRegistered(MemberStatusRegistered.Null);
-    setMemberStatus(MemberStatus.Unregistered);
+    setMemberStatus(MemberStatus.Unassigned);
   }
 
   //------------------------
@@ -106,7 +103,6 @@ public class Member extends NamedUser
   public String getMemberStatusFullName()
   {
     String answer = memberStatus.toString();
-    if (memberStatusRegistered != MemberStatusRegistered.Null) { answer += "." + memberStatusRegistered.toString(); }
     return answer;
   }
 
@@ -115,42 +111,20 @@ public class Member extends NamedUser
     return memberStatus;
   }
 
-  public MemberStatusRegistered getMemberStatusRegistered()
-  {
-    return memberStatusRegistered;
-  }
-
-  public boolean register()
+  public boolean assign(Guide guide)
   {
     boolean wasEventProcessed = false;
     
     MemberStatus aMemberStatus = memberStatus;
     switch (aMemberStatus)
     {
-      case Unregistered:
-        setMemberStatus(MemberStatus.Registered);
-        wasEventProcessed = true;
-        break;
-      default:
-        // Other states do respond to this event
-    }
-
-    return wasEventProcessed;
-  }
-
-  public boolean assign(Guide guide)
-  {
-    boolean wasEventProcessed = false;
-    
-    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
-    switch (aMemberStatusRegistered)
-    {
       case Unassigned:
-        exitMemberStatusRegistered();
-        // line 59 "../../../../../AssignmentStates.ump"
-        doAssign(guide);
-        setMemberStatusRegistered(MemberStatusRegistered.Assigned);
-        wasEventProcessed = true;
+        if (doAssign(guide))
+        {
+          setMemberStatus(MemberStatus.Assigned);
+          wasEventProcessed = true;
+          break;
+        }
         break;
       default:
         // Other states do respond to this event
@@ -163,12 +137,11 @@ public class Member extends NamedUser
   {
     boolean wasEventProcessed = false;
     
-    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
-    switch (aMemberStatusRegistered)
+    MemberStatus aMemberStatus = memberStatus;
+    switch (aMemberStatus)
     {
       case Assigned:
-        exitMemberStatusRegistered();
-        setMemberStatusRegistered(MemberStatusRegistered.Paid);
+        setMemberStatus(MemberStatus.Paid);
         wasEventProcessed = true;
         break;
       default:
@@ -182,12 +155,11 @@ public class Member extends NamedUser
   {
     boolean wasEventProcessed = false;
     
-    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
-    switch (aMemberStatusRegistered)
+    MemberStatus aMemberStatus = memberStatus;
+    switch (aMemberStatus)
     {
       case Assigned:
-        exitMemberStatus();
-        setMemberStatus(MemberStatus.Unregistered);
+        setMemberStatus(MemberStatus.Cancelled);
         wasEventProcessed = true;
         break;
       default:
@@ -201,11 +173,10 @@ public class Member extends NamedUser
   {
     boolean wasEventProcessed = false;
     
-    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
-    switch (aMemberStatusRegistered)
+    MemberStatus aMemberStatus = memberStatus;
+    switch (aMemberStatus)
     {
       case Assigned:
-        exitMemberStatus();
         setMemberStatus(MemberStatus.Banned);
         wasEventProcessed = true;
         break;
@@ -220,12 +191,11 @@ public class Member extends NamedUser
   {
     boolean wasEventProcessed = false;
     
-    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
-    switch (aMemberStatusRegistered)
+    MemberStatus aMemberStatus = memberStatus;
+    switch (aMemberStatus)
     {
       case Paid:
-        exitMemberStatusRegistered();
-        setMemberStatusRegistered(MemberStatusRegistered.TripStart);
+        setMemberStatus(MemberStatus.TripStart);
         wasEventProcessed = true;
         break;
       default:
@@ -239,12 +209,11 @@ public class Member extends NamedUser
   {
     boolean wasEventProcessed = false;
     
-    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
-    switch (aMemberStatusRegistered)
+    MemberStatus aMemberStatus = memberStatus;
+    switch (aMemberStatus)
     {
       case Paid:
-        exitMemberStatus();
-        setMemberStatus(MemberStatus.Unregistered);
+        setMemberStatus(MemberStatus.Cancelled);
         wasEventProcessed = true;
         break;
       default:
@@ -258,11 +227,10 @@ public class Member extends NamedUser
   {
     boolean wasEventProcessed = false;
     
-    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
-    switch (aMemberStatusRegistered)
+    MemberStatus aMemberStatus = memberStatus;
+    switch (aMemberStatus)
     {
       case TripStart:
-        exitMemberStatus();
         setMemberStatus(MemberStatus.TripFinish);
         wasEventProcessed = true;
         break;
@@ -277,12 +245,11 @@ public class Member extends NamedUser
   {
     boolean wasEventProcessed = false;
     
-    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
-    switch (aMemberStatusRegistered)
+    MemberStatus aMemberStatus = memberStatus;
+    switch (aMemberStatus)
     {
       case TripStart:
-        exitMemberStatus();
-        setMemberStatus(MemberStatus.Unregistered);
+        setMemberStatus(MemberStatus.Cancelled);
         wasEventProcessed = true;
         break;
       default:
@@ -292,52 +259,9 @@ public class Member extends NamedUser
     return wasEventProcessed;
   }
 
-  private void exitMemberStatus()
-  {
-    switch(memberStatus)
-    {
-      case Registered:
-        exitMemberStatusRegistered();
-        break;
-    }
-  }
-
   private void setMemberStatus(MemberStatus aMemberStatus)
   {
     memberStatus = aMemberStatus;
-
-    // entry actions and do activities
-    switch(memberStatus)
-    {
-      case Registered:
-        if (memberStatusRegistered == MemberStatusRegistered.Null) { setMemberStatusRegistered(MemberStatusRegistered.Unassigned); }
-        break;
-    }
-  }
-
-  private void exitMemberStatusRegistered()
-  {
-    switch(memberStatusRegistered)
-    {
-      case Unassigned:
-        setMemberStatusRegistered(MemberStatusRegistered.Null);
-        break;
-      case Assigned:
-        setMemberStatusRegistered(MemberStatusRegistered.Null);
-        break;
-      case Paid:
-        setMemberStatusRegistered(MemberStatusRegistered.Null);
-        break;
-      case TripStart:
-        setMemberStatusRegistered(MemberStatusRegistered.Null);
-        break;
-    }
-  }
-
-  private void setMemberStatusRegistered(MemberStatusRegistered aMemberStatusRegistered)
-  {
-    memberStatusRegistered = aMemberStatusRegistered;
-    if (memberStatus != MemberStatus.Registered && aMemberStatusRegistered != MemberStatusRegistered.Null) { setMemberStatus(MemberStatus.Registered); }
   }
   /* Code from template association_GetOne */
   public DiveSafe getDiveSafe()
@@ -532,18 +456,21 @@ public class Member extends NamedUser
    * @author Siger Ma
    * @param guide Guide to be assigned to the member if he asked for one
    */
-  // line 86 "../../../../../AssignmentStates.ump"
-   public void doAssign(Guide guide){
-    int numDaysRequest = getNumDays();
-    boolean needGuide = getGuideRequired();
+  // line 80 "../../../../../AssignmentStates.ump"
+   public boolean doAssign(Guide guide){
+    int numDaysRequest = this.getNumDays();
+    boolean needGuide = this.getGuideRequired();
     if (!needGuide) {
-      new Assignment(1, numDaysRequest, this, getDiveSafe());
-    } else if (guide != null) {
+      diveSafe.addAssignment(1, numDaysRequest, this);
+      return true;
+    } else {
       if (numDaysRequest <= guide.availableForPeriod()) {
-        Assignment assignment = new Assignment(guide.takenForPeriod() + 1, guide.takenForPeriod() + numDaysRequest, this, diveSafe);
+        Assignment assignment = diveSafe.addAssignment(guide.takenForPeriod() + 1, guide.takenForPeriod() + numDaysRequest, this);
         assignment.setGuide(guide);
+        return true;
       }
     }
+    return false;
   }
 
   // line 61 "../../../../../DiveSafe.ump"

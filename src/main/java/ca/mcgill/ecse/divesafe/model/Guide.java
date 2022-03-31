@@ -256,12 +256,12 @@ public class Guide extends NamedUser
   // line 16 "../../../../../AssignmentStates.ump"
    public int takenForPeriod(){
     int daysTaken = 0;
-      List <Assignment> currentAssignments = getAssignments();
+      List <Assignment> currentAssignments = this.getAssignments();
 
       for (Assignment assignment : currentAssignments) {
         int startDate = assignment.getStartDay();
         int endDate = assignment.getEndDay();
-        daysTaken = daysTaken + (endDate - startDate);
+        daysTaken = daysTaken + (endDate - startDate + 1);
       }
 
       return daysTaken;
@@ -275,7 +275,7 @@ public class Guide extends NamedUser
   // line 32 "../../../../../AssignmentStates.ump"
    public int availableForPeriod(){
     int numOfDaysAvailable = 0;
-    int daysTaken = takenForPeriod();
+    int daysTaken = this.takenForPeriod();
     int numOfDaysInSeason = getDiveSafe().getNumDays();
 
     numOfDaysAvailable = numOfDaysInSeason - daysTaken;
