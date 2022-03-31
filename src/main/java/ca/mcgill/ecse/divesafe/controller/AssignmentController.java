@@ -116,7 +116,7 @@ public class AssignmentController {
 
     //Update user payment status
     if(User.hasWithEmail(userEmail) && !(authorizationCode.isBlank()) && member.getMemberStatusFullName().equals("Assigned")){
-    member.pay();
+    member.confirmPayment();
     return authorizationCode;
     }
 

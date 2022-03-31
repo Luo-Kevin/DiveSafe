@@ -20,7 +20,7 @@ public class Member extends NamedUser
   private boolean hotelRequired;
 
   //Member State Machines
-  public enum MemberStatus { Unassigned, Assigned, Paid, TripStart, TripFinish, Banned, Cancelled }
+  public enum MemberStatus { Unassigned, Assigned, Paid, Started, Finished, Banned, Cancelled }
   private MemberStatus memberStatus;
 
   //Member Associations
@@ -133,7 +133,7 @@ public class Member extends NamedUser
     return wasEventProcessed;
   }
 
-  public boolean pay()
+  public boolean confirmPayment()
   {
     boolean wasEventProcessed = false;
     
@@ -144,21 +144,19 @@ public class Member extends NamedUser
         setMemberStatus(MemberStatus.Paid);
         wasEventProcessed = true;
         break;
-      default:
-        // Other states do respond to this event
-    }
-
-    return wasEventProcessed;
-  }
-
-  public boolean cancelNoPenalty()
-  {
-    boolean wasEventProcessed = false;
-    
-    MemberStatus aMemberStatus = memberStatus;
-    switch (aMemberStatus)
-    {
-      case Assigned:
+      case Started:
+        setMemberStatus(MemberStatus.Started);
+        wasEventProcessed = true;
+        break;
+      case Finished:
+        setMemberStatus(MemberStatus.Finished);
+        wasEventProcessed = true;
+        break;
+      case Banned:
+        setMemberStatus(MemberStatus.Banned);
+        wasEventProcessed = true;
+        break;
+      case Cancelled:
         setMemberStatus(MemberStatus.Cancelled);
         wasEventProcessed = true;
         break;
@@ -169,7 +167,7 @@ public class Member extends NamedUser
     return wasEventProcessed;
   }
 
-  public boolean ban()
+  public boolean startTrip()
   {
     boolean wasEventProcessed = false;
     
@@ -180,39 +178,19 @@ public class Member extends NamedUser
         setMemberStatus(MemberStatus.Banned);
         wasEventProcessed = true;
         break;
-      default:
-        // Other states do respond to this event
-    }
-
-    return wasEventProcessed;
-  }
-
-  public boolean start()
-  {
-    boolean wasEventProcessed = false;
-    
-    MemberStatus aMemberStatus = memberStatus;
-    switch (aMemberStatus)
-    {
       case Paid:
-        setMemberStatus(MemberStatus.TripStart);
+        setMemberStatus(MemberStatus.Started);
         wasEventProcessed = true;
         break;
-      default:
-        // Other states do respond to this event
-    }
-
-    return wasEventProcessed;
-  }
-
-  public boolean cancelFiftyRefund()
-  {
-    boolean wasEventProcessed = false;
-    
-    MemberStatus aMemberStatus = memberStatus;
-    switch (aMemberStatus)
-    {
-      case Paid:
+      case Finished:
+        setMemberStatus(MemberStatus.Finished);
+        wasEventProcessed = true;
+        break;
+      case Banned:
+        setMemberStatus(MemberStatus.Banned);
+        wasEventProcessed = true;
+        break;
+      case Cancelled:
         setMemberStatus(MemberStatus.Cancelled);
         wasEventProcessed = true;
         break;
@@ -223,15 +201,31 @@ public class Member extends NamedUser
     return wasEventProcessed;
   }
 
-  public boolean finish()
+  public boolean finishTrip()
   {
     boolean wasEventProcessed = false;
     
     MemberStatus aMemberStatus = memberStatus;
     switch (aMemberStatus)
     {
-      case TripStart:
-        setMemberStatus(MemberStatus.TripFinish);
+      case Assigned:
+        setMemberStatus(MemberStatus.Assigned);
+        wasEventProcessed = true;
+        break;
+      case Paid:
+        setMemberStatus(MemberStatus.Paid);
+        wasEventProcessed = true;
+        break;
+      case Started:
+        setMemberStatus(MemberStatus.Finished);
+        wasEventProcessed = true;
+        break;
+      case Banned:
+        setMemberStatus(MemberStatus.Banned);
+        wasEventProcessed = true;
+        break;
+      case Cancelled:
+        setMemberStatus(MemberStatus.Cancelled);
         wasEventProcessed = true;
         break;
       default:
@@ -241,15 +235,31 @@ public class Member extends NamedUser
     return wasEventProcessed;
   }
 
-  public boolean cancelTenRefund()
+  public boolean cancelTrip()
   {
     boolean wasEventProcessed = false;
     
     MemberStatus aMemberStatus = memberStatus;
     switch (aMemberStatus)
     {
-      case TripStart:
+      case Assigned:
         setMemberStatus(MemberStatus.Cancelled);
+        wasEventProcessed = true;
+        break;
+      case Paid:
+        setMemberStatus(MemberStatus.Cancelled);
+        wasEventProcessed = true;
+        break;
+      case Started:
+        setMemberStatus(MemberStatus.Cancelled);
+        wasEventProcessed = true;
+        break;
+      case Finished:
+        setMemberStatus(MemberStatus.Finished);
+        wasEventProcessed = true;
+        break;
+      case Banned:
+        setMemberStatus(MemberStatus.Banned);
         wasEventProcessed = true;
         break;
       default:
@@ -456,7 +466,7 @@ public class Member extends NamedUser
    * @author Siger Ma
    * @param guide Guide to be assigned to the member if he asked for one
    */
-  // line 80 "../../../../../AssignmentStates.ump"
+  // line 96 "../../../../../AssignmentStates.ump"
    public boolean doAssign(Guide guide){
     int numDaysRequest = this.getNumDays();
     boolean needGuide = this.getGuideRequired();
@@ -485,21 +495,6 @@ public class Member extends NamedUser
    public static  boolean hasWithEmail(String email){
     return getWithEmail(email) != null;
   }
-
-  /**
-   * Method checking user payment status
-   * @return boolean checking if user has paid
-   * @author Kevin Luo
-   */
-
-  public boolean hasPaid() {
-    String memberPaymentStatus = this.getMemberStatusFullName();
-    if (memberPaymentStatus.equals("Paid")) {
-      return true;
-    }
-    return false;
-  }
- 
 
 
   public String toString()
