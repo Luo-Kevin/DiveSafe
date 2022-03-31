@@ -135,7 +135,7 @@ Feature: Process assignments
 
   Scenario: Attempt to start a trip for a banned member
     Given the member with "emily@hotmail.ca" is banned
-    When the administrator attempts to start the trips for day  "4"
+    When the administrator attempts to start the trips for day "4"
     Then the error "Cannot start the trip due to a ban" shall be raised
     Then the member with email "emily@hotmail.ca" shall be "Banned"
 
