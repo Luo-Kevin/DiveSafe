@@ -10,13 +10,8 @@ import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
 import ca.mcgill.ecse.divesafe.model.Guide;
 import ca.mcgill.ecse.divesafe.model.Item;
 import ca.mcgill.ecse.divesafe.model.Member;
-import ca.mcgill.ecse.divesafe.model.Guide.AvailableStatus;
-<<<<<<< HEAD
-import ca.mcgill.ecse.divesafe.model.Member.MemberStatusRegistered;
 import ca.mcgill.ecse.divesafe.model.User;
-
-=======
->>>>>>> 8e63c912976901f1ec66830bce8d7772e2d60d9b
+import ca.mcgill.ecse.divesafe.model.Guide.AvailableStatus;
 
 public class AssignmentController {
   private static DiveSafe diveSafe = DiveSafeApplication.getDiveSafe();
