@@ -70,7 +70,9 @@ class Member {
         cancelFiftyRefund -> Unregistered;
       }
       TripStart {
-        finish -> TripFinish;
+        finish / {
+          doFinishTrip (member);
+        } -> TripFinish;
         cancelTenRefund -> Unregistered;
       }
     }
@@ -93,5 +95,9 @@ class Member {
         assignment.setGuide(guide);
       }
     }
+  }
+
+  public void doFinishTrip(Member member) {
+
   }
 }

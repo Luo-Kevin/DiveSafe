@@ -8,6 +8,7 @@ import ca.mcgill.ecse.divesafe.model.DiveSafe;
 import ca.mcgill.ecse.divesafe.model.Equipment;
 import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
 import ca.mcgill.ecse.divesafe.model.Item;
+import ca.mcgill.ecse.divesafe.model.Member;
 
 public class AssignmentController {
   private static DiveSafe diveSafe = DiveSafeApplication.getDiveSafe();
@@ -34,7 +35,10 @@ public class AssignmentController {
   }
 
   public static String finishTrip(String userEmail) {
-    
+    Member aMember = Member.getWithEmail(userEmail);
+    if (aMember.getMemberStatusRegistered().name().equals("TripStart")) {
+      
+    }
     return null;
   }
 
