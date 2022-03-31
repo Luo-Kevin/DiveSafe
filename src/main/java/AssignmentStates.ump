@@ -54,27 +54,38 @@ class Member {
     Unassigned {
       assign (Guide guide) [doAssign(guide)] -> Assigned;
     }
-    Assigned {
-      pay -> Paid;
-      cancelNoPenalty -> Cancelled;
-      ban -> Banned;
-      start [!paid] / {
-        doBan();
-      }-> TripStart;
+    MemberStatusRegistered {
+      cancelTrip -> Cancelled;
+      Assigned {
+        confirmPayment -> Paid;
+        startTrip [!paid()] -> Banned;
+        finishTrip -> Assigned;
+      }
+      Paid {
+        startTrip [paid()] -> Started;
+        finishTrip -> Paid;
+      }
+      Started {
+        finishTrip -> Finished;
+        confirmPayment -> Started;
+      }
     }
-    Paid {
-      start [paid] / {
-        doStart();
-        }-> TripStart;
-      cancelFiftyRefund -> Cancelled;
+    Finished{
+      confirmPayment -> Finished;
+      startTrip -> Finished;
+      cancelTrip -> Finished;
     }
-    TripStart {
-      finish -> TripFinish;
-      cancelTenRefund -> Cancelled;
+    Banned{
+      confirmPayment -> Banned;
+      startTrip -> Banned;
+      cancelTrip -> Banned;
+      finishTrip -> Banned;
     }
-    TripFinish{}
-    Banned{}
-    Cancelled{}
+    Cancelled{
+      confirmPayment -> Cancelled;
+      startTrip -> Cancelled;
+      finishTrip -> Cancelled;
+    }
   }
 
   public boolean doStart(int day) { 
@@ -112,4 +123,5 @@ class Member {
     }
     return false;
   }
+
 }
