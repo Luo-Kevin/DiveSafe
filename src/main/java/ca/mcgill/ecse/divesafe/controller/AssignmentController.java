@@ -85,9 +85,11 @@ public class AssignmentController {
    */
 
   public static String confirmPayment(String userEmail, String authorizationCode) {
+
     //Checks email exist
     if(!Member.hasWithEmail(userEmail)){
-      return userEmail;
+      return String.format("Member with email address %s does not exist", userEmail);
+      // return userEmail;
     }
 
     //Checks authorization code validity
@@ -116,7 +118,7 @@ public class AssignmentController {
     //Update user payment status
     if(User.hasWithEmail(userEmail) && !(authorizationCode.isBlank()) && member.getMemberStatusFullName().equals("Assigned")){
       member.pay();
-      return "";
+      return authorizationCode;
     }
 
     return null;

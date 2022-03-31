@@ -3,7 +3,7 @@ package ca.mcgill.ecse.divesafe.features;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.sql.Date;
@@ -263,32 +263,46 @@ public class AssignmentFeatureStepDefinitions {
 
         AssignmentController.initiateAssignment();
   }
-
+/**
+ * @author Jiahao Zhao
+ * @param userEmail
+ * @param authorizationCode
+ */
   @When("the administrator attempts to confirm payment for {string} using authorization code {string}")
   public void the_administrator_attempts_to_confirm_payment_for_using_authorization_code(
       String userEmail, String authorizationCode) {
         error = AssignmentController.confirmPayment(userEmail, authorizationCode);
   }
 
+  /**
+   * @author Kevin Luo
+  */
   @Then("the assignment for {string} shall record the authorization code {string}")
   public void the_assignment_for_shall_record_the_authorization_code(String userEmail,
       String authorizationCode) {
-
-        //make changes to the ump file to allow for authorization of code
+        assertEquals(authorizationCode, error);
       
   }
 
+  /**
+   * @author Kevin Luo
+   */
   @Then("the member account with the email {string} does not exist")
-  public void the_member_account_with_the_email_does_not_exist(String expectedError) {
-    assertEquals(expectedError, error);
-
+  public void the_member_account_with_the_email_does_not_exist(String email) {
+    assertEquals(null, Member.getWithEmail(email));
   }
 
+ /**
+   * @author Kevin Luo
+   */
   @Then("there are {string} members in the system")
-  public void there_are_members_in_the_system(String expectedError) {
-//    assertEquals(expectedError, error);
+  public void there_are_members_in_the_system(String number) {
+    assertEquals(number, String.valueOf(diveSafe.getMembers().size()));
   }
 
+ /**
+   * @author Kevin Luo
+   */
   @Then("the error {string} shall be raised")
   public void the_error_shall_be_raised(String expectedError) {
     assertEquals(expectedError, error);
