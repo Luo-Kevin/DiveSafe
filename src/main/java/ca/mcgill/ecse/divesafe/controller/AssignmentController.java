@@ -85,7 +85,6 @@ public class AssignmentController {
    */
 
   public static String confirmPayment(String userEmail, String authorizationCode) {
-
     //Checks email exist
     if(!Member.hasWithEmail(userEmail)){
       return String.format("Member with email address %s does not exist", userEmail);
@@ -100,7 +99,7 @@ public class AssignmentController {
     Member member =  Member.getWithEmail(userEmail);
 
     if(member.getMemberStatusFullName().equals("Paid")){
-      return "Trip has been already paid for";
+      return "Trip has already been paid for";
     }
 
     if(member.getMemberStatusFullName().equals("Cancelled")){
@@ -117,8 +116,8 @@ public class AssignmentController {
 
     //Update user payment status
     if(User.hasWithEmail(userEmail) && !(authorizationCode.isBlank()) && member.getMemberStatusFullName().equals("Assigned")){
-      member.pay();
-      return authorizationCode;
+    member.pay();
+    return authorizationCode;
     }
 
     return null;

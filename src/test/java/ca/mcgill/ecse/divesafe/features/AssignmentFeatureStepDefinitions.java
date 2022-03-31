@@ -310,13 +310,19 @@ public class AssignmentFeatureStepDefinitions {
 
   @When("the administrator attempts to cancel the trip for {string}")
   public void the_administrator_attempts_to_cancel_the_trip_for(String expectedError) {
-    // Write code here that turns the phrase above into concrete actions
-  }
+    throw new io.cucumber.java.PendingException();
 
+
+  }
+/**
+ * @author Kevin Luo
+ * @param userEmail
+ */
   @Given("the member with {string} has paid for their trip")
-  public void the_member_with_has_paid_for_their_trip(String expectedError) {
-    // Write code here that turns the phrase above into concrete actions
-    }
+  public void the_member_with_has_paid_for_their_trip(String userEmail) {
+    error = AssignmentController.confirmPayment(userEmail, "PAYup");
+  
+  }
 
   @Then("the member with email address {string} shall receive a refund of {string} percent")
   public void the_member_with_email_address_shall_receive_a_refund_of_percent(String string,
