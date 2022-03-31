@@ -486,6 +486,21 @@ public class Member extends NamedUser
     return getWithEmail(email) != null;
   }
 
+  /**
+   * Method checking user payment status
+   * @return boolean checking if user has paid
+   * @author Kevin Luo
+   */
+
+  public boolean hasPaid() {
+    String memberPaymentStatus = this.getMemberStatusFullName();
+    if (memberPaymentStatus.equals("Paid")) {
+      return true;
+    }
+    return false;
+  }
+ 
+
 
   public String toString()
   {

@@ -10,6 +10,7 @@ import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
 import ca.mcgill.ecse.divesafe.model.Guide;
 import ca.mcgill.ecse.divesafe.model.Item;
 import ca.mcgill.ecse.divesafe.model.Member;
+import ca.mcgill.ecse.divesafe.model.User;
 import ca.mcgill.ecse.divesafe.model.Guide.AvailableStatus;
 
 public class AssignmentController {
@@ -75,7 +76,50 @@ public class AssignmentController {
     return null;
   }
 
+  /**
+   * Method confirms payment for user and updates their MemberStatus
+   * @param userEmail - email related to payment
+   * @param authorizationCode - authorization code related to payment
+   * @return error message related to user input
+   * @author Kevin Luo
+   */
+
   public static String confirmPayment(String userEmail, String authorizationCode) {
+    //Checks email exist
+    if(!Member.hasWithEmail(userEmail)){
+      return String.format("Member with email address %s does not exist", userEmail);
+      // return userEmail;
+    }
+
+    //Checks authorization code validity
+    if(authorizationCode.isBlank()){
+      return "Invalid authorization code";
+    }
+
+    Member member =  Member.getWithEmail(userEmail);
+
+    if(member.getMemberStatusFullName().equals("Paid")){
+      return "Trip has already been paid for";
+    }
+
+    if(member.getMemberStatusFullName().equals("Cancelled")){
+      return "Cannot pay for a trip which has been cancelled";
+    }
+
+    if(member.getMemberStatusFullName().equals("TripFinish")){
+      return "Cannot pay for a trip which has finished";
+    }
+
+    if(member.getMemberStatusFullName().equals("Banned")){
+      return "Cannot pay for the trip due to a ban";
+    }
+
+    //Update user payment status
+    if(User.hasWithEmail(userEmail) && !(authorizationCode.isBlank()) && member.getMemberStatusFullName().equals("Assigned")){
+    member.pay();
+    return authorizationCode;
+    }
+
     return null;
   }
 

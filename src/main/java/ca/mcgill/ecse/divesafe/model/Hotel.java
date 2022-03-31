@@ -4,7 +4,7 @@
 package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
-// line 34 "../../../../../DiveSafePersistence.ump"
+// line 36 "../../../../../DiveSafePersistence.ump"
 // line 122 "../../../../../DiveSafe.ump"
 // line 226 "../../../../../DiveSafe.ump"
 public class Hotel
@@ -274,7 +274,7 @@ public class Hotel
     }
   }
 
-  // line 36 "../../../../../DiveSafePersistence.ump"
+  // line 38 "../../../../../DiveSafePersistence.ump"
    public static  void reinitializeUniqueName(List<Hotel> hotels){
     hotelsByName.clear();
     for (var hotel : hotels) {

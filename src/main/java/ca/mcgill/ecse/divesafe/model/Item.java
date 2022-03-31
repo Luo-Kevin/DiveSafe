@@ -4,7 +4,7 @@
 package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
-// line 22 "../../../../../DiveSafePersistence.ump"
+// line 24 "../../../../../DiveSafePersistence.ump"
 // line 78 "../../../../../DiveSafe.ump"
 // line 204 "../../../../../DiveSafe.ump"
 public abstract class Item
@@ -189,7 +189,7 @@ public abstract class Item
     }
   }
 
-  // line 24 "../../../../../DiveSafePersistence.ump"
+  // line 26 "../../../../../DiveSafePersistence.ump"
    public static  void reinitializeUniqueName(List<Equipment> equipments, List<EquipmentBundle> bundles){
     itemsByName.clear();
     for (var e : equipments) {
