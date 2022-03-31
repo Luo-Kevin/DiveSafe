@@ -11,7 +11,6 @@ import ca.mcgill.ecse.divesafe.model.Guide;
 import ca.mcgill.ecse.divesafe.model.Item;
 import ca.mcgill.ecse.divesafe.model.Member;
 import ca.mcgill.ecse.divesafe.model.Guide.AvailableStatus;
-import ca.mcgill.ecse.divesafe.model.Member.MemberStatusRegistered;
 
 public class AssignmentController {
   private static DiveSafe diveSafe = DiveSafeApplication.getDiveSafe();
@@ -35,23 +34,33 @@ public class AssignmentController {
    * they asked for one) and their trip's schedule
    * 
    * @author Siger Ma
-   * @return
+   * @return error string if there is one
    */
 
   public static String initiateAssignment() {
+
+    String error = "";
+
+    // Assign members
     List<Guide> currentGuides = diveSafe.getGuides();
-    if (currentGuides.isEmpty() || currentGuides == null) {
-      List<Member> currentMembers = diveSafe.getMembers();
-      for (Member member : currentMembers) {
-        member.assign(null);
-      }
-    } else {
-      for (Guide guide : currentGuides) {
-        guide.bookGuide();
-      }
+
+    for (Guide guide : currentGuides) {
+      guide.bookGuide();
     }
 
-    return null;
+    // get all unassigned members and return error if not empty
+    List <Member> currentMemberList = diveSafe.getMembers();
+    int count = 0;
+    for (Member currentMember : currentMemberList) {
+      if (currentMember.getMemberStatusFullName() == "Unassigned") {
+        count++;
+      }
+    }
+    if (count != 0) {
+      error = "Assignments could not be completed for all members";
+    }
+
+    return error;
   }
 
   public static String cancelTrip(String userEmail) {
