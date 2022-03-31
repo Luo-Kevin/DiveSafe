@@ -34,6 +34,7 @@ public class AssignmentController {
   }
 
   public static String finishTrip(String userEmail) {
+    
     return null;
   }
 
