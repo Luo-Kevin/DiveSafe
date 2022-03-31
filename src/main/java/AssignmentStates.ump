@@ -58,9 +58,14 @@ class Member {
       pay -> Paid;
       cancelNoPenalty -> Cancelled;
       ban -> Banned;
+      start [!paid] / {
+        doBan();
+      }-> TripStart;
     }
     Paid {
-      start -> TripStart;
+      start [paid] / {
+        doStart();
+        }-> TripStart;
       cancelFiftyRefund -> Cancelled;
     }
     TripStart {
@@ -70,6 +75,22 @@ class Member {
     TripFinish{}
     Banned{}
     Cancelled{}
+  }
+
+  public boolean doStart(int day) { 
+    Assignment assignment =  diveSafe.getAssignment(this);
+
+    List <Member> currentMemberList = diveSafe.getMembers();
+    for (Member member : currentMemberList) { 
+      if(member.getAssignment.getStartDay == day) { 
+        return true;
+      }
+    }
+  return false;
+  }
+
+  public boolean doBan(){
+
   }
 
   // Method for the members to be assigned to their schedule and to their guide if they asked for one.

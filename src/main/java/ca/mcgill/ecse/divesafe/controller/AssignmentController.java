@@ -72,7 +72,10 @@ public class AssignmentController {
   }
 
   public static String startTripsForDay(int day) {
-    return null;
+    String error = "";
+    
+
+    return error;
   }
 
   public static String confirmPayment(String userEmail, String authorizationCode) {

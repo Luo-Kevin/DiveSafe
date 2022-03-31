@@ -21,6 +21,7 @@ import ca.mcgill.ecse.divesafe.model.Guide;
 import ca.mcgill.ecse.divesafe.model.Item;
 import ca.mcgill.ecse.divesafe.model.Member;
 import ca.mcgill.ecse.divesafe.model.User;
+import ca.mcgill.ecse.divesafe.model.Member.MemberStatus;
 
 
 
@@ -301,9 +302,11 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   @Given("the member with {string} has paid for their trip")
-  public void the_member_with_has_paid_for_their_trip(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_member_with_has_paid_for_their_trip(String memberEmail) {
+    // set Member's status to paid
+    Member member = Member.getWithEmail(memberEmail);
+    member.pay();
+  
   }
 
   @Then("the member with email address {string} shall receive a refund of {string} percent")
