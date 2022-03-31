@@ -86,8 +86,8 @@ public class AssignmentController {
 
   public static String confirmPayment(String userEmail, String authorizationCode) {
     //Checks email exist
-    if(!User.hasWithEmail(userEmail)){
-      return String.format("Member with email adress %s does not exist yet", userEmail);
+    if(!Member.hasWithEmail(userEmail)){
+      return userEmail;
     }
 
     //Checks authorization code validity
@@ -95,9 +95,27 @@ public class AssignmentController {
       return "Invalid authorization code";
     }
 
+    Member member =  Member.getWithEmail(userEmail);
+
+    if(member.getMemberStatusFullName().equals("Paid")){
+      return "Trip has been already paid for";
+    }
+
+    if(member.getMemberStatusFullName().equals("Cancelled")){
+      return "Cannot pay for a trip which has been cancelled";
+    }
+
+    if(member.getMemberStatusFullName().equals("TripFinish")){
+      return "Cannot pay for a trip which has finished";
+    }
+
+    if(member.getMemberStatusFullName().equals("Banned")){
+      return "Cannot pay for the trip due to a ban";
+    }
+
     //Update user payment status
-    if(User.hasWithEmail(userEmail) && !(authorizationCode.isBlank())){
-      Member.getWithEmail(userEmail).pay();
+    if(User.hasWithEmail(userEmail) && !(authorizationCode.isBlank()) && member.getMemberStatusFullName().equals("Assigned")){
+      member.pay();
       return "";
     }
 

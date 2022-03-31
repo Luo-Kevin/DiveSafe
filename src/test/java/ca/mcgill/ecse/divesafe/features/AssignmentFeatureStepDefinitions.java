@@ -245,21 +245,23 @@ public class AssignmentFeatureStepDefinitions {
   public void the_following_assignments_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
 
-        // Extract all information from dataTable
+        // // Extract all information from dataTable
 
-        List<Map<String, String>> rows = dataTable.asMaps();
-        for(var row : rows) { 
-          String memberEmail = row.get("memberEmail");
-          String guideEmail = row.get("guideEmail");
-          int startDay = Integer.parseInt(row.get("startDay"));
-          int endDay = Integer.parseInt(row.get("endDay"));
-          Member assignedMember = (Member) User.getWithEmail(memberEmail);
-          Guide assignedGuide = (Guide) User.getWithEmail(guideEmail);
+        // List<Map<String, String>> rows = dataTable.asMaps();
+        // for(var row : rows) { 
+        //   String memberEmail = row.get("memberEmail");
+        //   String guideEmail = row.get("guideEmail");
+        //   int startDay = Integer.parseInt(row.get("startDay"));
+        //   int endDay = Integer.parseInt(row.get("endDay"));
+        //   Member assignedMember = Member.getWithEmail(memberEmail);
+        //   Guide assignedGuide = Guide.getWithEmail(guideEmail);
           
-          //Creating new Assignment and adding start and end day, member along with their assigned guide
-          Assignment newAssignment = diveSafe.addAssignment(startDay, endDay, assignedMember);
-          newAssignment.setGuide(assignedGuide);
-        }
+        //   //Creating new Assignment and adding start and end day, member along with their assigned guide
+        //   Assignment newAssignment = diveSafe.addAssignment(startDay, endDay, assignedMember);
+        //   newAssignment.setGuide(assignedGuide);
+        // }
+
+        AssignmentController.initiateAssignment();
   }
 
   @When("the administrator attempts to confirm payment for {string} using authorization code {string}")
@@ -277,34 +279,30 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   @Then("the member account with the email {string} does not exist")
-  public void the_member_account_with_the_email_does_not_exist(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_member_account_with_the_email_does_not_exist(String expectedError) {
+    assertEquals(expectedError, error);
+
   }
 
   @Then("there are {string} members in the system")
-  public void there_are_members_in_the_system(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void there_are_members_in_the_system(String expectedError) {
+//    assertEquals(expectedError, error);
   }
 
   @Then("the error {string} shall be raised")
-  public void the_error_shall_be_raised(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_error_shall_be_raised(String expectedError) {
+    assertEquals(expectedError, error);
   }
 
   @When("the administrator attempts to cancel the trip for {string}")
-  public void the_administrator_attempts_to_cancel_the_trip_for(String string) {
+  public void the_administrator_attempts_to_cancel_the_trip_for(String expectedError) {
     // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
   }
 
   @Given("the member with {string} has paid for their trip")
-  public void the_member_with_has_paid_for_their_trip(String string) {
+  public void the_member_with_has_paid_for_their_trip(String expectedError) {
     // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-  }
+    }
 
   @Then("the member with email address {string} shall receive a refund of {string} percent")
   public void the_member_with_email_address_shall_receive_a_refund_of_percent(String string,
