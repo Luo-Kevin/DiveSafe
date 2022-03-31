@@ -58,11 +58,11 @@ class Member {
       cancelTrip -> Cancelled;
       Assigned {
         confirmPayment -> Paid;
-        startTrip [!paid()] -> Banned;
+        startTrip -> Banned;
         finishTrip -> Assigned;
       }
       Paid {
-        startTrip [paid()] -> Started;
+        startTrip -> Started;
         finishTrip -> Paid;
       }
       Started {
@@ -72,15 +72,16 @@ class Member {
     }
     Finished{
       confirmPayment -> Finished;
-      startTrip -> Finished;
+      startTrip(int day) -> Finished;
       cancelTrip -> Finished;
     }
     Banned{
       confirmPayment -> Banned;
-      startTrip -> Banned;
+      startTrip(int day) -> Banned;
       cancelTrip -> Banned;
       finishTrip -> Banned;
     }
+
     Cancelled{
       confirmPayment -> Cancelled;
       startTrip -> Cancelled;
@@ -88,21 +89,21 @@ class Member {
     }
   }
 
-  public boolean doStart(int day) { 
-    Assignment assignment =  diveSafe.getAssignment(this);
+  // public boolean doStart(int day) { 
+  //   Assignment assignment =  diveSafe.getAssignment(this);
 
-    List <Member> currentMemberList = diveSafe.getMembers();
-    for (Member member : currentMemberList) { 
-      if(member.getAssignment.getStartDay == day) { 
-        return true;
-      }
-    }
-  return false;
-  }
+  //   List <Member> currentMemberList = diveSafe.getMembers();
+  //   for (Member member : currentMemberList) { 
+  //     if(member.getAssignment.getStartDay == day) { 
+  //       return true;
+  //     }
+  //   }
+  // return false;
+  // }
 
-  public boolean doBan(){
+  // public boolean doBan(){
 
-  }
+  // }
 
   // Method for the members to be assigned to their schedule and to their guide if they asked for one.
   // @author Siger Ma

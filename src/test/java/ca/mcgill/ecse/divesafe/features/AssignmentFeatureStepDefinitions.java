@@ -249,21 +249,23 @@ public class AssignmentFeatureStepDefinitions {
   public void the_following_assignments_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
 
-        // Extract all information from dataTable
+        // // Extract all information from dataTable
 
-        List<Map<String, String>> rows = dataTable.asMaps();
-        for(var row : rows) { 
-          String memberEmail = row.get("memberEmail");
-          String guideEmail = row.get("guideEmail");
-          int startDay = Integer.parseInt(row.get("startDay"));
-          int endDay = Integer.parseInt(row.get("endDay"));
-          Member assignedMember = (Member) User.getWithEmail(memberEmail);
-          Guide assignedGuide = (Guide) User.getWithEmail(guideEmail);
+        // List<Map<String, String>> rows = dataTable.asMaps();
+        // for(var row : rows) { 
+        //   String memberEmail = row.get("memberEmail");
+        //   String guideEmail = row.get("guideEmail");
+        //   int startDay = Integer.parseInt(row.get("startDay"));
+        //   int endDay = Integer.parseInt(row.get("endDay"));
+        //   Member assignedMember = (Member) User.getWithEmail(memberEmail);
+        //   Guide assignedGuide = (Guide) User.getWithEmail(guideEmail);
           
-          //Creating new Assignment and adding start and end day, member along with their assigned guide
-          Assignment newAssignment = diveSafe.addAssignment(startDay, endDay, assignedMember);
-          newAssignment.setGuide(assignedGuide);
-        }
+        //   //Creating new Assignment and adding start and end day, member along with their assigned guide
+        //   Assignment newAssignment = diveSafe.addAssignment(startDay, endDay, assignedMember);
+        //   newAssignment.setGuide(assignedGuide);
+          
+        // }
+        AssignmentController.initiateAssignment();
   }
 
   @When("the administrator attempts to confirm payment for {string} using authorization code {string}")
@@ -304,11 +306,14 @@ public class AssignmentFeatureStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
 
+  /**
+   * @author Jiahao Zhao
+   */
   @Given("the member with {string} has paid for their trip")
   public void the_member_with_has_paid_for_their_trip(String memberEmail) {
     // set Member's status to paid
     Member member = Member.getWithEmail(memberEmail);
-    member.pay();
+    member.confirmPayment();
   
   }
 
@@ -319,10 +324,17 @@ public class AssignmentFeatureStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
 
+  /**
+   * @author Jiahao Zhao
+   */
+
   @Given("the member with {string} has started their trip")
-  public void the_member_with_has_started_their_trip(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_member_with_has_started_their_trip(String memberEmail) {
+    // set Member's status to Paid
+    Member member = Member.getWithEmail(memberEmail);
+    member.confirmPayment();
+    // set status to Started
+    member.startTrip(member.getAssignment().getStartDay());
   }
 
   @When("the administrator attempts to finish the trip for the member with email {string}")
@@ -332,10 +344,15 @@ public class AssignmentFeatureStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
 
+  /**
+   * @author Jiahao Zhao
+   */
+
   @Given("the member with {string} is banned")
-  public void the_member_with_is_banned(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_member_with_is_banned(String memberEmail) {
+    //set member status to banned by calling startTrip without having paid
+    Member member = Member.getWithEmail(memberEmail);
+    member.startTrip(member.getAssignment().getStartDay());
   }
 
   @Then("the member with email {string} shall be {string}")
@@ -345,9 +362,10 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   @When("the administrator attempts to start the trips for day {string}")
-  public void the_administrator_attempts_to_start_the_trips_for_day(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_administrator_attempts_to_start_the_trips_for_day(String day) {
+
+    error = AssignmentController.startTripsForDay(Integer.parseInt(day));
+    
   }
 
   @Given("the member with {string} has cancelled their trip")

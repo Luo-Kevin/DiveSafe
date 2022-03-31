@@ -49,7 +49,7 @@ public class AssignmentController {
     }
 
     // get all unassigned members and return error if not empty
-    List <Member> currentMemberList = diveSafe.getMembers();
+    List<Member> currentMemberList = diveSafe.getMembers();
     int count = 0;
     for (Member currentMember : currentMemberList) {
       if (currentMember.getMemberStatusFullName() == "Unassigned") {
@@ -71,10 +71,27 @@ public class AssignmentController {
     return null;
   }
 
+  /**
+   * 
+   * @author Jiahao Zhao
+   * 
+   * Method that starts the trip for all members that have paid in accordance 
+   * with their schedule
+   * @param day Input parameter that determines the members that leave on a particular day
+   * in accordance with their schedule
+   * @return
+   */
+
   public static String startTripsForDay(int day) {
     String error = "";
-    
-
+    List<Member> currentMemberList = diveSafe.getMembers();
+    for (Member member : currentMemberList) {
+      // if(member.getAssignment().getStartDay() == day) {
+      // member.startTrip();
+      // }
+      // }
+      member.startTrip(day);
+    }
     return error;
   }
 
