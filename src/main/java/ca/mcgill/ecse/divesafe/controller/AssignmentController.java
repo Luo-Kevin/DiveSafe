@@ -50,7 +50,7 @@ public class AssignmentController {
     }
 
     // get all unassigned members and return error if not empty
-    List <Member> currentMemberList = diveSafe.getMembers();
+    List<Member> currentMemberList = diveSafe.getMembers();
     int count = 0;
     for (Member currentMember : currentMemberList) {
       if (currentMember.getMemberStatusFullName() == "Unassigned") {
@@ -72,8 +72,37 @@ public class AssignmentController {
     return null;
   }
 
+  /**
+   * 
+   * @author Jiahao Zhao
+   * 
+   * Method that starts the trip for all members that have paid in accordance 
+   * with their schedule
+   * @param day Input parameter that determines the members that leave on a particular day
+   * in accordance with their schedule
+   * @return
+   */
+
   public static String startTripsForDay(int day) {
-    return null;
+    String error = "";
+    List<Member> currentMemberList = diveSafe.getMembers();
+    for (Member member : currentMemberList) {
+      // if(member.getAssignment().getStartDay() == day) {
+      // member.startTrip();
+      // }
+      // }
+      member.startTrip(day);
+      if(member.getMemberStatusFullName().equals("Banned")){
+        error =  "Cannot start the trip due to a ban";
+      }
+      if(member.getMemberStatusFullName().equals("Cancelled")){
+        error = "Cannot start a trip which has been cancelled";
+      }
+      if(member.getMemberStatusFullName().equals("Finished")) {
+        error = "Cannot start a trip which has finished";
+      }
+    }
+    return error;
   }
 
   /**
@@ -102,6 +131,10 @@ public class AssignmentController {
       return "Trip has already been paid for";
     }
 
+    if(member.getMemberStatusFullName().equals("Started")){
+      return "Trip has already been paid for";
+    }
+    
     if(member.getMemberStatusFullName().equals("Cancelled")){
       return "Cannot pay for a trip which has been cancelled";
     }
@@ -116,7 +149,7 @@ public class AssignmentController {
 
     //Update user payment status
     if(User.hasWithEmail(userEmail) && !(authorizationCode.isBlank()) && member.getMemberStatusFullName().equals("Assigned")){
-    member.pay();
+    member.confirmPayment();
     return authorizationCode;
     }
 
