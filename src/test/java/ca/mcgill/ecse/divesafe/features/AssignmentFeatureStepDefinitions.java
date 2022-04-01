@@ -34,7 +34,6 @@ public class AssignmentFeatureStepDefinitions {
    * Making sure that the specified DiveSafe system exists, i.e. start date, number of days
    * and price of guide per day match.
    * @author Jiahao Zhao
-   * @param dataTable Table that contains inputs specified in the feature files
    */
 
   @Given("the following DiveSafe system exists:")
@@ -64,7 +63,6 @@ public class AssignmentFeatureStepDefinitions {
    * Add the pieces of equipment that should be present in the system before evaluating @When clause
    *
    * @author Jiahao Zhao
-   * @param dataTable Table that contains inputs specified in the feature files
    */
 
   @Given("the following pieces of equipment exist in the system:")
@@ -86,7 +84,6 @@ public class AssignmentFeatureStepDefinitions {
    * Add the bundles that should exist in the system before evaluating @When clause
    *
    * @author Jiahao Zhao
-   * @param dataTable Table that contains inputs specified in the feature files
    */
 
   @Given("the following equipment bundles exist in the system:")
@@ -123,7 +120,6 @@ public class AssignmentFeatureStepDefinitions {
    * Add the guides that should exist in the system before evaluating @When clause
    *
    * @author Jiahao Zhao
-   * @param dataTable Table that contains inputs specified in the feature files
    */
   @Given("the following guides exist in the system:")
   public void the_following_guides_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
@@ -147,7 +143,6 @@ public class AssignmentFeatureStepDefinitions {
    * Add members that should exist in diveSafe prior to evaluating the @When clause
    *
    * @author Jiahao Zhao
-   * @param dataTable
    */
 
   @Given("the following members exist in the system:")
@@ -242,36 +237,19 @@ public class AssignmentFeatureStepDefinitions {
    * Add assignments that should exist in the system prior to evaluating @When clause
    *
    * @author Jiahao Zhao
-   * @param dataTable
    */
 
   @Given("the following assignments exist in the system:")
   public void the_following_assignments_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
 
-        // // Extract all information from dataTable
-
-        // List<Map<String, String>> rows = dataTable.asMaps();
-        // for(var row : rows) { 
-        //   String memberEmail = row.get("memberEmail");
-        //   String guideEmail = row.get("guideEmail");
-        //   int startDay = Integer.parseInt(row.get("startDay"));
-        //   int endDay = Integer.parseInt(row.get("endDay"));
-        //   Member assignedMember = Member.getWithEmail(memberEmail);
-        //   Guide assignedGuide = Guide.getWithEmail(guideEmail);
-          
-        //   //Creating new Assignment and adding start and end day, member along with their assigned guide
-        //   Assignment newAssignment = diveSafe.addAssignment(startDay, endDay, assignedMember);
-        //   newAssignment.setGuide(assignedGuide);
-        // }
-
         AssignmentController.initiateAssignment();
   }
+
 /**
  * @author Jiahao Zhao
- * @param userEmail
- * @param authorizationCode
  */
+
   @When("the administrator attempts to confirm payment for {string} using authorization code {string}")
   public void the_administrator_attempts_to_confirm_payment_for_using_authorization_code(
       String userEmail, String authorizationCode) {
@@ -316,11 +294,9 @@ public class AssignmentFeatureStepDefinitions {
   public void the_administrator_attempts_to_cancel_the_trip_for(String expectedError) {
     throw new io.cucumber.java.PendingException();
 
-
   }
 /**
  * @author Kevin Luo
- * @param userEmail
  */
   @Given("the member with {string} has paid for their trip")
   public void the_member_with_has_paid_for_their_trip(String userEmail) {
@@ -366,11 +342,18 @@ public class AssignmentFeatureStepDefinitions {
     member.startTrip(member.getAssignment().getStartDay());
   }
 
+  /**
+   * @author Jiahao Zhao
+   */
+
   @Then("the member with email {string} shall be {string}")
   public void the_member_with_email_shall_be(String memberEmail, String state) {
     Member member = Member.getWithEmail(memberEmail);
     assertEquals(state, member.getMemberStatusFullName());
   }
+  /**
+   * @author Jiahao Zhao
+   */
 
   @When("the administrator attempts to start the trips for day {string}")
   public void the_administrator_attempts_to_start_the_trips_for_day(String day) {
