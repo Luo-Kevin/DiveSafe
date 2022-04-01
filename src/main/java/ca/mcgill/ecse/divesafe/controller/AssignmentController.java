@@ -78,7 +78,7 @@ public class AssignmentController {
    */
   public static String finishTrip(String userEmail) {
 
-    String error = "";
+    String error = "0";
     
     Member aMember = Member.getWithEmail(userEmail);
     if(!Member.hasWithEmail(userEmail)){
