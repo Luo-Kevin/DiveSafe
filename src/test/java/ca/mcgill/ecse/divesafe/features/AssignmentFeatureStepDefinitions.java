@@ -313,14 +313,24 @@ public class AssignmentFeatureStepDefinitions {
   
   }
 
+   /**
+    * If 
+    * @author Zahra Landou
+    * @param userEmail
+    * @param refund
+    */
   
   @Then("the member with email address {string} shall receive a refund of {string} percent")
   public void the_member_with_email_address_shall_receive_a_refund_of_percent(String userEmail,
       String refund) {
    
    Member member = Member.getWithEmail(userEmail);
-   //assertEquals(Integer.parseInt(refund), member. );
-
+   //
+    if(member.getMemberStatusFullName().equals("Paid"))
+      assertEquals(50, Integer.parseInt(refund) );
+  
+      if(member.getMemberStatusFullName().equals("Started"))
+      assertEquals(10, Integer.parseInt(refund) );
   }
 
   /**
