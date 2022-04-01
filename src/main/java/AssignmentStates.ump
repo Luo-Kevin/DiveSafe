@@ -54,21 +54,21 @@ class Member {
     Unassigned {
       assign (Guide guide) [doAssign(guide)] -> Assigned;
     }
-    MemberStatusRegistered {
+    Assigned {
+      confirmPayment -> Paid;
+      startTrip -> Banned;
+      finishTrip -> Assigned;
       cancelTrip -> Cancelled;
-      Assigned {
-        confirmPayment -> Paid;
-        startTrip -> Banned;
-        finishTrip -> Assigned;
-      }
-      Paid {
-        startTrip -> Started;
-        finishTrip -> Paid;
-      }
-      Started {
-        finishTrip -> Finished;
-        confirmPayment -> Started;
-      }
+    }
+    Paid {
+      startTrip -> Started;
+      finishTrip -> Paid;
+      cancelTrip -> Cancelled;
+    }
+    Started {
+      finishTrip -> Finished;
+      confirmPayment -> Started;
+      cancelTrip -> Cancelled;
     }
     Finished{
       confirmPayment -> Finished;

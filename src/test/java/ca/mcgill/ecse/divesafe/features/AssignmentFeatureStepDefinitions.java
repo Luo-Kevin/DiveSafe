@@ -3,7 +3,7 @@ package ca.mcgill.ecse.divesafe.features;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.sql.Date;
@@ -257,63 +257,74 @@ public class AssignmentFeatureStepDefinitions {
         //   String guideEmail = row.get("guideEmail");
         //   int startDay = Integer.parseInt(row.get("startDay"));
         //   int endDay = Integer.parseInt(row.get("endDay"));
-        //   Member assignedMember = (Member) User.getWithEmail(memberEmail);
-        //   Guide assignedGuide = (Guide) User.getWithEmail(guideEmail);
+        //   Member assignedMember = Member.getWithEmail(memberEmail);
+        //   Guide assignedGuide = Guide.getWithEmail(guideEmail);
           
         //   //Creating new Assignment and adding start and end day, member along with their assigned guide
         //   Assignment newAssignment = diveSafe.addAssignment(startDay, endDay, assignedMember);
         //   newAssignment.setGuide(assignedGuide);
-          
         // }
+
         AssignmentController.initiateAssignment();
   }
-
+/**
+ * @author Jiahao Zhao
+ * @param userEmail
+ * @param authorizationCode
+ */
   @When("the administrator attempts to confirm payment for {string} using authorization code {string}")
   public void the_administrator_attempts_to_confirm_payment_for_using_authorization_code(
       String userEmail, String authorizationCode) {
         error = AssignmentController.confirmPayment(userEmail, authorizationCode);
   }
 
+  /**
+   * @author Kevin Luo
+  */
   @Then("the assignment for {string} shall record the authorization code {string}")
   public void the_assignment_for_shall_record_the_authorization_code(String userEmail,
       String authorizationCode) {
-
-        //make changes to the ump file to allow for authorization of code
+        assertEquals(authorizationCode, error);
       
   }
 
+  /**
+   * @author Kevin Luo
+   */
   @Then("the member account with the email {string} does not exist")
-  public void the_member_account_with_the_email_does_not_exist(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_member_account_with_the_email_does_not_exist(String email) {
+    assertEquals(null, Member.getWithEmail(email));
   }
 
+ /**
+   * @author Kevin Luo
+   */
   @Then("there are {string} members in the system")
-  public void there_are_members_in_the_system(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void there_are_members_in_the_system(String number) {
+    assertEquals(number, String.valueOf(diveSafe.getMembers().size()));
   }
 
+ /**
+   * @author Kevin Luo
+   */
   @Then("the error {string} shall be raised")
-  public void the_error_shall_be_raised(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_error_shall_be_raised(String expectedError) {
+    assertEquals(expectedError, error);
   }
 
   @When("the administrator attempts to cancel the trip for {string}")
-  public void the_administrator_attempts_to_cancel_the_trip_for(String string) {
-    // Write code here that turns the phrase above into concrete actions
+  public void the_administrator_attempts_to_cancel_the_trip_for(String expectedError) {
     throw new io.cucumber.java.PendingException();
-  }
 
-  /**
-   * @author Jiahao Zhao
-   */
+
+  }
+/**
+ * @author Kevin Luo
+ * @param userEmail
+ */
   @Given("the member with {string} has paid for their trip")
-  public void the_member_with_has_paid_for_their_trip(String memberEmail) {
-    // set Member's status to paid
-    Member member = Member.getWithEmail(memberEmail);
-    member.confirmPayment();
+  public void the_member_with_has_paid_for_their_trip(String userEmail) {
+    error = AssignmentController.confirmPayment(userEmail, "PAYup");
   
   }
 
