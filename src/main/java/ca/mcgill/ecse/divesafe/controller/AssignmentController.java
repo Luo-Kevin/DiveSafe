@@ -64,12 +64,65 @@ public class AssignmentController {
     return error;
   }
 
+/**
+ * cancelTrip : Method to cancel user trip
+ * @author Zahra Landou
+ * @param userEmail - user email address
+ * @return error message or refund if there is one. 
+ */
+
   public static String cancelTrip(String userEmail) {
-    return null;
+    
+    String error = "";
+    if(!Member.hasWithEmail(userEmail)) return error = "Member with email address "+userEmail+" does not exist";
+  
+    Member member = Member.getWithEmail(userEmail) ;
+    if(member.getMemberStatusFullName().equals("Banned")){
+    error =  "Cannot cancel the trip due to a ban";
+    } 
+  
+    else if(member.getMemberStatusFullName().equals("Finished")) {
+    error = "Cannot cancel a trip which has finished";
+    }
+    else if(member.getMemberStatusFullName().equals("Paid")) 
+     error = "50";
+
+    else if(member.getMemberStatusFullName().equals("Started"))
+     error = "10";
+
+    member.cancelTrip();
+   return error;  
   }
 
+  /**
+   * 
+   * @author Eric Joung
+   * 
+   * Method to finish trip for a specific member. 
+   * @param userEmail used to indentify the member
+   * @return
+   */
   public static String finishTrip(String userEmail) {
-    return null;
+
+    String error = "0";
+    
+    Member aMember = Member.getWithEmail(userEmail);
+    if(!Member.hasWithEmail(userEmail)){
+      return String.format("Member with email address %s does not exist", userEmail);
+      // return userEmail;
+    }
+    aMember.finishTrip();
+    String statusMember = aMember.getMemberStatusFullName();
+    if (statusMember.equals("Assigned") || statusMember.equals("Paid")) {
+      return error = "Cannot finish a trip which has not started";
+    }
+    else if (statusMember.equals("Banned")) {
+      return error = "Cannot finish the trip due to a ban";
+    }
+    else if (statusMember.equals("Cancelled")) {
+      return error = "Cannot finish a trip which has been cancelled";
+    }
+    return error;
   }
 
   /**
@@ -87,20 +140,26 @@ public class AssignmentController {
     String error = "";
     List<Member> currentMemberList = diveSafe.getMembers();
     for (Member member : currentMemberList) {
-      // if(member.getAssignment().getStartDay() == day) {
-      // member.startTrip();
-      // }
-      // }
-      member.startTrip(day);
+      
       if(member.getMemberStatusFullName().equals("Banned")){
         error =  "Cannot start the trip due to a ban";
+        return error;
       }
-      if(member.getMemberStatusFullName().equals("Cancelled")){
+      
+      else if(member.getMemberStatusFullName().equals("Cancelled")){
         error = "Cannot start a trip which has been cancelled";
+        return error;
       }
-      if(member.getMemberStatusFullName().equals("Finished")) {
+
+      else if(member.getMemberStatusFullName().equals("Finished")) {
         error = "Cannot start a trip which has finished";
+        return error;
       }
+
+      else if(member.getAssignment().getStartDay() == day) {
+      member.startTrip(day);
+      }
+
     }
     return error;
   }
@@ -139,7 +198,7 @@ public class AssignmentController {
       return "Cannot pay for a trip which has been cancelled";
     }
 
-    if(member.getMemberStatusFullName().equals("TripFinish")){
+    if(member.getMemberStatusFullName().equals("Finished")){
       return "Cannot pay for a trip which has finished";
     }
 

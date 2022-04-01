@@ -12,6 +12,7 @@ import java.util.*;
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.controller.AssignmentController;
 import ca.mcgill.ecse.divesafe.controller.BundleController;
+import ca.mcgill.ecse.divesafe.controller.MemberController;
 import ca.mcgill.ecse.divesafe.model.Assignment;
 import ca.mcgill.ecse.divesafe.model.BundleItem;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
@@ -290,12 +291,20 @@ public class AssignmentFeatureStepDefinitions {
     assertEquals(expectedError, error);
   }
 
-  @When("the administrator attempts to cancel the trip for {string}")
-  public void the_administrator_attempts_to_cancel_the_trip_for(String expectedError) {
-    throw new io.cucumber.java.PendingException();
 
+
+  /**
+   * Cancel member's trip using email address
+   * @author Zahra Landou
+   */
+  @When("the administrator attempts to cancel the trip for {string}")
+  public void the_administrator_attempts_to_cancel_the_trip_for(String userEmail) {
+    error = AssignmentController.cancelTrip(userEmail);
   }
-/**
+ 
+  
+
+ /**
  * @author Kevin Luo
  */
   @Given("the member with {string} has paid for their trip")
@@ -304,11 +313,17 @@ public class AssignmentFeatureStepDefinitions {
   
   }
 
+   /**
+    * @author Zahra Landou
+    * @param userEmail
+    * @param refund
+    */
+  
   @Then("the member with email address {string} shall receive a refund of {string} percent")
-  public void the_member_with_email_address_shall_receive_a_refund_of_percent(String string,
-      String string2) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_member_with_email_address_shall_receive_a_refund_of_percent(String userEmail,
+      String refund) {
+   
+      assertEquals(refund,error);  
   }
 
   /**
@@ -324,11 +339,13 @@ public class AssignmentFeatureStepDefinitions {
     member.startTrip(member.getAssignment().getStartDay());
   }
 
+  /**
+   * @author Eric Joung
+   */
   @When("the administrator attempts to finish the trip for the member with email {string}")
   public void the_administrator_attempts_to_finish_the_trip_for_the_member_with_email(
       String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    error = AssignmentController.finishTrip(string);
   }
 
   /**
@@ -362,16 +379,27 @@ public class AssignmentFeatureStepDefinitions {
     
   }
 
+   /**
+    * @author Zahra Landou
+    */
   @Given("the member with {string} has cancelled their trip")
-  public void the_member_with_has_cancelled_their_trip(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_member_with_has_cancelled_their_trip(String memberEmail) {
+   
+   Member member = Member.getWithEmail(memberEmail);
+
+   member.cancelTrip();
+
   }
 
+  /**
+   * @author Eric Joung
+   */
   @Given("the member with {string} has finished their trip")
   public void the_member_with_has_finished_their_trip(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    Member aMember = Member.getWithEmail(string);
+    aMember.confirmPayment();
+    aMember.startTrip(aMember.getAssignment().getStartDay());
+    aMember.finishTrip();
   }
 
 }

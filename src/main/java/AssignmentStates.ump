@@ -56,12 +56,12 @@ class Member {
     }
     Assigned {
       confirmPayment -> Paid;
-      startTrip -> Banned;
+      startTrip(int day) -> Banned;
       finishTrip -> Assigned;
       cancelTrip -> Cancelled;
     }
     Paid {
-      startTrip -> Started;
+      startTrip(int day) -> Started;
       finishTrip -> Paid;
       cancelTrip -> Cancelled;
     }
@@ -84,7 +84,7 @@ class Member {
 
     Cancelled{
       confirmPayment -> Cancelled;
-      startTrip -> Cancelled;
+      startTrip(int day) -> Cancelled;
       finishTrip -> Cancelled;
     }
   }
