@@ -367,9 +367,9 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   @Then("the member with email {string} shall be {string}")
-  public void the_member_with_email_shall_be(String string, String string2) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_member_with_email_shall_be(String memberEmail, String state) {
+    Member member = Member.getWithEmail(memberEmail);
+    assertEquals(state, member.getMemberStatusFullName());
   }
 
   @When("the administrator attempts to start the trips for day {string}")

@@ -131,6 +131,10 @@ public class AssignmentController {
       return "Trip has already been paid for";
     }
 
+    if(member.getMemberStatusFullName().equals("Started")){
+      return "Trip has already been paid for";
+    }
+    
     if(member.getMemberStatusFullName().equals("Cancelled")){
       return "Cannot pay for a trip which has been cancelled";
     }
