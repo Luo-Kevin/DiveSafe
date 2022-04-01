@@ -180,7 +180,7 @@ public class AssignmentController {
     }
 
     //Checks authorization code validity
-    if(authorizationCode.isBlank()){
+    else if(authorizationCode.isBlank()){
       return "Invalid authorization code";
     }
 
@@ -190,19 +190,19 @@ public class AssignmentController {
       return "Trip has already been paid for";
     }
 
-    if(member.getMemberStatusFullName().equals("Started")){
+    else if(member.getMemberStatusFullName().equals("Started")){
       return "Trip has already been paid for";
     }
     
-    if(member.getMemberStatusFullName().equals("Cancelled")){
+    else if(member.getMemberStatusFullName().equals("Cancelled")){
       return "Cannot pay for a trip which has been cancelled";
     }
 
-    if(member.getMemberStatusFullName().equals("Finished")){
+    else if(member.getMemberStatusFullName().equals("Finished")){
       return "Cannot pay for a trip which has finished";
     }
 
-    if(member.getMemberStatusFullName().equals("Banned")){
+    else if(member.getMemberStatusFullName().equals("Banned")){
       return "Cannot pay for the trip due to a ban";
     }
 
