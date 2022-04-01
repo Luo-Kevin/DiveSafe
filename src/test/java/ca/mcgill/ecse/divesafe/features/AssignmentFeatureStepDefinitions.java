@@ -12,6 +12,7 @@ import java.util.*;
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.controller.AssignmentController;
 import ca.mcgill.ecse.divesafe.controller.BundleController;
+import ca.mcgill.ecse.divesafe.controller.MemberController;
 import ca.mcgill.ecse.divesafe.model.Assignment;
 import ca.mcgill.ecse.divesafe.model.BundleItem;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
@@ -290,12 +291,20 @@ public class AssignmentFeatureStepDefinitions {
     assertEquals(expectedError, error);
   }
 
-  @When("the administrator attempts to cancel the trip for {string}")
-  public void the_administrator_attempts_to_cancel_the_trip_for(String expectedError) {
-    throw new io.cucumber.java.PendingException();
 
+
+  /**
+   * Cancel member's trip using email address
+   * @author Zahra Landou
+   */
+  @When("the administrator attempts to cancel the trip for {string}")
+  public void the_administrator_attempts_to_cancel_the_trip_for(String userEmail) {
+    error = AssignmentController.cancelTrip(userEmail);
   }
-/**
+ 
+  
+
+ /**
  * @author Kevin Luo
  */
   @Given("the member with {string} has paid for their trip")
@@ -304,11 +313,14 @@ public class AssignmentFeatureStepDefinitions {
   
   }
 
+  
   @Then("the member with email address {string} shall receive a refund of {string} percent")
-  public void the_member_with_email_address_shall_receive_a_refund_of_percent(String string,
-      String string2) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_member_with_email_address_shall_receive_a_refund_of_percent(String userEmail,
+      String refund) {
+   
+   Member member = Member.getWithEmail(userEmail);
+   //assertEquals(Integer.parseInt(refund), member. );
+
   }
 
   /**
@@ -362,10 +374,16 @@ public class AssignmentFeatureStepDefinitions {
     
   }
 
+   /**
+    * @author Zahra Landou
+    */
   @Given("the member with {string} has cancelled their trip")
-  public void the_member_with_has_cancelled_their_trip(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_member_with_has_cancelled_their_trip(String memberEmail) {
+   
+   Member member = Member.getWithEmail(memberEmail);
+
+   member.cancelTrip();
+
   }
 
   @Given("the member with {string} has finished their trip")
