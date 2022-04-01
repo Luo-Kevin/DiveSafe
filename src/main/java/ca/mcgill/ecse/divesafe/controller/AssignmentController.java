@@ -66,13 +66,13 @@ public class AssignmentController {
 
 /**
  * cancelTrip : Method to cancel user trip
- * @author ZL
+ * @author Zahra Landou
  * @param userEmail - user email address
- * @return error message if there is one. 
+ * @return error message or refund if there is one. 
  */
 
   public static String cancelTrip(String userEmail) {
-
+    
     String error = "";
     if(!Member.hasWithEmail(userEmail)) return error = "Member with email address "+userEmail+" does not exist";
   
@@ -81,9 +81,14 @@ public class AssignmentController {
     error =  "Cannot cancel the trip due to a ban";
     } 
   
-    if(member.getMemberStatusFullName().equals("Finished")) {
+    else if(member.getMemberStatusFullName().equals("Finished")) {
     error = "Cannot cancel a trip which has finished";
     }
+    else if(member.getMemberStatusFullName().equals("Paid")) 
+     error = "50";
+
+    else if(member.getMemberStatusFullName().equals("Started"))
+     error = "10";
 
     member.cancelTrip();
    return error;  

@@ -314,7 +314,6 @@ public class AssignmentFeatureStepDefinitions {
   }
 
    /**
-    * If 
     * @author Zahra Landou
     * @param userEmail
     * @param refund
@@ -324,13 +323,7 @@ public class AssignmentFeatureStepDefinitions {
   public void the_member_with_email_address_shall_receive_a_refund_of_percent(String userEmail,
       String refund) {
    
-   Member member = Member.getWithEmail(userEmail);
-   //
-    if(member.getMemberStatusFullName().equals("Paid"))
-      assertEquals(50, Integer.parseInt(refund) );
-  
-      if(member.getMemberStatusFullName().equals("Started"))
-      assertEquals(10, Integer.parseInt(refund) );
+      assertEquals(refund,error);  
   }
 
   /**
