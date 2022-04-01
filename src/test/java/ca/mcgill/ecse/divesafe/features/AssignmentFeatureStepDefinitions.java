@@ -324,11 +324,13 @@ public class AssignmentFeatureStepDefinitions {
     member.startTrip(member.getAssignment().getStartDay());
   }
 
+  /**
+   * @author Eric Joung
+   */
   @When("the administrator attempts to finish the trip for the member with email {string}")
   public void the_administrator_attempts_to_finish_the_trip_for_the_member_with_email(
       String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    error = AssignmentController.finishTrip(string);
   }
 
   /**
@@ -368,10 +370,15 @@ public class AssignmentFeatureStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
 
+  /**
+   * @author Eric Joung
+   */
   @Given("the member with {string} has finished their trip")
   public void the_member_with_has_finished_their_trip(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    Member aMember = Member.getWithEmail(string);
+    aMember.confirmPayment();
+    aMember.startTrip(aMember.getAssignment().getStartDay());
+    aMember.finishTrip();
   }
 
 }

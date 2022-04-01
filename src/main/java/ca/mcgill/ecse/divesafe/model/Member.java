@@ -22,7 +22,6 @@ public class Member extends NamedUser
   //Member State Machines
   public enum MemberStatus { Unassigned, Assigned, Paid, Started, Finished, Banned, Cancelled }
   private MemberStatus memberStatus;
-  private MemberStatusRegistered memberStatusRegistered;
 
   //Member Associations
   private DiveSafe diveSafe;
@@ -45,7 +44,6 @@ public class Member extends NamedUser
       throw new RuntimeException("Unable to create member due to diveSafe. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     itemBookings = new ArrayList<ItemBooking>();
-    setMemberStatusRegistered(MemberStatusRegistered.Null);
     setMemberStatus(MemberStatus.Unassigned);
   }
 
@@ -105,18 +103,12 @@ public class Member extends NamedUser
   public String getMemberStatusFullName()
   {
     String answer = memberStatus.toString();
-    if (memberStatusRegistered != MemberStatusRegistered.Null) { answer += "." + memberStatusRegistered.toString(); }
     return answer;
   }
 
   public MemberStatus getMemberStatus()
   {
     return memberStatus;
-  }
-
-  public MemberStatusRegistered getMemberStatusRegistered()
-  {
-    return memberStatusRegistered;
   }
 
   public boolean assign(Guide guide)
@@ -129,7 +121,7 @@ public class Member extends NamedUser
       case Unassigned:
         if (doAssign(guide))
         {
-          setMemberStatusRegistered(MemberStatusRegistered.Assigned);
+          setMemberStatus(MemberStatus.Assigned);
           wasEventProcessed = true;
           break;
         }
@@ -248,7 +240,6 @@ public class Member extends NamedUser
     boolean wasEventProcessed = false;
     
     MemberStatus aMemberStatus = memberStatus;
-    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
     switch (aMemberStatus)
     {
       case Assigned:
@@ -275,120 +266,12 @@ public class Member extends NamedUser
         // Other states do respond to this event
     }
 
-    switch (aMemberStatusRegistered)
-    {
-      case Assigned:
-        if (!(paid()))
-        {
-          exitMemberStatus();
-          setMemberStatus(MemberStatus.Banned);
-          wasEventProcessed = true;
-          break;
-        }
-        break;
-      case Paid:
-        if (paid())
-        {
-          exitMemberStatusRegistered();
-          setMemberStatusRegistered(MemberStatusRegistered.Started);
-          wasEventProcessed = true;
-          break;
-        }
-        break;
-      default:
-        // Other states do respond to this event
-    }
-
     return wasEventProcessed;
-  }
-
-  public boolean finishTrip()
-  {
-    boolean wasEventProcessed = false;
-    
-    MemberStatus aMemberStatus = memberStatus;
-    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
-    switch (aMemberStatus)
-    {
-      case Banned:
-        setMemberStatus(MemberStatus.Banned);
-        wasEventProcessed = true;
-        break;
-      case Cancelled:
-        setMemberStatus(MemberStatus.Cancelled);
-        wasEventProcessed = true;
-        break;
-      default:
-        // Other states do respond to this event
-    }
-
-    switch (aMemberStatusRegistered)
-    {
-      case Assigned:
-        exitMemberStatusRegistered();
-        setMemberStatusRegistered(MemberStatusRegistered.Assigned);
-        wasEventProcessed = true;
-        break;
-      case Paid:
-        exitMemberStatusRegistered();
-        setMemberStatusRegistered(MemberStatusRegistered.Paid);
-        wasEventProcessed = true;
-        break;
-      case Started:
-        exitMemberStatus();
-        setMemberStatus(MemberStatus.Finished);
-        wasEventProcessed = true;
-        break;
-      default:
-        // Other states do respond to this event
-    }
-
-    return wasEventProcessed;
-  }
-
-  private void exitMemberStatus()
-  {
-    switch(memberStatus)
-    {
-      case Registered:
-        exitMemberStatusRegistered();
-        break;
-    }
   }
 
   private void setMemberStatus(MemberStatus aMemberStatus)
   {
     memberStatus = aMemberStatus;
-
-    // entry actions and do activities
-    switch(memberStatus)
-    {
-      case Registered:
-        if (memberStatusRegistered == MemberStatusRegistered.Null) { setMemberStatusRegistered(MemberStatusRegistered.Assigned); }
-        break;
-    }
-  }
-
-  private void exitMemberStatusRegistered()
-  {
-    switch(memberStatusRegistered)
-    {
-      case Assigned:
-        setMemberStatusRegistered(MemberStatusRegistered.Null);
-        break;
-      case Paid:
-        setMemberStatusRegistered(MemberStatusRegistered.Null);
-        break;
-      case Started:
-        setMemberStatusRegistered(MemberStatusRegistered.Null);
-        break;
-    }
-  }
-
-  private void setMemberStatusRegistered(MemberStatusRegistered aMemberStatusRegistered)
-  {
-    memberStatusRegistered = aMemberStatusRegistered;
-    if (memberStatus != MemberStatus.Registered && aMemberStatusRegistered != MemberStatusRegistered.Null) { setMemberStatus(MemberStatus.Registered); }
   }
   /* Code from template association_GetOne */
   public DiveSafe getDiveSafe()

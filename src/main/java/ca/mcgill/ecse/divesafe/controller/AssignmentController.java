@@ -68,24 +68,33 @@ public class AssignmentController {
     return null;
   }
 
+  /**
+   * 
+   * @author Eric Joung
+   * 
+   * Method to finish trip for a specific member. 
+   * @param userEmail used to indentify the member
+   * @return
+   */
   public static String finishTrip(String userEmail) {
 
     String error = "";
     
     Member aMember = Member.getWithEmail(userEmail);
     aMember.finishTrip();
-    String statusRegistered = aMember.getMemberStatusRegistered().name();
-      if (statusRegistered.equals("Assigned") || statusRegistered.equals("Paid")) {
-        return error = "Cannot finish a trip which has not started";
-      }
-    String statusMember = aMember.getMemberStatus().name();
-      if (statusMember.equals("Banned")) {
-        return error = "Cannot finish the trip due to a ban";
-      }
-      else if (statusMember.equals("Cancelled")) {
-        return error = "Cannot finish a trip which has been cancelled";
-      }
-    
+    String statusMember = aMember.getMemberStatusFullName();
+    if (statusMember.equals("Assigned") || statusMember.equals("Paid")) {
+      return error = "Cannot finish a trip which has not started";
+    }
+    else if (statusMember.equals("Banned")) {
+      return error = "Cannot finish the trip due to a ban";
+    }
+    else if (statusMember.equals("Cancelled")) {
+      return error = "Cannot finish a trip which has been cancelled";
+    }
+    else if (!Member.hasWithEmail(userEmail)) {
+      return error = "Member with email address" + userEmail + " does not exist";
+    }
     return error;
   }
 
