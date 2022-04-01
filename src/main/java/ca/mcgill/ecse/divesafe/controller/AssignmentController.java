@@ -81,6 +81,10 @@ public class AssignmentController {
     String error = "";
     
     Member aMember = Member.getWithEmail(userEmail);
+    if(!Member.hasWithEmail(userEmail)){
+      return String.format("Member with email address %s does not exist", userEmail);
+      // return userEmail;
+    }
     aMember.finishTrip();
     String statusMember = aMember.getMemberStatusFullName();
     if (statusMember.equals("Assigned") || statusMember.equals("Paid")) {
@@ -91,9 +95,6 @@ public class AssignmentController {
     }
     else if (statusMember.equals("Cancelled")) {
       return error = "Cannot finish a trip which has been cancelled";
-    }
-    else if (!Member.hasWithEmail(userEmail)) {
-      return error = "Member with email address" + userEmail + " does not exist";
     }
     return error;
   }
@@ -165,7 +166,7 @@ public class AssignmentController {
       return "Cannot pay for a trip which has been cancelled";
     }
 
-    if(member.getMemberStatusFullName().equals("TripFinish")){
+    if(member.getMemberStatusFullName().equals("Finished")){
       return "Cannot pay for a trip which has finished";
     }
 
