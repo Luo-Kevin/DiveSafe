@@ -144,22 +144,6 @@ public class Member extends NamedUser
         setMemberStatus(MemberStatus.Paid);
         wasEventProcessed = true;
         break;
-      case Started:
-        setMemberStatus(MemberStatus.Started);
-        wasEventProcessed = true;
-        break;
-      case Finished:
-        setMemberStatus(MemberStatus.Finished);
-        wasEventProcessed = true;
-        break;
-      case Banned:
-        setMemberStatus(MemberStatus.Banned);
-        wasEventProcessed = true;
-        break;
-      case Cancelled:
-        setMemberStatus(MemberStatus.Cancelled);
-        wasEventProcessed = true;
-        break;
       default:
         // Other states do respond to this event
     }
@@ -180,52 +164,6 @@ public class Member extends NamedUser
         break;
       case Paid:
         setMemberStatus(MemberStatus.Started);
-        wasEventProcessed = true;
-        break;
-      case Finished:
-        setMemberStatus(MemberStatus.Finished);
-        wasEventProcessed = true;
-        break;
-      case Banned:
-        setMemberStatus(MemberStatus.Banned);
-        wasEventProcessed = true;
-        break;
-      case Cancelled:
-        setMemberStatus(MemberStatus.Cancelled);
-        wasEventProcessed = true;
-        break;
-      default:
-        // Other states do respond to this event
-    }
-
-    return wasEventProcessed;
-  }
-
-  public boolean finishTrip()
-  {
-    boolean wasEventProcessed = false;
-    
-    MemberStatus aMemberStatus = memberStatus;
-    switch (aMemberStatus)
-    {
-      case Assigned:
-        setMemberStatus(MemberStatus.Assigned);
-        wasEventProcessed = true;
-        break;
-      case Paid:
-        setMemberStatus(MemberStatus.Paid);
-        wasEventProcessed = true;
-        break;
-      case Started:
-        setMemberStatus(MemberStatus.Finished);
-        wasEventProcessed = true;
-        break;
-      case Banned:
-        setMemberStatus(MemberStatus.Banned);
-        wasEventProcessed = true;
-        break;
-      case Cancelled:
-        setMemberStatus(MemberStatus.Cancelled);
         wasEventProcessed = true;
         break;
       default:
@@ -254,12 +192,22 @@ public class Member extends NamedUser
         setMemberStatus(MemberStatus.Cancelled);
         wasEventProcessed = true;
         break;
-      case Finished:
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean finishTrip()
+  {
+    boolean wasEventProcessed = false;
+    
+    MemberStatus aMemberStatus = memberStatus;
+    switch (aMemberStatus)
+    {
+      case Started:
         setMemberStatus(MemberStatus.Finished);
-        wasEventProcessed = true;
-        break;
-      case Banned:
-        setMemberStatus(MemberStatus.Banned);
         wasEventProcessed = true;
         break;
       default:
@@ -466,7 +414,7 @@ public class Member extends NamedUser
    * @author Siger Ma
    * @param guide Guide to be assigned to the member if he asked for one
    */
-  // line 97 "../../../../../AssignmentStates.ump"
+  // line 82 "../../../../../AssignmentStates.ump"
    public boolean doAssign(Guide guide){
     int numDaysRequest = this.getNumDays();
     boolean needGuide = this.getGuideRequired();

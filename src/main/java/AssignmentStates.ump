@@ -57,36 +57,21 @@ class Member {
     Assigned {
       confirmPayment -> Paid;
       startTrip(int day) -> Banned;
-      finishTrip -> Assigned;
       cancelTrip -> Cancelled;
     }
     Paid {
       startTrip(int day) -> Started;
-      finishTrip -> Paid;
       cancelTrip -> Cancelled;
     }
     Started {
       finishTrip -> Finished;
-      confirmPayment -> Started;
       cancelTrip -> Cancelled;
     }
-    Finished{
-      confirmPayment -> Finished;
-      startTrip(int day) -> Finished;
-      cancelTrip -> Finished;
-    }
-    Banned{
-      confirmPayment -> Banned;
-      startTrip(int day) -> Banned;
-      cancelTrip -> Banned;
-      finishTrip -> Banned;
-    }
+    Finished{}
 
-    Cancelled{
-      confirmPayment -> Cancelled;
-      startTrip(int day) -> Cancelled;
-      finishTrip -> Cancelled;
-    }
+    Banned{}
+
+    Cancelled{}
   }
 
   // Method for the members to be assigned to their schedule and to their guide if they asked for one.
