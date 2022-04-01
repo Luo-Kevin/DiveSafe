@@ -140,20 +140,26 @@ public class AssignmentController {
     String error = "";
     List<Member> currentMemberList = diveSafe.getMembers();
     for (Member member : currentMemberList) {
-      // if(member.getAssignment().getStartDay() == day) {
-      // member.startTrip();
-      // }
-      // }
-      member.startTrip(day);
+      
       if(member.getMemberStatusFullName().equals("Banned")){
         error =  "Cannot start the trip due to a ban";
+        return error;
       }
-      if(member.getMemberStatusFullName().equals("Cancelled")){
+      
+      else if(member.getMemberStatusFullName().equals("Cancelled")){
         error = "Cannot start a trip which has been cancelled";
+        return error;
       }
-      if(member.getMemberStatusFullName().equals("Finished")) {
+
+      else if(member.getMemberStatusFullName().equals("Finished")) {
         error = "Cannot start a trip which has finished";
+        return error;
       }
+
+      else if(member.getAssignment().getStartDay() == day) {
+      member.startTrip(day);
+      }
+
     }
     return error;
   }
