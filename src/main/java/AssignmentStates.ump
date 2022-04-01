@@ -54,39 +54,56 @@ class Member {
     Unassigned {
       assign (Guide guide) [doAssign(guide)] -> Assigned;
     }
-    Registered {
+    Assigned {
+      confirmPayment -> Paid;
+      startTrip -> Banned;
+      finishTrip -> Assigned;
       cancelTrip -> Cancelled;
-      Assigned {
-        confirmPayment -> Paid;
-        startTrip [!paid()] -> Banned;
-        finishTrip -> Assigned;
-      }
-      Paid {
-        startTrip [paid()] -> Started;
-        finishTrip -> Paid;
-      }
-      Started {
-        finishTrip -> Finished;
-        confirmPayment -> Started;
-      }
+    }
+    Paid {
+      startTrip -> Started;
+      finishTrip -> Paid;
+      cancelTrip -> Cancelled;
+    }
+    Started {
+      finishTrip -> Finished;
+      confirmPayment -> Started;
+      cancelTrip -> Cancelled;
     }
     Finished{
       confirmPayment -> Finished;
-      startTrip -> Finished;
+      startTrip(int day) -> Finished;
       cancelTrip -> Finished;
     }
     Banned{
       confirmPayment -> Banned;
-      startTrip -> Banned;
+      startTrip(int day) -> Banned;
       cancelTrip -> Banned;
       finishTrip -> Banned;
     }
+
     Cancelled{
       confirmPayment -> Cancelled;
       startTrip -> Cancelled;
       finishTrip -> Cancelled;
     }
   }
+
+  // public boolean doStart(int day) { 
+  //   Assignment assignment =  diveSafe.getAssignment(this);
+
+  //   List <Member> currentMemberList = diveSafe.getMembers();
+  //   for (Member member : currentMemberList) { 
+  //     if(member.getAssignment.getStartDay == day) { 
+  //       return true;
+  //     }
+  //   }
+  // return false;
+  // }
+
+  // public boolean doBan(){
+
+  // }
 
   // Method for the members to be assigned to their schedule and to their guide if they asked for one.
   // @author Siger Ma

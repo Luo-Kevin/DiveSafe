@@ -3,7 +3,7 @@ package ca.mcgill.ecse.divesafe.features;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.sql.Date;
@@ -21,6 +21,7 @@ import ca.mcgill.ecse.divesafe.model.Guide;
 import ca.mcgill.ecse.divesafe.model.Item;
 import ca.mcgill.ecse.divesafe.model.Member;
 import ca.mcgill.ecse.divesafe.model.User;
+import ca.mcgill.ecse.divesafe.model.Member.MemberStatus;
 
 
 
@@ -33,7 +34,6 @@ public class AssignmentFeatureStepDefinitions {
    * Making sure that the specified DiveSafe system exists, i.e. start date, number of days
    * and price of guide per day match.
    * @author Jiahao Zhao
-   * @param dataTable Table that contains inputs specified in the feature files
    */
 
   @Given("the following DiveSafe system exists:")
@@ -63,7 +63,6 @@ public class AssignmentFeatureStepDefinitions {
    * Add the pieces of equipment that should be present in the system before evaluating @When clause
    *
    * @author Jiahao Zhao
-   * @param dataTable Table that contains inputs specified in the feature files
    */
 
   @Given("the following pieces of equipment exist in the system:")
@@ -85,7 +84,6 @@ public class AssignmentFeatureStepDefinitions {
    * Add the bundles that should exist in the system before evaluating @When clause
    *
    * @author Jiahao Zhao
-   * @param dataTable Table that contains inputs specified in the feature files
    */
 
   @Given("the following equipment bundles exist in the system:")
@@ -122,7 +120,6 @@ public class AssignmentFeatureStepDefinitions {
    * Add the guides that should exist in the system before evaluating @When clause
    *
    * @author Jiahao Zhao
-   * @param dataTable Table that contains inputs specified in the feature files
    */
   @Given("the following guides exist in the system:")
   public void the_following_guides_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
@@ -146,7 +143,6 @@ public class AssignmentFeatureStepDefinitions {
    * Add members that should exist in diveSafe prior to evaluating the @When clause
    *
    * @author Jiahao Zhao
-   * @param dataTable
    */
 
   @Given("the following members exist in the system:")
@@ -241,29 +237,18 @@ public class AssignmentFeatureStepDefinitions {
    * Add assignments that should exist in the system prior to evaluating @When clause
    *
    * @author Jiahao Zhao
-   * @param dataTable
    */
 
   @Given("the following assignments exist in the system:")
   public void the_following_assignments_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
 
-        // Extract all information from dataTable
-
-        List<Map<String, String>> rows = dataTable.asMaps();
-        for(var row : rows) { 
-          String memberEmail = row.get("memberEmail");
-          String guideEmail = row.get("guideEmail");
-          int startDay = Integer.parseInt(row.get("startDay"));
-          int endDay = Integer.parseInt(row.get("endDay"));
-          Member assignedMember = (Member) User.getWithEmail(memberEmail);
-          Guide assignedGuide = (Guide) User.getWithEmail(guideEmail);
-          
-          //Creating new Assignment and adding start and end day, member along with their assigned guide
-          Assignment newAssignment = diveSafe.addAssignment(startDay, endDay, assignedMember);
-          newAssignment.setGuide(assignedGuide);
-        }
+        AssignmentController.initiateAssignment();
   }
+
+/**
+ * @author Jiahao Zhao
+ */
 
   @When("the administrator attempts to confirm payment for {string} using authorization code {string}")
   public void the_administrator_attempts_to_confirm_payment_for_using_authorization_code(
@@ -271,42 +256,52 @@ public class AssignmentFeatureStepDefinitions {
         error = AssignmentController.confirmPayment(userEmail, authorizationCode);
   }
 
+  /**
+   * @author Kevin Luo
+  */
   @Then("the assignment for {string} shall record the authorization code {string}")
   public void the_assignment_for_shall_record_the_authorization_code(String userEmail,
       String authorizationCode) {
-
-        //make changes to the ump file to allow for authorization of code
+        assertEquals(authorizationCode, error);
       
   }
 
+  /**
+   * @author Kevin Luo
+   */
   @Then("the member account with the email {string} does not exist")
-  public void the_member_account_with_the_email_does_not_exist(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_member_account_with_the_email_does_not_exist(String email) {
+    assertEquals(null, Member.getWithEmail(email));
   }
 
+ /**
+   * @author Kevin Luo
+   */
   @Then("there are {string} members in the system")
-  public void there_are_members_in_the_system(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void there_are_members_in_the_system(String number) {
+    assertEquals(number, String.valueOf(diveSafe.getMembers().size()));
   }
 
+ /**
+   * @author Kevin Luo
+   */
   @Then("the error {string} shall be raised")
-  public void the_error_shall_be_raised(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_error_shall_be_raised(String expectedError) {
+    assertEquals(expectedError, error);
   }
 
   @When("the administrator attempts to cancel the trip for {string}")
-  public void the_administrator_attempts_to_cancel_the_trip_for(String string) {
-    // Write code here that turns the phrase above into concrete actions
+  public void the_administrator_attempts_to_cancel_the_trip_for(String expectedError) {
     throw new io.cucumber.java.PendingException();
-  }
 
+  }
+/**
+ * @author Kevin Luo
+ */
   @Given("the member with {string} has paid for their trip")
-  public void the_member_with_has_paid_for_their_trip(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_member_with_has_paid_for_their_trip(String userEmail) {
+    error = AssignmentController.confirmPayment(userEmail, "PAYup");
+  
   }
 
   @Then("the member with email address {string} shall receive a refund of {string} percent")
@@ -316,10 +311,17 @@ public class AssignmentFeatureStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
 
+  /**
+   * @author Jiahao Zhao
+   */
+
   @Given("the member with {string} has started their trip")
-  public void the_member_with_has_started_their_trip(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_member_with_has_started_their_trip(String memberEmail) {
+    // set Member's status to Paid
+    Member member = Member.getWithEmail(memberEmail);
+    member.confirmPayment();
+    // set status to Started
+    member.startTrip(member.getAssignment().getStartDay());
   }
 
   @When("the administrator attempts to finish the trip for the member with email {string}")
@@ -329,22 +331,35 @@ public class AssignmentFeatureStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
 
+  /**
+   * @author Jiahao Zhao
+   */
+
   @Given("the member with {string} is banned")
-  public void the_member_with_is_banned(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_member_with_is_banned(String memberEmail) {
+    //set member status to banned by calling startTrip without having paid
+    Member member = Member.getWithEmail(memberEmail);
+    member.startTrip(member.getAssignment().getStartDay());
   }
+
+  /**
+   * @author Jiahao Zhao
+   */
 
   @Then("the member with email {string} shall be {string}")
-  public void the_member_with_email_shall_be(String string, String string2) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_member_with_email_shall_be(String memberEmail, String state) {
+    Member member = Member.getWithEmail(memberEmail);
+    assertEquals(state, member.getMemberStatusFullName());
   }
+  /**
+   * @author Jiahao Zhao
+   */
 
   @When("the administrator attempts to start the trips for day {string}")
-  public void the_administrator_attempts_to_start_the_trips_for_day(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_administrator_attempts_to_start_the_trips_for_day(String day) {
+
+    error = AssignmentController.startTripsForDay(Integer.parseInt(day));
+    
   }
 
   @Given("the member with {string} has cancelled their trip")

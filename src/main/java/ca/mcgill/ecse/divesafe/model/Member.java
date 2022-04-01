@@ -20,8 +20,7 @@ public class Member extends NamedUser
   private boolean hotelRequired;
 
   //Member State Machines
-  public enum MemberStatus { Unassigned, Registered, Finished, Banned, Cancelled }
-  public enum MemberStatusRegistered { Null, Assigned, Paid, Started }
+  public enum MemberStatus { Unassigned, Assigned, Paid, Started, Finished, Banned, Cancelled }
   private MemberStatus memberStatus;
   private MemberStatusRegistered memberStatusRegistered;
 
@@ -142,41 +141,21 @@ public class Member extends NamedUser
     return wasEventProcessed;
   }
 
-  public boolean cancelTrip()
-  {
-    boolean wasEventProcessed = false;
-    
-    MemberStatus aMemberStatus = memberStatus;
-    switch (aMemberStatus)
-    {
-      case Registered:
-        exitMemberStatus();
-        setMemberStatus(MemberStatus.Cancelled);
-        wasEventProcessed = true;
-        break;
-      case Finished:
-        setMemberStatus(MemberStatus.Finished);
-        wasEventProcessed = true;
-        break;
-      case Banned:
-        setMemberStatus(MemberStatus.Banned);
-        wasEventProcessed = true;
-        break;
-      default:
-        // Other states do respond to this event
-    }
-
-    return wasEventProcessed;
-  }
-
   public boolean confirmPayment()
   {
     boolean wasEventProcessed = false;
     
     MemberStatus aMemberStatus = memberStatus;
-    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
     switch (aMemberStatus)
     {
+      case Assigned:
+        setMemberStatus(MemberStatus.Paid);
+        wasEventProcessed = true;
+        break;
+      case Started:
+        setMemberStatus(MemberStatus.Started);
+        wasEventProcessed = true;
+        break;
       case Finished:
         setMemberStatus(MemberStatus.Finished);
         wasEventProcessed = true;
@@ -187,22 +166,6 @@ public class Member extends NamedUser
         break;
       case Cancelled:
         setMemberStatus(MemberStatus.Cancelled);
-        wasEventProcessed = true;
-        break;
-      default:
-        // Other states do respond to this event
-    }
-
-    switch (aMemberStatusRegistered)
-    {
-      case Assigned:
-        exitMemberStatusRegistered();
-        setMemberStatusRegistered(MemberStatusRegistered.Paid);
-        wasEventProcessed = true;
-        break;
-      case Started:
-        exitMemberStatusRegistered();
-        setMemberStatusRegistered(MemberStatusRegistered.Started);
         wasEventProcessed = true;
         break;
       default:
@@ -212,14 +175,21 @@ public class Member extends NamedUser
     return wasEventProcessed;
   }
 
-  public boolean startTrip()
+  public boolean startTrip(int day)
   {
     boolean wasEventProcessed = false;
     
     MemberStatus aMemberStatus = memberStatus;
-    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
     switch (aMemberStatus)
     {
+      case Assigned:
+        setMemberStatus(MemberStatus.Banned);
+        wasEventProcessed = true;
+        break;
+      case Paid:
+        setMemberStatus(MemberStatus.Started);
+        wasEventProcessed = true;
+        break;
       case Finished:
         setMemberStatus(MemberStatus.Finished);
         wasEventProcessed = true;
@@ -230,6 +200,75 @@ public class Member extends NamedUser
         break;
       case Cancelled:
         setMemberStatus(MemberStatus.Cancelled);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean finishTrip()
+  {
+    boolean wasEventProcessed = false;
+    
+    MemberStatus aMemberStatus = memberStatus;
+    switch (aMemberStatus)
+    {
+      case Assigned:
+        setMemberStatus(MemberStatus.Assigned);
+        wasEventProcessed = true;
+        break;
+      case Paid:
+        setMemberStatus(MemberStatus.Paid);
+        wasEventProcessed = true;
+        break;
+      case Started:
+        setMemberStatus(MemberStatus.Finished);
+        wasEventProcessed = true;
+        break;
+      case Banned:
+        setMemberStatus(MemberStatus.Banned);
+        wasEventProcessed = true;
+        break;
+      case Cancelled:
+        setMemberStatus(MemberStatus.Cancelled);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean cancelTrip()
+  {
+    boolean wasEventProcessed = false;
+    
+    MemberStatus aMemberStatus = memberStatus;
+    MemberStatusRegistered aMemberStatusRegistered = memberStatusRegistered;
+    switch (aMemberStatus)
+    {
+      case Assigned:
+        setMemberStatus(MemberStatus.Cancelled);
+        wasEventProcessed = true;
+        break;
+      case Paid:
+        setMemberStatus(MemberStatus.Cancelled);
+        wasEventProcessed = true;
+        break;
+      case Started:
+        setMemberStatus(MemberStatus.Cancelled);
+        wasEventProcessed = true;
+        break;
+      case Finished:
+        setMemberStatus(MemberStatus.Finished);
+        wasEventProcessed = true;
+        break;
+      case Banned:
+        setMemberStatus(MemberStatus.Banned);
         wasEventProcessed = true;
         break;
       default:
@@ -540,11 +579,23 @@ public class Member extends NamedUser
 
 
   /**
+   * public boolean doStart(int day) {
+   * Assignment assignment =  diveSafe.getAssignment(this);
+   * List <Member> currentMemberList = diveSafe.getMembers();
+   * for (Member member : currentMemberList) {
+   * if(member.getAssignment.getStartDay == day) {
+   * return true;
+   * }
+   * }
+   * return false;
+   * }
+   * public boolean doBan(){
+   * }
    * Method for the members to be assigned to their schedule and to their guide if they asked for one.
    * @author Siger Ma
    * @param guide Guide to be assigned to the member if he asked for one
    */
-  // line 96 "../../../../../AssignmentStates.ump"
+  // line 113 "../../../../../AssignmentStates.ump"
    public boolean doAssign(Guide guide){
     int numDaysRequest = this.getNumDays();
     boolean needGuide = this.getGuideRequired();

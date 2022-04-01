@@ -5,6 +5,7 @@ package ca.mcgill.ecse.divesafe.application;
 
 import java.sql.Date;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
+import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
 
 public class DiveSafeApplication {
   private static DiveSafe diveSafe;
@@ -17,6 +18,12 @@ public class DiveSafeApplication {
     if (diveSafe == null) {
       // these attributes are default, you should set them later with the setters
       diveSafe = new DiveSafe(new Date(0), 0, 0);
+
+      /**
+       * @author Jiahao Zhao
+       */
+      
+      //diveSafe = DiveSafePersistence.load();
     }
     
     return diveSafe;

@@ -99,7 +99,9 @@ public abstract class User
   // line 11 "../../../../../DiveSafePersistence.ump"
    public static  void reinitializeUniqueEmail(Administrator admin, List<Guide> guides, List<Member> members){
     usersByEmail.clear();
-    usersByEmail.put(admin.getEmail(), admin);
+    if (admin != null) {
+      usersByEmail.put(admin.getEmail(), admin);
+    }
     for (var guide : guides) {
       usersByEmail.put(guide.getEmail(), guide);
     }
