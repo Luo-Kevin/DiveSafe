@@ -462,23 +462,11 @@ public class Member extends NamedUser
 
 
   /**
-   * public boolean doStart(int day) {
-   * Assignment assignment =  diveSafe.getAssignment(this);
-   * List <Member> currentMemberList = diveSafe.getMembers();
-   * for (Member member : currentMemberList) {
-   * if(member.getAssignment.getStartDay == day) {
-   * return true;
-   * }
-   * }
-   * return false;
-   * }
-   * public boolean doBan(){
-   * }
    * Method for the members to be assigned to their schedule and to their guide if they asked for one.
    * @author Siger Ma
    * @param guide Guide to be assigned to the member if he asked for one
    */
-  // line 113 "../../../../../AssignmentStates.ump"
+  // line 97 "../../../../../AssignmentStates.ump"
    public boolean doAssign(Guide guide){
     int numDaysRequest = this.getNumDays();
     boolean needGuide = this.getGuideRequired();
