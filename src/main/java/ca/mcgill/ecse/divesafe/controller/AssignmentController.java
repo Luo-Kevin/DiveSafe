@@ -78,7 +78,7 @@ public class AssignmentController {
   public static String cancelTrip(String userEmail) {
 
     String error = "";
-    String refund = "";
+    String refundPercentage = "";
 
     if (!Member.hasWithEmail(userEmail))
       return error = "Member with email address " + userEmail + " does not exist";
@@ -96,10 +96,10 @@ public class AssignmentController {
 
     //Check for user status when allowed to refund
     else if (member.getMemberStatusFullName().equals("Paid"))
-      refund = "50";
+    refundPercentage = "50";
 
     else if (member.getMemberStatusFullName().equals("Started"))
-      refund = "10";
+    refundPercentage = "10";
 
     if(!error.isEmpty()){
       return error.trim();
@@ -114,7 +114,7 @@ public class AssignmentController {
        return e.getMessage();
      }
     
-    return refund;
+    return refundPercentage;
   }
 
   /**
@@ -177,7 +177,7 @@ public class AssignmentController {
    * @param day Input parameter that determines the members that leave on a
    *            particular day
    *            in accordance with their schedule
-   * @return error message if there is one, otherwise null string
+   * @return error message if there is one, otherwise empty string
    */
 
   public static String startTripsForDay(int day) {
