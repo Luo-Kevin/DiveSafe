@@ -214,11 +214,11 @@ public class AssignmentController {
    * @author Kevin Luo
    * @param userEmail         - email related to payment
    * @param authorizationCode - authorization code related to payment
-   * @return error message related to user input
+   * @return error message related to user input, otherwise return authorization code of user
    */
 
   public static String confirmPayment(String userEmail, String authorizationCode) {
-
+    String error = "";
     // Checks email exist
     if (!Member.hasWithEmail(userEmail)) {
       return String.format("Member with email address %s does not exist", userEmail);
@@ -227,45 +227,47 @@ public class AssignmentController {
 
     // Checks authorization code validity
     else if (authorizationCode.isBlank()) {
-      return "Invalid authorization code";
+      error = "Invalid authorization code";
     }
 
     Member member = Member.getWithEmail(userEmail);
 
+    //Checking user status and returning appropriate message if encounter error
     if (member.getMemberStatusFullName().equals("Paid")) {
-      return "Trip has already been paid for";
+      error = "Trip has already been paid for";
     }
 
     else if (member.getMemberStatusFullName().equals("Started")) {
-      return "Trip has already been paid for";
+      error = "Trip has already been paid for";
     }
 
     else if (member.getMemberStatusFullName().equals("Cancelled")) {
-      return "Cannot pay for a trip which has been cancelled";
+      error = "Cannot pay for a trip which has been cancelled";
     }
 
     else if (member.getMemberStatusFullName().equals("Finished")) {
-      return "Cannot pay for a trip which has finished";
+      error = "Cannot pay for a trip which has finished";
     }
 
     else if (member.getMemberStatusFullName().equals("Banned")) {
-      return "Cannot pay for the trip due to a ban";
+      error = "Cannot pay for the trip due to a ban";
     }
 
     // Update user payment status
-    if (Member.hasWithEmail(userEmail) && !(authorizationCode.isBlank())
+    else if (Member.hasWithEmail(userEmail) && !(authorizationCode.isBlank())
         && member.getMemberStatusFullName().equals("Assigned")) {
       member.confirmPayment();
       return authorizationCode;
     }
+
+    
      try {
       DiveSafePersistence.save(); 
      } catch (Exception e) {
       return e.getMessage();
      }
    
-
-    return null;
+    return error;
   }
 
   /**
