@@ -10,6 +10,7 @@ import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
 import ca.mcgill.ecse.divesafe.model.Guide;
 import ca.mcgill.ecse.divesafe.model.Item;
 import ca.mcgill.ecse.divesafe.model.Member;
+import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
 
 public class AssignmentController {
   private static DiveSafe diveSafe = DiveSafeApplication.getDiveSafe();
@@ -59,6 +60,12 @@ public class AssignmentController {
       error = "Assignments could not be completed for all members";
     }
 
+    try {
+      DiveSafePersistence.save();
+    } catch (RuntimeException e) {
+      e.getMessage();
+    }
+
     return error;
   }
 
@@ -93,8 +100,16 @@ public class AssignmentController {
     else if (member.getMemberStatusFullName().equals("Started"))
       error = "10";
 
-    member.cancelTrip();
-
+    
+     try {
+       //cancel member trip
+        member.cancelTrip();
+        //save changes with persistence
+        DiveSafePersistence.save();
+     } catch (RuntimeException e) {
+       return e.getMessage();
+     }
+    
     return error;
   }
 
@@ -111,14 +126,14 @@ public class AssignmentController {
     // Refund percentage if finish trip
     String error = "0";
 
-    Member aMember = Member.getWithEmail(userEmail);
+    Member member = Member.getWithEmail(userEmail);
 
     if (!Member.hasWithEmail(userEmail)) {
       return String.format("Member with email address %s does not exist", userEmail);
       // return userEmail;
     }
 
-    String statusMember = aMember.getMemberStatusFullName();
+    String statusMember = member.getMemberStatusFullName();
 
     if (statusMember.equals("Assigned") || statusMember.equals("Paid")) {
       return error = "Cannot finish a trip which has not started";
@@ -132,7 +147,15 @@ public class AssignmentController {
       return error = "Cannot finish a trip which has been cancelled";
     }
 
-    aMember.finishTrip();
+   try {
+     //finish member's trip
+     member.finishTrip();
+     //save changes with persistence
+     DiveSafePersistence.save();
+   } catch (RuntimeException e) {
+     
+    return e.getMessage();
+   } 
 
     return error;
   }
@@ -171,8 +194,16 @@ public class AssignmentController {
         return error;
       }
 
-      member.startTrip(day);
-
+      try {
+        //start member's trip
+        member.startTrip(day);
+        //save changes with persistence
+        DiveSafePersistence.save();
+      } catch (RuntimeException e) {
+        
+       return error;
+      } 
+      
     }
     return error;
   }
@@ -227,6 +258,12 @@ public class AssignmentController {
       member.confirmPayment();
       return authorizationCode;
     }
+     try {
+      DiveSafePersistence.save(); 
+     } catch (Exception e) {
+      return e.getMessage();
+     }
+   
 
     return null;
   }
