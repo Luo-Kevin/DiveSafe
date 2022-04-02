@@ -86,6 +86,7 @@ public class AssignmentController {
 
     Member member = Member.getWithEmail(userEmail);
 
+    //Check for invalid user status when attempting to refund
     if (member.getMemberStatusFullName().equals("Banned")) {
       error = "Cannot cancel the trip due to a ban";
     }
@@ -94,6 +95,7 @@ public class AssignmentController {
       error = "Cannot cancel a trip which has finished";
     }
 
+    //Check for user status when allowed to refund
     else if (member.getMemberStatusFullName().equals("Paid"))
       error = "50";
 
@@ -128,12 +130,14 @@ public class AssignmentController {
 
     Member member = Member.getWithEmail(userEmail);
 
+    //Check if userEmail exist in system
     if (!Member.hasWithEmail(userEmail)) {
       return String.format("Member with email address %s does not exist", userEmail);
-      // return userEmail;
     }
 
     String statusMember = member.getMemberStatusFullName();
+
+    //Check for invalid user status when finishing trip
 
     if (statusMember.equals("Assigned") || statusMember.equals("Paid")) {
       return error = "Cannot finish a trip which has not started";
@@ -177,8 +181,10 @@ public class AssignmentController {
 
     List<Member> currentMemberList = diveSafe.getMembers();
 
+    // Checking all user status 
     for (Member member : currentMemberList) {
 
+      // Checks for user that are not allowed to start trip
       if (member.getMemberStatusFullName().equals("Banned")) {
         error = "Cannot start the trip due to a ban";
         return error;
@@ -218,7 +224,8 @@ public class AssignmentController {
    */
 
   public static String confirmPayment(String userEmail, String authorizationCode) {
-    String error = "";
+    String error = authorizationCode;
+
     // Checks email exist
     if (!Member.hasWithEmail(userEmail)) {
       return String.format("Member with email address %s does not exist", userEmail);
@@ -257,10 +264,9 @@ public class AssignmentController {
     else if (Member.hasWithEmail(userEmail) && !(authorizationCode.isBlank())
         && member.getMemberStatusFullName().equals("Assigned")) {
       member.confirmPayment();
-      return authorizationCode;
     }
 
-    
+
      try {
       DiveSafePersistence.save(); 
      } catch (Exception e) {
