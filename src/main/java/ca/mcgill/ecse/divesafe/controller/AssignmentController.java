@@ -80,6 +80,7 @@ public class AssignmentController {
     String error = "";
     String refundPercentage = "";
 
+    //Check if userEmail exist in system
     if (!Member.hasWithEmail(userEmail))
       return error = "Member with email address " + userEmail + " does not exist";
 
@@ -139,7 +140,6 @@ public class AssignmentController {
     String statusMember = member.getMemberStatusFullName();
 
     //Check for invalid user status when finishing trip
-
     if (statusMember.equals("Assigned") || statusMember.equals("Paid")) {
       error = "Cannot finish a trip which has not started";
     }
@@ -244,7 +244,7 @@ public class AssignmentController {
 
     Member member = Member.getWithEmail(userEmail);
 
-    //Checking user status and returning appropriate message if encounter error
+    //Checking for invalid user status when confirming payment
     if (member.getMemberStatusFullName().equals("Paid")) {
       error = "Trip has already been paid for";
     }
