@@ -26,11 +26,11 @@ public class AssignmentFeatureStepDefinitions {
 
   /**
    * Making sure that the specified DiveSafe system exists, i.e. start date,
-   * number of days
-   * and price of guide per day match.
+   * number of days and price of guide per day match.
    * 
    * @author Jiahao Zhao
    */
+
   @Given("the following DiveSafe system exists:")
   public void the_following_dive_safe_system_exists(io.cucumber.datatable.DataTable dataTable) {
     // Initialize new diveSafe system
@@ -55,10 +55,11 @@ public class AssignmentFeatureStepDefinitions {
 
   /**
    * Add the pieces of equipment that should be present in the system before
-   * evaluating @When clause
+   * evaluating @When clause.
    * 
    * @author Jiahao Zhao
    */
+
   @Given("the following pieces of equipment exist in the system:")
   public void the_following_pieces_of_equipment_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
@@ -75,11 +76,12 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   /**
-   * Add the bundles that should exist in the system before
-   * evaluating @When clause
+   * Add the bundles that should exist in the system before evaluating @When
+   * clause.
    * 
    * @author Jiahao Zhao
    */
+
   @Given("the following equipment bundles exist in the system:")
   public void the_following_equipment_bundles_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
@@ -111,11 +113,12 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   /**
-   * Add the guides that should exist in the system
-   * before evaluating @When clause
+   * Add the guides that should exist in the system before evaluating @When
+   * clause.
    * 
    * @author Jiahao Zhao
    */
+
   @Given("the following guides exist in the system:")
   public void the_following_guides_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
 
@@ -135,11 +138,12 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   /**
-   * Add members that should exist in diveSafe prior to
-   * evaluating the @When clause
+   * Add members that should exist in diveSafe prior to evaluating the @When
+   * clause.
    * 
    * @author Jiahao Zhao
    */
+
   @Given("the following members exist in the system:")
   public void the_following_members_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
 
@@ -158,10 +162,12 @@ public class AssignmentFeatureStepDefinitions {
 
       String[] memberItemBookings = row.get("itemBookings").split(",");
       String[] itemBookingQuantity = row.get("itemBookingQuantities").split(",");
+
       // Create member
       Member aMember = new Member(memberEmail, memberPassword, memberName, memberEmergencyContact, memberNumDays,
           memberGuideRequired, memberHotelRequired, diveSafe);
       diveSafe.addMember(aMember);
+
       // add member's item booking
       for (int i = 0; i < itemBookingQuantity.length; i++) {
         aMember.addItemBooking(Integer.parseInt(itemBookingQuantity[i]), diveSafe,
@@ -171,20 +177,22 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   /**
-   * Initiate the assignment process using AssignmentController
+   * Initiate the assignment process using AssignmentController.
    * 
    * @author Siger Ma
    */
+
   @When("the administrator attempts to initiate the assignment process")
   public void the_administrator_attempts_to_initiate_the_assignment_process() {
     error = AssignmentController.initiateAssignment();
   }
 
   /**
-   * Making sure that the specified assignments are present in the system
+   * Making sure that the specified assignments are present in the system.
    * 
    * @author Siger Ma
    */
+
   @Then("the following assignments shall exist in the system:")
   public void the_following_assignments_shall_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
 
@@ -219,21 +227,23 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   /**
-   * Check that the member's state is well marked
+   * Check that the member's state is well marked.
    * 
    * @author Siger Ma
    */
+
   @Then("the assignment for {string} shall be marked as {string}")
-  public void the_assignment_for_shall_be_marked_as(String email, String state) {
-    Member member = Member.getWithEmail(email);
+  public void the_assignment_for_shall_be_marked_as(String memberEmail, String state) {
+    Member member = Member.getWithEmail(memberEmail);
     assertEquals(state, member.getMemberStatusFullName());
   }
 
   /**
-   * Check the number of assignments in the system
+   * Check the number of assignments in the system.
    * 
    * @author Siger Ma
    */
+
   @Then("the number of assignments in the system shall be {string}")
   public void the_number_of_assignments_in_the_system_shall_be(String numOfAssignments) {
     int currentNumOfAssignments = diveSafe.numberOfAssignments();
@@ -241,18 +251,19 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   /**
-   * Check that the error raised by the system corresponds to the expected
+   * Check that the error raised by the system corresponds to the expected.
    * 
    * @author Siger Ma
    */
+
   @Then("the system shall raise the error {string}")
   public void the_system_shall_raise_the_error(String expectedError) {
     assertEquals(expectedError, error);
   }
 
   /**
-   * Add assignments that should exist in the system
-   * prior to evaluating @When clause
+   * Add assignments that should exist in the system prior to evaluating @When
+   * clause.
    * 
    * @author Jiahao Zhao
    */
@@ -260,15 +271,15 @@ public class AssignmentFeatureStepDefinitions {
   @Given("the following assignments exist in the system:")
   public void the_following_assignments_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
-
     AssignmentController.initiateAssignment();
   }
 
   /**
-   * Attempt to pay for a member's trip
+   * Attempt to pay for a member's trip.
    * 
    * @author Jiahao Zhao
    */
+
   @When("the administrator attempts to confirm payment for {string} using authorization code {string}")
   public void the_administrator_attempts_to_confirm_payment_for_using_authorization_code(
       String memberEmail, String authorizationCode) {
@@ -276,10 +287,11 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   /**
-   * Check that the authorization code is well recorded
+   * Check that the authorization code is well recorded.
    * 
    * @author Kevin Luo
    */
+
   @Then("the assignment for {string} shall record the authorization code {string}")
   public void the_assignment_for_shall_record_the_authorization_code(String memberEmail,
       String authorizationCode) {
@@ -287,72 +299,78 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   /**
-   * Make sure that the specified member is not in the system
+   * Make sure that the specified member is not in the system.
    * 
    * @author Kevin Luo
    */
+
   @Then("the member account with the email {string} does not exist")
   public void the_member_account_with_the_email_does_not_exist(String memberEmail) {
     assertEquals(null, Member.getWithEmail(memberEmail));
   }
 
   /**
-   * Verify the number of members in the system
+   * Verify the number of members in the system.
    * 
    * @author Kevin Luo
    */
+
   @Then("there are {string} members in the system")
   public void there_are_members_in_the_system(String number) {
     assertEquals(number, String.valueOf(diveSafe.getMembers().size()));
   }
 
   /**
-   * Check that the error raised corresponds to the expected error
+   * Check that the error raised corresponds to the expected error.
    * 
    * @author Kevin Luo
    */
+
   @Then("the error {string} shall be raised")
   public void the_error_shall_be_raised(String expectedError) {
     assertEquals(expectedError, error);
   }
 
   /**
-   * Cancel member's trip using email address
+   * Cancel member's trip using email address.
    * 
    * @author Zahra Landou
    */
+
   @When("the administrator attempts to cancel the trip for {string}")
   public void the_administrator_attempts_to_cancel_the_trip_for(String memberEmail) {
     error = AssignmentController.cancelTrip(memberEmail);
   }
 
   /**
-   * Set member's state to "Paid"
+   * Set member's state to "Paid".
    * 
    * @author Kevin Luo
    */
+
   @Given("the member with {string} has paid for their trip")
   public void the_member_with_has_paid_for_their_trip(String memberEmail) {
     error = AssignmentController.confirmPayment(memberEmail, "PAYup");
   }
 
   /**
-   * Check that the specified member has received the expected refund
+   * Check that the specified member has received the expected refund.
    * 
    * @author Zahra Landou
    */
+
   @Then("the member with email address {string} shall receive a refund of {string} percent")
   public void the_member_with_email_address_shall_receive_a_refund_of_percent(String memberEmail,
       String refund) {
-
     assertEquals(refund, error);
   }
 
   /**
-   * Set member's state to "Started"
+   * Set member's state to "Started".
    * 
    * @author Jiahao Zhao
    */
+
   @Given("the member with {string} has started their trip")
   public void the_member_with_has_started_their_trip(String memberEmail) {
     // set Member's status to Paid
@@ -363,10 +381,11 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   /**
-   * Attempt to finish a member's trip
+   * Attempt to finish a member's trip.
    * 
    * @author Eric Joung
    */
+
   @When("the administrator attempts to finish the trip for the member with email {string}")
   public void the_administrator_attempts_to_finish_the_trip_for_the_member_with_email(
       String memberEmail) {
@@ -374,10 +393,11 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   /**
-   * Set specified member's state to "Banned"
+   * Set specified member's state to "Banned".
    * 
    * @author Jiahao Zhao
    */
+
   @Given("the member with {string} is banned")
   public void the_member_with_is_banned(String memberEmail) {
     // set member status to banned by calling startTrip without having paid
@@ -386,10 +406,11 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   /**
-   * Check that the specified member is in the correct state
+   * Check that the specified member is in the correct state.
    * 
    * @author Jiahao Zhao
    */
+
   @Then("the member with email {string} shall be {string}")
   public void the_member_with_email_shall_be(String memberEmail, String state) {
     Member member = Member.getWithEmail(memberEmail);
@@ -397,35 +418,34 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   /**
-   * Start trips for specified day
+   * Start trips for specified day.
    * 
    * @author Jiahao Zhao
    */
+
   @When("the administrator attempts to start the trips for day {string}")
   public void the_administrator_attempts_to_start_the_trips_for_day(String day) {
-
     error = AssignmentController.startTripsForDay(Integer.parseInt(day));
   }
 
   /**
-   * Set member's state to "Cancelled"
+   * Set member's state to "Cancelled".
    * 
    * @author Zahra Landou
    */
+
   @Given("the member with {string} has cancelled their trip")
   public void the_member_with_has_cancelled_their_trip(String memberEmail) {
-
     Member member = Member.getWithEmail(memberEmail);
-
     member.cancelTrip();
-
   }
 
   /**
-   * Set the specified member's state to "Finished"
+   * Set the specified member's state to "Finished".
    * 
    * @author Eric Joung
    */
+
   @Given("the member with {string} has finished their trip")
   public void the_member_with_has_finished_their_trip(String memberEmail) {
     Member aMember = Member.getWithEmail(memberEmail);
