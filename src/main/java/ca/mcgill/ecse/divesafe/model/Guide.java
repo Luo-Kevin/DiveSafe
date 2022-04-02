@@ -256,15 +256,15 @@ public class Guide extends NamedUser
   // line 16 "../../../../../AssignmentStates.ump"
    public int takenForPeriod(){
     int daysTaken = 0;
-      List <Assignment> currentAssignments = this.getAssignments();
+    List <Assignment> currentAssignments = this.getAssignments();
 
-      for (Assignment assignment : currentAssignments) {
-        int startDate = assignment.getStartDay();
-        int endDate = assignment.getEndDay();
-        daysTaken = daysTaken + (endDate - startDate + 1);
-      }
+    for (Assignment assignment : currentAssignments) {
+      int startDate = assignment.getStartDay();
+      int endDate = assignment.getEndDay();
+      daysTaken = daysTaken + (endDate - startDate + 1);
+    }
 
-      return daysTaken;
+    return daysTaken;
   }
 
 

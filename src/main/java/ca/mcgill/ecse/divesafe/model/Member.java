@@ -159,12 +159,20 @@ public class Member extends NamedUser
     switch (aMemberStatus)
     {
       case Assigned:
-        setMemberStatus(MemberStatus.Banned);
-        wasEventProcessed = true;
+        if (day==this.getAssignment().getStartDay())
+        {
+          setMemberStatus(MemberStatus.Banned);
+          wasEventProcessed = true;
+          break;
+        }
         break;
       case Paid:
-        setMemberStatus(MemberStatus.Started);
-        wasEventProcessed = true;
+        if (day==this.getAssignment().getStartDay())
+        {
+          setMemberStatus(MemberStatus.Started);
+          wasEventProcessed = true;
+          break;
+        }
         break;
       default:
         // Other states do respond to this event

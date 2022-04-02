@@ -10,8 +10,6 @@ import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
 import ca.mcgill.ecse.divesafe.model.Guide;
 import ca.mcgill.ecse.divesafe.model.Item;
 import ca.mcgill.ecse.divesafe.model.Member;
-import ca.mcgill.ecse.divesafe.model.User;
-import ca.mcgill.ecse.divesafe.model.Guide.AvailableStatus;
 
 public class AssignmentController {
   private static DiveSafe diveSafe = DiveSafeApplication.getDiveSafe();
@@ -64,156 +62,179 @@ public class AssignmentController {
     return error;
   }
 
-/**
- * cancelTrip : Method to cancel user trip
- * @author Zahra Landou
- * @param userEmail - user email address
- * @return error message or refund if there is one. 
- */
+  /**
+   * Method to cancel member trip and refund them if necessary.
+   * 
+   * @author Zahra Landou
+   * @param userEmail - user email address
+   * @return error message or refund if there is one.
+   */
 
   public static String cancelTrip(String userEmail) {
-    
-    String error = "";
-    if(!Member.hasWithEmail(userEmail)) return error = "Member with email address "+userEmail+" does not exist";
-  
-    Member member = Member.getWithEmail(userEmail) ;
-    if(member.getMemberStatusFullName().equals("Banned")){
-    error =  "Cannot cancel the trip due to a ban";
-    } 
-  
-    else if(member.getMemberStatusFullName().equals("Finished")) {
-    error = "Cannot cancel a trip which has finished";
-    }
-    else if(member.getMemberStatusFullName().equals("Paid")) 
-     error = "50";
 
-    else if(member.getMemberStatusFullName().equals("Started"))
-     error = "10";
+    String error = "";
+
+    if (!Member.hasWithEmail(userEmail))
+      return error = "Member with email address " + userEmail + " does not exist";
+
+    Member member = Member.getWithEmail(userEmail);
+
+    if (member.getMemberStatusFullName().equals("Banned")) {
+      error = "Cannot cancel the trip due to a ban";
+    }
+
+    else if (member.getMemberStatusFullName().equals("Finished")) {
+      error = "Cannot cancel a trip which has finished";
+    }
+
+    else if (member.getMemberStatusFullName().equals("Paid"))
+      error = "50";
+
+    else if (member.getMemberStatusFullName().equals("Started"))
+      error = "10";
 
     member.cancelTrip();
-   return error;  
-  }
 
-  /**
-   * 
-   * @author Eric Joung
-   * 
-   * Method to finish trip for a specific member. 
-   * @param userEmail used to indentify the member
-   * @return
-   */
-  public static String finishTrip(String userEmail) {
-
-    String error = "0";
-    
-    Member aMember = Member.getWithEmail(userEmail);
-    if(!Member.hasWithEmail(userEmail)){
-      return String.format("Member with email address %s does not exist", userEmail);
-      // return userEmail;
-    }
-    aMember.finishTrip();
-    String statusMember = aMember.getMemberStatusFullName();
-    if (statusMember.equals("Assigned") || statusMember.equals("Paid")) {
-      return error = "Cannot finish a trip which has not started";
-    }
-    else if (statusMember.equals("Banned")) {
-      return error = "Cannot finish the trip due to a ban";
-    }
-    else if (statusMember.equals("Cancelled")) {
-      return error = "Cannot finish a trip which has been cancelled";
-    }
     return error;
   }
 
   /**
+   * Method to finish trip for a specific member.
+   * 
+   * @author Eric Joung
+   * @param userEmail used to indentify the member
+   * @return error message if there is one, or 0 % refund if success
+   */
+
+  public static String finishTrip(String userEmail) {
+
+    // Refund percentage if finish trip
+    String error = "0";
+
+    Member aMember = Member.getWithEmail(userEmail);
+
+    if (!Member.hasWithEmail(userEmail)) {
+      return String.format("Member with email address %s does not exist", userEmail);
+      // return userEmail;
+    }
+
+    String statusMember = aMember.getMemberStatusFullName();
+
+    if (statusMember.equals("Assigned") || statusMember.equals("Paid")) {
+      return error = "Cannot finish a trip which has not started";
+    }
+
+    else if (statusMember.equals("Banned")) {
+      return error = "Cannot finish the trip due to a ban";
+    }
+
+    else if (statusMember.equals("Cancelled")) {
+      return error = "Cannot finish a trip which has been cancelled";
+    }
+
+    aMember.finishTrip();
+
+    return error;
+  }
+
+  /**
+   * Method that starts the trip for all members that have paid in accordance with
+   * their schedule.
    * 
    * @author Jiahao Zhao
-   * 
-   * Method that starts the trip for all members that have paid in accordance 
-   * with their schedule
-   * @param day Input parameter that determines the members that leave on a particular day
-   * in accordance with their schedule
-   * @return
+   * @param day Input parameter that determines the members that leave on a
+   *            particular day
+   *            in accordance with their schedule
+   * @return error message if there is one, otherwise null string
    */
 
   public static String startTripsForDay(int day) {
+
     String error = "";
+
     List<Member> currentMemberList = diveSafe.getMembers();
+
     for (Member member : currentMemberList) {
-      
-      if(member.getMemberStatusFullName().equals("Banned")){
-        error =  "Cannot start the trip due to a ban";
+
+      if (member.getMemberStatusFullName().equals("Banned")) {
+        error = "Cannot start the trip due to a ban";
         return error;
       }
-      
-      else if(member.getMemberStatusFullName().equals("Cancelled")){
+
+      else if (member.getMemberStatusFullName().equals("Cancelled")) {
         error = "Cannot start a trip which has been cancelled";
         return error;
       }
 
-      else if(member.getMemberStatusFullName().equals("Finished")) {
+      else if (member.getMemberStatusFullName().equals("Finished")) {
         error = "Cannot start a trip which has finished";
         return error;
       }
 
-      else if(member.getAssignment().getStartDay() == day) {
       member.startTrip(day);
-      }
 
     }
     return error;
   }
 
   /**
-   * Method confirms payment for user and updates their MemberStatus
-   * @param userEmail - email related to payment
+   * Method confirms payment for user and updates their MemberStatus.
+   * 
+   * @author Kevin Luo
+   * @param userEmail         - email related to payment
    * @param authorizationCode - authorization code related to payment
    * @return error message related to user input
-   * @author Kevin Luo
    */
 
   public static String confirmPayment(String userEmail, String authorizationCode) {
-    //Checks email exist
-    if(!Member.hasWithEmail(userEmail)){
+
+    // Checks email exist
+    if (!Member.hasWithEmail(userEmail)) {
       return String.format("Member with email address %s does not exist", userEmail);
       // return userEmail;
     }
 
-    //Checks authorization code validity
-    else if(authorizationCode.isBlank()){
+    // Checks authorization code validity
+    else if (authorizationCode.isBlank()) {
       return "Invalid authorization code";
     }
 
-    Member member =  Member.getWithEmail(userEmail);
+    Member member = Member.getWithEmail(userEmail);
 
-    if(member.getMemberStatusFullName().equals("Paid")){
+    if (member.getMemberStatusFullName().equals("Paid")) {
       return "Trip has already been paid for";
     }
 
-    else if(member.getMemberStatusFullName().equals("Started")){
+    else if (member.getMemberStatusFullName().equals("Started")) {
       return "Trip has already been paid for";
     }
-    
-    else if(member.getMemberStatusFullName().equals("Cancelled")){
+
+    else if (member.getMemberStatusFullName().equals("Cancelled")) {
       return "Cannot pay for a trip which has been cancelled";
     }
 
-    else if(member.getMemberStatusFullName().equals("Finished")){
+    else if (member.getMemberStatusFullName().equals("Finished")) {
       return "Cannot pay for a trip which has finished";
     }
 
-    else if(member.getMemberStatusFullName().equals("Banned")){
+    else if (member.getMemberStatusFullName().equals("Banned")) {
       return "Cannot pay for the trip due to a ban";
     }
 
-    //Update user payment status
-    if(User.hasWithEmail(userEmail) && !(authorizationCode.isBlank()) && member.getMemberStatusFullName().equals("Assigned")){
-    member.confirmPayment();
-    return authorizationCode;
+    // Update user payment status
+    if (Member.hasWithEmail(userEmail) && !(authorizationCode.isBlank())
+        && member.getMemberStatusFullName().equals("Assigned")) {
+      member.confirmPayment();
+      return authorizationCode;
     }
 
     return null;
   }
+
+  /**
+   * We did not need this method for our implementation because of how our state
+   * machine is implemented.
+   */
 
   public static String toggleBan(String userEmail) {
     return null;
