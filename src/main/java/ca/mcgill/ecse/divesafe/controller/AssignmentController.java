@@ -39,8 +39,6 @@ public class AssignmentController {
 
   public static String initiateAssignment() {
 
-    String error = "";
-
     // Assign members
     List<Guide> currentGuides = diveSafe.getGuides();
 
@@ -57,7 +55,7 @@ public class AssignmentController {
       }
     }
     if (count != 0) {
-      error = "Assignments could not be completed for all members";
+      return "Assignments could not be completed for all members";
     }
 
     try {
@@ -66,7 +64,7 @@ public class AssignmentController {
       e.getMessage();
     }
 
-    return error;
+    return "";
   }
 
   /**
@@ -80,12 +78,15 @@ public class AssignmentController {
   public static String cancelTrip(String userEmail) {
 
     String error = "";
+    String refundPercentage = "";
 
+    //Check if userEmail exist in system
     if (!Member.hasWithEmail(userEmail))
       return error = "Member with email address " + userEmail + " does not exist";
 
     Member member = Member.getWithEmail(userEmail);
 
+    //Check for invalid user status when attempting to refund
     if (member.getMemberStatusFullName().equals("Banned")) {
       error = "Cannot cancel the trip due to a ban";
     }
@@ -94,13 +95,17 @@ public class AssignmentController {
       error = "Cannot cancel a trip which has finished";
     }
 
+    //Check for user status when allowed to refund
     else if (member.getMemberStatusFullName().equals("Paid"))
-      error = "50";
+    refundPercentage = "50";
 
     else if (member.getMemberStatusFullName().equals("Started"))
-      error = "10";
+    refundPercentage = "10";
 
-    
+    if(!error.isEmpty()){
+      return error.trim();
+    }
+
      try {
        //cancel member trip
         member.cancelTrip();
@@ -110,7 +115,7 @@ public class AssignmentController {
        return e.getMessage();
      }
     
-    return error;
+    return refundPercentage;
   }
 
   /**
@@ -123,28 +128,32 @@ public class AssignmentController {
 
   public static String finishTrip(String userEmail) {
 
-    // Refund percentage if finish trip
-    String error = "0";
+    String error = "";
 
     Member member = Member.getWithEmail(userEmail);
 
+    //Check if userEmail exist in system
     if (!Member.hasWithEmail(userEmail)) {
       return String.format("Member with email address %s does not exist", userEmail);
-      // return userEmail;
     }
 
     String statusMember = member.getMemberStatusFullName();
 
+    //Check for invalid user status when finishing trip
     if (statusMember.equals("Assigned") || statusMember.equals("Paid")) {
-      return error = "Cannot finish a trip which has not started";
+      error = "Cannot finish a trip which has not started";
     }
 
     else if (statusMember.equals("Banned")) {
-      return error = "Cannot finish the trip due to a ban";
+      error = "Cannot finish the trip due to a ban";
     }
 
     else if (statusMember.equals("Cancelled")) {
-      return error = "Cannot finish a trip which has been cancelled";
+      error = "Cannot finish a trip which has been cancelled";
+    }
+
+    if (!error.isEmpty()){
+      return error.trim();
     }
 
    try {
@@ -157,7 +166,7 @@ public class AssignmentController {
     return e.getMessage();
    } 
 
-    return error;
+    return "0";  // Refund percentage if finish trip
   }
 
   /**
@@ -168,7 +177,7 @@ public class AssignmentController {
    * @param day Input parameter that determines the members that leave on a
    *            particular day
    *            in accordance with their schedule
-   * @return error message if there is one, otherwise null string
+   * @return error message if there is one, otherwise empty string
    */
 
   public static String startTripsForDay(int day) {
@@ -177,35 +186,38 @@ public class AssignmentController {
 
     List<Member> currentMemberList = diveSafe.getMembers();
 
+    // Checking all user status 
     for (Member member : currentMemberList) {
 
+      // Checks for user that are not allowed to start trip
       if (member.getMemberStatusFullName().equals("Banned")) {
         error = "Cannot start the trip due to a ban";
-        return error;
       }
 
       else if (member.getMemberStatusFullName().equals("Cancelled")) {
         error = "Cannot start a trip which has been cancelled";
-        return error;
       }
 
       else if (member.getMemberStatusFullName().equals("Finished")) {
         error = "Cannot start a trip which has finished";
-        return error;
       }
 
+      if (!error.isEmpty()) {
+        return error.trim();
+      }
+  
       try {
         //start member's trip
         member.startTrip(day);
         //save changes with persistence
         DiveSafePersistence.save();
       } catch (RuntimeException e) {
-        
-       return error;
+       return e.getMessage();
       } 
       
     }
-    return error;
+
+    return "";
   }
 
   /**
@@ -214,58 +226,63 @@ public class AssignmentController {
    * @author Kevin Luo
    * @param userEmail         - email related to payment
    * @param authorizationCode - authorization code related to payment
-   * @return error message related to user input
+   * @return error message related to user input, otherwise return authorization code of user
    */
 
   public static String confirmPayment(String userEmail, String authorizationCode) {
+    String error = "";
 
     // Checks email exist
     if (!Member.hasWithEmail(userEmail)) {
       return String.format("Member with email address %s does not exist", userEmail);
-      // return userEmail;
     }
 
     // Checks authorization code validity
     else if (authorizationCode.isBlank()) {
-      return "Invalid authorization code";
+      error = "Invalid authorization code";
     }
 
     Member member = Member.getWithEmail(userEmail);
 
+    //Checking for invalid user status when confirming payment
     if (member.getMemberStatusFullName().equals("Paid")) {
-      return "Trip has already been paid for";
+      error = "Trip has already been paid for";
     }
 
     else if (member.getMemberStatusFullName().equals("Started")) {
-      return "Trip has already been paid for";
+      error = "Trip has already been paid for";
+
     }
 
     else if (member.getMemberStatusFullName().equals("Cancelled")) {
-      return "Cannot pay for a trip which has been cancelled";
+      error = "Cannot pay for a trip which has been cancelled";
     }
 
     else if (member.getMemberStatusFullName().equals("Finished")) {
-      return "Cannot pay for a trip which has finished";
+      error = "Cannot pay for a trip which has finished";
     }
 
     else if (member.getMemberStatusFullName().equals("Banned")) {
-      return "Cannot pay for the trip due to a ban";
+      error = "Cannot pay for the trip due to a ban";
+    }
+
+    if (!error.isEmpty()){
+      return error.trim();
     }
 
     // Update user payment status
-    if (Member.hasWithEmail(userEmail) && !(authorizationCode.isBlank())
+    else if (Member.hasWithEmail(userEmail) && !(authorizationCode.isBlank())
         && member.getMemberStatusFullName().equals("Assigned")) {
       member.confirmPayment();
-      return authorizationCode;
     }
-     try {
-      DiveSafePersistence.save(); 
-     } catch (Exception e) {
-      return e.getMessage();
-     }
-   
 
-    return null;
+    try {
+      DiveSafePersistence.save(); 
+    } catch (Exception e) {
+      return e.getMessage();
+    }
+   
+    return authorizationCode;
   }
 
   /**
