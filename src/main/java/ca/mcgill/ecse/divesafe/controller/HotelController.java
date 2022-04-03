@@ -5,12 +5,14 @@ import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
 import ca.mcgill.ecse.divesafe.model.Hotel;
 import ca.mcgill.ecse.divesafe.model.Hotel.HotelType;
+import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
 
 public class HotelController {
 
   private static DiveSafe diveSafe = DiveSafeApplication.getDiveSafe();
 
-  private HotelController() {}
+  private HotelController() {
+  }
 
   // note: the hotel rating is its number of stars
   public static String addHotel(String name, String address, int nrStars, String type) {
@@ -26,6 +28,14 @@ public class HotelController {
 
     HotelType hotelType = HotelType.valueOf(type);
     diveSafe.addHotel(name, address, nrStars, hotelType);
+
+    try {
+      DiveSafePersistence.save();
+
+    } catch (RuntimeException e) {
+
+      e.getMessage();
+    }
 
     return "";
   }
@@ -52,6 +62,14 @@ public class HotelController {
     aHotel.setRating(newNrStars);
     aHotel.setType(hotelType);
 
+    try {
+      DiveSafePersistence.save();
+
+    } catch (RuntimeException e) {
+
+      e.getMessage();
+    }
+
     return "";
   }
 
@@ -60,11 +78,21 @@ public class HotelController {
     if (hotel != null) {
       hotel.delete();
     }
+
+    try {
+      DiveSafePersistence.save();
+
+    } catch (RuntimeException e) {
+
+      e.getMessage();
+    }
+
     return "";
   }
 
   private static boolean isHotelType(String type) {
-    // iterate over HotelType values and see if any have a name that matches the input type
+    // iterate over HotelType values and see if any have a name that matches the
+    // input type
     return Arrays.stream(HotelType.values()).anyMatch(e -> e.name().equals(type));
   }
 

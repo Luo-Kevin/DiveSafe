@@ -6,12 +6,14 @@ import ca.mcgill.ecse.divesafe.model.BundleItem;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
 import ca.mcgill.ecse.divesafe.model.Equipment;
 import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
+import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
 
 public class EquipmentController {
 
   private static DiveSafe diveSafe = DiveSafeApplication.getDiveSafe();
 
-  private EquipmentController() {}
+  private EquipmentController() {
+  }
 
   public static String addEquipment(String name, int weight, int pricePerDay) {
     var error = checkCommonConditions(weight, name, pricePerDay);
@@ -28,6 +30,13 @@ public class EquipmentController {
     }
 
     diveSafe.addEquipment(name, weight, pricePerDay);
+    try {
+      DiveSafePersistence.save();
+
+    } catch (RuntimeException e) {
+
+      e.getMessage();
+    }
     return "";
   }
 
@@ -57,6 +66,13 @@ public class EquipmentController {
     foundEquipment.setWeight(newWeight);
     foundEquipment.setPricePerDay(newPricePerDay);
 
+    try {
+      DiveSafePersistence.save();
+
+    } catch (RuntimeException e) {
+
+      e.getMessage();
+    }
     return "";
   }
 
@@ -77,6 +93,16 @@ public class EquipmentController {
     }
 
     equipment.delete();
+
+    try {
+
+      DiveSafePersistence.save();
+
+    } catch (RuntimeException e) {
+
+      e.getMessage();
+    }
+
     return "";
   }
 

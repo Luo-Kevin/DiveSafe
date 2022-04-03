@@ -2,10 +2,12 @@ package ca.mcgill.ecse.divesafe.controller;
 
 import java.sql.Date;
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
+import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
 
 public class SetupController {
 
-  private SetupController() {}
+  private SetupController() {
+  }
 
   public static String setup(Date startDate, int numDays, int priceOfGuidePerDay) {
     if (numDays < 0) {
@@ -18,6 +20,14 @@ public class SetupController {
       diveSafe.setPriceOfGuidePerDay(priceOfGuidePerDay);
       diveSafe.setNumDays(numDays);
     }
+    try {
+      DiveSafePersistence.save();
+
+    } catch (RuntimeException e) {
+
+      e.getMessage();
+    }
+
     return "";
   }
 

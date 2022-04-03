@@ -16,14 +16,12 @@ public class DiveSafeApplication {
 
   public static DiveSafe getDiveSafe() {
     if (diveSafe == null) {
-      // these attributes are default, you should set them later with the setters
-      diveSafe = new DiveSafe(new Date(0), 0, 0);
-
+      
       /**
        * @author Jiahao Zhao
        */
       
-      //diveSafe = DiveSafePersistence.load();
+      diveSafe = DiveSafePersistence.load();
     }
     
     return diveSafe;

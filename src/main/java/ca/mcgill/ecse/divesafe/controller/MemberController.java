@@ -7,12 +7,14 @@ import ca.mcgill.ecse.divesafe.model.Guide;
 import ca.mcgill.ecse.divesafe.model.Item;
 import ca.mcgill.ecse.divesafe.model.ItemBooking;
 import ca.mcgill.ecse.divesafe.model.Member;
+import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
 
 public class MemberController {
 
   private static DiveSafe diveSafe = DiveSafeApplication.getDiveSafe();
 
-  private MemberController() {}
+  private MemberController() {
+  }
 
   /**
    * Registers members.
@@ -65,6 +67,13 @@ public class MemberController {
       diveSafe.addItemBooking(itemQuantities.get(i), member, Item.getWithName(itemNames.get(i)));
     }
 
+    try {
+      DiveSafePersistence.save();
+
+    } catch (RuntimeException e) {
+
+      e.getMessage();
+    }
     return "";
   }
 
@@ -87,8 +96,7 @@ public class MemberController {
       String newEmergencyContact, int newNrDays, boolean newGuideRequired, boolean newHotelRequired,
       List<String> newItemNames, List<Integer> newItemQuantities) {
 
-    var error =
-        checkCommonConditions(newPassword, newName, newEmergencyContact, newNrDays, newItemNames);
+    var error = checkCommonConditions(newPassword, newName, newEmergencyContact, newNrDays, newItemNames);
 
     if (!Member.hasWithEmail(email)) {
       error = "Member not found";
@@ -114,6 +122,13 @@ public class MemberController {
       diveSafe.addItemBooking(newItemQuantities.get(i), member,
           Item.getWithName(newItemNames.get(i)));
     }
+    try {
+      DiveSafePersistence.save();
+
+    } catch (RuntimeException e) {
+
+      e.getMessage();
+    }
 
     return "";
   }
@@ -122,7 +137,16 @@ public class MemberController {
     Member member = Member.getWithEmail(email);
     if (member != null) {
       member.delete();
+      try {
+        DiveSafePersistence.save();
+
+      } catch (RuntimeException e) {
+
+        e.getMessage();
+      }
+
     }
+
     return "";
   }
 
@@ -168,7 +192,7 @@ public class MemberController {
    * checking if the number of days is valid or not
    *
    * @author Joey Koay
-   * @param nrDays - number of days
+   * @param nrDays   - number of days
    * @param diveSafe - the application
    * @return whether the number of days is valid
    */
@@ -181,7 +205,7 @@ public class MemberController {
    *
    * @author Joey Koay
    * @param newItemsNames - a list of all of the itemNames
-   * @param diveSafe - the application
+   * @param diveSafe      - the application
    * @return whether the item exists or not
    */
   private static boolean validItems(List<String> itemNames, DiveSafe diveSafe) {
@@ -209,8 +233,7 @@ public class MemberController {
     }
 
     if (!validNrDays(nrDays, diveSafe)) {
-      error =
-          "The number of days must be greater than zero and less than or equal to the number of diving days in the diving season";
+      error = "The number of days must be greater than zero and less than or equal to the number of diving days in the diving season";
     }
 
     if (!validItems(itemNames, diveSafe)) {

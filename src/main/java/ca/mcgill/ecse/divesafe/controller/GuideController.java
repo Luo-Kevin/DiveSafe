@@ -4,13 +4,14 @@ import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
 import ca.mcgill.ecse.divesafe.model.Guide;
 import ca.mcgill.ecse.divesafe.model.Member;
-
+import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
 
 public class GuideController {
 
   private static DiveSafe diveSafe = DiveSafeApplication.getDiveSafe();
 
-  private GuideController() {}
+  private GuideController() {
+  }
 
   public static String registerGuide(String email, String password, String name,
       String emergencyContact) {
@@ -46,6 +47,13 @@ public class GuideController {
     }
 
     diveSafe.addGuide(email, password, name, emergencyContact);
+    try {
+      DiveSafePersistence.save();
+
+    } catch (RuntimeException e) {
+
+      e.getMessage();
+    }
 
     return "";
   }
@@ -68,6 +76,14 @@ public class GuideController {
     guideToUpdate.setName(newName);
     guideToUpdate.setEmergencyContact(newEmergencyContact);
 
+    try {
+      DiveSafePersistence.save();
+
+    } catch (RuntimeException e) {
+
+      e.getMessage();
+    }
+
     return "";
   }
 
@@ -75,6 +91,14 @@ public class GuideController {
     Guide guide = Guide.getWithEmail(email);
     if (guide != null) {
       guide.delete();
+    }
+
+    try {
+      DiveSafePersistence.save();
+
+    } catch (RuntimeException e) {
+
+      e.getMessage();
     }
     return "";
   }

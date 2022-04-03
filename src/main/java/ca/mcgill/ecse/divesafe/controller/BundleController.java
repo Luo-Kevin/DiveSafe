@@ -9,6 +9,7 @@ import ca.mcgill.ecse.divesafe.model.DiveSafe;
 import ca.mcgill.ecse.divesafe.model.Equipment;
 import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
 import ca.mcgill.ecse.divesafe.model.Item;
+import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
 
 public class BundleController {
 
@@ -16,13 +17,14 @@ public class BundleController {
 
   private static final int MAX_DISCOUNT = 100;
 
-  private BundleController() {}
+  private BundleController() {
+  }
 
   /**
    * @author Runge (Karen) Fu This method creates an equipment bundle
-   * @param name the name of the new equipment bundle
-   * @param discount the discount of the new equipment bundle
-   * @param equipmentNames list of equipment names that need to be add
+   * @param name                the name of the new equipment bundle
+   * @param discount            the discount of the new equipment bundle
+   * @param equipmentNames      list of equipment names that need to be add
    * @param equipmentQuantities list of equipment quantities which need to be add
    * @throws InvalidInputException if an input exception occurred
    */
@@ -43,9 +45,16 @@ public class BundleController {
     for (int i = 0; i < equipmentNames.size(); i++) {
       String equipmentName = equipmentNames.get(i);
       int equipmentQuantity = equipmentQuantities.get(i);
-      BundleItem bundleItem =
-          diveSafe.addBundleItem(equipmentQuantity, bundle, Equipment.getWithName(equipmentName));
+      BundleItem bundleItem = diveSafe.addBundleItem(equipmentQuantity, bundle, Equipment.getWithName(equipmentName));
       bundle.addBundleItem(bundleItem);
+
+      try {
+        DiveSafePersistence.save();
+
+      } catch (RuntimeException e) {
+
+        e.getMessage();
+      }
     }
 
     return "";
@@ -53,18 +62,20 @@ public class BundleController {
 
   /**
    * @author Runge (Karen) Fu This method updates the equipment bundle
-   * @param oldName name of the equipment bundle which will be updated
-   * @param newName new name for the equipment bundle which will be updated
-   * @param newDiscount new discount for the equipment bundle
-   * @param newEquipmentNames list of equipment names that need to be updated
-   * @param newEquipmentQuantities list of equipment quantities that need to be updated
+   * @param oldName                name of the equipment bundle which will be
+   *                               updated
+   * @param newName                new name for the equipment bundle which will be
+   *                               updated
+   * @param newDiscount            new discount for the equipment bundle
+   * @param newEquipmentNames      list of equipment names that need to be updated
+   * @param newEquipmentQuantities list of equipment quantities that need to be
+   *                               updated
    * @throws InvalidInputException if an input exception occurred
    */
   public static String updateEquipmentBundle(String oldName, String newName, int newDiscount,
       List<String> newEquipmentNames, List<Integer> newEquipmentQuantities) {
 
-    String error =
-        checkCommonConditions(newName, newDiscount, newEquipmentNames, newEquipmentQuantities);
+    String error = checkCommonConditions(newName, newDiscount, newEquipmentNames, newEquipmentQuantities);
     var foundBundle = EquipmentBundle.getWithName(oldName);
 
     if (!oldName.equals(newName) && Item.hasWithName(newName)) {
@@ -90,7 +101,15 @@ public class BundleController {
       foundBundle.addBundleItem(newEquipmentQuantities.get(i), diveSafe, equipment);
     }
 
+    try {
+      DiveSafePersistence.save();
+
+    } catch (RuntimeException e) {
+
+      e.getMessage();
+    }
     return "";
+
   }
 
   public static String deleteEquipmentBundle(String name) {
@@ -99,8 +118,16 @@ public class BundleController {
     if (foundBundle != null) {
       foundBundle.delete();
     }
+    try {
+      DiveSafePersistence.save();
+
+    } catch (RuntimeException e) {
+
+      e.getMessage();
+    }
 
     return "";
+
   }
 
   private static String checkCommonConditions(String bundleName, int discount,
