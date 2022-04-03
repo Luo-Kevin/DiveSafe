@@ -27,13 +27,11 @@ public class HotelController {
     }
 
     HotelType hotelType = HotelType.valueOf(type);
-    diveSafe.addHotel(name, address, nrStars, hotelType);
 
     try {
+      diveSafe.addHotel(name, address, nrStars, hotelType);
       DiveSafePersistence.save();
-
     } catch (RuntimeException e) {
-
       e.getMessage();
     }
 
@@ -64,9 +62,7 @@ public class HotelController {
 
     try {
       DiveSafePersistence.save();
-
     } catch (RuntimeException e) {
-
       e.getMessage();
     }
 
@@ -77,14 +73,11 @@ public class HotelController {
     Hotel hotel = Hotel.getWithName(name);
     if (hotel != null) {
       hotel.delete();
-    }
-
-    try {
-      DiveSafePersistence.save();
-
-    } catch (RuntimeException e) {
-
-      e.getMessage();
+      try {
+        DiveSafePersistence.save();
+      } catch (RuntimeException e) {
+        e.getMessage();
+      }
     }
 
     return "";

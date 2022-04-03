@@ -80,13 +80,13 @@ public class AssignmentController {
     String error = "";
     String refundPercentage = "";
 
-    //Check if userEmail exist in system
+    // Check if userEmail exist in system
     if (!Member.hasWithEmail(userEmail))
       return error = "Member with email address " + userEmail + " does not exist";
 
     Member member = Member.getWithEmail(userEmail);
 
-    //Check for invalid user status when attempting to refund
+    // Check for invalid user status when attempting to refund
     if (member.getMemberStatusFullName().equals("Banned")) {
       error = "Cannot cancel the trip due to a ban";
     }
@@ -95,26 +95,26 @@ public class AssignmentController {
       error = "Cannot cancel a trip which has finished";
     }
 
-    //Check for user status when allowed to refund
+    // Check for user status when allowed to refund
     else if (member.getMemberStatusFullName().equals("Paid"))
-    refundPercentage = "50";
+      refundPercentage = "50";
 
     else if (member.getMemberStatusFullName().equals("Started"))
-    refundPercentage = "10";
+      refundPercentage = "10";
 
-    if(!error.isEmpty()){
+    if (!error.isEmpty()) {
       return error.trim();
     }
 
-     try {
-       //cancel member trip
-        member.cancelTrip();
-        //save changes with persistence
-        DiveSafePersistence.save();
-     } catch (RuntimeException e) {
-       return e.getMessage();
-     }
-    
+    try {
+      // cancel member trip
+      member.cancelTrip();
+      // save changes with persistence
+      DiveSafePersistence.save();
+    } catch (RuntimeException e) {
+      return e.getMessage();
+    }
+
     return refundPercentage;
   }
 
@@ -132,14 +132,14 @@ public class AssignmentController {
 
     Member member = Member.getWithEmail(userEmail);
 
-    //Check if userEmail exist in system
+    // Check if userEmail exist in system
     if (!Member.hasWithEmail(userEmail)) {
       return String.format("Member with email address %s does not exist", userEmail);
     }
 
     String statusMember = member.getMemberStatusFullName();
 
-    //Check for invalid user status when finishing trip
+    // Check for invalid user status when finishing trip
     if (statusMember.equals("Assigned") || statusMember.equals("Paid")) {
       error = "Cannot finish a trip which has not started";
     }
@@ -152,21 +152,21 @@ public class AssignmentController {
       error = "Cannot finish a trip which has been cancelled";
     }
 
-    if (!error.isEmpty()){
+    if (!error.isEmpty()) {
       return error.trim();
     }
 
-   try {
-     //finish member's trip
-     member.finishTrip();
-     //save changes with persistence
-     DiveSafePersistence.save();
-   } catch (RuntimeException e) {
-     
-    return e.getMessage();
-   } 
+    try {
+      // finish member's trip
+      member.finishTrip();
+      // save changes with persistence
+      DiveSafePersistence.save();
+    } catch (RuntimeException e) {
 
-    return "0";  // Refund percentage if finish trip
+      return e.getMessage();
+    }
+
+    return "0"; // Refund percentage if finish trip
   }
 
   /**
@@ -186,7 +186,7 @@ public class AssignmentController {
 
     List<Member> currentMemberList = diveSafe.getMembers();
 
-    // Checking all user status 
+    // Checking all user status
     for (Member member : currentMemberList) {
 
       // Checks for user that are not allowed to start trip
@@ -205,16 +205,16 @@ public class AssignmentController {
       if (!error.isEmpty()) {
         return error.trim();
       }
-  
+
       try {
-        //start member's trip
+        // start member's trip
         member.startTrip(day);
-        //save changes with persistence
+        // save changes with persistence
         DiveSafePersistence.save();
       } catch (RuntimeException e) {
-       return e.getMessage();
-      } 
-      
+        return e.getMessage();
+      }
+
     }
 
     return "";
@@ -226,7 +226,8 @@ public class AssignmentController {
    * @author Kevin Luo
    * @param userEmail         - email related to payment
    * @param authorizationCode - authorization code related to payment
-   * @return error message related to user input, otherwise return authorization code of user
+   * @return error message related to user input, otherwise return authorization
+   *         code of user
    */
 
   public static String confirmPayment(String userEmail, String authorizationCode) {
@@ -244,7 +245,7 @@ public class AssignmentController {
 
     Member member = Member.getWithEmail(userEmail);
 
-    //Checking for invalid user status when confirming payment
+    // Checking for invalid user status when confirming payment
     if (member.getMemberStatusFullName().equals("Paid")) {
       error = "Trip has already been paid for";
     }
@@ -266,22 +267,17 @@ public class AssignmentController {
       error = "Cannot pay for the trip due to a ban";
     }
 
-    if (!error.isEmpty()){
+    if (!error.isEmpty()) {
       return error.trim();
     }
 
-    // Update user payment status
-    else if (Member.hasWithEmail(userEmail) && !(authorizationCode.isBlank())
-        && member.getMemberStatusFullName().equals("Assigned")) {
-      member.confirmPayment();
-    }
-
     try {
-      DiveSafePersistence.save(); 
+      member.confirmPayment();
+      DiveSafePersistence.save();
     } catch (Exception e) {
       return e.getMessage();
     }
-   
+
     return authorizationCode;
   }
 

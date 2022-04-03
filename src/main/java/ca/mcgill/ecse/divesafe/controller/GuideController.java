@@ -46,12 +46,10 @@ public class GuideController {
       return error.trim();
     }
 
-    diveSafe.addGuide(email, password, name, emergencyContact);
     try {
+      diveSafe.addGuide(email, password, name, emergencyContact);
       DiveSafePersistence.save();
-
     } catch (RuntimeException e) {
-
       e.getMessage();
     }
 
@@ -78,9 +76,7 @@ public class GuideController {
 
     try {
       DiveSafePersistence.save();
-
     } catch (RuntimeException e) {
-
       e.getMessage();
     }
 
@@ -91,15 +87,13 @@ public class GuideController {
     Guide guide = Guide.getWithEmail(email);
     if (guide != null) {
       guide.delete();
+      try {
+        DiveSafePersistence.save();
+      } catch (RuntimeException e) {
+        e.getMessage();
+      }
     }
 
-    try {
-      DiveSafePersistence.save();
-
-    } catch (RuntimeException e) {
-
-      e.getMessage();
-    }
     return "";
   }
 

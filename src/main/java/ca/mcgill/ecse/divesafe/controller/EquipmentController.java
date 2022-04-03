@@ -29,14 +29,13 @@ public class EquipmentController {
       return "The equipment bundle already exists";
     }
 
-    diveSafe.addEquipment(name, weight, pricePerDay);
     try {
+      diveSafe.addEquipment(name, weight, pricePerDay);
       DiveSafePersistence.save();
-
     } catch (RuntimeException e) {
-
       e.getMessage();
     }
+
     return "";
   }
 
@@ -68,11 +67,10 @@ public class EquipmentController {
 
     try {
       DiveSafePersistence.save();
-
     } catch (RuntimeException e) {
-
       e.getMessage();
     }
+
     return "";
   }
 
@@ -95,11 +93,8 @@ public class EquipmentController {
     equipment.delete();
 
     try {
-
       DiveSafePersistence.save();
-
     } catch (RuntimeException e) {
-
       e.getMessage();
     }
 

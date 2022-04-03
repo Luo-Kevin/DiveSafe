@@ -69,11 +69,10 @@ public class MemberController {
 
     try {
       DiveSafePersistence.save();
-
     } catch (RuntimeException e) {
-
       e.getMessage();
     }
+
     return "";
   }
 
@@ -122,11 +121,10 @@ public class MemberController {
       diveSafe.addItemBooking(newItemQuantities.get(i), member,
           Item.getWithName(newItemNames.get(i)));
     }
+
     try {
       DiveSafePersistence.save();
-
     } catch (RuntimeException e) {
-
       e.getMessage();
     }
 
@@ -139,12 +137,9 @@ public class MemberController {
       member.delete();
       try {
         DiveSafePersistence.save();
-
       } catch (RuntimeException e) {
-
         e.getMessage();
       }
-
     }
 
     return "";

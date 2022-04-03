@@ -50,9 +50,7 @@ public class BundleController {
 
       try {
         DiveSafePersistence.save();
-
       } catch (RuntimeException e) {
-
         e.getMessage();
       }
     }
@@ -103,11 +101,10 @@ public class BundleController {
 
     try {
       DiveSafePersistence.save();
-
     } catch (RuntimeException e) {
-
       e.getMessage();
     }
+
     return "";
 
   }
@@ -117,13 +114,11 @@ public class BundleController {
 
     if (foundBundle != null) {
       foundBundle.delete();
-    }
-    try {
-      DiveSafePersistence.save();
-
-    } catch (RuntimeException e) {
-
-      e.getMessage();
+      try {
+        DiveSafePersistence.save();
+      } catch (RuntimeException e) {
+        e.getMessage();
+      }
     }
 
     return "";
