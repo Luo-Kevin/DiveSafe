@@ -8,6 +8,9 @@ import ca.mcgill.ecse.divesafe.model.DiveSafe;
 import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
 
 public class DiveSafeApplication {
+
+  public static final boolean DARK_MODE = true;
+
   private static DiveSafe diveSafe;
 
   public static void main(String[] args) {
@@ -16,23 +19,24 @@ public class DiveSafeApplication {
 
   public static DiveSafe getDiveSafe() {
     if (diveSafe == null) {
-      
+
       /**
        * @author Jiahao Zhao
        */
-      
+
       diveSafe = DiveSafePersistence.load();
     }
-    
+
     return diveSafe;
   }
 
   /**
-   * This is the setter to create a new Dive Safe season in the application with the required parameters.
+   * This is the setter to create a new Dive Safe season in the application with
+   * the required parameters.
    * 
    * @author Siger Ma
-   * @param aStartDate - Start date of the season
-   * @param aNumDays - Duration of the season
+   * @param aStartDate          - Start date of the season
+   * @param aNumDays            - Duration of the season
    * @param aPriceOfGuidePerDay - Price of a guide for the season
    */
 
