@@ -30,7 +30,7 @@ public class DiveSafeFxmlView extends Application {
             primaryStage.setScene(scene);
             primaryStage.setMinWidth(800);
             primaryStage.setMinHeight(600);
-            primaryStage.setTitle("BTMS");
+            primaryStage.setTitle("DiveSafe");
             primaryStage.show();
             refresh();
         } catch (IOException e) {

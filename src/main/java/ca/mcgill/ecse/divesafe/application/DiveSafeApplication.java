@@ -4,8 +4,11 @@
 package ca.mcgill.ecse.divesafe.application;
 
 import java.sql.Date;
+
+import ca.mcgill.ecse.divesafe.JavaFx.DiveSafeFxmlView;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
 import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
+import javafx.application.Application;
 
 public class DiveSafeApplication {
 
@@ -15,6 +18,10 @@ public class DiveSafeApplication {
 
   public static void main(String[] args) {
     // Launch UI here (For Iteration 4)
+    /**
+     * @author JZ
+     */
+    Application.launch(DiveSafeFxmlView.class, args);
   }
 
   public static DiveSafe getDiveSafe() {
