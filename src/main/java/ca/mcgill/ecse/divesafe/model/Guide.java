@@ -295,6 +295,11 @@ public class Guide extends NamedUser
     }
   }
 
+  // line 52 "../../../../../AssignmentStates.ump"
+   public void publicSetAvailableStatus(AvailableStatus aAvailableStatus){
+    setAvailableStatus(aAvailableStatus);
+  }
+
   // line 43 "../../../../../DiveSafe.ump"
    public static  Guide getWithEmail(String email){
     if (User.getWithEmail(email) instanceof Guide guide) {

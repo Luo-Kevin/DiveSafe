@@ -7,8 +7,14 @@ import java.util.ResourceBundle;
 
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.controller.AssignmentController;
+import ca.mcgill.ecse.divesafe.controller.GuideController;
+import ca.mcgill.ecse.divesafe.controller.TOAssignment;
+import ca.mcgill.ecse.divesafe.model.Assignment;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
+import ca.mcgill.ecse.divesafe.model.Guide;
 import ca.mcgill.ecse.divesafe.model.Member;
+import ca.mcgill.ecse.divesafe.model.Guide.AvailableStatus;
+import ca.mcgill.ecse.divesafe.model.Member.MemberStatus;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -42,6 +49,18 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+      List<Guide> listOGuides = DiveSafeApplication.getDiveSafe().getGuides();
+      List<Member> listOMembers = DiveSafeApplication.getDiveSafe().getMembers();
+      for (Guide guide : listOGuides) {
+        guide.publicSetAvailableStatus(AvailableStatus.Available);
+      }
+      for (Member member : listOMembers) {
+        member.publicSetMemberStatus(MemberStatus.Unassigned);
+      }
+      List<TOAssignment> listOfAssignments = AssignmentController.getAssignments();
+      for (TOAssignment assignment : listOfAssignments) {
+        listAssignedMembers.getItems().add(assignment.getMemberName());
+      }
       setTreeItem();
       
     }
@@ -49,11 +68,9 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
     @FXML
     void startInitiate(ActionEvent event) {
       AssignmentController.initiateAssignment();
-      List<Member> listOfMembers = DiveSafeApplication.getDiveSafe().getMembers();
-      for (Member member : listOfMembers) {
-        if (member.getMemberStatusFullName().equals("Assigned")) {
-          listAssignedMembers.getItems().add(member.getName());
-        }
+      List<TOAssignment> listOfAssignments = AssignmentController.getAssignments();
+      for (TOAssignment assignment : listOfAssignments) {
+        listAssignedMembers.getItems().add(assignment.getMemberName());
       }
     }
 
@@ -98,7 +115,7 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
     }
 
     @FXML
-    void getDetails(MouseEvent event) {
+    void getDetails(ContextMenuEvent event) {
 
     }
 
