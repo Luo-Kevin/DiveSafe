@@ -102,12 +102,12 @@
                       <Font size="18.0" fx:id="x1" />
                     </font>
                   </Label>
-                        <Pane layoutY="223.0" prefHeight="386.0" prefWidth="222.0">
+                        <Pane layoutY="223.0" prefHeight="386.0">
                            <children>
                               <ListView fx:id="listUnassignedMembers" />
                            </children>
                         </Pane>
-                        <Label layoutX="10.0" layoutY="194.0" text="Assigned Members">
+                        <Label layoutX="10.0" layoutY="194.0" text="Unassigned Members">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -128,9 +128,9 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Pane layoutY="66.0" prefHeight="506.0" prefWidth="252.0" AnchorPane.bottomAnchor="-53.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="66.0">
+                              <Pane layoutY="66.0" prefHeight="506.0" AnchorPane.bottomAnchor="-53.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="66.0">
                                  <children>
-                                    <ListView fx:id="listAssignedMembers" onContextMenuRequested="#getDetails" onMouseClicked="#getDetails" prefHeight="549.0" prefWidth="252.0" />
+                                    <ListView fx:id="listAssignedMembers" onMouseClicked="#getDetails" prefHeight="549.0" />
                                  </children>
                               </Pane>
                     </children>
@@ -144,9 +144,9 @@
                               <Font size="18.0" fx:id="x6" />
                            </font>
                         </Label>
-                        <Pane layoutY="64.0" minWidth="250.0" prefHeight="547.0" prefWidth="275.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
+                        <Pane layoutY="64.0" minWidth="250.0" prefHeight="547.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
                            <children>
-                              <TreeView fx:id="treeAssignmentDetails" layoutY="2.0" onContextMenuRequested="#selectTreeBranch" onMouseClicked="#selectTreeBranch" prefHeight="546.0" prefWidth="276.0" />
+                              <TreeView fx:id="treeAssignmentDetails" layoutY="2.0" onContextMenuRequested="#selectTreeBranch" onMouseClicked="#selectTreeBranch" prefHeight="546.0" />
                            </children>
                         </Pane>
                 </children>

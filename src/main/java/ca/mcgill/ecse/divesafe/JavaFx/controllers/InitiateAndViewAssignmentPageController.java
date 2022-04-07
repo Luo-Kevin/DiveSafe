@@ -8,7 +8,8 @@ import java.util.ResourceBundle;
 
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.controller.AssignmentController;
-import ca.mcgill.ecse.divesafe.controller.TOAssignment;
+import ca.mcgill.ecse.divesafe.model.Assignment;
+import ca.mcgill.ecse.divesafe.model.ItemBooking;
 import ca.mcgill.ecse.divesafe.model.Member;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.Node;
@@ -36,8 +38,10 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   private Stage stage;
   private Scene scene;
   private Parent root;
-  private String error;
-  
+  private String error = "";
+  private String memberEmail = "";
+  private Member selectedMember = null;
+
   // Button to initiate assignment
   @FXML
   private Button initiateButton;
@@ -65,7 +69,6 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   @FXML
   private ListView<String> listUnassignedMembers;
 
-
   // Deetailed information about the assignments
   @FXML
   private TreeView<String> treeAssignmentDetails;
@@ -84,6 +87,9 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
    */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    memberEmail = "";
+    selectedMember = null;
+    error = "";
     updateLists();
     setTreeItem();
   }
@@ -99,6 +105,7 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
     listAssignedMembers.getItems().clear();
     listUnassignedMembers.getItems().clear();
     updateLists();
+    setTreeItem();
   }
 
   /**
@@ -107,25 +114,47 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   @FXML
   public void setTreeItem() {
 
-    String contentOne = "";
-    String contentTwo = "";
-    String contentThree = "";
+    TreeItem<String> root = null;
 
-    TreeItem<String> root = new TreeItem<>("Details");
+    if (memberEmail != "") {
+      selectedMember = Member.getWithEmail(memberEmail);
+      Assignment selectedAssignment = selectedMember.getAssignment();
+      List<ItemBooking> listOfItemBookings = selectedMember.getItemBookings();
 
-    TreeItem<String> itemOne = new TreeItem<>("Start Date");
-    TreeItem<String> itemTwo = new TreeItem<>("End Date");
-    TreeItem<String> itemThree = new TreeItem<>("Guide");
+      String contentOne = String.valueOf(selectedAssignment.getStartDay());
+      String contentTwo = String.valueOf(selectedAssignment.getEndDay());
+      String contentThree = "No guide required";
+      if (selectedMember.getGuideRequired()) {
+        contentThree = selectedAssignment.getGuide().getEmail();
+      }     
+      String contentFour = "";
+      for (ItemBooking itemBooking : listOfItemBookings) {
+        contentFour += itemBooking.getItem().getName() + ". ";
+      }
+      if (contentFour == "") {
+        contentFour = "No items required";
+      }
 
-    TreeItem<String> itemOneContent = new TreeItem<>(contentOne);
-    TreeItem<String> itemTwoContent = new TreeItem<>(contentTwo);
-    TreeItem<String> itemThreeContent = new TreeItem<>(contentThree);
+      root = new TreeItem<>("Details");
 
-    itemOne.getChildren().add(itemOneContent);
-    itemTwo.getChildren().add(itemTwoContent);
-    itemThree.getChildren().add(itemThreeContent);
+      TreeItem<String> itemOne = new TreeItem<>("Start Date");
+      TreeItem<String> itemTwo = new TreeItem<>("End Date");
+      TreeItem<String> itemThree = new TreeItem<>("Guide");
+      TreeItem<String> itemFour = new TreeItem<>("Item Booking");
 
-    root.getChildren().addAll(itemOne, itemTwo, itemThree);
+      TreeItem<String> itemOneContent = new TreeItem<>(contentOne);
+      TreeItem<String> itemTwoContent = new TreeItem<>(contentTwo);
+      TreeItem<String> itemThreeContent = new TreeItem<>(contentThree);
+      TreeItem<String> itemFourContent = new TreeItem<>(contentFour.toString());
+
+      itemOne.getChildren().add(itemOneContent);
+      itemTwo.getChildren().add(itemTwoContent);
+      itemThree.getChildren().add(itemThreeContent);
+      itemFour.getChildren().add(itemFourContent);
+
+      root.getChildren().addAll(itemOne, itemTwo, itemThree, itemFour);
+    }
+
     treeAssignmentDetails.setRoot(root);
   }
 
@@ -135,15 +164,6 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   @FXML
   public void selectTreeBranch() {
     treeAssignmentDetails.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-      if (newValue != null) {
-        if (newValue.getValue().equals("Start Date")) {
-          System.out.println("Start Date");
-        } else if (newValue.getValue().equals("End Date")) {
-          System.out.println("End Date");
-        } else if (newValue.getValue().equals("Guide")) {
-          System.out.println("Guide");
-        }
-      }
     });
   }
 
@@ -152,8 +172,9 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
    * the selected member in the list listAssignedMembers
    */
   @FXML
-  void getDetails(ContextMenuEvent event) {
-
+  void getDetails(MouseEvent event) {
+    memberEmail = listAssignedMembers.getSelectionModel().getSelectedItem();
+    setTreeItem();
   }
 
   /**
@@ -164,8 +185,9 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
     DiveSafeApplication.reset();
     listAssignedMembers.getItems().clear();
     listUnassignedMembers.getItems().clear();
-    treeAssignmentDetails.setRoot(null);
+    memberEmail = "";
     updateLists();
+    setTreeItem();
   }
 
   @FXML
@@ -173,10 +195,9 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
     List<Member> listOfMembers = DiveSafeApplication.getDiveSafe().getMembers();
     for (Member member : listOfMembers) {
       if (member.getMemberStatusFullName().equals("Assigned")) {
-        listAssignedMembers.getItems().add(member.getName());
-      }
-      else if (member.getMemberStatusFullName().equals("Unassigned")) {
-        listUnassignedMembers.getItems().add(member.getName());
+        listAssignedMembers.getItems().add(member.getEmail());
+      } else if (member.getMemberStatusFullName().equals("Unassigned")) {
+        listUnassignedMembers.getItems().add(member.getEmail());
       }
     }
   }
