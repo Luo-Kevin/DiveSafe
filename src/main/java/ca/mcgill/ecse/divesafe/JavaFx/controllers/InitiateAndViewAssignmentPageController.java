@@ -91,7 +91,8 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
    */
   @FXML
   void startInitiate(ActionEvent event) {
-    AssignmentController.initiateAssignment();
+    String error = AssignmentController.initiateAssignment();
+    listAssignedMembers.getItems().clear();
     List<TOAssignment> listOfAssignments = AssignmentController.getAssignments();
     for (TOAssignment assignment : listOfAssignments) {
       listAssignedMembers.getItems().add(assignment.getMemberName());
@@ -156,6 +157,8 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   @FXML
   void resetApp(ActionEvent event) {
     DiveSafeApplication.reset();
+    listAssignedMembers.getItems().clear();
+    treeAssignmentDetails.setRoot(null);
   }
 
   @FXML
