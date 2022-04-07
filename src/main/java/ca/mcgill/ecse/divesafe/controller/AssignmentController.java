@@ -2,6 +2,9 @@ package ca.mcgill.ecse.divesafe.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.common.graph.SuccessorsFunction;
+
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.model.Assignment;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
@@ -232,6 +235,7 @@ public class AssignmentController {
 
   public static String confirmPayment(String userEmail, String authorizationCode) {
     String error = "";
+    boolean success;
 
     // Checks email exist
     if (!Member.hasWithEmail(userEmail)) {
@@ -272,13 +276,18 @@ public class AssignmentController {
     }
 
     try {
-      member.confirmPayment();
+      success = member.confirmPayment();
       DiveSafePersistence.save();
     } catch (Exception e) {
       return e.getMessage();
     }
 
-    return authorizationCode;
+    if (success) {
+      return authorizationCode;
+    } else {
+      return "";
+    }
+
   }
 
   /**
