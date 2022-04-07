@@ -27,87 +27,113 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+/**
+ * Controller for page where we initiate and view assignments.
+ * 
+ * @author Siger Ma
+ */
 public class InitiateAndViewAssignmentPageController implements Initializable {
 
-    @FXML
-    private Button initiateButton;
+  // Button to initiate assignment
+  @FXML
+  private Button initiateButton;
 
-    @FXML
-    private ListView<String> listAssignedMembers;
+  // List of assigned members
+  @FXML
+  private ListView<String> listAssignedMembers;
 
-    @FXML
-    private TreeView<String> treeAssignmentDetails;
+  // Deetailed information about the assignments
+  @FXML
+  private TreeView<String> treeAssignmentDetails;
 
-    @FXML
-    private Font x1;
+  @FXML
+  private Font x1;
 
-    @FXML
-    private Font x3;
+  @FXML
+  private Font x3;
 
-    @FXML
-    private Color x4;
+  @FXML
+  private Color x4;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-      List<TOAssignment> listOfAssignments = AssignmentController.getAssignments();
-      for (TOAssignment assignment : listOfAssignments) {
-        listAssignedMembers.getItems().add(assignment.getMemberName());
-      }
-      setTreeItem();
+  /**
+   * Initialize the controller class
+   */
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    List<TOAssignment> listOfAssignments = AssignmentController.getAssignments();
+    for (TOAssignment assignment : listOfAssignments) {
+      listAssignedMembers.getItems().add(assignment.getMemberName());
     }
+    setTreeItem();
+  }
 
-    @FXML
-    void startInitiate(ActionEvent event) {
-      AssignmentController.initiateAssignment();
-      List<TOAssignment> listOfAssignments = AssignmentController.getAssignments();
-      for (TOAssignment assignment : listOfAssignments) {
-        listAssignedMembers.getItems().add(assignment.getMemberName());
-      }
+  /**
+   * Action of the button initiateButton to initiate the assignments
+   * 
+   * @param event - mouse click
+   */
+  @FXML
+  void startInitiate(ActionEvent event) {
+    AssignmentController.initiateAssignment();
+    List<TOAssignment> listOfAssignments = AssignmentController.getAssignments();
+    for (TOAssignment assignment : listOfAssignments) {
+      listAssignedMembers.getItems().add(assignment.getMemberName());
     }
+  }
 
-    @FXML
-    public void setTreeItem () {
-    
-      String contentOne = "";
-      String contentTwo = "";
-      String contentThree = "";
-  
-      TreeItem<String> root = new TreeItem<>("Details");
-  
-      TreeItem<String> itemOne = new TreeItem<>("Start Date");
-      TreeItem<String> itemTwo = new TreeItem<>("End Date");
-      TreeItem<String> itemThree = new TreeItem<>("Guide");
-      
-      TreeItem<String> itemOneContent = new TreeItem<>(contentOne);
-      TreeItem<String> itemTwoContent = new TreeItem<>(contentTwo);
-      TreeItem<String> itemThreeContent = new TreeItem<>(contentThree);
-  
-      itemOne.getChildren().add(itemOneContent);
-      itemTwo.getChildren().add(itemTwoContent);
-      itemThree.getChildren().add(itemThreeContent);
-      
-      root.getChildren().addAll(itemOne, itemTwo, itemThree);
-      treeAssignmentDetails.setRoot(root);
-    }
+  /**
+   * Create items in the tree treeAssignmentDetails
+   */
+  @FXML
+  public void setTreeItem() {
 
-    @FXML
-    public void selectTreeBranch() {
-      treeAssignmentDetails.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-        if (newValue != null) {
-          if (newValue.getValue().equals("Start Date")) {
-            System.out.println("Start Date");
-          } else if (newValue.getValue().equals("End Date")) {
-            System.out.println("End Date");
-          } else if (newValue.getValue().equals("Guide")) {
-            System.out.println("Guide");
-          }
+    String contentOne = "";
+    String contentTwo = "";
+    String contentThree = "";
+
+    TreeItem<String> root = new TreeItem<>("Details");
+
+    TreeItem<String> itemOne = new TreeItem<>("Start Date");
+    TreeItem<String> itemTwo = new TreeItem<>("End Date");
+    TreeItem<String> itemThree = new TreeItem<>("Guide");
+
+    TreeItem<String> itemOneContent = new TreeItem<>(contentOne);
+    TreeItem<String> itemTwoContent = new TreeItem<>(contentTwo);
+    TreeItem<String> itemThreeContent = new TreeItem<>(contentThree);
+
+    itemOne.getChildren().add(itemOneContent);
+    itemTwo.getChildren().add(itemTwoContent);
+    itemThree.getChildren().add(itemThreeContent);
+
+    root.getChildren().addAll(itemOne, itemTwo, itemThree);
+    treeAssignmentDetails.setRoot(root);
+  }
+
+  /**
+   * Method to initiate the treeAssignmentDetails tree and make it interactive
+   */
+  @FXML
+  public void selectTreeBranch() {
+    treeAssignmentDetails.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+      if (newValue != null) {
+        if (newValue.getValue().equals("Start Date")) {
+          System.out.println("Start Date");
+        } else if (newValue.getValue().equals("End Date")) {
+          System.out.println("End Date");
+        } else if (newValue.getValue().equals("Guide")) {
+          System.out.println("Guide");
         }
-      });
-    }
+      }
+    });
+  }
 
-    @FXML
-    void getDetails(ContextMenuEvent event) {
+  /**
+   * Method to get the tree with the details of the assignments corresponding to
+   * the selected member in the list listAssignedMembers
+   */
+  @FXML
+  void getDetails(ContextMenuEvent event) {
 
-    }
+  }
 
 }
