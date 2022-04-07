@@ -8,16 +8,20 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="600.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-            <Tab text="Untitled Tab">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-          <Tab text="Untitled Tab 1" />
-            <Tab text="Untitled Tab" />
-          <Tab text="Untitled Tab 2" />
+          <Tab text="Untitled Tab 1">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+          <Tab text="Untitled Tab 2">
+            <content>
+              <fx:include source="pages\InitiateAndViewAssignmentPage.fxml" />
+            </content>
+          </Tab>
+          <Tab text="Untitled Tab 3" />
+          <Tab text="Untitled Tab 4" />
         </tabs>
       </TabPane>
    </children>
