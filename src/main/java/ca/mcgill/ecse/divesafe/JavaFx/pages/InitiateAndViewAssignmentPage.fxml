@@ -53,9 +53,9 @@
          <top>
             <VBox maxHeight="40.0" prefHeight="40.0" style="-fx-background-color: #004385#004385;" BorderPane.alignment="CENTER">
                <children>
-                  <Pane prefHeight="200.0" prefWidth="200.0">
+                  <Pane>
                      <children>
-                        <Button fx:id="resetButton" layoutX="829.0" layoutY="8.0" mnemonicParsing="false" onAction="#resetApp" text="Reset">
+                        <Button fx:id="resetButton" alignment="TOP_RIGHT" contentDisplay="TOP" layoutX="835.0" layoutY="8.0" mnemonicParsing="false" onAction="#resetApp" text="Reset">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -102,11 +102,21 @@
                       <Font size="18.0" fx:id="x1" />
                     </font>
                   </Label>
+                        <Pane layoutY="223.0" prefHeight="386.0" prefWidth="222.0">
+                           <children>
+                              <ListView fx:id="listUnassignedMembers" />
+                           </children>
+                        </Pane>
+                        <Label layoutX="10.0" layoutY="194.0" text="Assigned Members">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
                      </children>
               </AnchorPane>
-              <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
+              <ScrollPane minWidth="250.0" prefHeight="-1.0" prefWidth="-1.0">
                 <content>
-                  <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0">
+                  <AnchorPane id="Content" minHeight="-1.0" minWidth="250.0">
                     <children>
                       <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="View Assignments" textAlignment="CENTER" wrapText="false">
                                  <font>
@@ -134,7 +144,7 @@
                               <Font size="18.0" fx:id="x6" />
                            </font>
                         </Label>
-                        <Pane layoutY="64.0" prefHeight="547.0" prefWidth="275.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
+                        <Pane layoutY="64.0" minWidth="250.0" prefHeight="547.0" prefWidth="275.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
                            <children>
                               <TreeView fx:id="treeAssignmentDetails" layoutY="2.0" onContextMenuRequested="#selectTreeBranch" onMouseClicked="#selectTreeBranch" prefHeight="546.0" prefWidth="276.0" />
                            </children>

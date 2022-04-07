@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.controller.AssignmentController;
 import ca.mcgill.ecse.divesafe.controller.TOAssignment;
+import ca.mcgill.ecse.divesafe.model.Member;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +36,7 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   private Stage stage;
   private Scene scene;
   private Parent root;
+  private String error;
   
   // Button to initiate assignment
   @FXML
@@ -59,6 +61,11 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   @FXML
   private ListView<String> listAssignedMembers;
 
+  // List of unassigned members
+  @FXML
+  private ListView<String> listUnassignedMembers;
+
+
   // Deetailed information about the assignments
   @FXML
   private TreeView<String> treeAssignmentDetails;
@@ -77,10 +84,7 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
    */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    List<TOAssignment> listOfAssignments = AssignmentController.getAssignments();
-    for (TOAssignment assignment : listOfAssignments) {
-      listAssignedMembers.getItems().add(assignment.getMemberName());
-    }
+    updateLists();
     setTreeItem();
   }
 
@@ -91,12 +95,10 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
    */
   @FXML
   void startInitiate(ActionEvent event) {
-    String error = AssignmentController.initiateAssignment();
+    error = AssignmentController.initiateAssignment();
     listAssignedMembers.getItems().clear();
-    List<TOAssignment> listOfAssignments = AssignmentController.getAssignments();
-    for (TOAssignment assignment : listOfAssignments) {
-      listAssignedMembers.getItems().add(assignment.getMemberName());
-    }
+    listUnassignedMembers.getItems().clear();
+    updateLists();
   }
 
   /**
@@ -154,11 +156,29 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
 
   }
 
+  /**
+   * Reset the assignments
+   */
   @FXML
   void resetApp(ActionEvent event) {
     DiveSafeApplication.reset();
     listAssignedMembers.getItems().clear();
+    listUnassignedMembers.getItems().clear();
     treeAssignmentDetails.setRoot(null);
+    updateLists();
+  }
+
+  @FXML
+  private void updateLists() {
+    List<Member> listOfMembers = DiveSafeApplication.getDiveSafe().getMembers();
+    for (Member member : listOfMembers) {
+      if (member.getMemberStatusFullName().equals("Assigned")) {
+        listAssignedMembers.getItems().add(member.getName());
+      }
+      else if (member.getMemberStatusFullName().equals("Unassigned")) {
+        listUnassignedMembers.getItems().add(member.getName());
+      }
+    }
   }
 
   @FXML
