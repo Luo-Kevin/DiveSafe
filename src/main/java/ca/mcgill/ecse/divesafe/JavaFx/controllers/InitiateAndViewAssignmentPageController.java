@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -74,6 +75,9 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   private TreeView<String> treeAssignmentDetails;
 
   @FXML
+  private Label errorMessage;
+
+  @FXML
   private Font x1;
 
   @FXML
@@ -92,6 +96,7 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
     error = "";
     updateLists();
     setTreeItem();
+    errorMessage.setText("DiveSafe");
   }
 
   /**
@@ -106,6 +111,10 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
     listUnassignedMembers.getItems().clear();
     updateLists();
     setTreeItem();
+    if (error != "") {
+      errorMessage.setText(error);
+      errorMessage.setTextFill(Color.RED);
+    }
   }
 
   /**
@@ -126,7 +135,7 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
       String contentThree = "No guide required";
       if (selectedMember.getGuideRequired()) {
         contentThree = selectedAssignment.getGuide().getEmail();
-      }     
+      }
       String contentFour = "";
       for (ItemBooking itemBooking : listOfItemBookings) {
         contentFour += itemBooking.getItem().getName() + ". ";
@@ -186,6 +195,7 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
     listAssignedMembers.getItems().clear();
     listUnassignedMembers.getItems().clear();
     memberEmail = "";
+    error = "";
     updateLists();
     setTreeItem();
   }

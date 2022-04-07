@@ -157,16 +157,14 @@
          <bottom>
           <HBox id="HBox" alignment="CENTER_LEFT" maxHeight="20.0" minHeight="20.0" prefHeight="20.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
-              <Label maxHeight="20.0" maxWidth="-1.0" minHeight="20.0" prefHeight="20.0" text="Left status" HBox.hgrow="ALWAYS">
-                <font>
-                  <Font size="11.0" fx:id="x3" />
-                </font>
-                <textFill>
-                  <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
-                </textFill>
-              </Label>
               <Pane maxHeight="20.0" minHeight="20.0" prefHeight="20.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-              <Label font="$x3" maxWidth="-1.0" text="Right status" textFill="$x4" HBox.hgrow="NEVER" />
+              <Label fx:id="errorMessage" maxWidth="-1.0" text="DiveSafe" HBox.hgrow="NEVER">
+                     <font>
+                  <Font size="11.0" fx:id="x3" />
+                     </font>
+                     <textFill>
+                  <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
+                     </textFill></Label>
             </children>
                <padding>
                   <Insets bottom="3.0" left="3.0" right="3.0" />
