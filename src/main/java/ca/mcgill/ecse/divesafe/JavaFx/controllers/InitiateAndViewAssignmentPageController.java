@@ -1,31 +1,29 @@
 
 package ca.mcgill.ecse.divesafe.JavaFx.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.controller.AssignmentController;
-import ca.mcgill.ecse.divesafe.controller.GuideController;
 import ca.mcgill.ecse.divesafe.controller.TOAssignment;
-import ca.mcgill.ecse.divesafe.model.Assignment;
-import ca.mcgill.ecse.divesafe.model.DiveSafe;
-import ca.mcgill.ecse.divesafe.model.Guide;
-import ca.mcgill.ecse.divesafe.model.Member;
-import ca.mcgill.ecse.divesafe.model.Guide.AvailableStatus;
-import ca.mcgill.ecse.divesafe.model.Member.MemberStatus;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  * Controller for page where we initiate and view assignments.
@@ -34,9 +32,28 @@ import javafx.scene.text.Font;
  */
 public class InitiateAndViewAssignmentPageController implements Initializable {
 
+  private Stage stage;
+  private Scene scene;
+  private Parent root;
+  
   // Button to initiate assignment
   @FXML
   private Button initiateButton;
+
+  @FXML
+  private Button assignmentButton;
+
+  @FXML
+  private Button memberButton;
+
+  @FXML
+  private Button paymentButton;
+
+  @FXML
+  private Button resetButton;
+
+  @FXML
+  private Button tripButton;
 
   // List of assigned members
   @FXML
@@ -134,6 +151,30 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   @FXML
   void getDetails(ContextMenuEvent event) {
 
+  }
+
+  @FXML
+  void resetApp(ActionEvent event) {
+    DiveSafeApplication.reset();
+  }
+
+  @FXML
+  public void switchToPayment(ActionEvent event) throws IOException {
+    root = FXMLLoader.load(getClass().getResource("../pages/Payment.fxml"));
+
+    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
+  }
+
+  @FXML
+  public void switchToAssignment(ActionEvent event) throws IOException {
+    Parent root = FXMLLoader.load(getClass().getResource("../pages/InitiateAndViewAssignmentPage.fxml"));
+    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
   }
 
 }

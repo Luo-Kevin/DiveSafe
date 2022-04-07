@@ -4,21 +4,11 @@
 package ca.mcgill.ecse.divesafe.application;
 
 import java.sql.Date;
-import java.util.List;
-import java.util.Objects;
 
 import ca.mcgill.ecse.divesafe.JavaFx.DiveSafeFxmlView;
-import ca.mcgill.ecse.divesafe.JavaFx.controllers.PaymentController;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
-import ca.mcgill.ecse.divesafe.model.Guide;
-import ca.mcgill.ecse.divesafe.model.Member;
-import ca.mcgill.ecse.divesafe.model.Guide.AvailableStatus;
-import ca.mcgill.ecse.divesafe.model.Member.MemberStatus;
 import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 
 public class DiveSafeApplication {
 
@@ -55,14 +45,6 @@ public class DiveSafeApplication {
    */
   public static void reset() {
     diveSafe = DiveSafePersistence.reset();
-    List<Guide> listOGuides = diveSafe.getGuides();
-    List<Member> listOMembers = diveSafe.getMembers();
-    for (Guide guide : listOGuides) {
-      guide.publicSetAvailableStatus(AvailableStatus.Available);
-    }
-    for (Member member : listOMembers) {
-      member.publicSetMemberStatus(MemberStatus.Unassigned);
-    }
   }
 
   /**

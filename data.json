@@ -18,6 +18,7 @@
             "password": "pwd1",
             "name": "Alice Hill",
             "emergencyContact": "(222) 123-4567",
+            "availableStatus": "Available",
             "diveSafe": {
               "@reference": "../../.."
             },
@@ -30,6 +31,7 @@
             "password": "password",
             "name": "Bob Hill",
             "emergencyContact": "(222) 123-4568",
+            "availableStatus": "Available",
             "diveSafe": {
               "@reference": "../../.."
             },
@@ -42,6 +44,7 @@
             "password": "passwd",
             "name": "Dave Hill",
             "emergencyContact": "(222) 123-4569",
+            "availableStatus": "Available",
             "diveSafe": {
               "@reference": "../../.."
             },
@@ -54,6 +57,7 @@
             "password": "pass",
             "name": "Kyle Hill",
             "emergencyContact": "(222) 123-4570",
+            "availableStatus": "Available",
             "diveSafe": {
               "@reference": "../../.."
             },
@@ -66,6 +70,7 @@
             "password": "pwd",
             "name": "Sarah Hill",
             "emergencyContact": "(222) 123-7671",
+            "availableStatus": "Available",
             "diveSafe": {
               "@reference": "../../.."
             },
@@ -87,6 +92,7 @@
             "numDays": 2,
             "guideRequired": true,
             "hotelRequired": false,
+            "memberStatus": "Unassigned",
             "diveSafe": {
               "@reference": "../../.."
             },
@@ -161,6 +167,7 @@
                                                   "numDays": 3,
                                                   "guideRequired": false,
                                                   "hotelRequired": false,
+                                                  "memberStatus": "Unassigned",
                                                   "diveSafe": {
                                                     "@reference": "../../../../../../../../../../../../../../.."
                                                   },
@@ -214,6 +221,7 @@
                                                                             "numDays": 3,
                                                                             "guideRequired": true,
                                                                             "hotelRequired": false,
+                                                                            "memberStatus": "Unassigned",
                                                                             "diveSafe": {
                                                                               "@reference": "../../../../../../../../../../../../../../../../../../../../../../../.."
                                                                             },
@@ -414,6 +422,7 @@
                                                                                                   "numDays": 4,
                                                                                                   "guideRequired": true,
                                                                                                   "hotelRequired": true,
+                                                                                                  "memberStatus": "Unassigned",
                                                                                                   "diveSafe": {
                                                                                                     "@reference": "../../../../../../../../../../../../../../../../../../../../../../../../../../../../../.."
                                                                                                   },
@@ -869,6 +878,7 @@
             "numDays": 1,
             "guideRequired": true,
             "hotelRequired": false,
+            "memberStatus": "Unassigned",
             "diveSafe": {
               "@reference": "../../.."
             },
