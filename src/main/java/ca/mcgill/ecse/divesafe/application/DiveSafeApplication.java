@@ -4,8 +4,16 @@
 package ca.mcgill.ecse.divesafe.application;
 
 import java.sql.Date;
+import java.util.Objects;
+
+import ca.mcgill.ecse.divesafe.JavaFx.DiveSafeFxmlView;
+import ca.mcgill.ecse.divesafe.JavaFx.controllers.PaymentController;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
 import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 public class DiveSafeApplication {
 
@@ -14,7 +22,9 @@ public class DiveSafeApplication {
   private static DiveSafe diveSafe;
 
   public static void main(String[] args) {
-    // Launch UI here (For Iteration 4)
+
+
+    Application.launch(DiveSafeFxmlView.class, args);
   }
 
   public static DiveSafe getDiveSafe() {
@@ -31,12 +41,12 @@ public class DiveSafeApplication {
   }
 
   /**
-   * This is the setter to create a new Dive Safe season in the application with
-   * the required parameters.
+   * This is the setter to create a new Dive Safe season in the application with the required
+   * parameters.
    * 
    * @author Siger Ma
-   * @param aStartDate          - Start date of the season
-   * @param aNumDays            - Duration of the season
+   * @param aStartDate - Start date of the season
+   * @param aNumDays - Duration of the season
    * @param aPriceOfGuidePerDay - Price of a guide for the season
    */
 

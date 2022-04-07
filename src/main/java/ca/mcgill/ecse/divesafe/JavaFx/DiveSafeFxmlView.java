@@ -16,36 +16,36 @@ import javafx.stage.Stage;
 
 public class DiveSafeFxmlView extends Application {
 
-    public static final EventType<Event> REFRESH_EVENT = new EventType<>("REFRESH");
-    private static DiveSafeFxmlView instance;
-    private List<Node> refreshableNodes = new ArrayList<>();
+  public static final EventType<Event> REFRESH_EVENT = new EventType<>("REFRESH");
+  private static DiveSafeFxmlView instance;
+  private List<Node> refreshableNodes = new ArrayList<>();
 
-    @Override
-    public void start(Stage primaryStage) {
-        instance = this;
-        try {
-            var root = (Pane) FXMLLoader.load(getClass().getResource("MainPage.fxml"));
-            root.setStyle(DiveSafeApplication.DARK_MODE ? "-fx-base: rgba(20, 20, 20, 255);" : "");
-            var scene = new Scene(root);
-            primaryStage.setScene(scene);
-            primaryStage.setMinWidth(800);
-            primaryStage.setMinHeight(600);
-            primaryStage.setTitle("BTMS");
-            primaryStage.show();
-            refresh();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+  @Override
+  public void start(Stage primaryStage) {
+    instance = this;
+    try {
+      var root = (Pane) FXMLLoader.load(getClass().getResource("MainPage.fxml"));
+      root.setStyle(DiveSafeApplication.DARK_MODE ? "-fx-base: rgba(20, 20, 20, 255);" : "");
+      var scene = new Scene(root);
+      primaryStage.setScene(scene);
+      primaryStage.setMinWidth(800);
+      primaryStage.setMinHeight(600);
+      primaryStage.setTitle("DiveSafe");
+      primaryStage.show();
+      refresh();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+  }
 
-    // Register the node for receiving refresh events
+  // Register the node for receiving refresh events
   public void registerRefreshEvent(Node node) {
     refreshableNodes.add(node);
   }
 
   // Register multiple nodes for receiving refresh events
   public void registerRefreshEvent(Node... nodes) {
-    for (var node: nodes) {
+    for (var node : nodes) {
       refreshableNodes.add(node);
     }
   }
@@ -63,10 +63,11 @@ public class DiveSafeFxmlView extends Application {
   }
 
   public static DiveSafeFxmlView getInstance() {
+
     return instance;
+
   }
 
 }
-
 
 
