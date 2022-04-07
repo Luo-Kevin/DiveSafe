@@ -6,8 +6,7 @@ import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
 
 public class SetupController {
 
-  private SetupController() {
-  }
+  private SetupController() {}
 
   public static String setup(Date startDate, int numDays, int priceOfGuidePerDay) {
     if (numDays < 0) {
