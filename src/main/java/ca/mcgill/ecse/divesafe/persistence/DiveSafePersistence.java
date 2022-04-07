@@ -31,4 +31,10 @@ public class DiveSafePersistence {
     return diveSafe;
   }
 
+  public static DiveSafe reset() {
+    var diveSafe = (DiveSafe) serializer.deserialize("DiveSafeData.json");
+    save(diveSafe);
+    return diveSafe;
+  }
+
 }

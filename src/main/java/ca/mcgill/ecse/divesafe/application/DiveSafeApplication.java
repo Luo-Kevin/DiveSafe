@@ -4,9 +4,14 @@
 package ca.mcgill.ecse.divesafe.application;
 
 import java.sql.Date;
+import java.util.List;
 
 import ca.mcgill.ecse.divesafe.JavaFx.DiveSafeFxmlView;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
+import ca.mcgill.ecse.divesafe.model.Guide;
+import ca.mcgill.ecse.divesafe.model.Member;
+import ca.mcgill.ecse.divesafe.model.Guide.AvailableStatus;
+import ca.mcgill.ecse.divesafe.model.Member.MemberStatus;
 import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
 import javafx.application.Application;
 
@@ -35,6 +40,24 @@ public class DiveSafeApplication {
     }
 
     return diveSafe;
+  }
+
+  /**
+   * Method to reset DiveSafe application (persistence in data.json) to the data
+   * in DiveSafeData.json and initialize the states for guides and members.
+   * 
+   * @author Siger Ma
+   */
+  public static void reset() {
+    diveSafe = DiveSafePersistence.reset();
+    List<Guide> listOGuides = diveSafe.getGuides();
+    List<Member> listOMembers = diveSafe.getMembers();
+    for (Guide guide : listOGuides) {
+      guide.publicSetAvailableStatus(AvailableStatus.Available);
+    }
+    for (Member member : listOMembers) {
+      member.publicSetMemberStatus(MemberStatus.Unassigned);
+    }
   }
 
   /**

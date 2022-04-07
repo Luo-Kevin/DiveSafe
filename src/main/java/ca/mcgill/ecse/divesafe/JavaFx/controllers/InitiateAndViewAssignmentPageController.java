@@ -49,20 +49,11 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-      List<Guide> listOGuides = DiveSafeApplication.getDiveSafe().getGuides();
-      List<Member> listOMembers = DiveSafeApplication.getDiveSafe().getMembers();
-      for (Guide guide : listOGuides) {
-        guide.publicSetAvailableStatus(AvailableStatus.Available);
-      }
-      for (Member member : listOMembers) {
-        member.publicSetMemberStatus(MemberStatus.Unassigned);
-      }
       List<TOAssignment> listOfAssignments = AssignmentController.getAssignments();
       for (TOAssignment assignment : listOfAssignments) {
         listAssignedMembers.getItems().add(assignment.getMemberName());
       }
       setTreeItem();
-      
     }
 
     @FXML
