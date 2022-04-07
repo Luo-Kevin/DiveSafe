@@ -3,8 +3,6 @@ package ca.mcgill.ecse.divesafe.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.common.graph.SuccessorsFunction;
-
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.model.Assignment;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;

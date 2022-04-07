@@ -20,10 +20,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -47,18 +45,23 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   @FXML
   private Button initiateButton;
 
+  // Button to view assignment
   @FXML
   private Button assignmentButton;
 
+  // Button to register members
   @FXML
   private Button memberButton;
 
+  // Button to confirm payment
   @FXML
   private Button paymentButton;
 
+  // Button to reset app to initial state
   @FXML
   private Button resetButton;
 
+  // Button to manage trips
   @FXML
   private Button tripButton;
 
@@ -74,17 +77,9 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   @FXML
   private TreeView<String> treeAssignmentDetails;
 
+  // Label to display error message
   @FXML
   private Label errorMessage;
-
-  @FXML
-  private Font x1;
-
-  @FXML
-  private Font x3;
-
-  @FXML
-  private Color x4;
 
   /**
    * Initialize the controller class
@@ -200,6 +195,9 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
     setTreeItem();
   }
 
+  /**
+   * Method to update the lists of assigned and unassigned members
+   */
   @FXML
   private void updateLists() {
     List<Member> listOfMembers = DiveSafeApplication.getDiveSafe().getMembers();
@@ -212,6 +210,9 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
     }
   }
 
+  /**
+   * Method to switch to payment page
+   */
   @FXML
   public void switchToPayment(ActionEvent event) throws IOException {
     root = FXMLLoader.load(getClass().getResource("../pages/Payment.fxml"));
@@ -222,6 +223,9 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
     stage.show();
   }
 
+  /**
+   * Method to reset present page
+   */
   @FXML
   public void switchToAssignment(ActionEvent event) throws IOException {
     Parent root = FXMLLoader.load(getClass().getResource("../pages/InitiateAndViewAssignmentPage.fxml"));

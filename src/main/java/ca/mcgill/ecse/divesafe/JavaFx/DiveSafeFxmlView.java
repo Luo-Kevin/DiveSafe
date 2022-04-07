@@ -4,7 +4,6 @@ import javafx.application.Application;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.application.Application;
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import javafx.event.Event;
 import javafx.event.EventType;
