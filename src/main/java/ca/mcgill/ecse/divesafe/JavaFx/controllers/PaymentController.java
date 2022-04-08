@@ -6,6 +6,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import java.io.IOException;
 import java.util.HexFormat;
+import ca.mcgill.ecse.divesafe.model.Equipment;
+import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
+import ca.mcgill.ecse.divesafe.model.Item;
+import ca.mcgill.ecse.divesafe.model.ItemBooking;
 import ca.mcgill.ecse.divesafe.model.Member;
 
 
@@ -44,8 +48,29 @@ public class PaymentController {
       else{
         var equip = member.getItemBookings();
 
-        for(var q: equip){
-          System.out.println(q.getItem().getName());
+        for (ItemBooking item: equip){
+          Item itemBooked = item.getItem();
+          // System.out.println(item);
+          String itemType = itemBooked.getClass().getName();
+
+          if(itemType.equals("ca.mcgill.ecse.divesafe.model.EquipmentBundle")){
+            EquipmentBundle bundleBooked = (EquipmentBundle) itemBooked;
+            System.out.println(itemBooked.getName());
+            var memberDiscount = bundleBooked.getDiscount();
+            System.out.println(memberDiscount);
+          }
+          
+          else if (itemType.equals("ca.mcgill.ecse.divesafe.model.Equipment")){
+            Equipment bundleBooked = (Equipment) itemBooked;
+            System.out.println(itemBooked.getName());
+            var memberDiscount = bundleBooked.getPricePerDay();
+            System.out.println(memberDiscount);
+          }
+         
+        }
+         
+
+  
         }
       }
     }
@@ -53,4 +78,4 @@ public class PaymentController {
 
 
   }
-}
+
