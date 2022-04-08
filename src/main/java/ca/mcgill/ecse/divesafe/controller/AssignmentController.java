@@ -60,7 +60,7 @@ public class AssignmentController {
     }
 
     try {
-      DiveSafePersistence.save();
+      DiveSafePersistence.save(diveSafe);
     } catch (RuntimeException e) {
       e.getMessage();
     }
@@ -111,7 +111,7 @@ public class AssignmentController {
       // cancel member trip
       member.cancelTrip();
       // save changes with persistence
-      DiveSafePersistence.save();
+      DiveSafePersistence.save(diveSafe);
     } catch (RuntimeException e) {
       return e.getMessage();
     }
@@ -161,7 +161,7 @@ public class AssignmentController {
       // finish member's trip
       member.finishTrip();
       // save changes with persistence
-      DiveSafePersistence.save();
+      DiveSafePersistence.save(diveSafe);
     } catch (RuntimeException e) {
 
       return e.getMessage();
@@ -211,7 +211,7 @@ public class AssignmentController {
         // start member's trip
         member.startTrip(day);
         // save changes with persistence
-        DiveSafePersistence.save();
+        DiveSafePersistence.save(diveSafe);
       } catch (RuntimeException e) {
         return e.getMessage();
       }
@@ -275,7 +275,7 @@ public class AssignmentController {
 
     try {
       success = member.confirmPayment();
-      DiveSafePersistence.save();
+      DiveSafePersistence.save(diveSafe);
     } catch (Exception e) {
       return e.getMessage();
     }

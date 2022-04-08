@@ -24,16 +24,13 @@ public class DiveSafeApplication {
     Application.launch(DiveSafeFxmlView.class, args);
   }
 
+  /**
+   * Method to get the current DiveSafe object from the data.json file
+   * 
+   * @author Jiahao Zhao
+   */
   public static DiveSafe getDiveSafe() {
-    if (diveSafe == null) {
-
-      /**
-       * @author Jiahao Zhao
-       */
-
-      diveSafe = DiveSafePersistence.load();
-    }
-
+    diveSafe = DiveSafePersistence.load();
     return diveSafe;
   }
 
@@ -52,8 +49,8 @@ public class DiveSafeApplication {
    * the required parameters.
    * 
    * @author Siger Ma
-   * @param aStartDate - Start date of the season
-   * @param aNumDays - Duration of the season
+   * @param aStartDate          - Start date of the season
+   * @param aNumDays            - Duration of the season
    * @param aPriceOfGuidePerDay - Price of a guide for the season
    */
 

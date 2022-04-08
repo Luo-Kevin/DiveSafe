@@ -68,7 +68,7 @@ public class MemberController {
     }
 
     try {
-      DiveSafePersistence.save();
+      DiveSafePersistence.save(diveSafe);
     } catch (RuntimeException e) {
       e.getMessage();
     }
@@ -123,7 +123,7 @@ public class MemberController {
     }
 
     try {
-      DiveSafePersistence.save();
+      DiveSafePersistence.save(diveSafe);
     } catch (RuntimeException e) {
       e.getMessage();
     }
@@ -136,7 +136,7 @@ public class MemberController {
     if (member != null) {
       member.delete();
       try {
-        DiveSafePersistence.save();
+        DiveSafePersistence.save(diveSafe);
       } catch (RuntimeException e) {
         e.getMessage();
       }
