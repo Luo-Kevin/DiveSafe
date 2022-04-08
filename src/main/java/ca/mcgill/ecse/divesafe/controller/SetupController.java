@@ -6,7 +6,8 @@ import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
 
 public class SetupController {
 
-  private SetupController() {}
+  private SetupController() {
+  }
 
   public static String setup(Date startDate, int numDays, int priceOfGuidePerDay) {
     if (numDays < 0) {
@@ -18,13 +19,11 @@ public class SetupController {
       diveSafe.setStartDate(startDate);
       diveSafe.setPriceOfGuidePerDay(priceOfGuidePerDay);
       diveSafe.setNumDays(numDays);
-    }
-    try {
-      DiveSafePersistence.save();
-
-    } catch (RuntimeException e) {
-
-      e.getMessage();
+      try {
+        DiveSafePersistence.save(diveSafe);
+      } catch (RuntimeException e) {
+        e.getMessage();
+      }
     }
 
     return "";
