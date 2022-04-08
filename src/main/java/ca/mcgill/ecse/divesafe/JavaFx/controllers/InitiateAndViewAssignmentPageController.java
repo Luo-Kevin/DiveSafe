@@ -102,8 +102,6 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   @FXML
   void startInitiate(ActionEvent event) {
     error = AssignmentController.initiateAssignment();
-    listAssignedMembers.getItems().clear();
-    listUnassignedMembers.getItems().clear();
     updateLists();
     setTreeItem();
     if (error != "") {
@@ -187,8 +185,6 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   @FXML
   void resetApp(ActionEvent event) {
     DiveSafeApplication.reset();
-    listAssignedMembers.getItems().clear();
-    listUnassignedMembers.getItems().clear();
     memberEmail = "";
     error = "";
     updateLists();
@@ -200,6 +196,8 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
    */
   @FXML
   private void updateLists() {
+    listAssignedMembers.getItems().clear();
+    listUnassignedMembers.getItems().clear();
     List<Member> listOfMembers = DiveSafeApplication.getDiveSafe().getMembers();
     for (Member member : listOfMembers) {
       if (member.getMemberStatusFullName().equals("Assigned")) {
