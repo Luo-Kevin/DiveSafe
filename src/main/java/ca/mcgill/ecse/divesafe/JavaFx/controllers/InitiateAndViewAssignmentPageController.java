@@ -8,9 +8,7 @@ import java.util.ResourceBundle;
 
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.controller.AssignmentController;
-import ca.mcgill.ecse.divesafe.model.Assignment;
-import ca.mcgill.ecse.divesafe.model.ItemBooking;
-import ca.mcgill.ecse.divesafe.model.Member;
+import ca.mcgill.ecse.divesafe.controller.MemberController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,7 +37,6 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   private Parent root;
   private String error = "";
   private String memberEmail = "";
-  private Member selectedMember = null;
 
   // Button to initiate assignment
   @FXML
@@ -87,11 +84,11 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     memberEmail = "";
-    selectedMember = null;
     error = "";
     updateLists();
     setTreeItem();
     errorMessage.setText("DiveSafe");
+    errorMessage.setTextFill(Color.web("#0076a3"));
   }
 
   /**
@@ -107,6 +104,9 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
     if (error != "") {
       errorMessage.setText(error);
       errorMessage.setTextFill(Color.RED);
+    } else {
+      errorMessage.setText("DiveSafe");
+      errorMessage.setTextFill(Color.web("#0076a3"));
     }
   }
 
@@ -119,25 +119,17 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
     TreeItem<String> root = null;
 
     if (memberEmail != "") {
-      selectedMember = Member.getWithEmail(memberEmail);
-      Assignment selectedAssignment = selectedMember.getAssignment();
-      List<ItemBooking> listOfItemBookings = selectedMember.getItemBookings();
+      List<String> assignmentDetail = AssignmentController.getAssignmentDetails(memberEmail);
 
-      String contentOne = String.valueOf(selectedAssignment.getStartDay());
-      String contentTwo = String.valueOf(selectedAssignment.getEndDay());
-      String contentThree = "No guide required";
-      if (selectedMember.getGuideRequired()) {
-        contentThree = selectedAssignment.getGuide().getEmail();
-      }
+      String contentOne = assignmentDetail.get(0);
+      String contentTwo = assignmentDetail.get(1);
+      String contentThree = assignmentDetail.get(2);
       String contentFour = "";
-      for (ItemBooking itemBooking : listOfItemBookings) {
-        contentFour += itemBooking.getItem().getName() + ". ";
-      }
-      if (contentFour == "") {
-        contentFour = "No items required";
+      for (int i = 3; i < assignmentDetail.size(); i++) {
+        contentFour += assignmentDetail.get(i) + "\n";
       }
 
-      root = new TreeItem<>("Details");
+      root = new TreeItem<>(memberEmail);
 
       TreeItem<String> itemOne = new TreeItem<>("Start Date");
       TreeItem<String> itemTwo = new TreeItem<>("End Date");
@@ -198,13 +190,13 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   private void updateLists() {
     listAssignedMembers.getItems().clear();
     listUnassignedMembers.getItems().clear();
-    List<Member> listOfMembers = DiveSafeApplication.getDiveSafe().getMembers();
-    for (Member member : listOfMembers) {
-      if (member.getMemberStatusFullName().equals("Assigned")) {
-        listAssignedMembers.getItems().add(member.getEmail());
-      } else if (member.getMemberStatusFullName().equals("Unassigned")) {
-        listUnassignedMembers.getItems().add(member.getEmail());
-      }
+    List<String> listOfAssignedMembers = MemberController.getAssignedMembers();
+    for (String member : listOfAssignedMembers) {
+      listAssignedMembers.getItems().add(member);
+    }
+    List<String> listOfUnassignedMembers = MemberController.getUnassignedMembers();
+    for (String member : listOfUnassignedMembers) {
+      listUnassignedMembers.getItems().add(member);
     }
   }
 
@@ -226,7 +218,7 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
    */
   @FXML
   public void switchToAssignment(ActionEvent event) throws IOException {
-    Parent root = FXMLLoader.load(getClass().getResource("../pages/InitiateAndViewAssignmentPage.fxml"));
+    root = FXMLLoader.load(getClass().getResource("../pages/InitiateAndViewAssignmentPage.fxml"));
     stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     scene = new Scene(root);
     stage.setScene(scene);

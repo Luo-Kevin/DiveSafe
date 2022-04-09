@@ -1,5 +1,6 @@
 package ca.mcgill.ecse.divesafe.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
@@ -210,6 +211,38 @@ public class MemberController {
       }
     }
     return true;
+  }
+
+  /**
+   * Method to get all the assigned members in the app
+   * 
+   * @author Siger Ma
+   */
+  public static List<String> getAssignedMembers() {
+    List<Member> listOfMembers = DiveSafeApplication.getDiveSafe().getMembers();
+    List<String> listOfAssignedMembers = new ArrayList<String>();
+    for (Member member : listOfMembers) {
+      if (member.getMemberStatusFullName().equals("Assigned")) {
+        listOfAssignedMembers.add(member.getEmail());
+      }
+    }
+    return listOfAssignedMembers;
+  }
+
+  /**
+   * Method to get all the unassigned members in the app
+   * 
+   * @author Siger Ma
+   */
+  public static List<String> getUnassignedMembers() {
+    List<Member> listOfMembers = DiveSafeApplication.getDiveSafe().getMembers();
+    List<String> listOfUnassignedMembers = new ArrayList<String>();
+    for (Member member : listOfMembers) {
+      if (member.getMemberStatusFullName().equals("Unassigned")) {
+        listOfUnassignedMembers.add(member.getEmail());
+      }
+    }
+    return listOfUnassignedMembers;
   }
 
   private static String checkCommonConditions(String password, String name, String emergencyContact,

@@ -10,6 +10,7 @@ import ca.mcgill.ecse.divesafe.model.Equipment;
 import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
 import ca.mcgill.ecse.divesafe.model.Guide;
 import ca.mcgill.ecse.divesafe.model.Item;
+import ca.mcgill.ecse.divesafe.model.ItemBooking;
 import ca.mcgill.ecse.divesafe.model.Member;
 import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
 
@@ -295,6 +296,37 @@ public class AssignmentController {
 
   public static String toggleBan(String userEmail) {
     return null;
+  }
+
+    /**
+   * Method to get the assignment details of a member
+   * 
+   * @author Siger Ma
+   * @param email - Email of member
+   * @return List with assignment details
+   */
+  public static List<String> getAssignmentDetails(String email) {
+    List<String> assignmentDetails = new ArrayList<String>();
+    Member member = Member.getWithEmail(email);
+    Assignment assignment = member.getAssignment();
+    List<ItemBooking> itemBookings = member.getItemBookings();
+
+    assignmentDetails.add(String.valueOf(assignment.getStartDay()));
+    assignmentDetails.add(String.valueOf(assignment.getEndDay()));
+    if (member.getGuideRequired()) {
+      assignmentDetails.add(assignment.getGuide().getEmail());
+    } else {
+      assignmentDetails.add("No guide required");
+    }
+    if (itemBookings == null || itemBookings.size() == 0) {
+      assignmentDetails.add("No items required");
+    } else {
+      for (ItemBooking itemBooking : itemBookings) {
+        assignmentDetails.add(itemBooking.getItem().getName() + ": " + itemBooking.getQuantity());
+      }
+    }
+
+    return assignmentDetails;
   }
 
   /**

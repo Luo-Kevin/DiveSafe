@@ -47,7 +47,7 @@ public class SceneController implements Initializable {
 
     @FXML
     public void switchToAssignment(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../pages/InitiateAndViewAssignmentPage.fxml"));
+        root = FXMLLoader.load(getClass().getResource("../pages/InitiateAndViewAssignmentPage.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
