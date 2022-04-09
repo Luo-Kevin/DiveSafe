@@ -403,12 +403,12 @@ public class AssignmentController {
       }
 
       if(member.getAssignment().hasGuide()){
-        double discount = (double) bundleBooked.getDiscount()/100;
+        double discount = (double) (100 - bundleBooked.getDiscount())/100;
         bundlePrice =  (int) (bundlePrice*discount);
       }
       String bundleName = bundleBooked.getName();
       int bundleQuantity = item.getQuantity();
-      bundlePrice *= daysBooked;
+      bundlePrice = bundlePrice * daysBooked * bundleQuantity;
       String billingDetail = bundleName + " [Quantity: " + bundleQuantity +"]" + " $" + bundlePrice; 
       bookingBill.add(billingDetail);
     }

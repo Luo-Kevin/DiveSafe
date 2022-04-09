@@ -15,37 +15,44 @@
 <?import javafx.scene.text.TextFlow?>
 
 
-<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.PaymentController">
-    <BorderPane>
+<AnchorPane minWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.PaymentController">
+    <BorderPane prefHeight="638.0" prefWidth="751.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <top>
-            <VBox prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #004385#004385;" BorderPane.alignment="CENTER" />
+            <VBox maxWidth="1.7976931348623157E308" minWidth="600.0" prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #004385#004385;" BorderPane.alignment="CENTER" />
         </top>
         <left>
-            <VBox prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" BorderPane.alignment="CENTER">
-                <Button alignment="CENTER" minWidth="45.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Member" textAlignment="JUSTIFY" textFill="WHITE">
-                    <font>
-                        <Font name="System Font" size="11.0" />
-                    </font>
-                </Button>
-                <Button alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onMouseClicked="#switchToAssignment" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Assignment" textAlignment="JUSTIFY" textFill="WHITE">
-                    <font>
-                        <Font name="System Font" size="11.0" />
-                    </font>
-                </Button>
-                <Button alignment="CENTER" minWidth="45.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Payment" textAlignment="JUSTIFY" textFill="WHITE">
-                    <font>
-                        <Font name="System Font" size="11.0" />
-                    </font>
-                </Button>
-                <Button alignment="CENTER" minWidth="45.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Trip" textAlignment="JUSTIFY" textFill="WHITE">
-                    <font>
-                        <Font name="System Font" size="11.0" />
-                    </font>
-                </Button>
-            </VBox>
+         <AnchorPane BorderPane.alignment="CENTER">
+            <children>
+                  <VBox prefHeight="579.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                      <Button alignment="CENTER" minWidth="45.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Member" textAlignment="JUSTIFY" textFill="WHITE">
+                          <font>
+                              <Font name="System Font" size="11.0" />
+                          </font>
+                      </Button>
+                      <Button alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onMouseClicked="#switchToAssignment" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Assignment" textAlignment="JUSTIFY" textFill="WHITE">
+                          <font>
+                              <Font name="System Font" size="11.0" />
+                          </font>
+                      </Button>
+                      <Button alignment="CENTER" minWidth="45.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Payment" textAlignment="JUSTIFY" textFill="WHITE">
+                          <font>
+                              <Font name="System Font" size="11.0" />
+                          </font>
+                      </Button>
+                      <Button alignment="CENTER" minWidth="45.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Trip" textAlignment="JUSTIFY" textFill="WHITE">
+                          <font>
+                              <Font name="System Font" size="11.0" />
+                          </font>
+                      </Button>
+                  </VBox>
+            </children>
+         </AnchorPane>
         </left>
+      <bottom>
+         <HBox fx:id="statusBar" prefHeight="19.0" prefWidth="626.0" BorderPane.alignment="CENTER" />
+      </bottom>
       <center>
-         <Pane minHeight="450.0" prefHeight="579.0" prefWidth="572.0" BorderPane.alignment="CENTER">
+         <Pane BorderPane.alignment="CENTER">
             <children>
                <Text layoutX="45.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email: " />
                <Text layoutX="279.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password: " />
@@ -71,13 +78,9 @@
                   </font>
                </Text>
                <Text layoutX="109.0" layoutY="410.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="339.21630859375" />
-               <TextFlow layoutX="131.0" layoutY="149.0" prefHeight="200.0" prefWidth="200.0" />
                <TextFlow fx:id="paymentSummary" layoutX="106.0" layoutY="397.0" prefHeight="70.0" prefWidth="335.0" />
             </children>
          </Pane>
       </center>
-      <bottom>
-         <HBox fx:id="statusBar" prefHeight="19.0" prefWidth="697.0" BorderPane.alignment="CENTER" />
-      </bottom>
     </BorderPane>
 </AnchorPane>
