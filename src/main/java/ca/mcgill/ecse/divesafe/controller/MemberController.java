@@ -249,73 +249,16 @@ public class MemberController {
     }
     return listOfUnassignedMembers;
   }
-
-  /**
-   *  
-   */
-
-  public static List<ItemBooking> getUserBill(String email){
-    if(!Member.hasWithEmail(email)){
-      return null;
+  
+  public static String getMemberStatus(String email){
+    if(Member.hasWithEmail(email)){
+      return Member.getWithEmail(email).getMemberStatusFullName();
     }
-    else{
-      Member member = Member.getWithEmail(email);
-      List<ItemBooking> userBooking = member.getItemBookings();
-      return userBooking;
-    }
+
+    return "No status associated with " + email;
   }
 
-  public static HashMap<String, Double> userBillToString(List<ItemBooking> userBooking, String email){
-    HashMap<String, Double> bookingBill = new HashMap<String, Double>();
-    int WEEKDAYS = 7;
-    
-    if(!Member.hasWithEmail(email)){
-      return null;
-    }
 
-    Member member = Member.getWithEmail(email);
-    double daysBooked = member.getNumDays();
-
-    if(member.isGuideRequired()){
-      Assignment memberAssignment = member.getAssignment();
-      String guideName = memberAssignment.getGuide().getName() + "(Contact:" + member.getEmail() +")";
-      double guidePrice = diveSafe.getPriceOfGuidePerDay() * daysBooked;
-      bookingBill.put(guideName, guidePrice);
-    }
-
-    for (ItemBooking item: userBooking){
-      Item itemBooked = item.getItem();
-      String itemType = itemBooked.getClass().getName();
-
-      if(itemType.equals("ca.mcgill.ecse.divesafe.model.EquipmentBundle")){
-        EquipmentBundle bundleBooked = (EquipmentBundle) itemBooked;
-        List<BundleItem> itemInBundle = bundleBooked.getBundleItems();
-        double bundlePrice = 0;
-        for(BundleItem bundleEquipment: itemInBundle){
-          double bundleItemPrice = bundleEquipment.getEquipment().getPricePerDay() * WEEKDAYS; //bundle rented per week
-          bundlePrice += bundleItemPrice;
-        }
-
-        if(member.isGuideRequired()){
-          bundlePrice = bundlePrice - bundleBooked.getDiscount();
-        }
-
-        bundlePrice = bundlePrice * (Math.ceil(daysBooked/WEEKDAYS));
-        bookingBill.put(bundleBooked.getName(), bundlePrice);
-      }
-
-      else if (itemType.equals("ca.mcgill.ecse.divesafe.model.Equipment")){
-        Equipment bundleBooked = (Equipment) itemBooked;
-        String itemName = itemBooked.getName();
-        double itemPrice = bundleBooked.getPricePerDay();
-        bookingBill.put(itemName, itemPrice * daysBooked);        
-      }
-
-    }
-
-    return bookingBill;
-
-  }
 
   private static String checkCommonConditions(String password, String name, String emergencyContact,
       int nrDays, List<String> itemNames) {

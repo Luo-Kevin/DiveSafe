@@ -1,10 +1,12 @@
 package ca.mcgill.ecse.divesafe.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.model.Assignment;
+import ca.mcgill.ecse.divesafe.model.BundleItem;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
 import ca.mcgill.ecse.divesafe.model.Equipment;
 import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
@@ -328,6 +330,75 @@ public class AssignmentController {
 
     return assignmentDetails;
   }
+
+
+  public static List<ItemBooking> getUserBill(String email){
+    if(!Member.hasWithEmail(email)){
+      return null;
+    }
+    else{
+      Member member = Member.getWithEmail(email);
+      List<ItemBooking> userBooking = member.getItemBookings();
+      return userBooking;
+    }
+  }
+  public static List<String> userBillBookedEquipmentDetails(List<ItemBooking> userBooking, String email){
+    List<String> bookingBill = new ArrayList<String>();
+    Member member = Member.getWithEmail(email);
+    int daysBooked = member.getNumDays();
+
+    for (ItemBooking item: userBooking){
+      Item itemBooked = item.getItem();
+      if (itemBooked instanceof Equipment) {
+        Equipment itemEquipment = (Equipment) itemBooked;
+        String itemName = itemBooked.getName();
+        int itemQuantity = item.getQuantity();
+        int itemPrice = itemEquipment.getPricePerDay() * itemQuantity * daysBooked;
+        String billingDetail = itemName + " [Quantity: " + itemQuantity +"]" + " $" +itemPrice; 
+        bookingBill.add(billingDetail);
+         
+      }
+    }
+    return bookingBill;
+  }
+
+  public static List<String> userBillBundleDetails(List<ItemBooking> userBooking, String email){
+    List<String> bookingBill = new ArrayList<String>();
+
+    Member member = Member.getWithEmail(email);
+    int daysBooked = member.getNumDays();
+
+    for (ItemBooking item: userBooking){
+    Item itemBooked = item.getItem();
+
+    if(itemBooked instanceof EquipmentBundle){
+      EquipmentBundle bundleBooked = (EquipmentBundle) itemBooked;
+      List<BundleItem> itemInBundle = bundleBooked.getBundleItems();
+      Integer bundlePrice = 0;
+      for(BundleItem bundleEquipment: itemInBundle){
+        Integer bundleItemPrice = bundleEquipment.getEquipment().getPricePerDay() * bundleEquipment.getQuantity(); //bundle rented per week
+        bundlePrice += bundleItemPrice;
+      }
+
+      if(member.getAssignment().hasGuide()){
+        double discount = (double) bundleBooked.getDiscount()/100;
+        bundlePrice =  (int) (bundlePrice*discount);
+      }
+      String bundleName = bundleBooked.getName();
+      int bundleQuantity = item.getQuantity();
+      bundlePrice *= daysBooked;
+      String billingDetail = bundleName + " [Quantity: " + bundleQuantity +"]" + " $" + bundlePrice; 
+      bookingBill.add(billingDetail);
+    }
+  }
+    return bookingBill;
+  }
+
+  
+
+
+
+
 
   /**
    * Helper method used to wrap the information in an <code>Assignment</code>
