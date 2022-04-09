@@ -38,7 +38,7 @@ public class SceneController implements Initializable {
 
     @FXML
     public void switchToPayment(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("../pages/Payment.fxml"));
+        root = FXMLLoader.load(getClass().getResource("../pages/PaymentPage.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
