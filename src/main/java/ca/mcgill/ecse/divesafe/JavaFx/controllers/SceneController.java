@@ -38,7 +38,7 @@ public class SceneController implements Initializable {
     }
 
     @FXML
-    public void switchToPayment(ActionEvent event) throws IOException {
+    public void switchToPayment(MouseEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../pages/PaymentPage.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -47,7 +47,7 @@ public class SceneController implements Initializable {
     }
 
     @FXML
-    public void switchToAssignment(ActionEvent event) throws IOException {
+    public void switchToAssignment(MouseEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../pages/InitiateAndViewAssignmentPage.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);

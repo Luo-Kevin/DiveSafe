@@ -60,7 +60,7 @@ public class PaymentController {
   }
 
   @FXML
-  void switchToAssignment(ActionEvent event) throws IOException {
+  void switchToAssignment(MouseEvent event) throws IOException {
     Parent root = FXMLLoader.load(getClass().getResource("../pages/InitiateAndViewAssignmentPage.fxml"));
     stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     scene = new Scene(root);

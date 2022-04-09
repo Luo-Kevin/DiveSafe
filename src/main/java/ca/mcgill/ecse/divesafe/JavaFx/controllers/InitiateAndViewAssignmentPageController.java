@@ -204,7 +204,7 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
    * Method to switch to payment page
    */
   @FXML
-  public void switchToPayment(ActionEvent event) throws IOException {
+  public void switchToPayment(MouseEvent event) throws IOException {
       root = FXMLLoader.load(getClass().getResource("../pages/PaymentPage.fxml"));
       stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
       scene = new Scene(root);
