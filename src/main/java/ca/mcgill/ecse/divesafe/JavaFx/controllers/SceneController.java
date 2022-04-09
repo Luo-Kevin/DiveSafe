@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class SceneController implements Initializable {
@@ -32,12 +32,12 @@ public class SceneController implements Initializable {
     }
 
     @FXML
-    void resetApp(ActionEvent event) {
+    void resetApp(MouseEvent event) {
         DiveSafeApplication.reset();
     }
 
     @FXML
-    public void switchToPayment(ActionEvent event) throws IOException {
+    public void switchToPayment(MouseEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../pages/PaymentPage.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -46,7 +46,7 @@ public class SceneController implements Initializable {
     }
 
     @FXML
-    public void switchToAssignment(ActionEvent event) throws IOException {
+    public void switchToAssignment(MouseEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../pages/InitiateAndViewAssignmentPage.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);

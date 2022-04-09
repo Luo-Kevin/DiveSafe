@@ -55,7 +55,7 @@
                <children>
                   <Pane>
                      <children>
-                        <Button fx:id="resetButton" alignment="TOP_RIGHT" contentDisplay="TOP" layoutX="835.0" layoutY="8.0" mnemonicParsing="false" onAction="#resetApp" text="Reset">
+                        <Button fx:id="resetButton" alignment="TOP_RIGHT" contentDisplay="TOP" layoutX="835.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#resetApp" text="Reset">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -73,12 +73,12 @@
                         <Font name="System Font" size="11.0" />
                      </font>
                   </Button>
-                  <Button fx:id="assignmentButton" alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onAction="#switchToAssignment" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Assignment" textAlignment="JUSTIFY" textFill="WHITE">
+                  <Button fx:id="assignmentButton" alignment="CENTER" minWidth="45.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Assignment" textAlignment="JUSTIFY" textFill="WHITE">
                      <font>
                         <Font name="System Font" size="11.0" />
                      </font>
                   </Button>
-                  <Button fx:id="paymentButton" alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onAction="#switchToPayment" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Payment" textAlignment="JUSTIFY" textFill="WHITE">
+                  <Button fx:id="paymentButton" alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onMouseClicked="#switchToPayment" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Payment" textAlignment="JUSTIFY" textFill="WHITE">
                      <font>
                         <Font name="System Font" size="11.0" />
                      </font>
@@ -96,7 +96,7 @@
             <items>
               <AnchorPane>
                      <children>
-                        <Button fx:id="initiateButton" layoutX="73.0" layoutY="68.0" mnemonicParsing="false" onAction="#startInitiate" prefHeight="53.0" prefWidth="76.0" text="Initiate" />
+                        <Button fx:id="initiateButton" layoutX="73.0" layoutY="68.0" mnemonicParsing="false" onMouseClicked="#startInitiate" prefHeight="53.0" prefWidth="76.0" text="Initiate" />
                   <Label alignment="CENTER" layoutY="14.0" minWidth="60.0" prefHeight="27.0" prefWidth="222.0" style="&#10;" text="Initiate Assignments" textAlignment="CENTER" wrapText="false">
                     <font>
                       <Font size="18.0" fx:id="x1" />
