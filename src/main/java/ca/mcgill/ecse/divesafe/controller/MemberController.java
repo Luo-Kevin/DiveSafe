@@ -249,6 +249,12 @@ public class MemberController {
     }
     return listOfUnassignedMembers;
   }
+
+  /**
+   * Method to get the member's status
+   * @param email - String representing email of user
+   * @return String representing the member's status 
+   */
   
   public static String getMemberStatus(String email){
     if(Member.hasWithEmail(email)){

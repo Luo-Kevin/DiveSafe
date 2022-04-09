@@ -19,7 +19,11 @@ import ca.mcgill.ecse.divesafe.controller.AssignmentController;
 import ca.mcgill.ecse.divesafe.controller.MemberController;
 import ca.mcgill.ecse.divesafe.controller.TOAssignment;
 
-
+/**
+ * Controller for page where user gets their bill and makes their payment.
+ * 
+ * @author Kevin Luo
+ */
 
 public class PaymentController {
   private Stage stage;
@@ -52,7 +56,11 @@ public class PaymentController {
   private Label errorMessage;
 
 
- 
+ /**
+  * Method triggered when user click the retrieve bill button
+  * @param event - mouse click
+  * @author Kevin Luo
+  */
 
   @FXML
   void retrieveBillClick(ActionEvent event) {
@@ -101,6 +109,12 @@ public class PaymentController {
 
   }
 
+  /**
+  * Method triggered when user click the retrieve make payment button
+  * @param event - mouse click
+  * @author Kevin Luo
+  */
+
 
   @FXML
   void makePayment(MouseEvent event) {
@@ -119,6 +133,9 @@ public class PaymentController {
     }
   }
 
+  /**
+   * Method to update the lists of assigned and unassigned members
+   */
  
   @FXML
   public void switchToPayment(MouseEvent event) throws IOException {
@@ -135,6 +152,9 @@ public class PaymentController {
    
   }
 
+  /**
+   * Method to switch to payment page
+   */
 
   @FXML
   void switchToAssignment(MouseEvent event) throws IOException {

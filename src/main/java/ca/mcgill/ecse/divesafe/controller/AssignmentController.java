@@ -331,6 +331,12 @@ public class AssignmentController {
     return assignmentDetails;
   }
 
+  /**
+   * Method which gets the billable bookings of the member
+   * @param email - String which representing the member's email
+   * @return List of the billable equipment
+   * @author Kevin Luo
+   */
 
   public static List<ItemBooking> getUserBill(String email){
     if(!Member.hasWithEmail(email)){
@@ -342,6 +348,14 @@ public class AssignmentController {
       return userBooking;
     }
   }
+
+  /**
+    Method which gets the user's billable equipments
+    @param userBooking - List of billable equipment
+    @param email - user's email
+    @return List of String representing the detailed information of user's bill for equipments booked
+    @author Kevin Luo
+  */
   public static List<String> userBillBookedEquipmentDetails(List<ItemBooking> userBooking, String email){
     List<String> bookingBill = new ArrayList<String>();
     Member member = Member.getWithEmail(email);
@@ -361,6 +375,14 @@ public class AssignmentController {
     }
     return bookingBill;
   }
+
+   /**
+    Method which gets the user's billable bundle
+    @param userBooking - List of billable equipment
+    @param email - user's email
+    @return List of String representing the detailed information of user's bill for bundle booked
+    @author Kevin Luo
+  */
 
   public static List<String> userBillBundleDetails(List<ItemBooking> userBooking, String email){
     List<String> bookingBill = new ArrayList<String>();
@@ -393,11 +415,6 @@ public class AssignmentController {
   }
     return bookingBill;
   }
-
-  
-
-
-
 
 
   /**
