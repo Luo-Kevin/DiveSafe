@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.controller.AssignmentController;
 import ca.mcgill.ecse.divesafe.controller.MemberController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -203,12 +204,13 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
    * Method to switch to payment page
    */
   @FXML
-  public void switchToPayment(MouseEvent event) throws IOException {
-    root = FXMLLoader.load(getClass().getResource("../pages/PaymentPage.fxml"));
-    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    scene = new Scene(root);
-    stage.setScene(scene);
-    stage.show();
+  public void switchToPayment(ActionEvent event) throws IOException {
+      root = FXMLLoader.load(getClass().getResource("../pages/PaymentPage.fxml"));
+      stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+      scene = new Scene(root);
+      stage.setScene(scene);
+      stage.show();
   }
+
 
 }

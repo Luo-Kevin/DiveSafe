@@ -33,12 +33,12 @@
             
             </Button>
             
-            <Button fx:id="assignmentButton" alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onMouseClicked="#switchToAssignment" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Assignment" textAlignment="JUSTIFY" textFill="WHITE">
+            <Button fx:id="assignmentButton" alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onAction="#switchToAssignment" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Assignment" textAlignment="JUSTIFY" textFill="WHITE">
                <font>
                   <Font name="System Font" size="11.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onMouseClicked="#switchToPayment" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Payment" textAlignment="JUSTIFY" textFill="WHITE">
+            <Button alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onAction="#switchToPayment" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Payment" textAlignment="JUSTIFY" textFill="WHITE">
                <font>
                   <Font name="System Font" size="11.0" />
                </font>
