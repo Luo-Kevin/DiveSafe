@@ -193,6 +193,7 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
     List<String> listOfAssignedMembers = MemberController.getAssignedMembers();
     for (String member : listOfAssignedMembers) {
       listAssignedMembers.getItems().add(member);
+     
     }
     List<String> listOfUnassignedMembers = MemberController.getUnassignedMembers();
     for (String member : listOfUnassignedMembers) {
