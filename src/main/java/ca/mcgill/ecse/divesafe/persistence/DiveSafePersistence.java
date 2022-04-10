@@ -44,9 +44,11 @@ public class DiveSafePersistence {
     for (Guide guide : listOGuides) {
       guide.publicSetAvailableStatus(AvailableStatus.Available);
     }
-    for (Member member : listOMembers) {
-      member.publicSetMemberStatus(MemberStatus.Unassigned);
+    var member = diveSafe.getMembers().toArray();
+    for(int i = 0; i < member.length ; i++){
+      diveSafe.getMember(i).publicSetMemberStatus(MemberStatus.Unassigned);
     }
+    
     save(diveSafe);
     return diveSafe;
   }

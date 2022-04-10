@@ -392,8 +392,12 @@ public class AssignmentController {
   public static List<String> userBillBundleDetails(List<ItemBooking> userBooking, String email){
     List<String> bookingBill = new ArrayList<String>();
 
+
     Member member = Member.getWithEmail(email);
     int daysBooked = member.getNumDays();
+    if(member.getAssignment() == null){
+      return null;
+    }
 
     for (ItemBooking item: userBooking){
     Item itemBooked = item.getItem();

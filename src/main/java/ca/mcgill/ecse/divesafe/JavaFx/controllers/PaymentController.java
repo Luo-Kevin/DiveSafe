@@ -68,7 +68,7 @@ public class PaymentController {
   void retrieveBillClick(ActionEvent event) {
     String userEmail = email.getText().strip();
     boolean userFound = false;
-    if(paymentDetail.getItems().isEmpty() && (MemberController.getMemberStatus(userEmail).equals("Assigned"))){
+    if(paymentDetail.getItems().isEmpty() && !(MemberController.getMemberStatus(userEmail).equals("Unassigned"))){
     var userBooking = AssignmentController.getUserBill(userEmail);
 
     for(var member: AssignmentController.getAssignments()){
@@ -78,10 +78,13 @@ public class PaymentController {
         String userEndDate = "End Date: " + member.getEndDay();
         paymentDetail.getItems().add(userStartDate);
         paymentDetail.getItems().add(userEndDate);
+        paymentDetail.getItems().add("GUIDE");
         String userGuideDetail = "Guide: " + member.getGuideName() + " [Contact: " + member.getGuideEmail() + "] $" + member.getTotalCostForGuide();
         paymentDetail.getItems().add(userGuideDetail);
+        paymentDetail.getItems().add("EQUIPMENT");
         var userEquipmentDetail = AssignmentController.userBillBookedEquipmentDetails(userBooking, userEmail);
         userEquipmentDetail.forEach(equipmentDetail -> paymentDetail.getItems().add(equipmentDetail));
+        paymentDetail.getItems().add("BUNDLE");
         var userBundleDetail = AssignmentController.userBillBundleDetails(userBooking, userEmail);
         userBundleDetail.forEach(bundleDetail -> paymentDetail.getItems().add(bundleDetail));
 
@@ -102,7 +105,7 @@ public class PaymentController {
       }
     }
 
-    if(!userFound){
+    if(!userFound && (MemberController.getMemberStatus(userEmail).equals("Unassigned"))){
       watermark.setText("");
       errorMessage.setText(String.format("No payment associated with ") + userEmail);
       errorMessage.setTextFill(Color.RED);

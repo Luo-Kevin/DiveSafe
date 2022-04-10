@@ -48,7 +48,10 @@ public class DiveSafeApplication {
    * @author Siger Ma
    */
   public static void reset() {
+
     diveSafe = DiveSafePersistence.reset();
+    diveSafe = getDiveSafe();
+
   }
 
   /**
