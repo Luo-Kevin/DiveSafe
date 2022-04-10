@@ -20,6 +20,7 @@ public class SetupController {
       diveSafe.setPriceOfGuidePerDay(priceOfGuidePerDay);
       diveSafe.setNumDays(numDays);
       try {
+        DiveSafeApplication.save(diveSafe);
         DiveSafePersistence.save();
       } catch (RuntimeException e) {
         e.getMessage();

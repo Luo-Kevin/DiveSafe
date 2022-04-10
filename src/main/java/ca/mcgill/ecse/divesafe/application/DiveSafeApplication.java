@@ -52,6 +52,15 @@ public class DiveSafeApplication {
   }
 
   /**
+   * Method to save a DiveSafe object to the running application
+   * 
+   * @author Siger Ma
+   */
+  public static void save(DiveSafe diveSafeToSave) {
+    diveSafe = diveSafeToSave;
+  }
+
+  /**
    * This is the setter to create a new Dive Safe season in the application with
    * the required parameters.
    * 

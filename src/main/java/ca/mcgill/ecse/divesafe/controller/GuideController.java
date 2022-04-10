@@ -48,6 +48,7 @@ public class GuideController {
 
     try {
       diveSafe.addGuide(email, password, name, emergencyContact);
+      DiveSafeApplication.save(diveSafe);
       DiveSafePersistence.save();
     } catch (RuntimeException e) {
       e.getMessage();
@@ -75,6 +76,7 @@ public class GuideController {
     guideToUpdate.setEmergencyContact(newEmergencyContact);
 
     try {
+      DiveSafeApplication.save(diveSafe);
       DiveSafePersistence.save();
     } catch (RuntimeException e) {
       e.getMessage();
@@ -88,6 +90,7 @@ public class GuideController {
     if (guide != null) {
       guide.delete();
       try {
+        DiveSafeApplication.save(diveSafe);
         DiveSafePersistence.save();
       } catch (RuntimeException e) {
         e.getMessage();

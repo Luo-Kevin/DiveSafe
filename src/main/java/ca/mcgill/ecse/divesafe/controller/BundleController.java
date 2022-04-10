@@ -49,6 +49,7 @@ public class BundleController {
       bundle.addBundleItem(bundleItem);
 
       try {
+        DiveSafeApplication.save(diveSafe);
         DiveSafePersistence.save();
       } catch (RuntimeException e) {
         e.getMessage();
@@ -100,7 +101,8 @@ public class BundleController {
     }
 
     try {
-      DiveSafePersistence.save();
+      DiveSafeApplication.save(diveSafe);
+        DiveSafePersistence.save();
     } catch (RuntimeException e) {
       e.getMessage();
     }
@@ -115,6 +117,7 @@ public class BundleController {
     if (foundBundle != null) {
       foundBundle.delete();
       try {
+        DiveSafeApplication.save(diveSafe);
         DiveSafePersistence.save();
       } catch (RuntimeException e) {
         e.getMessage();
