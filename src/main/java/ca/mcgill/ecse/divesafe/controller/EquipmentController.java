@@ -31,7 +31,7 @@ public class EquipmentController {
 
     try {
       diveSafe.addEquipment(name, weight, pricePerDay);
-      DiveSafePersistence.save(diveSafe);
+      DiveSafePersistence.save();
     } catch (RuntimeException e) {
       e.getMessage();
     }
@@ -66,7 +66,7 @@ public class EquipmentController {
     foundEquipment.setPricePerDay(newPricePerDay);
 
     try {
-      DiveSafePersistence.save(diveSafe);
+      DiveSafePersistence.save();
     } catch (RuntimeException e) {
       e.getMessage();
     }
@@ -93,7 +93,7 @@ public class EquipmentController {
     equipment.delete();
 
     try {
-      DiveSafePersistence.save(diveSafe);
+      DiveSafePersistence.save();
     } catch (RuntimeException e) {
       e.getMessage();
     }

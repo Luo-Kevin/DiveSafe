@@ -30,7 +30,14 @@ public class DiveSafeApplication {
    * @author Jiahao Zhao
    */
   public static DiveSafe getDiveSafe() {
-    diveSafe = DiveSafePersistence.load();
+    if (diveSafe == null) {
+
+      /**
+       * @author Jiahao Zhao
+       */
+
+      diveSafe = DiveSafePersistence.load();
+    }
     return diveSafe;
   }
 
