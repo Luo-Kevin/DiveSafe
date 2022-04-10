@@ -36,6 +36,11 @@ public class SceneController implements Initializable {
     void resetApp(MouseEvent event) {
         DiveSafeApplication.reset();
     }
+    
+
+    /**
+     * Method to switch to payment page
+     */
 
     @FXML
     public void switchToPayment(MouseEvent event) throws IOException {
@@ -46,6 +51,10 @@ public class SceneController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Method to switch to assignment page
+     */
+
     @FXML
     public void switchToAssignment(MouseEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../pages/InitiateAndViewAssignmentPage.fxml"));
@@ -54,6 +63,12 @@ public class SceneController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    
+  /**
+   * Method to switch to trip page
+   */
+  
 
     @FXML 
     public void switchToTrip(MouseEvent event) throws IOException {

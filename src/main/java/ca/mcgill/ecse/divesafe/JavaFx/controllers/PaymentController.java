@@ -165,6 +165,10 @@ public class PaymentController {
     stage.show();
   }
 
+  /**
+   * Method to switch to trip page
+   */
+  
   @FXML 
   public void switchToTrip(MouseEvent event) throws IOException {
       root = FXMLLoader.load(getClass().getResource("../pages/TripPage.fxml"));
