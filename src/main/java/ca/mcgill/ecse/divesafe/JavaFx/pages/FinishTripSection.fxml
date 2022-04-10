@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.SceneController">
+   <BorderPane prefHeight="128.0" prefWidth="389.0">
+      <top>
+         <Pane prefHeight="158.0" prefWidth="394.0" BorderPane.alignment="CENTER">
+            <children>
+               <Text layoutX="20.0" layoutY="41.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Finish/Cancel Trips">
+                  <font>
+                     <Font name="System Bold" size="25.0" />
+                  </font>
+               </Text>
+               <Spinner layoutX="65.0" layoutY="59.0" prefHeight="25.0" prefWidth="79.0" />
+               <Button layoutX="228.0" layoutY="71.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Confirm" textFill="WHITE">
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets>
+               </Button>
+               <Text layoutX="22.0" layoutY="76.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" />
+               <Text smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" />
+               <Text layoutX="22.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Action:" />
+               <Spinner layoutX="65.0" layoutY="97.0" />
+            </children>
+         </Pane>
+      </top>
+   </BorderPane>
+</AnchorPane>

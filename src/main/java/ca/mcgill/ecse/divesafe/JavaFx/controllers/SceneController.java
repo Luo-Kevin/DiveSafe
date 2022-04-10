@@ -65,9 +65,9 @@ public class SceneController implements Initializable {
     }
 
     
-  /**
-   * Method to switch to trip page
-   */
+    /**
+     * Method to switch to trip page
+     */
   
 
     @FXML 
