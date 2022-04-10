@@ -51,6 +51,10 @@ public class StartTripController implements Initializable {
     // integer to store the week selected by the user using the weekSpinner spinner
     int targetWeek;
 
+    // List of assignments from the assignment controller
+
+    List<TOAssignment> assignments = AssignmentController.getAssignments();
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -74,14 +78,14 @@ public class StartTripController implements Initializable {
     @FXML
     void startTrip(MouseEvent event) {
         
-        List<TOAssignment> assignments = getAssignments();
+        System.out.println("Contains this : " + assignments);
+
 
         List<String> readyForTripMembers = new ArrayList<String>();
 
         if (assignments.isEmpty()) {
             System.out.println("No assignments");
         }
-
         else {
 
             for (TOAssignment assignment : assignments) {
@@ -118,24 +122,12 @@ public class StartTripController implements Initializable {
 
         }
 
-    /**
-     * Helper method to retrieve assignments from AssignmentController
-     */
-
-    List<TOAssignment> getAssignments() {
-        List<TOAssignment> assignments = AssignmentController.getAssignments();
-        return assignments;
-    }
-
-
-
-    
 
     @FXML
     void resetApp(MouseEvent event) {
         DiveSafeApplication.reset();
-        getAssignments().clear();
-
+        //Clearing assignments list instance upon clicking reset button, the above isn't enough
+        assignments.clear();
     }
 
     @FXML
