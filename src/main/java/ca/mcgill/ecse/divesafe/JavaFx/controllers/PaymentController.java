@@ -17,7 +17,6 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import ca.mcgill.ecse.divesafe.controller.AssignmentController;
 import ca.mcgill.ecse.divesafe.controller.MemberController;
-import ca.mcgill.ecse.divesafe.controller.TOAssignment;
 
 /**
  * Controller for page where user gets their bill and makes their payment.
@@ -48,6 +47,9 @@ public class PaymentController {
   @FXML
   private Text resultText;
 
+  @FXML
+  private Label watermark;
+
 
   @FXML
   private TextFlow paymentSummary;
@@ -66,7 +68,7 @@ public class PaymentController {
   void retrieveBillClick(ActionEvent event) {
     String userEmail = email.getText().strip();
     boolean userFound = false;
-    if(paymentDetail.getItems().isEmpty()){
+    if(paymentDetail.getItems().isEmpty() && (MemberController.getMemberStatus(userEmail).equals("Assigned"))){
     var userBooking = AssignmentController.getUserBill(userEmail);
 
     for(var member: AssignmentController.getAssignments()){
@@ -101,7 +103,8 @@ public class PaymentController {
     }
 
     if(!userFound){
-      errorMessage.setText(String.format("No payment associated with") + userEmail);
+      watermark.setText("");
+      errorMessage.setText(String.format("No payment associated with ") + userEmail);
       errorMessage.setTextFill(Color.RED);
     }
 
@@ -122,6 +125,7 @@ public class PaymentController {
       String userEmail = email.getText().strip();
       String paymentAuthorization = authorizationCode.getText().strip();
       String paymentMessage = AssignmentController.confirmPayment(userEmail, paymentAuthorization);
+      watermark.setText("");
       if(MemberController.getMemberStatus(userEmail).equals("Paid")){
         errorMessage.setTextFill(Color.web("#0076a3"));
       }
@@ -145,7 +149,7 @@ public class PaymentController {
       scene = new Scene(root);
       stage.setScene(scene);
       stage.show();
-      if(MemberController.getMemberStatus(userEmail).equals("Paid")){
+      if(MemberController.getMemberStatus(userEmail).equals("Paid")){    
         errorMessage.setTextFill(Color.web("#0076a3"));
         errorMessage.setText("Paid");
       }
