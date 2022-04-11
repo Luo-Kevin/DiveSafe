@@ -13,6 +13,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -20,6 +22,8 @@ public class SceneController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+    //Image image = new Image("file:../ressources/diving.png");
 
     @FXML
     private Button assignmentButton;
@@ -29,13 +33,20 @@ public class SceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        // ImageView img = new ImageView(image);
+        // img.setFitHeight(100);
+        // img.setFitWidth(100);
     }
 
     @FXML
     void resetApp(MouseEvent event) {
         DiveSafeApplication.reset();
     }
+    
+
+    /**
+     * Method to switch to payment page
+     */
 
     @FXML
     public void switchToPayment(MouseEvent event) throws IOException {
@@ -46,9 +57,28 @@ public class SceneController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Method to switch to assignment page
+     */
+
     @FXML
     public void switchToAssignment(MouseEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../pages/InitiateAndViewAssignmentPage.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    
+    /**
+     * Method to switch to trip page
+     */
+  
+
+    @FXML 
+    public void switchToTrip(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("../pages/TripPage.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

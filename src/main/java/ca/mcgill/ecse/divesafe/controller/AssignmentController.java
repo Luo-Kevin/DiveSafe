@@ -89,17 +89,21 @@ public class AssignmentController {
 
     // Check if userEmail exist in system
     if (!Member.hasWithEmail(userEmail))
-      return error = "Member with email address " + userEmail + " does not exist";
+      return error = "Member with email address " + userEmail + " does not exist.\n";
 
     Member member = Member.getWithEmail(userEmail);
 
     // Check for invalid user status when attempting to refund
     if (member.getMemberStatusFullName().equals("Banned")) {
-      error = "Cannot cancel the trip due to a ban";
+      return error = "Cannot cancel the trip due to a ban.\n";
+    }
+
+    if (member.getMemberStatusFullName().equals("Unassigned")) {
+      return error = "Cannot cancel a trip for an unassigned member.\n";
     }
 
     else if (member.getMemberStatusFullName().equals("Finished")) {
-      error = "Cannot cancel a trip which has finished";
+      return error = "Cannot cancel a trip which has finished.\n";
     }
 
     // Check for user status when allowed to refund
@@ -142,22 +146,27 @@ public class AssignmentController {
 
     // Check if userEmail exist in system
     if (!Member.hasWithEmail(userEmail)) {
-      return String.format("Member with email address %s does not exist", userEmail);
+      return String.format("Member with email address %s does not exist.\n", userEmail);
     }
 
+    
     String statusMember = member.getMemberStatusFullName();
 
     // Check for invalid user status when finishing trip
     if (statusMember.equals("Assigned") || statusMember.equals("Paid")) {
-      error = "Cannot finish a trip which has not started";
+      return error = "Cannot finish a trip which has not started.\n";
     }
 
     else if (statusMember.equals("Banned")) {
-      error = "Cannot finish the trip due to a ban";
+      return error = "Cannot finish the trip due to a ban.\n";
+    }
+    
+    if (statusMember.equals("Unassigned")) {
+      return error = "Cannot finish a trip for an unassigned member.\n";
     }
 
     else if (statusMember.equals("Cancelled")) {
-      error = "Cannot finish a trip which has been cancelled";
+      return error = "Cannot finish a trip which has been cancelled.\n";
     }
 
     if (!error.isEmpty()) {
@@ -312,6 +321,20 @@ public class AssignmentController {
 
   public static String toggleBan(String userEmail) {
     return null;
+  }
+
+  /**
+   * Method that gets all member's emails in diveSafe
+   * @author Eric Joung
+   * @return List<Member> List of all members
+   */
+  public static ArrayList<String> getMemberEmails() {
+      ArrayList<String> memberEmails = new ArrayList<>();
+      List<Member> members = diveSafe.getMembers();
+      for (Member member : members) {
+       memberEmails.add(member.getEmail());
+      }
+      return memberEmails;
   }
 
     /**
