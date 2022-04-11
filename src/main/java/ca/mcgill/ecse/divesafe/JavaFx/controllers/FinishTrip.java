@@ -54,7 +54,7 @@ public class FinishTrip implements Initializable {
         }
         else if (action.equals("Cancel Trip")) {
             errorMessage = AssignmentController.cancelTrip(emailChoiceBox.getValue());
-            if (errorMessage.equals("")) {
+            if (errorMessage.equals("50") || errorMessage.equals("10") || errorMessage.equals("")) {
                 errorMessage = String.format("Cancelled trip successfully for %s.\n", emailChoiceBox.getValue());
             }
         }

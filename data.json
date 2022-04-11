@@ -36,7 +36,7 @@
                       "numDays": 2,
                       "guideRequired": true,
                       "hotelRequired": false,
-                      "memberStatus": "Assigned",
+                      "memberStatus": "Banned",
                       "diveSafe": {
                         "@reference": "../../../../../.."
                       },
@@ -114,7 +114,7 @@
                                                             "numDays": 3,
                                                             "guideRequired": false,
                                                             "hotelRequired": false,
-                                                            "memberStatus": "Assigned",
+                                                            "memberStatus": "Banned",
                                                             "diveSafe": {
                                                               "@reference": "../../../../../../../../../../../../../../../../../.."
                                                             },
@@ -178,7 +178,7 @@
                                                                                       "numDays": 3,
                                                                                       "guideRequired": true,
                                                                                       "hotelRequired": false,
-                                                                                      "memberStatus": "Assigned",
+                                                                                      "memberStatus": "Banned",
                                                                                       "diveSafe": {
                                                                                         "@reference": "../../../../../../../../../../../../../../../../../../../../../../../../../../.."
                                                                                       },
@@ -406,7 +406,7 @@
                                                                                                             "numDays": 4,
                                                                                                             "guideRequired": true,
                                                                                                             "hotelRequired": true,
-                                                                                                            "memberStatus": "Assigned",
+                                                                                                            "memberStatus": "Banned",
                                                                                                             "diveSafe": {
                                                                                                               "@reference": "../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../.."
                                                                                                             },
