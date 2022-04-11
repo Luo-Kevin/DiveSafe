@@ -13,11 +13,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<<<<<<< HEAD
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.SceneController">
-=======
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.StartTripController">
->>>>>>> startTripgui
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.StartTripController">
    <BorderPane prefHeight="558.0" prefWidth="771.0">
       <top>
          <VBox prefHeight="40.0" style="-fx-background-color: #004385#004385;" BorderPane.alignment="CENTER">
@@ -62,24 +58,46 @@
          </VBox>
       </left>
       <center>
-         <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <children>
-               <Text layoutX="20.0" layoutY="41.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Trips">
-                  <font>
-                     <Font name="System Bold" size="25.0" />
-                  </font>
-               </Text>
-               <Spinner fx:id="weekSpinner" editable="true" layoutX="65.0" layoutY="59.0" prefHeight="25.0" prefWidth="79.0" />
-               <Button layoutX="159.0" layoutY="58.0" mnemonicParsing="false" onMouseClicked="#startTrip" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Start" textFill="WHITE">
-                  <opaqueInsets>
-                     <Insets />
-                  </opaqueInsets>
-               </Button>
-               <Text layoutX="20.0" layoutY="76.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Week:" />
-               <TextArea editable="false" layoutX="20.0" layoutY="97.0" prefHeight="184.0" prefWidth="291.0" />
-               <TextFlow fx:id="startTripResult" layoutX="27.0" layoutY="100.0" prefHeight="174.0" prefWidth="278.0" />
-            </children>
-         </Pane>
+         <SplitPane dividerPositions="0.5681159420289855" BorderPane.alignment="CENTER">
+            <items>
+               <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+                 <items>
+                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                        <children>
+                           <Pane prefHeight="258.0" prefWidth="390.0">
+                              <children>
+                                 <Text layoutX="20.0" layoutY="41.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Trips">
+                                    <font>
+                                       <Font name="System Bold" size="25.0" />
+                                    </font>
+                                 </Text>
+                                 <Spinner fx:id="weekSpinner" editable="true" layoutX="65.0" layoutY="59.0" prefHeight="25.0" prefWidth="79.0" />
+                                 <Text layoutX="20.0" layoutY="76.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Week:" />
+                                 <Button layoutX="228.0" layoutY="58.0" mnemonicParsing="false" onMouseClicked="#startTrip" prefHeight="27.0" prefWidth="61.0" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Start" textFill="WHITE">
+                                    <opaqueInsets>
+                                       <Insets />
+                                    </opaqueInsets>
+                                 </Button>
+                              </children>
+                           </Pane>
+                        </children>
+                     </AnchorPane>
+                     <AnchorPane prefHeight="377.0" prefWidth="389.0">
+                        <children>
+                           <fx:include source="FinishTripSection.fxml" />
+                        </children>
+                     </AnchorPane>
+                 </items>
+               </SplitPane>
+               <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <children>
+                     <TextArea editable="false" layoutX="4.0" layoutY="103.0" prefHeight="310.0" prefWidth="242.0" />
+                     <TextFlow fx:id="startTripResult" layoutX="5.0" layoutY="103.0" prefHeight="310.0" prefWidth="240.0" />
+                     <Text layoutX="7.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Member Status Log:" />
+                  </children>
+               </AnchorPane>
+            </items>
+         </SplitPane>
       </center>
    </BorderPane>
 </AnchorPane>
