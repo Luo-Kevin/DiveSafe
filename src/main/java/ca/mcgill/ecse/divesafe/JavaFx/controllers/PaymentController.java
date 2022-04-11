@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -29,8 +30,17 @@ public class PaymentController {
   private Scene scene;
   private Parent root;
 
+  @FXML
+  private Button memberButton;
 
+  @FXML
+  private Button assignmentButton;
 
+  @FXML
+  private Button paymentButton;
+
+  @FXML
+  private Button tripButton;
 
   @FXML
   private TextField authorizationCode;
@@ -50,89 +60,86 @@ public class PaymentController {
   @FXML
   private Label watermark;
 
-
   @FXML
   private TextFlow paymentSummary;
 
   @FXML
   private Label errorMessage;
 
-
- /**
-  * Method triggered when user click the retrieve bill button
-  * @param event - mouse click
-  * @author Kevin Luo
-  */
+  /**
+   * Method triggered when user click the retrieve bill button
+   * 
+   * @param event - mouse click
+   * @author Kevin Luo
+   */
 
   @FXML
   void retrieveBillClick(ActionEvent event) {
     String userEmail = email.getText().strip();
     boolean userFound = false;
-    if(paymentDetail.getItems().isEmpty()){
-    var userBooking = AssignmentController.getUserBill(userEmail);
+    if (paymentDetail.getItems().isEmpty()) {
+      var userBooking = AssignmentController.getUserBill(userEmail);
 
-    for(var member: AssignmentController.getAssignments()){
-      if(member.getMemberEmail().equals(userEmail)){
-        userFound = true;
-        String userStartDate = "Start Date: " + member.getStartDay();
-        String userEndDate = "End Date: " + member.getEndDay();
-        paymentDetail.getItems().add(userStartDate);
-        paymentDetail.getItems().add(userEndDate);
-        paymentDetail.getItems().add("GUIDE");
-        String userGuideDetail = "Guide: " + member.getGuideName() + " [Contact: " + member.getGuideEmail() + "] $" + member.getTotalCostForGuide();
-        paymentDetail.getItems().add(userGuideDetail);
-        paymentDetail.getItems().add("EQUIPMENT");
-        var userEquipmentDetail = AssignmentController.userBillBookedEquipmentDetails(userBooking, userEmail);
-        userEquipmentDetail.forEach(equipmentDetail -> paymentDetail.getItems().add(equipmentDetail));
-        paymentDetail.getItems().add("BUNDLE");
-        var userBundleDetail = AssignmentController.userBillBundleDetails(userBooking, userEmail);
-        userBundleDetail.forEach(bundleDetail -> paymentDetail.getItems().add(bundleDetail));
+      for (var member : AssignmentController.getAssignments()) {
+        if (member.getMemberEmail().equals(userEmail)) {
+          userFound = true;
+          String userStartDate = "Start Date: " + member.getStartDay();
+          String userEndDate = "End Date: " + member.getEndDay();
+          paymentDetail.getItems().add(userStartDate);
+          paymentDetail.getItems().add(userEndDate);
+          paymentDetail.getItems().add("GUIDE");
+          String userGuideDetail = "Guide: " + member.getGuideName() + " [Contact: " + member.getGuideEmail() + "] $"
+              + member.getTotalCostForGuide();
+          paymentDetail.getItems().add(userGuideDetail);
+          paymentDetail.getItems().add("EQUIPMENT");
+          var userEquipmentDetail = AssignmentController.userBillBookedEquipmentDetails(userBooking, userEmail);
+          userEquipmentDetail.forEach(equipmentDetail -> paymentDetail.getItems().add(equipmentDetail));
+          paymentDetail.getItems().add("BUNDLE");
+          var userBundleDetail = AssignmentController.userBillBundleDetails(userBooking, userEmail);
+          userBundleDetail.forEach(bundleDetail -> paymentDetail.getItems().add(bundleDetail));
 
-        Text startDate = new Text("Start Date: " + member.getStartDay() + "\n");
-        Text endDate = new Text("End Date: " + member.getStartDay() + "\n");
-        int totalEquipmentCost = member.getTotalCostForEquipment();
-        Text equipmentSummary = new Text("Total Equipment Cost: $" + totalEquipmentCost + "\n");
-        int totalGuideCost = member.getTotalCostForGuide();
-        Text guideSummary = new Text("Total Guide Cost: $" + totalGuideCost +"\n");
-        int totalCost = totalEquipmentCost + totalGuideCost;
-        Text totalSummary = new Text("Total Cost: $" + totalCost);
-        paymentSummary.getChildren().add(equipmentSummary);
-        paymentSummary.getChildren().add(guideSummary);
-        paymentSummary.getChildren().add(totalSummary);
+          Text startDate = new Text("Start Date: " + member.getStartDay() + "\n");
+          Text endDate = new Text("End Date: " + member.getStartDay() + "\n");
+          int totalEquipmentCost = member.getTotalCostForEquipment();
+          Text equipmentSummary = new Text("Total Equipment Cost: $" + totalEquipmentCost + "\n");
+          int totalGuideCost = member.getTotalCostForGuide();
+          Text guideSummary = new Text("Total Guide Cost: $" + totalGuideCost + "\n");
+          int totalCost = totalEquipmentCost + totalGuideCost;
+          Text totalSummary = new Text("Total Cost: $" + totalCost);
+          paymentSummary.getChildren().add(equipmentSummary);
+          paymentSummary.getChildren().add(guideSummary);
+          paymentSummary.getChildren().add(totalSummary);
 
-        break;
+          break;
         }
       }
     }
 
-    if(!userFound){
+    if (!userFound) {
       watermark.setText("");
       errorMessage.setText(String.format("No payment associated with ") + userEmail);
       errorMessage.setTextFill(Color.RED);
     }
 
- 
-
   }
 
   /**
-  * Method triggered when user click the retrieve make payment button
-  * @param event - mouse click
-  * @author Kevin Luo
-  */
-
+   * Method triggered when user click the retrieve make payment button
+   * 
+   * @param event - mouse click
+   * @author Kevin Luo
+   */
 
   @FXML
   void makePayment(MouseEvent event) {
-    if(!paymentDetail.getItems().isEmpty()){
+    if (!paymentDetail.getItems().isEmpty()) {
       String userEmail = email.getText().strip();
       String paymentAuthorization = authorizationCode.getText().strip();
       String paymentMessage = AssignmentController.confirmPayment(userEmail, paymentAuthorization);
       watermark.setText("");
-      if(MemberController.getMemberStatus(userEmail).equals("Paid")){
+      if (MemberController.getMemberStatus(userEmail).equals("Paid")) {
         errorMessage.setTextFill(Color.web("#0076a3"));
-      }
-      else{
+      } else {
         errorMessage.setTextFill(Color.RED);
       }
       errorMessage.setText(paymentMessage);
@@ -143,24 +150,24 @@ public class PaymentController {
   /**
    * Method to update the lists of assigned and unassigned members
    */
- 
+
   @FXML
   public void switchToPayment(MouseEvent event) throws IOException {
-      String userEmail = email.getText().strip();
-      root = FXMLLoader.load(getClass().getResource("../pages/PaymentPage.fxml"));
-      stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-      scene = new Scene(root);
-      stage.setScene(scene);
-      stage.show();
-      if(MemberController.getMemberStatus(userEmail).equals("Paid")){    
-        errorMessage.setTextFill(Color.web("#0076a3"));
-        errorMessage.setText("Paid");
-      }
-   
+    String userEmail = email.getText().strip();
+    root = FXMLLoader.load(getClass().getResource("../pages/PaymentPage.fxml"));
+    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
+    if (MemberController.getMemberStatus(userEmail).equals("Paid")) {
+      errorMessage.setTextFill(Color.web("#0076a3"));
+      errorMessage.setText("Paid");
+    }
+
   }
 
   /**
-   * Method to switch to payment page
+   * Method to switch to assignment page
    */
 
   @FXML
@@ -175,14 +182,27 @@ public class PaymentController {
   /**
    * Method to switch to trip page
    */
-  
-  @FXML 
+
+  @FXML
   public void switchToTrip(MouseEvent event) throws IOException {
-      root = FXMLLoader.load(getClass().getResource("../pages/TripPage.fxml"));
-      stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-      scene = new Scene(root);
-      stage.setScene(scene);
-      stage.show();
+    root = FXMLLoader.load(getClass().getResource("../pages/TripPage.fxml"));
+    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
+  }
+
+  /**
+   * Method to switch to member page
+   */
+
+  @FXML
+  void switchToMember(MouseEvent event) throws IOException {
+    root = FXMLLoader.load(getClass().getResource("../pages/MemberPage.fxml"));
+    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
   }
 
 }

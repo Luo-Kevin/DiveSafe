@@ -1,7 +1,6 @@
 package ca.mcgill.ecse.divesafe.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
@@ -49,7 +48,7 @@ public class AssignmentController {
 
     for (Guide guide : currentGuides) {
       guide.bookGuide();
-      
+
     }
 
     // get all unassigned members and return error if not empty
@@ -149,7 +148,6 @@ public class AssignmentController {
       return String.format("Member with email address %s does not exist.\n", userEmail);
     }
 
-    
     String statusMember = member.getMemberStatusFullName();
 
     // Check for invalid user status when finishing trip
@@ -160,7 +158,7 @@ public class AssignmentController {
     else if (statusMember.equals("Banned")) {
       return error = "Cannot finish the trip due to a ban.\n";
     }
-    
+
     if (statusMember.equals("Unassigned")) {
       return error = "Cannot finish a trip for an unassigned member.\n";
     }
@@ -262,15 +260,14 @@ public class AssignmentController {
     else if (authorizationCode.isBlank()) {
       error = "Invalid authorization code";
     }
-    var divesafeMember= DiveSafeApplication.getDiveSafe().getMembers();
+    var divesafeMember = DiveSafeApplication.getDiveSafe().getMembers();
 
     Member member = null;
-    for(Member checkMember: divesafeMember){
-      if(checkMember.getEmail().equals(userEmail)){
+    for (Member checkMember : divesafeMember) {
+      if (checkMember.getEmail().equals(userEmail)) {
         member = checkMember;
       }
     }
-    
 
     // Checking for invalid user status when confirming payment
     if (member.getMemberStatusFullName().equals("Paid")) {
@@ -325,19 +322,20 @@ public class AssignmentController {
 
   /**
    * Method that gets all member's emails in diveSafe
+   * 
    * @author Eric Joung
    * @return List<Member> List of all members
    */
   public static ArrayList<String> getMemberEmails() {
-      ArrayList<String> memberEmails = new ArrayList<>();
-      List<Member> members = diveSafe.getMembers();
-      for (Member member : members) {
-       memberEmails.add(member.getEmail());
-      }
-      return memberEmails;
+    ArrayList<String> memberEmails = new ArrayList<>();
+    List<Member> members = diveSafe.getMembers();
+    for (Member member : members) {
+      memberEmails.add(member.getEmail());
+    }
+    return memberEmails;
   }
 
-    /**
+  /**
    * Method to get the assignment details of a member
    * 
    * @author Siger Ma
@@ -370,16 +368,16 @@ public class AssignmentController {
 
   /**
    * Method which gets the billable bookings of the member
+   * 
    * @param email - String which representing the member's email
    * @return List of the billable equipment
    * @author Kevin Luo
    */
 
-  public static List<ItemBooking> getUserBill(String email){
-    if(!Member.hasWithEmail(email)){
+  public static List<ItemBooking> getUserBill(String email) {
+    if (!Member.hasWithEmail(email)) {
       return null;
-    }
-    else{
+    } else {
       Member member = Member.getWithEmail(email);
       List<ItemBooking> userBooking = member.getItemBookings();
       return userBooking;
@@ -387,76 +385,81 @@ public class AssignmentController {
   }
 
   /**
-    Method which gets the user's billable equipments
-    @param userBooking - List of billable equipment
-    @param email - user's email
-    @return List of String representing the detailed information of user's bill for equipments booked
-    @author Kevin Luo
-  */
-  public static List<String> userBillBookedEquipmentDetails(List<ItemBooking> userBooking, String email){
+   * Method which gets the user's billable equipments
+   * 
+   * @param userBooking - List of billable equipment
+   * @param email       - user's email
+   * @return List of String representing the detailed information of user's bill
+   *         for equipments booked
+   * @author Kevin Luo
+   */
+  public static List<String> userBillBookedEquipmentDetails(List<ItemBooking> userBooking, String email) {
     List<String> bookingBill = new ArrayList<String>();
     Member member = Member.getWithEmail(email);
     int daysBooked = member.getNumDays();
 
-    for (ItemBooking item: userBooking){
+    for (ItemBooking item : userBooking) {
       Item itemBooked = item.getItem();
       if (itemBooked instanceof Equipment) {
         Equipment itemEquipment = (Equipment) itemBooked;
         String itemName = itemBooked.getName();
         int itemQuantity = item.getQuantity();
         int itemPrice = itemEquipment.getPricePerDay() * itemQuantity * daysBooked;
-        String billingDetail = itemName + " [Quantity: " + itemQuantity +"]" + " $" +itemPrice; 
+        String billingDetail = itemName + " [Quantity: " + itemQuantity + "]" + " $" + itemPrice;
         bookingBill.add(billingDetail);
-         
+
       }
     }
     return bookingBill;
   }
 
-   /**
-    Method which gets the user's billable bundle
-    @param userBooking - List of billable equipment
-    @param email - user's email
-    @return List of String representing the detailed information of user's bill for bundle booked
-    @author Kevin Luo
-  */
+  /**
+   * Method which gets the user's billable bundle
+   * 
+   * @param userBooking - List of billable equipment
+   * @param email       - user's email
+   * @return List of String representing the detailed information of user's bill
+   *         for bundle booked
+   * @author Kevin Luo
+   */
 
-  public static List<String> userBillBundleDetails(List<ItemBooking> userBooking, String email){
+  public static List<String> userBillBundleDetails(List<ItemBooking> userBooking, String email) {
     List<String> bookingBill = new ArrayList<String>();
-
 
     Member member = Member.getWithEmail(email);
     int daysBooked = member.getNumDays();
-    if(member.getAssignment() == null){
+    if (member.getAssignment() == null) {
       return bookingBill;
     }
 
-    for (ItemBooking item: userBooking){
-    Item itemBooked = item.getItem();
+    for (ItemBooking item : userBooking) {
+      Item itemBooked = item.getItem();
 
-    if(itemBooked instanceof EquipmentBundle){
-      EquipmentBundle bundleBooked = (EquipmentBundle) itemBooked;
-      List<BundleItem> itemInBundle = bundleBooked.getBundleItems();
-      Integer bundlePrice = 0;
-      for(BundleItem bundleEquipment: itemInBundle){
-        Integer bundleItemPrice = bundleEquipment.getEquipment().getPricePerDay() * bundleEquipment.getQuantity(); //bundle rented per week
-        bundlePrice += bundleItemPrice;
-      }
+      if (itemBooked instanceof EquipmentBundle) {
+        EquipmentBundle bundleBooked = (EquipmentBundle) itemBooked;
+        List<BundleItem> itemInBundle = bundleBooked.getBundleItems();
+        Integer bundlePrice = 0;
+        for (BundleItem bundleEquipment : itemInBundle) {
+          Integer bundleItemPrice = bundleEquipment.getEquipment().getPricePerDay() * bundleEquipment.getQuantity(); // bundle
+                                                                                                                     // rented
+                                                                                                                     // per
+                                                                                                                     // week
+          bundlePrice += bundleItemPrice;
+        }
 
-      if(member.getAssignment().hasGuide()){
-        double discount = (double) (100 - bundleBooked.getDiscount())/100;
-        bundlePrice =  (int) (bundlePrice*discount);
+        if (member.getAssignment().hasGuide()) {
+          double discount = (double) (100 - bundleBooked.getDiscount()) / 100;
+          bundlePrice = (int) (bundlePrice * discount);
+        }
+        String bundleName = bundleBooked.getName();
+        int bundleQuantity = item.getQuantity();
+        bundlePrice = bundlePrice * daysBooked * bundleQuantity;
+        String billingDetail = bundleName + " [Quantity: " + bundleQuantity + "]" + " $" + bundlePrice;
+        bookingBill.add(billingDetail);
       }
-      String bundleName = bundleBooked.getName();
-      int bundleQuantity = item.getQuantity();
-      bundlePrice = bundlePrice * daysBooked * bundleQuantity;
-      String billingDetail = bundleName + " [Quantity: " + bundleQuantity +"]" + " $" + bundlePrice; 
-      bookingBill.add(billingDetail);
     }
-  }
     return bookingBill;
   }
-
 
   /**
    * Helper method used to wrap the information in an <code>Assignment</code>

@@ -1,14 +1,9 @@
 package ca.mcgill.ecse.divesafe.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
-import ca.mcgill.ecse.divesafe.model.Assignment;
-import ca.mcgill.ecse.divesafe.model.BundleItem;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
-import ca.mcgill.ecse.divesafe.model.Equipment;
-import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
 import ca.mcgill.ecse.divesafe.model.Guide;
 import ca.mcgill.ecse.divesafe.model.Item;
 import ca.mcgill.ecse.divesafe.model.ItemBooking;
@@ -74,6 +69,7 @@ public class MemberController {
     }
 
     try {
+      DiveSafeApplication.save(diveSafe);
       DiveSafePersistence.save();
     } catch (RuntimeException e) {
       e.getMessage();
@@ -129,6 +125,7 @@ public class MemberController {
     }
 
     try {
+      DiveSafeApplication.save(diveSafe);
       DiveSafePersistence.save();
     } catch (RuntimeException e) {
       e.getMessage();
@@ -142,6 +139,7 @@ public class MemberController {
     if (member != null) {
       member.delete();
       try {
+        DiveSafeApplication.save(diveSafe);
         DiveSafePersistence.save();
       } catch (RuntimeException e) {
         e.getMessage();
@@ -252,22 +250,21 @@ public class MemberController {
 
   /**
    * Method to get the member's status
+   * 
    * @param email - String representing email of user
-   * @return String representing the member's status 
+   * @return String representing the member's status
    */
-  
-  public static String getMemberStatus(String email){
-    List<Member>  divesafeMember = DiveSafeApplication.getDiveSafe().getMembers();
-    for(Member checkMember:divesafeMember){
-      if(checkMember.getEmail().equals(email)){
+
+  public static String getMemberStatus(String email) {
+    List<Member> divesafeMember = DiveSafeApplication.getDiveSafe().getMembers();
+    for (Member checkMember : divesafeMember) {
+      if (checkMember.getEmail().equals(email)) {
         return checkMember.getMemberStatusFullName();
       }
     }
 
     return "No status associated with " + email;
   }
-
-
 
   private static String checkCommonConditions(String password, String name, String emergencyContact,
       int nrDays, List<String> itemNames) {

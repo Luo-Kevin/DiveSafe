@@ -28,7 +28,7 @@
       </top>
       <left>
          <VBox prefHeight="500.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" BorderPane.alignment="CENTER">
-            <Button fx:id="member" alignment="CENTER" minWidth="45.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Member" textAlignment="JUSTIFY" textFill="WHITE">
+            <Button fx:id="memberButton" alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onMouseClicked="#switchToMember" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Member" textAlignment="JUSTIFY" textFill="WHITE">
                <font>
                   <Font name="System Font" size="11.0" />
                </font>

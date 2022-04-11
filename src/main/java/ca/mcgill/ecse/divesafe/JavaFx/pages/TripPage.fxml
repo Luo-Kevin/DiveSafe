@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="673.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.StartTripController">
+<AnchorPane prefHeight="673.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.StartTripController">
    <BorderPane prefHeight="673.0" prefWidth="895.0">
       <top>
          <VBox prefHeight="40.0" style="-fx-background-color: #004385#004385;" BorderPane.alignment="CENTER">
@@ -32,7 +32,7 @@
       </top>
       <left>
          <VBox prefHeight="673.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" BorderPane.alignment="CENTER">
-            <Button fx:id="member" alignment="CENTER" minWidth="45.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Member" textAlignment="JUSTIFY" textFill="WHITE">
+            <Button fx:id="memberButton" alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onMouseClicked="#switchToMember" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Member" textAlignment="JUSTIFY" textFill="WHITE">
                <font>
                   <Font name="System Font" size="11.0" />
                </font>
@@ -45,7 +45,7 @@
                   <Font name="System Font" size="11.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onMouseClicked="#switchToPayment" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Payment" textAlignment="JUSTIFY" textFill="WHITE">
+            <Button fx:id="paymentButton" alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onMouseClicked="#switchToPayment" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Payment" textAlignment="JUSTIFY" textFill="WHITE">
                <font>
                   <Font name="System Font" size="11.0" />
                </font>
