@@ -123,7 +123,7 @@ public class StartTripController implements Initializable {
       } else {
         for (String memberEmail : readyForTripMembers) {
 
-          if (MemberController.getMemberStatus(memberEmail).equals("Paid")) {
+          if (MemberController.getMemberStatus(memberEmail).equals("Paid") ||MemberController.getMemberStatus(memberEmail).equals("Started") ) {
 
             Text tripStarted = new Text("Member " + memberEmail + ": Trip started!\n");
             startTripResult.getChildren().add(tripStarted);
