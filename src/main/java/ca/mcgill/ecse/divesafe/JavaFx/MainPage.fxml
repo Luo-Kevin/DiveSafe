@@ -6,15 +6,16 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.SceneController">
-   <BorderPane prefHeight="580.0" prefWidth="705.0">
+   <BorderPane prefHeight="599.0" prefWidth="793.0">
       <top>
          <VBox prefHeight="40.0" style="-fx-background-color: #004385#004385;" BorderPane.alignment="CENTER">
             <children>
                <Pane prefHeight="200.0" prefWidth="200.0">
                   <children>
-                     <Button fx:id="resetButton" layoutX="644.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#resetApp" text="Reset">
+                     <Button fx:id="resetButton" layoutX="730.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#resetApp" text="Reset">
                         <font>
                            <Font name="System Bold" size="12.0" />
                         </font>
@@ -30,10 +31,10 @@
                   <Font name="System Font" size="11.0" />
                </font>
 
+                  
+                  </Button>
             
-            </Button>
-            
-            <Button fx:id="assignmentButton" alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onMouseClicked="#switchToAssignment" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Assignment" textAlignment="JUSTIFY" textFill="WHITE">
+                  <Button fx:id="assignmentButton" alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onMouseClicked="#switchToAssignment" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Assignment" textAlignment="JUSTIFY" textFill="WHITE">
                <font>
                   <Font name="System Font" size="11.0" />
                </font>
@@ -50,5 +51,21 @@
             </Button>
          </VBox>
       </left>
+      <center>
+         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F0F8FF;" BorderPane.alignment="CENTER">
+            <children>
+               <Text layoutX="157.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to DiveSafe!" textAlignment="CENTER" wrappingWidth="352.513671875">
+                  <font>
+                     <Font name="Garamond Bold" size="67.0" />
+                  </font>
+               </Text>
+               <Text layoutX="149.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select a menu option on the left to start your trip." textAlignment="CENTER">
+                  <font>
+                     <Font name="Garamond" size="17.0" />
+                  </font>
+               </Text>
+            </children>
+         </Pane>
+      </center>
    </BorderPane>
 </AnchorPane>

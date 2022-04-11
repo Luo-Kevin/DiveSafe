@@ -94,7 +94,7 @@
          <center>
           <SplitPane dividerPositions="0.3201530612244898, 0.6466836734693877" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" BorderPane.alignment="CENTER">
             <items>
-              <AnchorPane>
+              <AnchorPane style="-fx-background-color: #F0F8FF;">
                      <children>
                         <Button fx:id="initiateButton" layoutX="73.0" layoutY="68.0" mnemonicParsing="false" onMouseClicked="#startInitiate" prefHeight="53.0" prefWidth="76.0" text="Initiate" />
                   <Label alignment="CENTER" layoutY="14.0" minWidth="60.0" prefHeight="27.0" prefWidth="222.0" style="&#10;" text="Initiate Assignments" textAlignment="CENTER" wrapText="false">
@@ -116,7 +116,7 @@
               </AnchorPane>
               <ScrollPane minWidth="250.0" prefHeight="-1.0" prefWidth="-1.0">
                 <content>
-                  <AnchorPane id="Content" minHeight="-1.0">
+                  <AnchorPane id="Content" minHeight="-1.0" prefHeight="611.0" prefWidth="249.0" style="-fx-background-color: #F0F8FF;">
                     <children>
                       <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="View Assignments" textAlignment="CENTER" wrapText="false">
                                  <font>
@@ -137,7 +137,7 @@
                   </AnchorPane>
                 </content>
               </ScrollPane>
-              <AnchorPane>
+              <AnchorPane style="-fx-background-color: #F0F8FF;">
                 <children>
                   <Label alignment="CENTER" layoutX="-2.0" layoutY="14.0" prefHeight="27.0" prefWidth="276.0" style="&#10;" text="Assignment Details" textAlignment="CENTER" wrapText="false">
                            <font>
