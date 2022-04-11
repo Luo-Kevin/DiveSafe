@@ -88,21 +88,21 @@ public class AssignmentController {
 
     // Check if userEmail exist in system
     if (!Member.hasWithEmail(userEmail))
-      return error = "Member with email address " + userEmail + " does not exist.\n";
+      return error = "Member with email address " + userEmail + " does not exist.";
 
     Member member = Member.getWithEmail(userEmail);
 
     // Check for invalid user status when attempting to refund
     if (member.getMemberStatusFullName().equals("Banned")) {
-      return error = "Cannot cancel the trip due to a ban.\n";
+      return error = "Cannot cancel the trip due to a ban.";
     }
 
     if (member.getMemberStatusFullName().equals("Unassigned")) {
-      return error = "Cannot cancel a trip for an unassigned member.\n";
+      return error = "Cannot cancel a trip for an unassigned member.";
     }
 
     else if (member.getMemberStatusFullName().equals("Finished")) {
-      return error = "Cannot cancel a trip which has finished.\n";
+      return error = "Cannot cancel a trip which has finished.";
     }
 
     // Check for user status when allowed to refund
@@ -145,26 +145,26 @@ public class AssignmentController {
 
     // Check if userEmail exist in system
     if (!Member.hasWithEmail(userEmail)) {
-      return String.format("Member with email address %s does not exist.\n", userEmail);
+      return String.format("Member with email address %s does not exist.", userEmail);
     }
 
     String statusMember = member.getMemberStatusFullName();
 
     // Check for invalid user status when finishing trip
     if (statusMember.equals("Assigned") || statusMember.equals("Paid")) {
-      return error = "Cannot finish a trip which has not started.\n";
+      return error = "Cannot finish a trip which has not started.";
     }
 
     else if (statusMember.equals("Banned")) {
-      return error = "Cannot finish the trip due to a ban.\n";
+      return error = "Cannot finish the trip due to a ban.";
     }
 
     if (statusMember.equals("Unassigned")) {
-      return error = "Cannot finish a trip for an unassigned member.\n";
+      return error = "Cannot finish a trip for an unassigned member.";
     }
 
     else if (statusMember.equals("Cancelled")) {
-      return error = "Cannot finish a trip which has been cancelled.\n";
+      return error = "Cannot finish a trip which has been cancelled.";
     }
 
     if (!error.isEmpty()) {
