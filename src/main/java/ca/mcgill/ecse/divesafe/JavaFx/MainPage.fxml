@@ -66,9 +66,9 @@
                      <Font name="Garamond" size="17.0" />
                   </font>
                </Text>
-               <ImageView fitHeight="247.0" fitWidth="243.0" layoutX="263.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true">
+               <ImageView fx:id="myImage" fitHeight="247.0" fitWidth="243.0" layoutX="263.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                     <Image url="@../../../../../../../../../../Downloads/diving.png" />
+                     <Image url="@ressources/diving.png" />
                   </image>
                </ImageView>
             </children>

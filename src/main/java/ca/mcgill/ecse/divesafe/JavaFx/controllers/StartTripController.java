@@ -89,6 +89,7 @@ public class StartTripController implements Initializable {
     @FXML
     void startTrip(MouseEvent event) {
 
+        AssignmentController.startTripsForDay(targetWeek);
         //System.out.println("Contains this : " + assignments);
 
         List<String> readyForTripMembers = new ArrayList<String>();
