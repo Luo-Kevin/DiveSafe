@@ -47,7 +47,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.InitiateAndViewAssignmentPageController">
+<VBox xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.InitiateAndViewAssignmentPageController">
   <children>
       <BorderPane>
          <top>
@@ -55,7 +55,7 @@
                <children>
                   <Pane>
                      <children>
-                        <Button fx:id="resetButton" alignment="TOP_RIGHT" contentDisplay="TOP" layoutX="835.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#resetApp" text="Reset">
+                        <Button fx:id="resetButton" alignment="TOP_RIGHT" contentDisplay="TOP" layoutX="839.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#resetApp" text="Reset">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -164,7 +164,8 @@
                      </font>
                      <textFill>
                   <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
-                     </textFill></Label>
+                     </textFill>
+                  </Label>
             </children>
                <padding>
                   <Insets bottom="3.0" left="3.0" right="3.0" />

@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane minWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.PaymentController">
+<AnchorPane minWidth="750.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.PaymentController">
     <BorderPane prefHeight="638.0" prefWidth="751.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <top>
             <VBox maxWidth="1.7976931348623157E308" minWidth="600.0" prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #004385#004385;" BorderPane.alignment="CENTER" />
@@ -63,7 +63,7 @@
                <TextField fx:id="authorizationCode" layoutX="206.0" layoutY="490.0" />
                <Text layoutX="40.0" layoutY="507.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Authorization Code: " />
                <ListView fx:id="paymentDetail" layoutX="104.0" layoutY="140.0" prefHeight="217.0" prefWidth="339.0" />
-               <Label fx:id="errorMessage" layoutX="525.0" layoutY="583.0" maxWidth="-1.0" text="DiveSafe">
+               <Label fx:id="errorMessage" layoutX="575.0" layoutY="582.0" maxWidth="-1.0" text="DiveSafe">
                   <font>
                      <Font size="11.0" fx:id="x3" />
                   </font>
