@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.SceneController">
-   <BorderPane prefWidth="600.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.SceneController">
+   <BorderPane prefHeight="580.0" prefWidth="705.0">
       <top>
          <VBox prefHeight="40.0" style="-fx-background-color: #004385#004385;" BorderPane.alignment="CENTER">
             <children>
                <Pane prefHeight="200.0" prefWidth="200.0">
                   <children>
-                     <Button fx:id="resetButton" layoutX="547.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#resetApp" text="Reset">
+                     <Button fx:id="resetButton" layoutX="644.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#resetApp" text="Reset">
                         <font>
                            <Font name="System Bold" size="12.0" />
                         </font>

@@ -89,7 +89,7 @@ public class StartTripController implements Initializable {
     @FXML
     void startTrip(MouseEvent event) {
 
-        System.out.println("Contains this : " + assignments);
+        //System.out.println("Contains this : " + assignments);
 
         List<String> readyForTripMembers = new ArrayList<String>();
         // make sure there are assignmnents to start trips

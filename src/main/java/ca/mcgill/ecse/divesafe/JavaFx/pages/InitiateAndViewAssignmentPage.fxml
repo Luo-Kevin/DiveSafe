@@ -47,7 +47,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.InitiateAndViewAssignmentPageController">
+<VBox xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.InitiateAndViewAssignmentPageController">
   <children>
       <BorderPane>
          <top>
@@ -92,7 +92,7 @@
             </VBox>
          </left>
          <center>
-          <SplitPane dividerPositions="0.2505567928730512, 0.6893095768374164" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" BorderPane.alignment="CENTER">
+          <SplitPane dividerPositions="0.3201530612244898, 0.6466836734693877" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" BorderPane.alignment="CENTER">
             <items>
               <AnchorPane>
                      <children>
@@ -104,7 +104,7 @@
                   </Label>
                         <Pane layoutY="223.0" prefHeight="386.0">
                            <children>
-                              <ListView fx:id="listUnassignedMembers" onMouseClicked="#switchToPayment" />
+                              <ListView fx:id="listUnassignedMembers" layoutY="3.0" onMouseClicked="#switchToPayment" prefHeight="375.0" prefWidth="232.0" />
                            </children>
                         </Pane>
                         <Label layoutX="10.0" layoutY="194.0" text="Unassigned Members">
@@ -116,7 +116,7 @@
               </AnchorPane>
               <ScrollPane minWidth="250.0" prefHeight="-1.0" prefWidth="-1.0">
                 <content>
-                  <AnchorPane id="Content" minHeight="-1.0" minWidth="250.0">
+                  <AnchorPane id="Content" minHeight="-1.0">
                     <children>
                       <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="View Assignments" textAlignment="CENTER" wrapText="false">
                                  <font>
@@ -130,7 +130,7 @@
                               </Label>
                               <Pane layoutY="66.0" prefHeight="506.0" AnchorPane.bottomAnchor="-53.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="66.0">
                                  <children>
-                                    <ListView fx:id="listAssignedMembers" onMouseClicked="#getDetails" prefHeight="549.0" />
+                                    <ListView fx:id="listAssignedMembers" layoutX="7.0" layoutY="9.0" onMouseClicked="#getDetails" prefHeight="525.0" prefWidth="235.0" />
                                  </children>
                               </Pane>
                     </children>
@@ -146,7 +146,7 @@
                         </Label>
                         <Pane layoutY="64.0" minWidth="250.0" prefHeight="547.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
                            <children>
-                              <TreeView fx:id="treeAssignmentDetails" layoutY="2.0" onContextMenuRequested="#selectTreeBranch" onMouseClicked="#selectTreeBranch" prefHeight="546.0" />
+                              <TreeView fx:id="treeAssignmentDetails" layoutX="11.0" layoutY="11.0" onContextMenuRequested="#selectTreeBranch" onMouseClicked="#selectTreeBranch" prefHeight="525.0" prefWidth="253.0" />
                            </children>
                         </Pane>
                 </children>
