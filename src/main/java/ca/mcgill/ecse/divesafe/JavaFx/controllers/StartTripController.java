@@ -44,6 +44,13 @@ public class StartTripController implements Initializable {
 
     @FXML
     private TextFlow startTripResult;
+    
+    @FXML
+    private static TextFlow startTripResult_static;
+
+    public static TextFlow getTextFlow() {
+        return startTripResult_static;
+    }
 
     // Configure spinner to choose desired week to start trips
     @FXML
@@ -73,6 +80,7 @@ public class StartTripController implements Initializable {
             }
         });
 
+        startTripResult_static = startTripResult;
     }
 
     /**
