@@ -97,7 +97,7 @@ public class StartTripController implements Initializable {
     @FXML
     void startTrip(MouseEvent event) {
 
-        System.out.println("Contains this : " + assignments);
+        //System.out.println("Contains this : " + assignments);
 
         List<String> readyForTripMembers = new ArrayList<String>();
         // make sure there are assignmnents to start trips
@@ -118,7 +118,7 @@ public class StartTripController implements Initializable {
             }
 
             if (readyForTripMembers.isEmpty()) {
-                Text noMemberReady = new Text("No assigned member has chosen start day.\n");
+                Text noMemberReady = new Text("No assigned member on chosen week.\n");
                 startTripResult.getChildren().add(noMemberReady);
 
             } else {
@@ -131,7 +131,7 @@ public class StartTripController implements Initializable {
                     }
 
                     else {
-                        Text banMember = new Text("Member " + memberEmail + ": Banned due to not having paid.\n");
+                        Text banMember = new Text("Member " + memberEmail + ": Banned.\n");
                         startTripResult.getChildren().add(banMember);
 
                     }
