@@ -48,11 +48,12 @@ public class DiveSafeApplication {
    * @author Siger Ma
    */
   public static void reset() {
-
     diveSafe = DiveSafePersistence.reset();
-    diveSafe = getDiveSafe();
+    save(diveSafe);
+
 
   }
+
 
   /**
    * Method to save a DiveSafe object to the running application
@@ -76,4 +77,8 @@ public class DiveSafeApplication {
   public static void setDiveSafe(Date aStartDate, int aNumDays, int aPriceOfGuidePerDay) {
     diveSafe = new DiveSafe(aStartDate, aNumDays, aPriceOfGuidePerDay);
   }
+
+  // public static start(){
+    
+  // }
 }

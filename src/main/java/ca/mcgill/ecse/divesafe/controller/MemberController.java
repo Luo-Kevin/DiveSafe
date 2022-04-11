@@ -257,8 +257,11 @@ public class MemberController {
    */
   
   public static String getMemberStatus(String email){
-    if(Member.hasWithEmail(email)){
-      return Member.getWithEmail(email).getMemberStatusFullName();
+    List<Member>  divesafeMember = DiveSafeApplication.getDiveSafe().getMembers();
+    for(Member checkMember:divesafeMember){
+      if(checkMember.getEmail().equals(email)){
+        return checkMember.getMemberStatusFullName();
+      }
     }
 
     return "No status associated with " + email;

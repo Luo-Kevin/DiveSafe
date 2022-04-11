@@ -68,7 +68,7 @@ public class PaymentController {
   void retrieveBillClick(ActionEvent event) {
     String userEmail = email.getText().strip();
     boolean userFound = false;
-    if(paymentDetail.getItems().isEmpty() && !(MemberController.getMemberStatus(userEmail).equals("Unassigned"))){
+    if(paymentDetail.getItems().isEmpty()){
     var userBooking = AssignmentController.getUserBill(userEmail);
 
     for(var member: AssignmentController.getAssignments()){
@@ -105,7 +105,7 @@ public class PaymentController {
       }
     }
 
-    if(!userFound && (MemberController.getMemberStatus(userEmail).equals("Unassigned"))){
+    if(!userFound){
       watermark.setText("");
       errorMessage.setText(String.format("No payment associated with ") + userEmail);
       errorMessage.setTextFill(Color.RED);

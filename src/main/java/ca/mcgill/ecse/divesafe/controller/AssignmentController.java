@@ -24,8 +24,9 @@ public class AssignmentController {
 
   public static List<TOAssignment> getAssignments() {
     List<TOAssignment> assignments = new ArrayList<>();
+    List<Assignment> diveSafeAssignments = DiveSafeApplication.getDiveSafe().getAssignments();
 
-    for (var assignment : diveSafe.getAssignments()) {
+    for (var assignment : diveSafeAssignments) {
       var newTOAssignment = wrapAssignment(assignment);
       assignments.add(newTOAssignment);
     }
@@ -44,17 +45,18 @@ public class AssignmentController {
   public static String initiateAssignment() {
 
     // Assign members
-    List<Guide> currentGuides = diveSafe.getGuides();
+    List<Guide> currentGuides = DiveSafeApplication.getDiveSafe().getGuides();
 
     for (Guide guide : currentGuides) {
       guide.bookGuide();
+      
     }
 
     // get all unassigned members and return error if not empty
-    List<Member> currentMemberList = diveSafe.getMembers();
+    List<Member> currentMemberList = DiveSafeApplication.getDiveSafe().getMembers();
     int count = 0;
     for (Member currentMember : currentMemberList) {
-      if (currentMember.getMemberStatusFullName() == "Unassigned") {
+      if (!currentMember.getMemberStatusFullName().equals("Assigned")) {
         count++;
       }
     }
@@ -63,7 +65,7 @@ public class AssignmentController {
     }
 
     try {
-      DiveSafeApplication.save(diveSafe);
+      DiveSafeApplication.save(DiveSafeApplication.getDiveSafe());
       DiveSafePersistence.save();
     } catch (RuntimeException e) {
       e.getMessage();
@@ -251,8 +253,15 @@ public class AssignmentController {
     else if (authorizationCode.isBlank()) {
       error = "Invalid authorization code";
     }
+    var divesafeMember= DiveSafeApplication.getDiveSafe().getMembers();
 
-    Member member = Member.getWithEmail(userEmail);
+    Member member = null;
+    for(Member checkMember: divesafeMember){
+      if(checkMember.getEmail().equals(userEmail)){
+        member = checkMember;
+      }
+    }
+    
 
     // Checking for invalid user status when confirming payment
     if (member.getMemberStatusFullName().equals("Paid")) {
@@ -282,7 +291,7 @@ public class AssignmentController {
 
     try {
       success = member.confirmPayment();
-      DiveSafeApplication.save(diveSafe);
+      DiveSafeApplication.save(DiveSafeApplication.getDiveSafe());
       DiveSafePersistence.save();
     } catch (Exception e) {
       return e.getMessage();
@@ -396,7 +405,7 @@ public class AssignmentController {
     Member member = Member.getWithEmail(email);
     int daysBooked = member.getNumDays();
     if(member.getAssignment() == null){
-      return null;
+      return bookingBill;
     }
 
     for (ItemBooking item: userBooking){
