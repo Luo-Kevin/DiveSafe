@@ -11,8 +11,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
+<<<<<<< HEAD
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.SceneController">
+=======
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.StartTripController">
+>>>>>>> startTripgui
    <BorderPane prefHeight="558.0" prefWidth="771.0">
       <top>
          <VBox prefHeight="40.0" style="-fx-background-color: #004385#004385;" BorderPane.alignment="CENTER">
@@ -57,36 +62,24 @@
          </VBox>
       </left>
       <center>
-         <BorderPane>
-            <center>
-               <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="518.0" prefWidth="486.0">
-                 <items>
-                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="356.0" prefWidth="644.0">
-                        <children>
-                           <Text layoutX="17.0" layoutY="50.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Trips">
-                              <font>
-                                 <Font name="System Bold" size="25.0" />
-                              </font>
-                           </Text>
-                           <Spinner layoutX="53.0" layoutY="67.0" prefHeight="25.0" prefWidth="83.0" />
-                           <Button layoutX="148.0" layoutY="66.0" mnemonicParsing="false" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Start" textFill="WHITE">
-                              <opaqueInsets>
-                                 <Insets />
-                              </opaqueInsets>
-                           </Button>
-                           <Text layoutX="17.0" layoutY="84.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Week:" />
-                           <TextArea layoutX="17.0" layoutY="102.0" prefHeight="139.0" prefWidth="280.0" />
-                        </children>
-                     </AnchorPane>
-                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                        <children>
-                           <fx:include source="FinishTripSection.fxml" />
-                        </children>
-                     </AnchorPane>
-                 </items>
-               </SplitPane>
-            </center>
-         </BorderPane>
+         <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+               <Text layoutX="20.0" layoutY="41.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Trips">
+                  <font>
+                     <Font name="System Bold" size="25.0" />
+                  </font>
+               </Text>
+               <Spinner fx:id="weekSpinner" editable="true" layoutX="65.0" layoutY="59.0" prefHeight="25.0" prefWidth="79.0" />
+               <Button layoutX="159.0" layoutY="58.0" mnemonicParsing="false" onMouseClicked="#startTrip" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Start" textFill="WHITE">
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets>
+               </Button>
+               <Text layoutX="20.0" layoutY="76.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Week:" />
+               <TextArea editable="false" layoutX="20.0" layoutY="97.0" prefHeight="184.0" prefWidth="291.0" />
+               <TextFlow fx:id="startTripResult" layoutX="27.0" layoutY="100.0" prefHeight="174.0" prefWidth="278.0" />
+            </children>
+         </Pane>
       </center>
    </BorderPane>
 </AnchorPane>

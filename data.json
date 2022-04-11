@@ -36,7 +36,7 @@
                       "numDays": 2,
                       "guideRequired": true,
                       "hotelRequired": false,
-                      "memberStatus": "Assigned",
+                      "memberStatus": "Paid",
                       "diveSafe": {
                         "@reference": "../../../../../.."
                       },
