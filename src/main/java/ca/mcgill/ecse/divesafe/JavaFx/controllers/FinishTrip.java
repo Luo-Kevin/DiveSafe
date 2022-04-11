@@ -23,21 +23,34 @@ public class FinishTrip implements Initializable {
 
     private String[] adminAction = new String[] {"Finish Trip", "Cancel Trip"};
 
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub
         finishOrCancel.getItems().addAll(adminAction);
+
     }
 
-    public void performFinishOrCancel(ActionEvent event) {
+    public String performFinishOrCancel(ActionEvent event) {
+
+        String errorMessage = "";
 
         String action = finishOrCancel.getValue();
         if (action.equals("Finish Trip")) {
-            AssignmentController.finishTrip();
+            errorMessage = AssignmentController.finishTrip(emailChoiceBox.getValue());
+            if (errorMessage.equals("")) {
+                errorMessage = String.format("Finished trip successfully for %s", emailChoiceBox.getValue());
+            }
         }
         else if (action.equals("Cancel Trip")) {
-            AssignmentController.cancelTrip();
+            errorMessage = AssignmentController.cancelTrip(emailChoiceBox.getValue());
+            if (errorMessage.equals("")) {
+                errorMessage = String.format("Finished trip successfully for %s", emailChoiceBox.getValue());
+            }
         }
+
+        return errorMessage;
     }
 
 
