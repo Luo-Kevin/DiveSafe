@@ -21,22 +21,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="911.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.MemberPageController">
    <children>
-      <BorderPane prefHeight="673.0" prefWidth="911.0">
-         <top>
-            <VBox prefHeight="40.0" prefWidth="911.0" style="-fx-background-color: #004385#004385;" BorderPane.alignment="CENTER">
-               <children>
-                  <Pane prefHeight="40.0" prefWidth="911.0">
-                     <children>
-                        <Button fx:id="resetButton" layoutX="854.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#resetApp" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 30;" text="Reset" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </Pane>
-               </children>
-            </VBox>
-         </top>
+      <BorderPane prefHeight="673.0" prefWidth="911.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
             <AnchorPane prefHeight="626.0" prefWidth="125.0" BorderPane.alignment="CENTER">
                <children>
@@ -94,33 +79,33 @@
                                     <RowConstraints maxHeight="359.0" minHeight="10.0" prefHeight="121.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email :" textAlignment="CENTER" wrappingWidth="81.13671875" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" />
                                     <TextField fx:id="memberEmail" onAction="#registerMember" prefHeight="24.0" prefWidth="149.0" promptText="Email" GridPane.columnIndex="1" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
                                     <TextField fx:id="memberPassword" onAction="#registerMember" prefHeight="25.0" prefWidth="169.0" promptText="Password" GridPane.columnIndex="3" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Emergency Contact :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Emergency Contact :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                                     <TextField fx:id="memberContact" onAction="#registerMember" prefHeight="24.0" prefWidth="149.0" promptText="(XXX)-XXX-XXXX" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Number of days :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.rowIndex="2" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Number of days :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                                     <TextField fx:id="memberNumDays" onAction="#registerMember" prefHeight="24.0" prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Guide Required ?" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.rowIndex="3" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hotel     Required ?" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Guide Required ?" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hotel     Required ?" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                                     <CheckBox fx:id="guideRequiredRegister" mnemonicParsing="false" onAction="#registerMember" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     <CheckBox fx:id="hotelRequiredRegister" mnemonicParsing="false" onAction="#registerMember" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.rowIndex="4" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Quantity :" textAlignment="RIGHT" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Quantity :" textAlignment="RIGHT" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
                                     <TextField fx:id="itemRegisterQuantity" onAction="#registerItem" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                                     <Button fx:id="addRegisterItem" mnemonicParsing="false" onMouseClicked="#registerItem" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Add Item" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bundle Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.rowIndex="6" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bundle Quantity :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bundle Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bundle Quantity :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
                                     <TextField fx:id="bundleRegisterQuantity" onAction="#registerBundle" prefHeight="10.0" prefWidth="185.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
                                     <Button fx:id="addRegisterBundle" mnemonicParsing="false" onMouseClicked="#registerBundle" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Add Bundle" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                     <TextField fx:id="addItemNameList" onAction="#registerItem" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                     <TextField fx:id="addBundleNameList" onAction="#registerBundle" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                    <Button fx:id="registerButton" mnemonicParsing="false" onMouseClicked="#registerMember" prefHeight="37.0" prefWidth="78.0" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Register" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                                    <Button fx:id="registerButton" mnemonicParsing="false" onMouseClicked="#registerMember" prefHeight="37.0" prefWidth="78.0" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Register" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
                                        </font></Button>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.rowIndex="1" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                                     <TextField fx:id="memberName" onAction="#registerMember" prefHeight="26.0" prefWidth="148.0" promptText="Marwan Kanan" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
@@ -153,27 +138,27 @@
                                     <RowConstraints maxHeight="359.0" minHeight="10.0" prefHeight="68.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.rowIndex="1" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                                     <TextField fx:id="newMemberName" onAction="#updateMember" prefHeight="26.0" prefWidth="148.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Password :" textAlignment="CENTER" wrappingWidth="94.13671875" GridPane.columnIndex="2" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Password :" textAlignment="CENTER" wrappingWidth="94.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
                                     <TextField fx:id="newMemberPassword" onAction="#updateMember" prefHeight="25.0" prefWidth="169.0" GridPane.columnIndex="3" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Emergency Contact :" textAlignment="CENTER" wrappingWidth="95.13671875" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Emergency Contact :" textAlignment="CENTER" wrappingWidth="95.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                                     <TextField fx:id="newMemberContact" onAction="#updateMember" prefHeight="24.0" prefWidth="149.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Number of days :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.rowIndex="2" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Number of days :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                                     <TextField fx:id="newMemberNumDays" onAction="#updateMember" prefHeight="24.0" prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Guide Required ?" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.rowIndex="3" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hotel  Required ?" textAlignment="CENTER" wrappingWidth="93.13671875" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Guide Required ?" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hotel  Required ?" textAlignment="CENTER" wrappingWidth="93.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                                     <CheckBox fx:id="guideRequiredUpdate" mnemonicParsing="false" onAction="#updateMember" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     <CheckBox fx:id="hotelRequiredUpdate" mnemonicParsing="false" onAction="#updateMember" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.rowIndex="4" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Quantity :" textAlignment="CENTER" wrappingWidth="98.13671875" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Quantity :" textAlignment="CENTER" wrappingWidth="98.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
                                     <TextField fx:id="itemUpdateQuantity" onAction="#updateItem" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                                     <Button fx:id="addItemUpdate" mnemonicParsing="false" onMouseClicked="#updateItem" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Add Item" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bundle Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.rowIndex="6" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bundle Quantity :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bundle Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bundle Quantity :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
                                     <TextField fx:id="bundleUpdateQuantity" onAction="#updateBundle" prefHeight="10.0" prefWidth="185.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
                                     <Button fx:id="addBundleUpdate" mnemonicParsing="false" onMouseClicked="#updateBundle" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Add Bundle" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                    <Button fx:id="updateMemberButton" mnemonicParsing="false" onMouseClicked="#updateMember" prefHeight="37.0" prefWidth="78.0" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Update" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                                    <Button fx:id="updateMemberButton" mnemonicParsing="false" onMouseClicked="#updateMember" prefHeight="37.0" prefWidth="78.0" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Update" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                                        <font>
                                           <Font size="14.0" />
                                        </font></Button>
@@ -181,7 +166,7 @@
                                     <TextField fx:id="currentEmail" onAction="#deleteMember" prefHeight="25.0" prefWidth="100.0" promptText="Current Email" GridPane.columnIndex="3" GridPane.rowIndex="9" />
                                     <TextField fx:id="updateItemList" onAction="#updateItem" prefHeight="24.0" prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                     <TextField fx:id="updateBundleList" onAction="#updateBundle" prefHeight="24.0" prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email :" textAlignment="CENTER" wrappingWidth="81.13671875" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" />
                                     <TextField fx:id="newMemberEmail" onAction="#updateMember" prefHeight="24.0" prefWidth="149.0" GridPane.columnIndex="1" />
                                  </children>
                               </GridPane>
@@ -209,6 +194,21 @@
                </padding>
             </HBox>
          </bottom>
+         <top>
+            <HBox maxHeight="40.0" minHeight="40.0" prefHeight="40.0" style="-fx-background-color: #004385#004385;" BorderPane.alignment="CENTER">
+               <children>
+                  <Pane maxHeight="40.0" minHeight="40.0" prefHeight="40.0" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="resetButton" alignment="TOP_RIGHT" contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#resetApp" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 30;" text="Reset" textFill="WHITE" HBox.hgrow="NEVER">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </top>
       </BorderPane>
    </children>
 </AnchorPane>

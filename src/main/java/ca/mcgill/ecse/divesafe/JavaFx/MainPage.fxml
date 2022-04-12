@@ -15,23 +15,9 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="673.0" prefWidth="911.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.SceneController">
-   <BorderPane prefHeight="673.0" prefWidth="911.0">
-      <top>
-         <VBox prefHeight="40.0" prefWidth="911.0" style="-fx-background-color: #004385;" BorderPane.alignment="CENTER">
-            <children>
-               <Pane prefHeight="200.0" prefWidth="911.0">
-                  <children>
-                     <Button fx:id="resetButton" layoutX="854.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#resetApp" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 30;" text="Reset" textFill="WHITE">
-                        <font>
-                           <Font name="System Bold" size="12.0" />
-                        </font>
-                     </Button>
-                  </children>
-               </Pane>
-            </children></VBox>
-      </top>
+   <BorderPane prefHeight="673.0" prefWidth="911.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <left>
-         <VBox prefHeight="500.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" BorderPane.alignment="CENTER">
+         <VBox prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" BorderPane.alignment="CENTER">
             <Button fx:id="memberButton" alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onMouseClicked="#switchToMember" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Member" textAlignment="JUSTIFY" textFill="WHITE">
                <font>
                   <Font name="System Font" size="11.0" />
@@ -58,7 +44,7 @@
          </VBox>
       </left>
       <center>
-         <Pane prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #F0F8FF;" BorderPane.alignment="CENTER">
+         <Pane style="-fx-background-color: #F0F8FF;" BorderPane.alignment="CENTER">
             <children>
                <Text layoutX="208.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to DiveSafe!" textAlignment="CENTER" wrappingWidth="352.513671875">
                   <font>
@@ -96,5 +82,20 @@
             </padding>
          </HBox>
       </bottom>
+      <top>
+         <HBox maxHeight="40.0" minHeight="40.0" prefHeight="40.0" style="-fx-background-color: #004385#004385;" BorderPane.alignment="CENTER">
+            <children>
+               <Pane maxHeight="40.0" minHeight="40.0" prefHeight="40.0" HBox.hgrow="ALWAYS" />
+               <Button fx:id="resetButton" alignment="TOP_RIGHT" contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#resetApp" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 30;" text="Reset" textFill="WHITE" HBox.hgrow="NEVER">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font>
+                  <HBox.margin>
+                     <Insets top="5.0" />
+                  </HBox.margin>
+               </Button>
+            </children>
+         </HBox>
+      </top>
    </BorderPane>
 </AnchorPane>

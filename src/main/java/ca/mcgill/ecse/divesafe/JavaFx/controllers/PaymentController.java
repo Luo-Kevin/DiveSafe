@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.controller.AssignmentController;
 import ca.mcgill.ecse.divesafe.controller.MemberController;
 
@@ -45,6 +46,9 @@ public class PaymentController implements Initializable {
 
   @FXML
   private Button tripButton;
+
+  @FXML
+  private Button resetButton;
 
   @FXML
   private TextField authorizationCode;
@@ -208,6 +212,17 @@ public class PaymentController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     errorMessage.setTextFill(Color.web("#0076a3"));
     errorMessage.setText("DiveSafe");
+  }
+
+  /**
+   * Reset the assignments
+   * 
+   * @throws IOException
+   */
+  @FXML
+  void resetApp(MouseEvent event) throws IOException {
+    DiveSafeApplication.reset();
+    switchToPayment(event);
   }
 
 }
