@@ -2,6 +2,7 @@ package ca.mcgill.ecse.divesafe.JavaFx.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -23,6 +24,7 @@ import javafx.stage.Stage;
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.controller.AssignmentController;
 import ca.mcgill.ecse.divesafe.controller.MemberController;
+import ca.mcgill.ecse.divesafe.controller.TOAssignment;
 
 /**
  * Controller for page where user gets their bill and makes their payment.
@@ -107,9 +109,9 @@ public class PaymentController implements Initializable {
   void retrieveBillClick(ActionEvent event) {
     String userEmail = email.getText().strip();
     boolean userFound = false;
-    var userBooking = AssignmentController.getUserBill(userEmail);
-
-    for (var member : AssignmentController.getAssignments()) {
+    paymentDetail.getItems().clear();
+    paymentSummary.getChildren().clear();
+    for (TOAssignment member : AssignmentController.getAssignments()) {
       if (member.getMemberEmail().equals(userEmail)) {
         userFound = true;
 
@@ -123,10 +125,10 @@ public class PaymentController implements Initializable {
             + member.getTotalCostForGuide();
         paymentDetail.getItems().add(userGuideDetail);
         paymentDetail.getItems().add("EQUIPMENT");
-        var userEquipmentDetail = AssignmentController.userBillBookedEquipmentDetails(userBooking, userEmail);
+        List<String> userEquipmentDetail = AssignmentController.userBillBookedEquipmentDetails(userEmail);
         userEquipmentDetail.forEach(equipmentDetail -> paymentDetail.getItems().add(equipmentDetail));
         paymentDetail.getItems().add("BUNDLE");
-        var userBundleDetail = AssignmentController.userBillBundleDetails(userBooking, userEmail);
+        List<String> userBundleDetail = AssignmentController.userBillBundleDetails(userEmail);
         userBundleDetail.forEach(bundleDetail -> paymentDetail.getItems().add(bundleDetail));
 
         // Display payment summary
