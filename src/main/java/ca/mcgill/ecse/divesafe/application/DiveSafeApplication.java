@@ -12,7 +12,7 @@ import javafx.application.Application;
 
 public class DiveSafeApplication {
 
-  public static final boolean DARK_MODE = true;
+  public static final boolean DARK_MODE = false;
 
   private static DiveSafe diveSafe;
 

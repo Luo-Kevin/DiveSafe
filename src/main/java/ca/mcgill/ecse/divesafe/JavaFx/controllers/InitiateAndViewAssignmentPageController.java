@@ -29,6 +29,7 @@ import javafx.stage.Stage;
  * 
  * @author Siger Ma
  */
+
 public class InitiateAndViewAssignmentPageController implements Initializable {
 
   private Stage stage;
@@ -69,7 +70,7 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   @FXML
   private ListView<String> listUnassignedMembers;
 
-  // Deetailed information about the assignments
+  // Detailed information about the assignments
   @FXML
   private TreeView<String> treeAssignmentDetails;
 
@@ -80,6 +81,7 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   /**
    * Initialize the controller class
    */
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     memberEmail = "";
@@ -95,6 +97,7 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
    * 
    * @param event - mouse click
    */
+
   @FXML
   void startInitiate(MouseEvent event) {
     error = AssignmentController.initiateAssignment();
@@ -112,6 +115,7 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   /**
    * Create items in the tree treeAssignmentDetails
    */
+
   @FXML
   public void setTreeItem() {
 
@@ -154,6 +158,7 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   /**
    * Method to initiate the treeAssignmentDetails tree and make it interactive
    */
+
   @FXML
   public void selectTreeBranch() {
     treeAssignmentDetails.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -163,7 +168,10 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   /**
    * Method to get the tree with the details of the assignments corresponding to
    * the selected member in the list listAssignedMembers
+   * 
+   * @param event - mouse click
    */
+
   @FXML
   void getDetails(MouseEvent event) {
     memberEmail = listAssignedMembers.getSelectionModel().getSelectedItem();
@@ -171,8 +179,12 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   }
 
   /**
-   * Reset the assignments
+   * Reset the assignments.
+   * 
+   * @author everyone
+   * @param event - mouse click
    */
+
   @FXML
   void resetApp(MouseEvent event) {
     DiveSafeApplication.reset();
@@ -185,6 +197,7 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   /**
    * Method to update the lists of assigned and unassigned members
    */
+
   @FXML
   private void updateLists() {
     listAssignedMembers.getItems().clear();
@@ -200,7 +213,10 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   }
 
   /**
-   * Method to switch to payment page
+   * Method to switch to the payment page.
+   * 
+   * @author everyone
+   * @param event - mouse click
    */
 
   @FXML
@@ -213,7 +229,10 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   }
 
   /**
-   * Method to switch to trip page
+   * Method to switch to trip page.
+   * 
+   * @author everyone
+   * @param event - mouse click
    */
 
   @FXML
@@ -226,7 +245,10 @@ public class InitiateAndViewAssignmentPageController implements Initializable {
   }
 
   /**
-   * Method to switch to member page
+   * Method to switch to member page.
+   * 
+   * @author everyone
+   * @param event - mouse click
    */
 
   @FXML

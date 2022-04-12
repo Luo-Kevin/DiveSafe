@@ -168,7 +168,8 @@ public class MemberPageController implements Initializable {
   /**
    * Reset member
    * 
-   * @param event
+   * @author everyone
+   * @param event - mouse click
    */
 
   @FXML
@@ -177,9 +178,9 @@ public class MemberPageController implements Initializable {
   }
 
   /**
-   * register Member
+   * Method to register member.
    * 
-   * @param event
+   * @param event - mouse click
    */
 
   @FXML
@@ -220,6 +221,12 @@ public class MemberPageController implements Initializable {
     }
     DiveSafeFxmlView.getInstance().refresh();
   }
+
+  /**
+   * Method to update member.
+   * 
+   * @param event - mouse click
+   */
 
   @FXML
   void updateMember(MouseEvent event) {
@@ -262,9 +269,9 @@ public class MemberPageController implements Initializable {
   }
 
   /**
-   * Method to delete member
+   * Method to delete member.
    * 
-   * @param event
+   * @param event - mouse click
    */
 
   @FXML
@@ -274,6 +281,12 @@ public class MemberPageController implements Initializable {
     MemberController.deleteMember(userEmail);
 
   }
+
+  /**
+   * Initialize the controller class
+   * 
+   * @author everyone
+   */
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -286,9 +299,9 @@ public class MemberPageController implements Initializable {
   }
 
   /**
-   * Action of the button Add Item on register Page
+   * Action of the button Add Item on register page to add an item that the member wants.
    * 
-   * @param event
+   * @param event - mouse click
    */
 
   @FXML
@@ -310,8 +323,9 @@ public class MemberPageController implements Initializable {
   }
 
   /**
+   * Action of the button Add Item on update page to add an item that the member wants.
    * 
-   * @param event
+   * @param event - mouse click
    */
 
   @FXML
@@ -322,7 +336,7 @@ public class MemberPageController implements Initializable {
     try {
       itemQuantity = Integer.parseInt(itemUpdateQuantity.getText());
     } catch (NumberFormatException e) {
-      // TODO: handle exception
+      return;
     }
     newItemQuantities.add(itemQuantity);
     String itemName = updateItemBox.getValue();
@@ -334,9 +348,9 @@ public class MemberPageController implements Initializable {
   }
 
   /**
-   * Action of the button Add Bundle on register page
+   * Action of the button Add Bundle on register page to add a bundle that the member wants.
    * 
-   * @param event
+   * @param event - mouse click
    */
 
   @FXML
@@ -358,9 +372,9 @@ public class MemberPageController implements Initializable {
   }
 
   /**
-   * Action of the button Add Bundle on update page
+   * Action of the button Add Bundle on update page to add a bundle that the member wants.
    * 
-   * @param event
+   * @param event - mouse click
    */
 
   @FXML
@@ -382,8 +396,11 @@ public class MemberPageController implements Initializable {
 
   }
 
-    /**
-   * Method to switch to assignment page
+  /**
+   * Method to switch to assignment page.
+   * 
+   * @author everyone
+   * @param event - mouse click
    */
 
   @FXML
@@ -396,7 +413,10 @@ public class MemberPageController implements Initializable {
   }
 
   /**
-   * Method to switch to payment page
+   * Method to switch to the payment page.
+   * 
+   * @author everyone
+   * @param event - mouse click
    */
 
   @FXML
@@ -410,7 +430,10 @@ public class MemberPageController implements Initializable {
   }
 
   /**
-   * Method to switch to trip page
+   * Method to switch to trip page.
+   * 
+   * @author everyone
+   * @param event - mouse click
    */
 
   @FXML

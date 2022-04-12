@@ -1,9 +1,13 @@
 package ca.mcgill.ecse.divesafe.JavaFx.controllers;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.controller.AssignmentController;
 import ca.mcgill.ecse.divesafe.controller.MemberController;
 
@@ -25,7 +30,7 @@ import ca.mcgill.ecse.divesafe.controller.MemberController;
  * @author Kevin Luo
  */
 
-public class PaymentController {
+public class PaymentController implements Initializable {
   private Stage stage;
   private Scene scene;
   private Parent root;
@@ -43,6 +48,9 @@ public class PaymentController {
   private Button tripButton;
 
   @FXML
+  private Button resetButton;
+
+  @FXML
   private TextField authorizationCode;
 
   @FXML
@@ -58,19 +66,41 @@ public class PaymentController {
   private Text resultText;
 
   @FXML
-  private Label watermark;
-
-  @FXML
   private TextFlow paymentSummary;
 
   @FXML
   private Label errorMessage;
 
   /**
-   * Method triggered when user click the retrieve bill button
+   * Method executed when page is initialized.
+   * 
+   * @author everyone
+   */
+
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    errorMessage.setTextFill(Color.web("#0076a3"));
+    errorMessage.setText("DiveSafe");
+  }
+
+  /**
+   * Reset the assignments.
+   * 
+   * @author everyone
+   * @param event - mouse click
+   * @throws IOException
+   */
+
+  @FXML
+  void resetApp(MouseEvent event) throws IOException {
+    DiveSafeApplication.reset();
+    switchToPayment(event);
+  }
+
+  /**
+   * Method triggered when user click the retrieve bill button.
    * 
    * @param event - mouse click
-   * @author Kevin Luo
    */
 
   @FXML
@@ -116,7 +146,6 @@ public class PaymentController {
     }
 
     if (!userFound) {
-      watermark.setText("");
       errorMessage.setText(String.format("No payment associated with ") + userEmail);
       errorMessage.setTextFill(Color.RED);
     }
@@ -124,10 +153,9 @@ public class PaymentController {
   }
 
   /**
-   * Method triggered when user click the retrieve make payment button
+   * Method triggered when user click the retrieve make payment button.
    * 
    * @param event - mouse click
-   * @author Kevin Luo
    */
 
   @FXML
@@ -136,7 +164,6 @@ public class PaymentController {
       String userEmail = email.getText().strip();
       String paymentAuthorization = authorizationCode.getText().strip();
       String paymentMessage = AssignmentController.confirmPayment(userEmail, paymentAuthorization);
-      watermark.setText("");
       if (MemberController.getMemberStatus(userEmail).equals("Paid")) {
         errorMessage.setTextFill(Color.web("#0076a3"));
       } else {
@@ -148,7 +175,9 @@ public class PaymentController {
   }
 
   /**
-   * Method to update the lists of assigned and unassigned members
+   * Method to switch to the payment page.
+   * 
+   * @param event - mouse click
    */
 
   @FXML
@@ -167,7 +196,10 @@ public class PaymentController {
   }
 
   /**
-   * Method to switch to assignment page
+   * Method to switch to assignment page.
+   * 
+   * @author everyone
+   * @param event - mouse click
    */
 
   @FXML
@@ -180,7 +212,10 @@ public class PaymentController {
   }
 
   /**
-   * Method to switch to trip page
+   * Method to switch to trip page.
+   * 
+   * @author everyone
+   * @param event - mouse click
    */
 
   @FXML
@@ -193,7 +228,10 @@ public class PaymentController {
   }
 
   /**
-   * Method to switch to member page
+   * Method to switch to member page.
+   * 
+   * @author everyone
+   * @param event - mouse click
    */
 
   @FXML

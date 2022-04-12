@@ -12,15 +12,21 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+/**
+ * Controller page for the main page of the application and for switching scenes.
+ * 
+ * @author everyone
+ */
 
 public class SceneController implements Initializable {
   private Stage stage;
   private Scene scene;
   private Parent root;
-
-  // Image image = new Image("file:../ressources/diving.png");
 
   @FXML
   private Button memberButton;
@@ -31,12 +37,24 @@ public class SceneController implements Initializable {
   @FXML
   private Button resetButton;
 
+  @FXML
+  private Label errorMessage;
+
+  /**
+   * Method executed when page is initialized.
+   */
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    // ImageView img = new ImageView(image);
-    // img.setFitHeight(100);
-    // img.setFitWidth(100);
+    errorMessage.setTextFill(Color.web("#0076a3"));
+    errorMessage.setText("DiveSafe");
   }
+
+  /**
+   * Reset the assignments.
+   * 
+   * @param event - mouse click
+   */
 
   @FXML
   void resetApp(MouseEvent event) {
@@ -44,7 +62,9 @@ public class SceneController implements Initializable {
   }
 
   /**
-   * Method to switch to payment page
+   * Method to switch to payment page.
+   * 
+   * @param event - mouse click
    */
 
   @FXML
@@ -57,7 +77,9 @@ public class SceneController implements Initializable {
   }
 
   /**
-   * Method to switch to assignment page
+   * Method to switch to assignment page.
+   * 
+   * @param event - mouse click
    */
 
   @FXML
@@ -70,7 +92,9 @@ public class SceneController implements Initializable {
   }
 
   /**
-   * Method to switch to trip page
+   * Method to switch to trip page.
+   * 
+   * @param event - mouse click
    */
 
   @FXML
@@ -83,7 +107,9 @@ public class SceneController implements Initializable {
   }
 
   /**
-   * Method to switch to member page
+   * Method to switch to member page.
+   * 
+   * @param event - mouse click
    */
 
   @FXML

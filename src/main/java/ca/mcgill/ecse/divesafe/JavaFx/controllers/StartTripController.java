@@ -19,11 +19,19 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+
+/**
+ * Controller method for the start trip page.
+ * 
+ * @author Jiahao Zhao
+ */
 
 public class StartTripController implements Initializable {
   private Stage stage;
@@ -43,6 +51,9 @@ public class StartTripController implements Initializable {
   private Button resetButton;
 
   @FXML
+  private Label errorMessage;
+
+  @FXML
   private TextFlow startTripResult;
 
   @FXML
@@ -60,8 +71,11 @@ public class StartTripController implements Initializable {
   int targetWeek;
 
   // List of assignments from the assignment controller
-
   List<TOAssignment> assignments = AssignmentController.getAssignments();
+
+  /**
+   * Method executed when page is initialized.
+   */
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
@@ -80,17 +94,20 @@ public class StartTripController implements Initializable {
     });
 
     startTripResult_static = startTripResult;
+
+    errorMessage.setTextFill(Color.web("#0076a3"));
+    errorMessage.setText("DiveSafe");
   }
 
   /**
+   * Method triggered when user clicks the start button
+   *  1. get all assignments and their corresponding startDay
+   *  2. Check if targetWeek is the same as the startDay of the assignment
+   *  3. Check if member is eligible to start trip, i.e. if status is paid,
+   *     if not BAN
+   *  4. If eligible, start trip
    * 
-   * @author JZ
-   *         Method triggered when user clicks the start button
-   *         1. get all assignments and their corresponding startDay
-   *         2. Check if targetWeek is the same as the startDay of the assignment
-   *         3. Check if member is eligible to start trip, i.e. if status is paid,
-   *         if not BAN
-   *         4. If eligible, start trip
+   * @param event - mouse click
    */
 
   @FXML
@@ -140,6 +157,14 @@ public class StartTripController implements Initializable {
     AssignmentController.startTripsForDay(targetWeek);
   }
 
+  /**
+   * Reset the assignments.
+   * 
+   * @author everyone
+   * @param event - mouse click
+   * @throws IOException
+   */
+
   @FXML
   void resetApp(MouseEvent event) {
     DiveSafeApplication.reset();
@@ -149,6 +174,13 @@ public class StartTripController implements Initializable {
     startTripResult.getChildren().clear();
   }
 
+  /**
+   * Method to switch to assignment page.
+   * 
+   * @author everyone
+   * @param event - mouse click
+   */
+
   @FXML
   void switchToAssignment(MouseEvent event) throws IOException {
     Parent root = FXMLLoader.load(getClass().getResource("../pages/InitiateAndViewAssignmentPage.fxml"));
@@ -157,6 +189,13 @@ public class StartTripController implements Initializable {
     stage.setScene(scene);
     stage.show();
   }
+
+  /**
+   * Method to switch to the payment page.
+   * 
+   * @author everyone
+   * @param event - mouse click
+   */
 
   @FXML
   public void switchToPayment(MouseEvent event) throws IOException {
@@ -168,7 +207,10 @@ public class StartTripController implements Initializable {
   }
 
   /**
-   * Method to switch to member page
+   * Method to switch to member page.
+   * 
+   * @author everyone
+   * @param event - mouse click
    */
 
   @FXML

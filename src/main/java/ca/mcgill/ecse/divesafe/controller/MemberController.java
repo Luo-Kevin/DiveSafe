@@ -225,7 +225,7 @@ public class MemberController {
     List<Member> listOfMembers = DiveSafeApplication.getDiveSafe().getMembers();
     List<String> listOfAssignedMembers = new ArrayList<String>();
     for (Member member : listOfMembers) {
-      if (member.getMemberStatusFullName().equals("Assigned")) {
+      if (!member.getMemberStatusFullName().equals("Unassigned")) {
         listOfAssignedMembers.add(member.getEmail());
       }
     }

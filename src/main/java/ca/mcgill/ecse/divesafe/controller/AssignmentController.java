@@ -89,8 +89,17 @@ public class AssignmentController {
     // Check if userEmail exist in system
     if (!Member.hasWithEmail(userEmail))
       return error = "Member with email address " + userEmail + " does not exist";
+    
+      
 
-    Member member = Member.getWithEmail(userEmail);
+    var divesafeMember = DiveSafeApplication.getDiveSafe().getMembers();
+
+    Member member = null;
+    for (Member checkMember : divesafeMember) {
+      if (checkMember.getEmail().equals(userEmail)) {
+        member = checkMember;
+      }
+    }
 
     // Check for invalid user status when attempting to refund
     if (member.getMemberStatusFullName().equals("Banned")) {
@@ -120,7 +129,7 @@ public class AssignmentController {
       // cancel member trip
       member.cancelTrip();
       // save changes with persistence
-      DiveSafeApplication.save(diveSafe);
+      DiveSafeApplication.save(DiveSafeApplication.getDiveSafe());
       DiveSafePersistence.save();
     } catch (RuntimeException e) {
       return e.getMessage();
@@ -141,7 +150,15 @@ public class AssignmentController {
 
     String error = "";
 
-    Member member = Member.getWithEmail(userEmail);
+    // Member member = Member.getWithEmail(userEmail);
+    var divesafeMember = DiveSafeApplication.getDiveSafe().getMembers();
+
+    Member member = null;
+    for (Member checkMember : divesafeMember) {
+      if (checkMember.getEmail().equals(userEmail)) {
+        member = checkMember;
+      }
+    }
 
     // Check if userEmail exist in system
     if (!Member.hasWithEmail(userEmail)) {
@@ -175,7 +192,7 @@ public class AssignmentController {
       // finish member's trip
       member.finishTrip();
       // save changes with persistence
-      DiveSafeApplication.save(diveSafe);
+      DiveSafeApplication.save(DiveSafeApplication.getDiveSafe());
       DiveSafePersistence.save();
     } catch (RuntimeException e) {
 
@@ -200,7 +217,7 @@ public class AssignmentController {
 
     String error = "";
 
-    List<Member> currentMemberList = diveSafe.getMembers();
+    List<Member> currentMemberList = DiveSafeApplication.getDiveSafe().getMembers();
 
     // Checking all user status
     for (Member member : currentMemberList) {
@@ -218,15 +235,11 @@ public class AssignmentController {
         error = "Cannot start a trip which has finished";
       }
 
-      if (!error.isEmpty()) {
-        return error.trim();
-      }
-
       try {
         // start member's trip
         member.startTrip(day);
         // save changes with persistence
-        DiveSafeApplication.save(diveSafe);
+        DiveSafeApplication.save(DiveSafeApplication.getDiveSafe());
         DiveSafePersistence.save();
       } catch (RuntimeException e) {
         return e.getMessage();
@@ -234,7 +247,7 @@ public class AssignmentController {
 
     }
 
-    return "";
+    return error;
   }
 
   /**
@@ -266,6 +279,7 @@ public class AssignmentController {
     for (Member checkMember : divesafeMember) {
       if (checkMember.getEmail().equals(userEmail)) {
         member = checkMember;
+        break;
       }
     }
 
