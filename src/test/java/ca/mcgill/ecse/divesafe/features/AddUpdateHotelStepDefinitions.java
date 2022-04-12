@@ -18,6 +18,7 @@ import ca.mcgill.ecse.divesafe.controller.HotelController;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
 import ca.mcgill.ecse.divesafe.model.Hotel;
 import ca.mcgill.ecse.divesafe.model.Hotel.HotelType;
+import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -36,9 +37,8 @@ public class AddUpdateHotelStepDefinitions {
   @Given("the following DiveSafe system exists: \\(p13)")
   public void the_following_dive_safe_system_exists_p13(io.cucumber.datatable.DataTable dataTable) {
     diveSafe = DiveSafeApplication.getDiveSafe();
-
+    diveSafe.delete();
     error = ""; // Initial error message set as empty
-
 
     List<Map<String, String>> rows = dataTable.asMaps();
     for (Map<String, String> columns : rows) {
