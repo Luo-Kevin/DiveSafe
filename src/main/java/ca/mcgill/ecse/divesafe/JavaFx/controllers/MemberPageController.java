@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import ca.mcgill.ecse.divesafe.controller.BundleController;
 import ca.mcgill.ecse.divesafe.controller.MemberController;
 import ca.mcgill.ecse.divesafe.JavaFx.DiveSafeFxmlView;
@@ -19,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -141,18 +141,11 @@ public class MemberPageController implements Initializable {
 
   @FXML
   private TextField bundleUpdateQuantity;
-
- /* @FXML
-  private TextField updateItemList;
-
   @FXML
-  private TextField updateBundleList;*/
+  private TableView<String> registeredItemTable;
+  @FXML
+  private TableView<String> registeredBundleTable;
 
-  //@FXML
- // private TextField addItemNameList;
-
- //@FXML
- // private TextField addBundleNameList;
 
   @FXML
   private Label errorMessage;
@@ -279,7 +272,7 @@ public class MemberPageController implements Initializable {
 
     String userEmail = currentEmail.getText();
     MemberController.deleteMember(userEmail);
-
+    currentEmail.setText("");
   }
 
   /**
@@ -386,7 +379,8 @@ public class MemberPageController implements Initializable {
     try {
       bundleQuantity = Integer.parseInt(bundleUpdateQuantity.getText());
     } catch (NumberFormatException e) {
-      // TODO: handle exception
+      errorMessage.setText("The value inserted must be an integer");
+      errorMessage.setTextFill(Color.web("#0076a3"));
     }
     newItemQuantities.add(bundleQuantity);
     newItemNames.add(bundleName);
