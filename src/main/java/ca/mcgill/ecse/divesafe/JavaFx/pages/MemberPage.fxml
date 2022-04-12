@@ -5,11 +5,10 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -85,66 +84,42 @@
                                  </rowConstraints>
                                  <children>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" />
-                                    <TextField fx:id="memberEmail" onAction="#registerMember" prefHeight="24.0" prefWidth="149.0" promptText="Email" GridPane.columnIndex="1" />
+                                    <TextField fx:id="memberEmail" maxWidth="150.0" onAction="#registerMember" prefHeight="24.0" prefWidth="150.0" promptText="Email" GridPane.columnIndex="1" GridPane.hgrow="NEVER" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
-                                    <TextField fx:id="memberPassword" onAction="#registerMember" prefHeight="25.0" prefWidth="169.0" promptText="Password" GridPane.columnIndex="3" />
+                                    <TextField fx:id="memberPassword" maxWidth="150.0" onAction="#registerMember" prefHeight="25.0" prefWidth="150.0" promptText="Password" GridPane.columnIndex="3" GridPane.hgrow="NEVER" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                    <TextField fx:id="memberName" onAction="#registerMember" prefHeight="26.0" prefWidth="148.0" promptText="Marwan Kanaan" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <TextField fx:id="memberName" maxWidth="150.0" onAction="#registerMember" prefHeight="26.0" prefWidth="150.0" promptText="Marwan Kanaan" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="1" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Emergency Contact :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                    <TextField fx:id="memberContact" onAction="#registerMember" prefHeight="24.0" prefWidth="149.0" promptText="(XXX)-XXX-XXXX" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                    <TextField fx:id="memberContact" maxWidth="150.0" onAction="#registerMember" prefHeight="24.0" prefWidth="150.0" promptText="(XXX)-XXX-XXXX" GridPane.columnIndex="3" GridPane.hgrow="NEVER" GridPane.rowIndex="1" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Number of days :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                                    <TextField fx:id="memberNumDays" onAction="#registerMember" prefHeight="24.0" prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextField fx:id="memberNumDays" maxWidth="150.0" onAction="#registerMember" prefHeight="24.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="2" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Guide Required ?" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hotel     Required ?" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                                     <CheckBox fx:id="guideRequiredRegister" mnemonicParsing="false" onMouseClicked="#registerMember" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     <CheckBox fx:id="hotelRequiredRegister" mnemonicParsing="false" onMouseClicked="#registerMember" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Item :" textAlignment="CENTER" wrappingWidth="60.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-                                    <ComboBox fx:id="registerItemBox" onMouseClicked="#registerItem" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <ComboBox fx:id="registerItemBox" maxWidth="150.0" onMouseClicked="#registerItem" prefWidth="150.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="4" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" Quantity :" textAlignment="CENTER" wrappingWidth="70.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-                                    <TextField fx:id="itemRegisterQuantity" onAction="#registerItem" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                    <TextField fx:id="itemRegisterQuantity" maxWidth="150.0" onAction="#registerItem" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="3" GridPane.hgrow="NEVER" GridPane.rowIndex="4" />
                                     <Button fx:id="addRegisterItem" mnemonicParsing="false" onMouseClicked="#registerItem" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Add Item" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Bundle :" textAlignment="CENTER" wrappingWidth="75.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-                                    <ComboBox fx:id="registerBundleBox" onMouseClicked="#registerBundle" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <ComboBox fx:id="registerBundleBox" maxWidth="150.0" onMouseClicked="#registerBundle" prefWidth="150.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="6" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity :" textAlignment="CENTER" wrappingWidth="72.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-                                    <TextField fx:id="bundleRegisterQuantity" onAction="#registerBundle" prefHeight="10.0" prefWidth="185.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                                    <TextField fx:id="bundleRegisterQuantity" maxWidth="150.0" onAction="#registerBundle" prefHeight="10.0" prefWidth="150.0" GridPane.columnIndex="3" GridPane.hgrow="NEVER" GridPane.rowIndex="6" />
                                     <Button fx:id="addRegisterBundle" mnemonicParsing="false" onMouseClicked="#registerBundle" style="-fx-background-color: #087ca7#087ca7; -fx-border-radius: 20; -fx-background-radius: 20; -fx-border-color: #001a66;" text="Add Bundle" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                     <Button fx:id="registerButton" mnemonicParsing="false" onMouseClicked="#registerMember" prefHeight="37.0" prefWidth="78.0" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66;" text="Register" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
                                  </children>
                               </GridPane>
-                              <SplitPane dividerPositions="0.5016949152542373" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
-                                <items>
-                                  <AnchorPane minHeight="0.0" minWidth="160.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #F0F8FF;">
-                                       <children>
-                                          <TableView fx:id="registeredItemTable" layoutX="-2.0" layoutY="49.0" prefHeight="244.0" prefWidth="304.0">
-                                            <columns>
-                                              <TableColumn prefWidth="154.0" text="Item" />
-                                              <TableColumn prefWidth="146.0" text="Quantity" />
-                                            </columns>
-                                          </TableView>
-                                          <Label layoutX="66.0" prefHeight="54.0" prefWidth="172.0" text="Chosen Items" textAlignment="CENTER">
-                                             <font>
-                                                <Font name="System Bold" size="22.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </AnchorPane>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #F0F8FF;">
-                                       <children>
-                                          <TableView fx:id="registeredBundleTable" layoutX="-4.0" layoutY="44.0" prefHeight="253.0" prefWidth="308.0">
-                                             <columns>
-                                                <TableColumn prefWidth="154.0" text="Bundle" />
-                                                <TableColumn prefWidth="146.0" text="Quantity" />
-                                             </columns>
-                                          </TableView>
-                                          <Label layoutX="51.0" prefHeight="44.0" prefWidth="176.0" text="Chosen Bundles" textAlignment="CENTER">
-                                             <font>
-                                                <Font name="System Bold" size="22.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </AnchorPane>
-                                </items>
-                              </SplitPane>
+                            <AnchorPane minHeight="0.0" minWidth="160.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #F0F8FF;">
+                                 <children>
+                                    <Label layoutX="66.0" prefHeight="54.0" prefWidth="172.0" text="Chosen Items" textAlignment="CENTER">
+                                       <font>
+                                          <Font name="System Bold" size="22.0" />
+                                       </font>
+                                    </Label>
+                                    <ListView fx:id="registeredItemTable" layoutY="53.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+                                 </children>
+                              </AnchorPane>
                            </items>
                         </SplitPane>
                      </content>

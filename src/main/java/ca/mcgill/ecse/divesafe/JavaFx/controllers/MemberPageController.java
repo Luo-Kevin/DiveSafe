@@ -18,7 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -144,10 +144,7 @@ public class MemberPageController implements Initializable {
   private TextField bundleUpdateQuantity;
 
   @FXML
-  private TableView<String> registeredItemTable;
-
-  @FXML
-  private TableView<String> registeredBundleTable;
+  private ListView<String> registeredItemTable;
 
   @FXML
   private Label errorMessage;
@@ -312,6 +309,8 @@ public class MemberPageController implements Initializable {
     String itemName = registerItemBox.getValue();
     itemNames.add(itemName);
 
+    registeredItemTable.getItems().add(itemName + " " + itemQuantity);
+
     itemRegisterQuantity.setText("");
     registerItemBox.setValue(null);
 
@@ -361,6 +360,8 @@ public class MemberPageController implements Initializable {
 
     String bundleName = registerBundleBox.getValue();
     itemNames.add(bundleName);
+
+    registeredItemTable.getItems().add(bundleName + " " + bundleQuantity);
 
     bundleRegisterQuantity.setText("");
     registerBundleBox.setValue(null);
