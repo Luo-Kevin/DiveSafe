@@ -57,18 +57,22 @@ public class FinishTrip implements Initializable {
 
     String action = finishOrCancel.getValue();
     if (action.equals("Finish Trip")) {
-      errorMessage = AssignmentController.finishTrip(emailChoiceBox.getValue())+"\n";
+      errorMessage = AssignmentController.finishTrip(emailChoiceBox.getValue());
       if (errorMessage.length() < 3) {
-        errorMessage = String.format("Finished trip successfully for %s.\n", emailChoiceBox.getValue());
+        errorMessage = String.format("Finished trip successfully for %s.", emailChoiceBox.getValue());
       }
     } else if (action.equals("Cancel Trip")) {
-      errorMessage = AssignmentController.cancelTrip(emailChoiceBox.getValue())+"\n";
+      errorMessage = AssignmentController.cancelTrip(emailChoiceBox.getValue());
       if (errorMessage.equals("50") || errorMessage.equals("10") || errorMessage.equals("")) {
-        errorMessage = String.format("Cancelled trip successfully for %s.\n", emailChoiceBox.getValue());
+        if (errorMessage.equals("")) {
+          errorMessage = "0";
+        }
+        String refundPercent = errorMessage;
+        errorMessage = String.format("Cancelled trip successfully for %s.\n     Refund of %s %%.", emailChoiceBox.getValue(), refundPercent);
       }
     }
 
-    Text message = new Text(errorMessage);
+    Text message = new Text(errorMessage + "\n");
     StartTripController.getTextFlow().getChildren().add(message);
 
   }
