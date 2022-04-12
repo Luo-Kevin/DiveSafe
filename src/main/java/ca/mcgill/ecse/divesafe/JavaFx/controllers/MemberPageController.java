@@ -272,7 +272,6 @@ public class MemberPageController implements Initializable {
 
   @FXML
   void deleteMember(MouseEvent event) {
-
     String userEmail = currentEmail.getText();
     MemberController.deleteMember(userEmail);
     currentEmail.setText("");
