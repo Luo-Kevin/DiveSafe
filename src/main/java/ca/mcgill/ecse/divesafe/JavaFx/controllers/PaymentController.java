@@ -107,45 +107,43 @@ public class PaymentController implements Initializable {
   void retrieveBillClick(ActionEvent event) {
     String userEmail = email.getText().strip();
     boolean userFound = false;
-    if (paymentDetail.getItems().isEmpty()) {
-      var userBooking = AssignmentController.getUserBill(userEmail);
+    var userBooking = AssignmentController.getUserBill(userEmail);
 
-      for (var member : AssignmentController.getAssignments()) {
-        if (member.getMemberEmail().equals(userEmail)) {
-          userFound = true;
+    for (var member : AssignmentController.getAssignments()) {
+      if (member.getMemberEmail().equals(userEmail)) {
+        userFound = true;
 
-          //Display information on detailed sales to user
-          String userStartDate = "Start Date: " + member.getStartDay();
-          String userEndDate = "End Date: " + member.getEndDay();
-          paymentDetail.getItems().add(userStartDate);
-          paymentDetail.getItems().add(userEndDate);
-          paymentDetail.getItems().add("GUIDE");
-          String userGuideDetail = "Guide: " + member.getGuideName() + " [Contact: " + member.getGuideEmail() + "] $"
-              + member.getTotalCostForGuide();
-          paymentDetail.getItems().add(userGuideDetail);
-          paymentDetail.getItems().add("EQUIPMENT");
-          var userEquipmentDetail = AssignmentController.userBillBookedEquipmentDetails(userBooking, userEmail);
-          userEquipmentDetail.forEach(equipmentDetail -> paymentDetail.getItems().add(equipmentDetail));
-          paymentDetail.getItems().add("BUNDLE");
-          var userBundleDetail = AssignmentController.userBillBundleDetails(userBooking, userEmail);
-          userBundleDetail.forEach(bundleDetail -> paymentDetail.getItems().add(bundleDetail));
-     
-          //Display payment summary
-          int totalEquipmentCost = member.getTotalCostForEquipment();
-          Text equipmentSummary = new Text("Total Equipment Cost: $" + totalEquipmentCost + "\n");
-          int totalGuideCost = member.getTotalCostForGuide();
-          Text guideSummary = new Text("Total Guide Cost: $" + totalGuideCost + "\n");
-          int totalCost = totalEquipmentCost + totalGuideCost;
-          Text totalSummary = new Text("Total Cost: $" + totalCost);
-          paymentSummary.getChildren().add(equipmentSummary);
-          paymentSummary.getChildren().add(guideSummary);
-          paymentSummary.getChildren().add(totalSummary);
+        // Display information on detailed sales to user
+        String userStartDate = "Start Date: " + member.getStartDay();
+        String userEndDate = "End Date: " + member.getEndDay();
+        paymentDetail.getItems().add(userStartDate);
+        paymentDetail.getItems().add(userEndDate);
+        paymentDetail.getItems().add("GUIDE");
+        String userGuideDetail = "Guide: " + member.getGuideName() + " [Contact: " + member.getGuideEmail() + "] $"
+            + member.getTotalCostForGuide();
+        paymentDetail.getItems().add(userGuideDetail);
+        paymentDetail.getItems().add("EQUIPMENT");
+        var userEquipmentDetail = AssignmentController.userBillBookedEquipmentDetails(userBooking, userEmail);
+        userEquipmentDetail.forEach(equipmentDetail -> paymentDetail.getItems().add(equipmentDetail));
+        paymentDetail.getItems().add("BUNDLE");
+        var userBundleDetail = AssignmentController.userBillBundleDetails(userBooking, userEmail);
+        userBundleDetail.forEach(bundleDetail -> paymentDetail.getItems().add(bundleDetail));
 
-          break;
-        }
+        // Display payment summary
+        int totalEquipmentCost = member.getTotalCostForEquipment();
+        Text equipmentSummary = new Text("Total Equipment Cost: $" + totalEquipmentCost + "\n");
+        int totalGuideCost = member.getTotalCostForGuide();
+        Text guideSummary = new Text("Total Guide Cost: $" + totalGuideCost + "\n");
+        int totalCost = totalEquipmentCost + totalGuideCost;
+        Text totalSummary = new Text("Total Cost: $" + totalCost);
+        paymentSummary.getChildren().add(equipmentSummary);
+        paymentSummary.getChildren().add(guideSummary);
+        paymentSummary.getChildren().add(totalSummary);
+
+        break;
       }
     }
-    //Display error message if user not found
+    // Display error message if user not found
     if (!userFound) {
       errorMessage.setText(String.format("No payment associated with ") + userEmail);
       errorMessage.setTextFill(Color.RED);
@@ -163,11 +161,11 @@ public class PaymentController implements Initializable {
   void makePayment(MouseEvent event) {
     if (!paymentDetail.getItems().isEmpty()) {
       String userEmail = email.getText().strip();
-      //Getting the authorization code
+      // Getting the authorization code
       String paymentAuthorization = authorizationCode.getText().strip();
-      //Attempt to make the payment
+      // Attempt to make the payment
       String paymentMessage = AssignmentController.confirmPayment(userEmail, paymentAuthorization);
-      //Display error message after
+      // Display error message after
       if (MemberController.getMemberStatus(userEmail).equals("Paid")) {
         errorMessage.setTextFill(Color.web("#0076a3"));
       } else {
