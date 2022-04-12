@@ -138,23 +138,29 @@ public class StartTripController implements Initializable {
         startTripResult.getChildren().add(noMemberReady);
 
       } else {
+        
+        String message = AssignmentController.startTripsForDay(targetDay);
+        
         for (String memberEmail : readyForTripMembers) {
 
-          if (MemberController.getMemberStatus(memberEmail).equals("Paid")) {
-
+          if (MemberController.getMemberStatus(memberEmail).equals("Started")) {
             Text tripStarted = new Text("Member " + memberEmail + ": Trip started!\n");
             startTripResult.getChildren().add(tripStarted);
           }
 
-          else {
+          else if (MemberController.getMemberStatus(memberEmail).equals("Banned")) {
             Text banMember = new Text("Member " + memberEmail + ": Banned.\n");
             startTripResult.getChildren().add(banMember);
+          }
 
+          else {
+            Text error = new Text("Member " + memberEmail + ": " + message + ".\n");
+            startTripResult.getChildren().add(error);
           }
         }
       }
     }
-    AssignmentController.startTripsForDay(targetDay);
+    
   }
 
   /**
