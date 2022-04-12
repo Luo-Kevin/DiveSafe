@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane minWidth="750.0" prefHeight="673.0" prefWidth="911.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.PaymentController">
+<AnchorPane minWidth="750.0" prefHeight="673.0" prefWidth="911.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.PaymentController">
     <BorderPane prefHeight="673.0" prefWidth="911.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <left>
          <AnchorPane BorderPane.alignment="CENTER">
@@ -56,8 +56,7 @@
                <Text layoutX="174.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email: " />
                <Button layoutX="464.0" layoutY="91.0" mnemonicParsing="false" onAction="#retrieveBillClick" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Retrieve Bill" textFill="WHITE" />
                <Button layoutX="437.0" layoutY="488.0" mnemonicParsing="false" onMouseClicked="#makePayment" prefHeight="28.0" prefWidth="109.0" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Make Payment" textFill="WHITE" />
-               <TextField id="email" fx:id="email" layoutX="216.0" layoutY="58.0" prefHeight="26.0" prefWidth="195.0" />
-               <Text fx:id="resultText" layoutX="28.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="251.00003051757812" />
+               <TextField id="email" fx:id="email" layoutX="216.0" layoutY="58.0" onKeyTyped="#resetErrorMessage" prefHeight="26.0" prefWidth="195.0" />
                <TextField fx:id="authorizationCode" layoutX="243.0" layoutY="490.0" />
                <Text layoutX="119.0" layoutY="507.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Authorization Code: " />
                <ListView fx:id="paymentDetail" layoutX="144.0" layoutY="141.0" prefHeight="217.0" prefWidth="339.0" />

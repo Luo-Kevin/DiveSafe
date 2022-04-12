@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -65,9 +66,6 @@ public class PaymentController implements Initializable {
   private ListView<String> paymentDetail;
 
   @FXML
-  private Text resultText;
-
-  @FXML
   private TextFlow paymentSummary;
 
   @FXML
@@ -109,48 +107,67 @@ public class PaymentController implements Initializable {
   void retrieveBillClick(ActionEvent event) {
     String userEmail = email.getText().strip();
     boolean userFound = false;
-    if (paymentDetail.getItems().isEmpty()) {
-      for (TOAssignment member : AssignmentController.getAssignments()) {
-        if (member.getMemberEmail().equals(userEmail)) {
-          userFound = true;
+    //Reset information for next search query
+    paymentDetail.getItems().clear();
+    paymentSummary.getChildren().clear();
+    //Search for bill of user
+    for (TOAssignment member : AssignmentController.getAssignments()) {
+      if (member.getMemberEmail().equals(userEmail)) {
+        userFound = true;
+        //Display information on detailed sales to user
+        String userStartDate = "Start Date: " + member.getStartDay();
+        String userEndDate = "End Date: " + member.getEndDay();
+        paymentDetail.getItems().add(userStartDate);
+        paymentDetail.getItems().add(userEndDate);
+        paymentDetail.getItems().add("GUIDE");
+        String userGuideDetail = "Guide: " + member.getGuideName() + " [Contact: " + member.getGuideEmail() + "] $"
+            + member.getTotalCostForGuide();
+        paymentDetail.getItems().add(userGuideDetail);
+        paymentDetail.getItems().add("EQUIPMENT");
+        List<String> userEquipmentDetail = AssignmentController.userBillBookedEquipmentDetails(userEmail);
+        userEquipmentDetail.forEach(equipmentDetail -> paymentDetail.getItems().add(equipmentDetail));
+        paymentDetail.getItems().add("BUNDLE");
+        List<String> userBundleDetail = AssignmentController.userBillBundleDetails(userEmail);
+        userBundleDetail.forEach(bundleDetail -> paymentDetail.getItems().add(bundleDetail));
+    
+        //Display payment summary
+        int totalEquipmentCost = member.getTotalCostForEquipment();
+        Text equipmentSummary = new Text("Total Equipment Cost: $" + totalEquipmentCost + "\n");
+        int totalGuideCost = member.getTotalCostForGuide();
+        Text guideSummary = new Text("Total Guide Cost: $" + totalGuideCost + "\n");
+        int totalCost = totalEquipmentCost + totalGuideCost;
+        Text totalSummary = new Text("Total Cost: $" + totalCost);
+        paymentSummary.getChildren().add(equipmentSummary);
+        paymentSummary.getChildren().add(guideSummary);
+        paymentSummary.getChildren().add(totalSummary);
 
-          //Display information on detailed sales to user
-          String userStartDate = "Start Date: " + member.getStartDay();
-          String userEndDate = "End Date: " + member.getEndDay();
-          paymentDetail.getItems().add(userStartDate);
-          paymentDetail.getItems().add(userEndDate);
-          paymentDetail.getItems().add("GUIDE");
-          String userGuideDetail = "Guide: " + member.getGuideName() + " [Contact: " + member.getGuideEmail() + "] $"
-              + member.getTotalCostForGuide();
-          paymentDetail.getItems().add(userGuideDetail);
-          paymentDetail.getItems().add("EQUIPMENT");
-          List<String> userEquipmentDetail = AssignmentController.userBillBookedEquipmentDetails(userEmail);
-          userEquipmentDetail.forEach(equipmentDetail -> paymentDetail.getItems().add(equipmentDetail));
-          paymentDetail.getItems().add("BUNDLE");
-          List<String> userBundleDetail = AssignmentController.userBillBundleDetails(userEmail);
-          userBundleDetail.forEach(bundleDetail -> paymentDetail.getItems().add(bundleDetail));
-     
-          //Display payment summary
-          int totalEquipmentCost = member.getTotalCostForEquipment();
-          Text equipmentSummary = new Text("Total Equipment Cost: $" + totalEquipmentCost + "\n");
-          int totalGuideCost = member.getTotalCostForGuide();
-          Text guideSummary = new Text("Total Guide Cost: $" + totalGuideCost + "\n");
-          int totalCost = totalEquipmentCost + totalGuideCost;
-          Text totalSummary = new Text("Total Cost: $" + totalCost);
-          paymentSummary.getChildren().add(equipmentSummary);
-          paymentSummary.getChildren().add(guideSummary);
-          paymentSummary.getChildren().add(totalSummary);
-
-          break;
-        }
+        break;
       }
     }
+    
     //Display error message if user not found
     if (!userFound) {
       errorMessage.setText(String.format("No payment associated with ") + userEmail);
       errorMessage.setTextFill(Color.RED);
     }
 
+  }
+
+   /**
+   * Method triggered when clicks a key in the email
+   * 
+   * @param event - mouse click
+   */
+
+  @FXML
+  void resetErrorMessage(KeyEvent event) {
+    //Resets the page for new entry if email field is blank
+    errorMessage.setText("DiveSafe");
+    errorMessage.setTextFill(Color.web("#0076a3"));
+    if(email.getText().isBlank()){
+      paymentSummary.getChildren().clear();
+      paymentDetail.getItems().clear();
+    }
   }
 
   /**
@@ -169,12 +186,17 @@ public class PaymentController implements Initializable {
       String paymentMessage = AssignmentController.confirmPayment(userEmail, paymentAuthorization);
       //Display error message after
       if (MemberController.getMemberStatus(userEmail).equals("Paid")) {
+        //Resets field for new entry if payment
         errorMessage.setTextFill(Color.web("#0076a3"));
+        paymentDetail.getItems().clear();
+        paymentSummary.getChildren().clear();
+        email.clear();
+        authorizationCode.clear();
       } else {
         errorMessage.setTextFill(Color.RED);
       }
       errorMessage.setText(paymentMessage);
-
+      
     }
   }
 
@@ -192,10 +214,6 @@ public class PaymentController implements Initializable {
     scene = new Scene(root);
     stage.setScene(scene);
     stage.show();
-    if (MemberController.getMemberStatus(userEmail).equals("Paid")) {
-      errorMessage.setTextFill(Color.web("#0076a3"));
-      errorMessage.setText("Paid");
-    }
 
   }
 
