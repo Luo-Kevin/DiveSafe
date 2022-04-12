@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import ca.mcgill.ecse.divesafe.controller.BundleController;
 import ca.mcgill.ecse.divesafe.controller.MemberController;
-//import ca.mcgill.ecse.divesafe.controller.BundleController;
 import ca.mcgill.ecse.divesafe.JavaFx.DiveSafeFxmlView;
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import javafx.fxml.FXML;
@@ -17,7 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-//import javafx.scene.control.ComboBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -50,19 +50,16 @@ public class MemberPageController implements Initializable {
   @FXML
   private Button addRegisterBundle;
 
-  /*
-   * @FXML
-   * private ComboBox<String> addedItemsList;
-   * 
-   * @FXML
-   * private ComboBox<String> addedUpdateBundleList = new ComboBox<String>();
-   * 
-   * @FXML
-   * private ComboBox<?> addRegisterItemList = new ComboBox<String>();
-   * 
-   * @FXML
-   * private ComboBox<String> addedUpdateItemList = new ComboBox<String>();
-   */
+  
+    @FXML
+    private ComboBox<String> registerItemBox;
+
+    @FXML
+    private ComboBox<String> registerBundleBox = new ComboBox<String>();
+    @FXML
+    private ComboBox<String> updateItemBox = new ComboBox<String>();
+    @FXML
+    private ComboBox<String> updateBundleBox = new ComboBox<String>();
 
   @FXML
   private Button assignmentButton;
@@ -145,17 +142,17 @@ public class MemberPageController implements Initializable {
   @FXML
   private TextField bundleUpdateQuantity;
 
-  @FXML
+ /* @FXML
   private TextField updateItemList;
 
   @FXML
-  private TextField updateBundleList;
+  private TextField updateBundleList;*/
 
-  @FXML
-  private TextField addItemNameList;
+  //@FXML
+ // private TextField addItemNameList;
 
-  @FXML
-  private TextField addBundleNameList;
+ //@FXML
+ // private TextField addBundleNameList;
 
   @FXML
   private Label errorMessage;
@@ -282,6 +279,10 @@ public class MemberPageController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     errorMessage.setText("DiveSafe");
     errorMessage.setTextFill(Color.web("#0076a3"));
+    registerItemBox.addEventHandler(DiveSafeFxmlView.REFRESH_EVENT, e -> { registerItemBox.setItems(BundleController.getItems()); registerItemBox.setValue(null);});
+    registerBundleBox.addEventHandler(DiveSafeFxmlView.REFRESH_EVENT, e -> { registerBundleBox.setItems(BundleController.getBundles());  registerBundleBox.setValue(null);});
+    updateItemBox.addEventHandler(DiveSafeFxmlView.REFRESH_EVENT, e ->{updateItemBox.setItems(BundleController.getItems()); updateItemBox.setValue(null);});
+    updateBundleBox.addEventHandler(DiveSafeFxmlView.REFRESH_EVENT, e ->{ updateBundleBox.setItems(BundleController.getBundles());updateBundleBox.setValue(null);});
   }
 
   /**
@@ -301,10 +302,10 @@ public class MemberPageController implements Initializable {
     }
     itemQuantities.add(itemQuantity);
 
-    String itemName = addItemNameList.getText();
+    String itemName = registerItemBox.getValue();
     itemNames.add(itemName);
     itemRegisterQuantity.setText("");
-    addItemNameList.setText("");
+    registerItemBox.setValue(null);
 
   }
 
@@ -324,11 +325,11 @@ public class MemberPageController implements Initializable {
       // TODO: handle exception
     }
     newItemQuantities.add(itemQuantity);
-    String itemName = updateItemList.getText();
+    String itemName = updateItemBox.getValue();
 
     newItemNames.add(itemName);
     itemUpdateQuantity.setText("");
-    updateItemList.setText("");
+    updateItemBox.setValue(null);
 
   }
 
@@ -349,11 +350,11 @@ public class MemberPageController implements Initializable {
     }
     itemQuantities.add(bundleQuantity);
 
-    String bundleName = addBundleNameList.getText();
+    String bundleName = registerBundleBox.getValue();
     itemNames.add(bundleName);
 
     bundleRegisterQuantity.setText("");
-    addBundleNameList.setText("");
+   registerBundleBox.setValue(null);
   }
 
   /**
@@ -365,7 +366,7 @@ public class MemberPageController implements Initializable {
   @FXML
   void updateBundle(MouseEvent event) {
 
-    String bundleName = updateBundleList.getText();
+    String bundleName = updateBundleBox.getValue();
     int bundleQuantity = 0;
 
     try {
@@ -377,7 +378,7 @@ public class MemberPageController implements Initializable {
     newItemNames.add(bundleName);
 
     bundleUpdateQuantity.setText("");
-    updateBundleList.setText("");
+    updateBundleBox.setValue(null);
 
   }
 
