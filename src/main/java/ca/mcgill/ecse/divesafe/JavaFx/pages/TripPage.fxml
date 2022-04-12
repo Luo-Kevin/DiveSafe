@@ -59,7 +59,7 @@
                                        <Font name="System Bold" size="25.0" />
                                     </font>
                                  </Text>
-                                 <Spinner fx:id="daySpinner" editable="true" layoutX="62.0" layoutY="59.0" prefHeight="25.0" prefWidth="121.0" />
+                                 <Spinner fx:id="daySpinner" editable="true" layoutX="62.0" layoutY="59.0" prefHeight="25.0" prefWidth="121.0" style="-fx-border-color: #000000; -fx-border-radius: 5;" />
                                  <Text layoutX="20.0" layoutY="76.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Day:" />
                                  <Button layoutX="233.0" layoutY="58.0" mnemonicParsing="false" onMouseClicked="#startTrip" prefHeight="27.0" prefWidth="61.0" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20; " text="Start" textFill="WHITE">
                                     <opaqueInsets>
