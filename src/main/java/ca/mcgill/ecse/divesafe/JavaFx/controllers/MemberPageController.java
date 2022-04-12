@@ -211,6 +211,7 @@ public class MemberPageController implements Initializable {
       errorMessage.setText("DiveSafe");
       errorMessage.setTextFill(Color.web("#0076a3"));
     }
+    registeredItemTable.getItems().clear();
     DiveSafeFxmlView.getInstance().refresh();
   }
 
@@ -309,7 +310,7 @@ public class MemberPageController implements Initializable {
     String itemName = registerItemBox.getValue();
     itemNames.add(itemName);
 
-    registeredItemTable.getItems().add(itemName + " " + itemQuantity);
+    registeredItemTable.getItems().add(itemName + ": " + itemQuantity);
 
     itemRegisterQuantity.setText("");
     registerItemBox.setValue(null);
@@ -361,7 +362,7 @@ public class MemberPageController implements Initializable {
     String bundleName = registerBundleBox.getValue();
     itemNames.add(bundleName);
 
-    registeredItemTable.getItems().add(bundleName + " " + bundleQuantity);
+    registeredItemTable.getItems().add(bundleName + ": " + bundleQuantity);
 
     bundleRegisterQuantity.setText("");
     registerBundleBox.setValue(null);
@@ -391,6 +392,32 @@ public class MemberPageController implements Initializable {
     bundleUpdateQuantity.setText("");
     updateBundleBox.setValue(null);
 
+  }
+
+  @FXML
+  void editChosenItems(MouseEvent event) {
+    String selection = registeredItemTable.getSelectionModel().getSelectedItem();
+    if (selection == null) {
+      return;
+    }
+    String[] split = selection.split(": ");
+
+    for (String item : itemNames) {
+      if (item.equals(split[0])) {
+        itemNames.remove(item);
+        itemQuantities.remove(itemQuantities.indexOf(Integer.parseInt(split[1])));
+        break;
+      }
+    }
+    for (String bundle : itemNames) {
+      if (bundle.equals(split[0])) {
+        itemNames.remove(bundle);
+        itemQuantities.remove(itemQuantities.indexOf(Integer.parseInt(split[1])));
+        break;
+      }
+    }
+
+    registeredItemTable.getItems().remove(selection);
   }
 
   /**

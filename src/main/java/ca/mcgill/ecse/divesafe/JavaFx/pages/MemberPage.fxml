@@ -117,7 +117,8 @@
                                           <Font name="System Bold" size="22.0" />
                                        </font>
                                     </Label>
-                                    <ListView fx:id="registeredItemTable" layoutY="53.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+                                    <ListView fx:id="registeredItemTable" layoutY="53.0" onMouseClicked="#editChosenItems" prefHeight="482.0" prefWidth="278.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+                                    <Label layoutX="4.0" layoutY="533.0" prefHeight="48.0" prefWidth="268.0" text="Instructions: Click item in list to remove selected item. No repeat item allowed." wrapText="true" />
                                  </children>
                               </AnchorPane>
                            </items>
