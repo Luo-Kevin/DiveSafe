@@ -95,8 +95,8 @@
                                     <TextField fx:id="memberNumDays" maxWidth="150.0" onAction="#registerMember" prefHeight="24.0" prefWidth="150.0" style="-fx-background-color:#ffffff; -fx-border-color: #000000; -fx-border-radius: 5; -fx-background-radius: 5;" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="2" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Guide Required ?" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hotel     Required ?" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                                    <CheckBox fx:id="guideRequiredRegister" mnemonicParsing="false" onMouseClicked="#registerMember" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <CheckBox fx:id="hotelRequiredRegister" mnemonicParsing="false" onMouseClicked="#registerMember" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                    <CheckBox fx:id="guideRequiredRegister" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <CheckBox fx:id="hotelRequiredRegister" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Item :" textAlignment="CENTER" wrappingWidth="60.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
                                     <ComboBox fx:id="registerItemBox" maxWidth="150.0" onMouseClicked="#registerItem" prefWidth="150.0" style="-fx-background-color:#ffffff; -fx-border-color: #000000; -fx-border-radius: 5; -fx-background-radius: 5;" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="4" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" Quantity :" textAlignment="CENTER" wrappingWidth="70.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
@@ -116,9 +116,15 @@
                                        <font>
                                           <Font name="System Bold" size="22.0" />
                                        </font>
+                                       <VBox.margin>
+                                          <Insets left="5.0" />
+                                       </VBox.margin>
                                     </Label>
                                     <ListView fx:id="registeredItemTable" onMouseClicked="#editChosenItemsRegistered" prefHeight="482.0" prefWidth="278.0" VBox.vgrow="ALWAYS" />
-                                    <Label prefHeight="48.0" prefWidth="268.0" text="Instructions: Click item in list to remove selected item. No repeat item allowed." wrapText="true" VBox.vgrow="NEVER" />
+                                    <Label prefHeight="48.0" prefWidth="268.0" text="Instructions: Click item in list to remove selected item. No repeat item allowed." wrapText="true" VBox.vgrow="NEVER">
+                                       <VBox.margin>
+                                          <Insets left="5.0" />
+                                       </VBox.margin></Label>
                                  </children>
                               </VBox>
                            </items>
@@ -161,9 +167,9 @@
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Number of days :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                                     <TextField fx:id="newMemberNumDays" maxWidth="150.0" onAction="#updateMember" prefHeight="24.0" prefWidth="150.0" style="-fx-background-color:#ffffff; -fx-border-color: #000000; -fx-border-radius: 5; -fx-background-radius: 5;" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="2" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Guide Required ?" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                                    <CheckBox fx:id="guideRequiredUpdate" mnemonicParsing="false" onMouseClicked="#updateMember" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <CheckBox fx:id="guideRequiredUpdate" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hotel  Required ?" textAlignment="CENTER" wrappingWidth="93.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                                    <CheckBox fx:id="hotelRequiredUpdate" mnemonicParsing="false" onMouseClicked="#updateMember" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                    <CheckBox fx:id="hotelRequiredUpdate" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
                                     <ComboBox fx:id="updateItemBox" maxWidth="150.0" onMouseClicked="#updateItem" prefWidth="150.0" style="-fx-background-color:#ffffff; -fx-border-color: #000000; -fx-border-radius: 5; -fx-background-radius: 5;" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="4" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Quantity :" textAlignment="CENTER" wrappingWidth="98.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
@@ -187,9 +193,15 @@
                                        <font>
                                           <Font name="System Bold" size="22.0" />
                                        </font>
+                                       <VBox.margin>
+                                          <Insets left="5.0" />
+                                       </VBox.margin>
                                     </Label>
                                     <ListView fx:id="UpdatedItemTable" onMouseClicked="#editChosenItemsUpdated" prefHeight="482.0" prefWidth="278.0" VBox.vgrow="ALWAYS" />
-                                    <Label prefHeight="48.0" prefWidth="268.0" text="Instructions: Click item in list to remove selected item. No repeat item allowed." wrapText="true" VBox.vgrow="NEVER" />
+                                    <Label prefHeight="48.0" prefWidth="268.0" text="Instructions: Click item in list to remove selected item. No repeat item allowed." wrapText="true" VBox.vgrow="NEVER">
+                                       <padding>
+                                          <Insets left="5.0" />
+                                       </padding></Label>
                                  </children>
                               </VBox>
                            </items>
