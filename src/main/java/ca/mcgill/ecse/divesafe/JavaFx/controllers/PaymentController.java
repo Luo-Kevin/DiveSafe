@@ -113,6 +113,8 @@ public class PaymentController implements Initializable {
       for (var member : AssignmentController.getAssignments()) {
         if (member.getMemberEmail().equals(userEmail)) {
           userFound = true;
+
+          //Display information on detailed sales to user
           String userStartDate = "Start Date: " + member.getStartDay();
           String userEndDate = "End Date: " + member.getEndDay();
           paymentDetail.getItems().add(userStartDate);
@@ -127,9 +129,8 @@ public class PaymentController implements Initializable {
           paymentDetail.getItems().add("BUNDLE");
           var userBundleDetail = AssignmentController.userBillBundleDetails(userBooking, userEmail);
           userBundleDetail.forEach(bundleDetail -> paymentDetail.getItems().add(bundleDetail));
-
-          Text startDate = new Text("Start Date: " + member.getStartDay() + "\n");
-          Text endDate = new Text("End Date: " + member.getStartDay() + "\n");
+     
+          //Display payment summary
           int totalEquipmentCost = member.getTotalCostForEquipment();
           Text equipmentSummary = new Text("Total Equipment Cost: $" + totalEquipmentCost + "\n");
           int totalGuideCost = member.getTotalCostForGuide();
@@ -144,7 +145,7 @@ public class PaymentController implements Initializable {
         }
       }
     }
-
+    //Display error message if user not found
     if (!userFound) {
       errorMessage.setText(String.format("No payment associated with ") + userEmail);
       errorMessage.setTextFill(Color.RED);
@@ -162,8 +163,11 @@ public class PaymentController implements Initializable {
   void makePayment(MouseEvent event) {
     if (!paymentDetail.getItems().isEmpty()) {
       String userEmail = email.getText().strip();
+      //Getting the authorization code
       String paymentAuthorization = authorizationCode.getText().strip();
+      //Attempt to make the payment
       String paymentMessage = AssignmentController.confirmPayment(userEmail, paymentAuthorization);
+      //Display error message after
       if (MemberController.getMemberStatus(userEmail).equals("Paid")) {
         errorMessage.setTextFill(Color.web("#0076a3"));
       } else {
