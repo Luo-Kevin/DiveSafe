@@ -72,10 +72,35 @@ public class PaymentController implements Initializable {
   private Label errorMessage;
 
   /**
-   * Method triggered when user click the retrieve bill button
+   * Method executed when page is initialized.
+   * 
+   * @author everyone
+   */
+
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    errorMessage.setTextFill(Color.web("#0076a3"));
+    errorMessage.setText("DiveSafe");
+  }
+
+  /**
+   * Reset the assignments.
+   * 
+   * @author everyone
+   * @param event - mouse click
+   * @throws IOException
+   */
+
+  @FXML
+  void resetApp(MouseEvent event) throws IOException {
+    DiveSafeApplication.reset();
+    switchToPayment(event);
+  }
+
+  /**
+   * Method triggered when user click the retrieve bill button.
    * 
    * @param event - mouse click
-   * @author Kevin Luo
    */
 
   @FXML
@@ -128,10 +153,9 @@ public class PaymentController implements Initializable {
   }
 
   /**
-   * Method triggered when user click the retrieve make payment button
+   * Method triggered when user click the retrieve make payment button.
    * 
    * @param event - mouse click
-   * @author Kevin Luo
    */
 
   @FXML
@@ -151,7 +175,9 @@ public class PaymentController implements Initializable {
   }
 
   /**
-   * Method to update the lists of assigned and unassigned members
+   * Method to switch to the payment page.
+   * 
+   * @param event - mouse click
    */
 
   @FXML
@@ -170,7 +196,10 @@ public class PaymentController implements Initializable {
   }
 
   /**
-   * Method to switch to assignment page
+   * Method to switch to assignment page.
+   * 
+   * @author everyone
+   * @param event - mouse click
    */
 
   @FXML
@@ -183,7 +212,10 @@ public class PaymentController implements Initializable {
   }
 
   /**
-   * Method to switch to trip page
+   * Method to switch to trip page.
+   * 
+   * @author everyone
+   * @param event - mouse click
    */
 
   @FXML
@@ -196,7 +228,10 @@ public class PaymentController implements Initializable {
   }
 
   /**
-   * Method to switch to member page
+   * Method to switch to member page.
+   * 
+   * @author everyone
+   * @param event - mouse click
    */
 
   @FXML
@@ -206,23 +241,6 @@ public class PaymentController implements Initializable {
     scene = new Scene(root);
     stage.setScene(scene);
     stage.show();
-  }
-
-  @Override
-  public void initialize(URL location, ResourceBundle resources) {
-    errorMessage.setTextFill(Color.web("#0076a3"));
-    errorMessage.setText("DiveSafe");
-  }
-
-  /**
-   * Reset the assignments
-   * 
-   * @throws IOException
-   */
-  @FXML
-  void resetApp(MouseEvent event) throws IOException {
-    DiveSafeApplication.reset();
-    switchToPayment(event);
   }
 
 }

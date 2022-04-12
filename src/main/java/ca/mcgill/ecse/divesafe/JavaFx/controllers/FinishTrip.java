@@ -13,6 +13,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.text.Text;
 
+/**
+ * Controller for the finish trip and cancel trip page.
+ * 
+ * @author Eric Joung
+ */
+
 public class FinishTrip implements Initializable {
 
   @FXML
@@ -28,12 +34,22 @@ public class FinishTrip implements Initializable {
 
   private List<String> members = this.getMembers();
 
+  /**
+   * Method executed when page is initialized.
+   */
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     finishOrCancel.getItems().addAll(adminAction);
     emailChoiceBox.getItems().addAll(members);
     confirm.setOnAction(this::performFinishOrCancel);
   }
+
+  /**
+   * Method to perform finish or cancel trip.
+   * 
+   * @param event - mouse click
+   */
 
   public void performFinishOrCancel(ActionEvent event) {
 
@@ -56,6 +72,12 @@ public class FinishTrip implements Initializable {
     StartTripController.getTextFlow().getChildren().add(message);
 
   }
+
+  /**
+   * Get the list of member emails from the assignment controller.
+   * 
+   * @return the list of members
+   */
 
   public ArrayList<String> getMembers() {
     return AssignmentController.getMemberEmails();
