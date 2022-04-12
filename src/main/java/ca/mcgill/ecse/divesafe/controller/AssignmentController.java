@@ -379,25 +379,7 @@ public class AssignmentController {
 
     return assignmentDetails;
   }
-
-  /**
-   * Method which gets the billable bookings of the member
-   * 
-   * @param email - String which representing the member's email
-   * @return List of the billable equipment
-   * @author Kevin Luo
-   */
-
-  public static List<ItemBooking> getUserBill(String email) {
-    if (!Member.hasWithEmail(email)) {
-      return null;
-    } else {
-      Member member = Member.getWithEmail(email);
-      List<ItemBooking> userBooking = member.getItemBookings();
-      return userBooking;
-    }
-  }
-
+  
   /**
    * Method which gets the user's billable equipments
    * 
@@ -407,9 +389,14 @@ public class AssignmentController {
    *         for equipments booked
    * @author Kevin Luo
    */
-  public static List<String> userBillBookedEquipmentDetails(List<ItemBooking> userBooking, String email) {
+  public static List<String> userBillBookedEquipmentDetails(String email) {
+    if (!Member.hasWithEmail(email)) {
+      return null;
+    } 
+  
     List<String> bookingBill = new ArrayList<String>();
     Member member = Member.getWithEmail(email);
+    List<ItemBooking> userBooking = member.getItemBookings();
     int daysBooked = member.getNumDays();
     //Get equipment and price for user
     for (ItemBooking item : userBooking) {
@@ -438,10 +425,16 @@ public class AssignmentController {
    * @author Kevin Luo
    */
 
-  public static List<String> userBillBundleDetails(List<ItemBooking> userBooking, String email) {
+  public static List<String> userBillBundleDetails(String email) {
+
+    if (!Member.hasWithEmail(email)) {
+      return null;
+    } 
+    Member member = Member.getWithEmail(email);
+    List<ItemBooking> userBooking = member.getItemBookings();
+  
     List<String> bookingBill = new ArrayList<String>();
 
-    Member member = Member.getWithEmail(email);
     int daysBooked = member.getNumDays();
     if (member.getAssignment() == null) {
       return bookingBill;
@@ -449,7 +442,7 @@ public class AssignmentController {
 
     for (ItemBooking item : userBooking) {
       Item itemBooked = item.getItem();
-      //Get bundle assigned to user
+      //Get bundle assigned to user 
       if (itemBooked instanceof EquipmentBundle) {
         EquipmentBundle bundleBooked = (EquipmentBundle) itemBooked;
         List<BundleItem> itemInBundle = bundleBooked.getBundleItems();
