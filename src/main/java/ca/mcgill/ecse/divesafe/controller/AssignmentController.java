@@ -411,13 +411,14 @@ public class AssignmentController {
     List<String> bookingBill = new ArrayList<String>();
     Member member = Member.getWithEmail(email);
     int daysBooked = member.getNumDays();
-
+    //Get equipment and price for user
     for (ItemBooking item : userBooking) {
       Item itemBooked = item.getItem();
       if (itemBooked instanceof Equipment) {
         Equipment itemEquipment = (Equipment) itemBooked;
         String itemName = itemBooked.getName();
         int itemQuantity = item.getQuantity();
+        //calculate price
         int itemPrice = itemEquipment.getPricePerDay() * itemQuantity * daysBooked;
         String billingDetail = itemName + " [Quantity: " + itemQuantity + "]" + " $" + itemPrice;
         bookingBill.add(billingDetail);
@@ -448,25 +449,22 @@ public class AssignmentController {
 
     for (ItemBooking item : userBooking) {
       Item itemBooked = item.getItem();
-
+      //Get bundle assigned to user
       if (itemBooked instanceof EquipmentBundle) {
         EquipmentBundle bundleBooked = (EquipmentBundle) itemBooked;
         List<BundleItem> itemInBundle = bundleBooked.getBundleItems();
         Integer bundlePrice = 0;
         for (BundleItem bundleEquipment : itemInBundle) {
-          Integer bundleItemPrice = bundleEquipment.getEquipment().getPricePerDay() * bundleEquipment.getQuantity(); // bundle
-                                                                                                                     // rented
-                                                                                                                     // per
-                                                                                                                     // week
+          Integer bundleItemPrice = bundleEquipment.getEquipment().getPricePerDay() * bundleEquipment.getQuantity();
           bundlePrice += bundleItemPrice;
         }
-
         if (member.getAssignment().hasGuide()) {
           double discount = (double) (100 - bundleBooked.getDiscount()) / 100;
           bundlePrice = (int) (bundlePrice * discount);
         }
         String bundleName = bundleBooked.getName();
         int bundleQuantity = item.getQuantity();
+        //Calculate price
         bundlePrice = bundlePrice * daysBooked * bundleQuantity;
         String billingDetail = bundleName + " [Quantity: " + bundleQuantity + "]" + " $" + bundlePrice;
         bookingBill.add(billingDetail);
