@@ -20,7 +20,7 @@ public class MemberController {
   /**
    * Registers members.
    *
-   * @author Joey Koay
+   * @author Joey Koay and Siger Ma
    * @param email
    * @param password
    * @param name
@@ -46,30 +46,34 @@ public class MemberController {
       error = "Invalid email";
     }
 
-    if (Member.hasWithEmail(email)) {
-      error = "A member with this email already exists";
+    for (var member : DiveSafeApplication.getDiveSafe().getMembers()) {
+      if (member.getEmail().equals(email)) {
+        error = "A member with this email already exists";
+      }
     }
 
     if (email.equals("admin@ad.atl")) {
       error = "The email entered is not allowed for members";
     }
 
-    if (Guide.hasWithEmail(email)) {
-      error = "A guide with this email already exists";
+    for (var guide : DiveSafeApplication.getDiveSafe().getGuides()) {
+      if (guide.getEmail().equals(email)) {
+        error = "A guide with this email already exists";
+      }
     }
 
     if (!error.isBlank()) {
       return error.trim();
     }
 
-    Member member = diveSafe.addMember(email, password, name, emergencyContact, nrDays,
+    Member member = DiveSafeApplication.getDiveSafe().addMember(email, password, name, emergencyContact, nrDays,
         guideRequired, hotelRequired);
     for (int i = 0; i < itemNames.size(); i++) {
-      diveSafe.addItemBooking(itemQuantities.get(i), member, Item.getWithName(itemNames.get(i)));
+      DiveSafeApplication.getDiveSafe().addItemBooking(itemQuantities.get(i), member, Item.getWithName(itemNames.get(i)));
     }
 
     try {
-      DiveSafeApplication.save(diveSafe);
+      DiveSafeApplication.save(DiveSafeApplication.getDiveSafe());
       DiveSafePersistence.save();
     } catch (RuntimeException e) {
       e.getMessage();
@@ -120,12 +124,12 @@ public class MemberController {
       member.getItemBookings().get(0).delete();
     }
     for (int i = 0; i < newItemNames.size(); i++) {
-      diveSafe.addItemBooking(newItemQuantities.get(i), member,
+      DiveSafeApplication.getDiveSafe().addItemBooking(newItemQuantities.get(i), member,
           Item.getWithName(newItemNames.get(i)));
     }
 
     try {
-      DiveSafeApplication.save(diveSafe);
+      DiveSafeApplication.save(DiveSafeApplication.getDiveSafe());
       DiveSafePersistence.save();
     } catch (RuntimeException e) {
       e.getMessage();
@@ -139,7 +143,7 @@ public class MemberController {
     if (member != null) {
       member.delete();
       try {
-        DiveSafeApplication.save(diveSafe);
+        DiveSafeApplication.save(DiveSafeApplication.getDiveSafe());
         DiveSafePersistence.save();
       } catch (RuntimeException e) {
         e.getMessage();

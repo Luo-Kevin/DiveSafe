@@ -5,7 +5,10 @@ import java.util.List;
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
 import ca.mcgill.ecse.divesafe.model.Guide;
+import ca.mcgill.ecse.divesafe.model.Hotel;
+import ca.mcgill.ecse.divesafe.model.Item;
 import ca.mcgill.ecse.divesafe.model.Member;
+import ca.mcgill.ecse.divesafe.model.User;
 import ca.mcgill.ecse.divesafe.model.Guide.AvailableStatus;
 import ca.mcgill.ecse.divesafe.model.Member.MemberStatus;
 
@@ -47,7 +50,12 @@ public class DiveSafePersistence {
     for (Member member : listOMembers) {
       member.publicSetMemberStatus(MemberStatus.Unassigned);
     }
+    
     save(diveSafe);
+    User.reinitializeUniqueEmail(diveSafe.getAdministrator(), diveSafe.getGuides(), diveSafe.getMembers());
+    Item.reinitializeUniqueName(diveSafe.getEquipments(), diveSafe.getBundles());
+    Hotel.reinitializeUniqueName(diveSafe.getHotels());
+    
     return diveSafe;
   }
 

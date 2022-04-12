@@ -63,12 +63,12 @@ public class StartTripController implements Initializable {
     return startTripResult_static;
   }
 
-  // Configure spinner to choose desired week to start trips
+  // Configure spinner to choose desired day to start trips
   @FXML
-  private Spinner<Integer> weekSpinner;
+  private Spinner<Integer> daySpinner;
 
-  // integer to store the week selected by the user using the weekSpinner spinner
-  int targetWeek;
+  // integer to store the day selected by the user using the daySpinner spinner
+  int targetDay;
 
   // List of assignments from the assignment controller
   List<TOAssignment> assignments = AssignmentController.getAssignments();
@@ -81,15 +81,15 @@ public class StartTripController implements Initializable {
   public void initialize(URL arg0, ResourceBundle arg1) {
 
     SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 5, 1);
-    weekSpinner.setValueFactory(valueFactory);
-    // Set the targetweek to the weekspinner
-    targetWeek = valueFactory.getValue();
+    daySpinner.setValueFactory(valueFactory);
+    // Set the targetDay to the dayspinner
+    targetDay = valueFactory.getValue();
 
-    weekSpinner.valueProperty().addListener(new ChangeListener<Integer>() {
+    daySpinner.valueProperty().addListener(new ChangeListener<Integer>() {
       @Override
       public void changed(javafx.beans.value.ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) {
-        weekSpinner.setValueFactory(valueFactory);
-        targetWeek = valueFactory.getValue();
+        daySpinner.setValueFactory(valueFactory);
+        targetDay = valueFactory.getValue();
      }
     });
 
@@ -102,7 +102,7 @@ public class StartTripController implements Initializable {
   /**
    * Method triggered when user clicks the start button
    *  1. get all assignments and their corresponding startDay
-   *  2. Check if targetWeek is the same as the startDay of the assignment
+   *  2. Check if targetDay is the same as the startDay of the assignment
    *  3. Check if member is eligible to start trip, i.e. if status is paid,
    *     if not BAN
    *  4. If eligible, start trip
@@ -128,13 +128,13 @@ public class StartTripController implements Initializable {
       for (TOAssignment assignment : assignments) {
         int startDay = assignment.getStartDay();
 
-        if (startDay == targetWeek) {
+        if (startDay == targetDay) {
           readyForTripMembers.add(assignment.getMemberEmail());
         }
       }
 
       if (readyForTripMembers.isEmpty()) {
-        Text noMemberReady = new Text("No assigned member on chosen week.\n");
+        Text noMemberReady = new Text("No assigned member on chosen day.\n");
         startTripResult.getChildren().add(noMemberReady);
 
       } else {
@@ -154,7 +154,7 @@ public class StartTripController implements Initializable {
         }
       }
     }
-    AssignmentController.startTripsForDay(targetWeek);
+    AssignmentController.startTripsForDay(targetDay);
   }
 
   /**
