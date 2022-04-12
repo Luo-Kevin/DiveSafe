@@ -46,7 +46,7 @@ public class MemberController {
       error = "Invalid email";
     }
 
-    for (var member : DiveSafeApplication.getDiveSafe().getMembers()) {
+    for (Member member : DiveSafeApplication.getDiveSafe().getMembers()) {
       if (member.getEmail().equals(email)) {
         error = "A member with this email already exists";
       }
@@ -56,10 +56,13 @@ public class MemberController {
       error = "The email entered is not allowed for members";
     }
 
-    for (var guide : DiveSafeApplication.getDiveSafe().getGuides()) {
+    for (Guide guide : DiveSafeApplication.getDiveSafe().getGuides()) {
       if (guide.getEmail().equals(email)) {
         error = "A guide with this email already exists";
       }
+    }
+    if (Guide.hasWithEmail(email)) {
+      error = "A guide with this email already exists";
     }
 
     if (!error.isBlank()) {

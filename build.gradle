@@ -7,62 +7,63 @@
  */
 
 plugins {
-    id 'java'
-    
-    // Apply the application plugin to add support for building a CLI application in Java.
-    id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.12'
+  id 'java'
+
+  // Apply the application plugin to add support for building a CLI application in Java.
+  id 'application'
+
+  id 'org.openjfx.javafxplugin' version '0.0.12'
 }
 
 repositories {
-    // Use mavenCentral for resolving dependencies.
-     mavenCentral() 
+  // Use mavenCentral for resolving dependencies.
+  mavenCentral() 
 }
 
 javafx {
-    version = "17"
-    modules = [ 'javafx.controls', 'javafx.fxml' ]
+  version = "18"
+  modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
 tasks.register('copyResources', Copy) {
-    from "src/main/java/ca/mcgill/ecse/divesafe"
-    into "build/classes/java/main/ca/mcgill/ecse/divesafe"
-    exclude "**/*.java"
+  from "src/main/java/ca/mcgill/ecse/divesafe"
+  into "build/classes/java/main/ca/mcgill/ecse/divesafe"
+  exclude "**/*.java"
 }
 tasks.named('run') {
-    dependsOn tasks.named('copyResources')
+  dependsOn tasks.named('copyResources')
 }
 
 dependencies {
-    // This dependency is used by the application.
-    implementation 'com.google.guava:guava:29.0-jre'
+  // This dependency is used by the application.
+  implementation 'com.google.guava:guava:29.0-jre'
 
-    // Persistence dependencies, used to save data to files and load it back again
-    implementation 'com.thoughtworks.xstream:xstream:1.4.19'
-    implementation 'org.codehaus.jettison:jettison:1.4.1'
+  // Persistence dependencies, used to save data to files and load it back again
+  implementation 'com.thoughtworks.xstream:xstream:1.4.19'
+  implementation 'org.codehaus.jettison:jettison:1.4.1'
 
-	// cucumber.io dependencies
-    testImplementation "io.cucumber:cucumber-java:6.6.0"
-    testImplementation "io.cucumber:cucumber-junit:6.6.0"
+  // cucumber.io dependencies
+  testImplementation "io.cucumber:cucumber-java:6.6.0"
+  testImplementation "io.cucumber:cucumber-junit:6.6.0"
 
-    // Use JUnit Jupiter API for testing.
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+  // Use JUnit Jupiter API for testing.
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
 
-    // Use JUnit Jupiter Engine for testing.
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+  // Use JUnit Jupiter Engine for testing.
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 
-    // This is here to solve Eclipse IDE Junit 5 compatibility issues
-    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.6.2'
+  // This is here to solve Eclipse IDE Junit 5 compatibility issues
+  testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.6.2'
 }
 
 application {
-    // Define the main class for the application.
-    mainClass = 'ca.mcgill.ecse.divesafe.application.DiveSafeApplication'
-    sourceCompatibility = 17
-    targetCompatibility = 17
+  // Define the main class for the application.
+  mainClass = 'ca.mcgill.ecse.divesafe.application.DiveSafeApplication'
+  sourceCompatibility = 17
+  targetCompatibility = 17
 }
 
 tasks.named('test') {
-    // Use junit platform for unit tests.
-    useJUnitPlatform()
+  // Use junit platform for unit tests.
+  useJUnitPlatform()
 }

@@ -174,7 +174,7 @@ public class BundleController {
  
   /**
    * Helper method to put the items'name into an ObservableList<String>
-   *@author Zahra Landou 
+   * @author Zahra Landou 
    * @return myItemList - list of items' name
    */
   public static ArrayList<String> getItems(){
