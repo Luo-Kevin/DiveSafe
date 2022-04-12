@@ -94,8 +94,8 @@
                                     <TextField fx:id="memberNumDays" onAction="#registerMember" prefHeight="24.0" prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Guide Required ?" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hotel     Required ?" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                                    <CheckBox fx:id="guideRequiredRegister" mnemonicParsing="false" onAction="#registerMember" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <CheckBox fx:id="hotelRequiredRegister" mnemonicParsing="false" onAction="#registerMember" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                    <CheckBox fx:id="guideRequiredRegister" mnemonicParsing="false" onMouseClicked="#registerMember" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <CheckBox fx:id="hotelRequiredRegister" mnemonicParsing="false" onMouseClicked="#registerMember" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Item :" textAlignment="CENTER" wrappingWidth="60.13671875" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" Quantity :" textAlignment="CENTER" wrappingWidth="70.13671875" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                     <TextField fx:id="itemRegisterQuantity" onAction="#registerItem" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
@@ -188,8 +188,8 @@
                                     <TextField fx:id="newMemberNumDays" onAction="#updateMember" prefHeight="24.0" prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Guide Required ?" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hotel  Required ?" textAlignment="CENTER" wrappingWidth="93.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                                    <CheckBox fx:id="guideRequiredUpdate" mnemonicParsing="false" onAction="#updateMember" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <CheckBox fx:id="hotelRequiredUpdate" mnemonicParsing="false" onAction="#updateMember" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                    <CheckBox fx:id="guideRequiredUpdate" mnemonicParsing="false" onMouseClicked="#updateMember" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <CheckBox fx:id="hotelRequiredUpdate" mnemonicParsing="false" onMouseClicked="#updateMember" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Quantity :" textAlignment="CENTER" wrappingWidth="98.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
                                     <TextField fx:id="itemUpdateQuantity" onAction="#updateItem" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
@@ -197,7 +197,7 @@
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bundle Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bundle Quantity :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
                                     <TextField fx:id="bundleUpdateQuantity" onAction="#updateBundle" prefHeight="10.0" prefWidth="185.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                                    <Button fx:id="addBundleUpdate" mnemonicParsing="false" onMouseClicked="#updateBundle" text="Add Bundle" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                    <Button fx:id="addBundleUpdate" mnemonicParsing="false" onMouseClicked="#updateBundle" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66;" text="Add Bundle" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                     <Button fx:id="updateMemberButton" mnemonicParsing="false" onMouseClicked="#updateMember" prefHeight="37.0" prefWidth="78.0" text="Update" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email :" textAlignment="CENTER" wrappingWidth="81.13671875" />
                                     <TextField fx:id="newMemberEmail" onAction="#updateMember" prefHeight="24.0" prefWidth="149.0" GridPane.columnIndex="1" />
