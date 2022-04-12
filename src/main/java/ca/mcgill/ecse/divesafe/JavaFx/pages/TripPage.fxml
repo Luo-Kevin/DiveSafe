@@ -91,7 +91,7 @@
          </SplitPane>
       </center>
       <bottom>
-         <HBox id="HBox" alignment="CENTER_LEFT" maxHeight="20.0" minHeight="20.0" prefHeight="20.0" spacing="5.0" BorderPane.alignment="CENTER">
+         <HBox id="HBox" alignment="CENTER_LEFT" maxHeight="20.0" minHeight="20.0" prefHeight="20.0" spacing="5.0" style="-fx-background-color: #f0d77f;" BorderPane.alignment="CENTER">
             <children>
                <Pane maxHeight="20.0" minHeight="20.0" prefHeight="20.0" HBox.hgrow="ALWAYS" />
                <Label fx:id="errorMessage" maxWidth="-1.0" text="DiveSafe" HBox.hgrow="NEVER">
