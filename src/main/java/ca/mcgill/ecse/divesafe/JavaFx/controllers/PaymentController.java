@@ -107,14 +107,13 @@ public class PaymentController implements Initializable {
   void retrieveBillClick(ActionEvent event) {
     String userEmail = email.getText().strip();
     boolean userFound = false;
-    //Reset information for next search query
     paymentDetail.getItems().clear();
     paymentSummary.getChildren().clear();
-    //Search for bill of user
     for (TOAssignment member : AssignmentController.getAssignments()) {
       if (member.getMemberEmail().equals(userEmail)) {
         userFound = true;
-        //Display information on detailed sales to user
+
+        // Display information on detailed sales to user
         String userStartDate = "Start Date: " + member.getStartDay();
         String userEndDate = "End Date: " + member.getEndDay();
         paymentDetail.getItems().add(userStartDate);
@@ -129,8 +128,8 @@ public class PaymentController implements Initializable {
         paymentDetail.getItems().add("BUNDLE");
         List<String> userBundleDetail = AssignmentController.userBillBundleDetails(userEmail);
         userBundleDetail.forEach(bundleDetail -> paymentDetail.getItems().add(bundleDetail));
-    
-        //Display payment summary
+
+        // Display payment summary
         int totalEquipmentCost = member.getTotalCostForEquipment();
         Text equipmentSummary = new Text("Total Equipment Cost: $" + totalEquipmentCost + "\n");
         int totalGuideCost = member.getTotalCostForGuide();
@@ -144,8 +143,7 @@ public class PaymentController implements Initializable {
         break;
       }
     }
-    
-    //Display error message if user not found
+    // Display error message if user not found
     if (!userFound) {
       errorMessage.setText(String.format("No payment associated with ") + userEmail);
       errorMessage.setTextFill(Color.RED);
@@ -182,11 +180,11 @@ public class PaymentController implements Initializable {
   void makePayment(MouseEvent event) {
     if (!paymentDetail.getItems().isEmpty()) {
       String userEmail = email.getText().strip();
-      //Getting the authorization code
+      // Getting the authorization code
       String paymentAuthorization = authorizationCode.getText().strip();
-      //Attempt to make the payment
+      // Attempt to make the payment
       String paymentMessage = AssignmentController.confirmPayment(userEmail, paymentAuthorization);
-      //Display error message after
+      // Display error message after
       if (MemberController.getMemberStatus(userEmail).equals("Paid")) {
         //Resets field for new entry if payment
         errorMessage.setTextFill(Color.web("#0076a3"));

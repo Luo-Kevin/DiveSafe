@@ -147,6 +147,9 @@ public class MemberPageController implements Initializable {
   private ListView<String> registeredItemTable;
 
   @FXML
+  private ListView<String> UpdatedItemTable;
+
+  @FXML
   private Label errorMessage;
 
   private List<String> newItemNames = new ArrayList<String>();
@@ -211,6 +214,7 @@ public class MemberPageController implements Initializable {
       errorMessage.setText("DiveSafe");
       errorMessage.setTextFill(Color.web("#0076a3"));
     }
+    registeredItemTable.getItems().clear();
     DiveSafeFxmlView.getInstance().refresh();
   }
 
@@ -255,6 +259,7 @@ public class MemberPageController implements Initializable {
       errorMessage.setText("DiveSafe");
       errorMessage.setTextFill(Color.web("#0076a3"));
     }
+    UpdatedItemTable.getItems().clear();
     DiveSafeFxmlView.getInstance().refresh(); // check
 
     
@@ -292,6 +297,7 @@ public class MemberPageController implements Initializable {
   /**
    * Action of the button Add Item on register page to add an item that the member wants.
    * 
+   * @author Zahra Landou and Siger Ma
    * @param event - mouse click
    */
 
@@ -309,7 +315,7 @@ public class MemberPageController implements Initializable {
     String itemName = registerItemBox.getValue();
     itemNames.add(itemName);
 
-    registeredItemTable.getItems().add(itemName + " " + itemQuantity);
+    registeredItemTable.getItems().add(itemName + ": " + itemQuantity);
 
     itemRegisterQuantity.setText("");
     registerItemBox.setValue(null);
@@ -319,6 +325,7 @@ public class MemberPageController implements Initializable {
   /**
    * Action of the button Add Item on update page to add an item that the member wants.
    * 
+   * @author Zahra Landou and Siger Ma
    * @param event - mouse click
    */
 
@@ -336,6 +343,8 @@ public class MemberPageController implements Initializable {
     String itemName = updateItemBox.getValue();
     newItemNames.add(itemName);
 
+    UpdatedItemTable.getItems().add(itemName + ": " + itemQuantity);
+
     itemUpdateQuantity.setText("");
     updateItemBox.setValue(null);
 
@@ -344,6 +353,7 @@ public class MemberPageController implements Initializable {
   /**
    * Action of the button Add Bundle on register page to add a bundle that the member wants.
    * 
+   * @author Zahra Landou and Siger Ma
    * @param event - mouse click
    */
 
@@ -361,7 +371,7 @@ public class MemberPageController implements Initializable {
     String bundleName = registerBundleBox.getValue();
     itemNames.add(bundleName);
 
-    registeredItemTable.getItems().add(bundleName + " " + bundleQuantity);
+    registeredItemTable.getItems().add(bundleName + ": " + bundleQuantity);
 
     bundleRegisterQuantity.setText("");
     registerBundleBox.setValue(null);
@@ -370,6 +380,7 @@ public class MemberPageController implements Initializable {
   /**
    * Action of the button Add Bundle on update page to add a bundle that the member wants.
    * 
+   * @author Zahra Landou and Siger Ma
    * @param event - mouse click
    */
 
@@ -388,9 +399,77 @@ public class MemberPageController implements Initializable {
     String bundleName = updateBundleBox.getValue();
     newItemNames.add(bundleName);
 
+    UpdatedItemTable.getItems().add(bundleName + ": " + bundleQuantity);
+
     bundleUpdateQuantity.setText("");
     updateBundleBox.setValue(null);
 
+  }
+
+  /**
+   * Method to delete an item from the table and the selection for the registration.
+   * 
+   * @author Siger Ma
+   * @param event - mouse click
+   */
+
+  @FXML
+  void editChosenItemsRegistered(MouseEvent event) {
+    String selection = registeredItemTable.getSelectionModel().getSelectedItem();
+    if (selection == null) {
+      return;
+    }
+    String[] split = selection.split(": ");
+
+    for (String item : itemNames) {
+      if (item.equals(split[0])) {
+        itemNames.remove(item);
+        itemQuantities.remove(itemQuantities.indexOf(Integer.parseInt(split[1])));
+        break;
+      }
+    }
+    for (String bundle : itemNames) {
+      if (bundle.equals(split[0])) {
+        itemNames.remove(bundle);
+        itemQuantities.remove(itemQuantities.indexOf(Integer.parseInt(split[1])));
+        break;
+      }
+    }
+
+    registeredItemTable.getItems().remove(selection);
+  }
+
+  /**
+   * Method to delete an item from the table and the selection for the update of member.
+   * 
+   * @author Siger Ma
+   * @param event - mouse click
+   */
+
+  @FXML
+  void editChosenItemsUpdated(MouseEvent event) {
+    String selection = UpdatedItemTable.getSelectionModel().getSelectedItem();
+    if (selection == null) {
+      return;
+    }
+    String[] split = selection.split(": ");
+
+    for (String item : newItemNames) {
+      if (item.equals(split[0])) {
+        newItemNames.remove(item);
+        newItemQuantities.remove(newItemQuantities.indexOf(Integer.parseInt(split[1])));
+        break;
+      }
+    }
+    for (String bundle : newItemNames) {
+      if (bundle.equals(split[0])) {
+        newItemNames.remove(bundle);
+        newItemQuantities.remove(newItemQuantities.indexOf(Integer.parseInt(split[1])));
+        break;
+      }
+    }
+
+    UpdatedItemTable.getItems().remove(selection);
   }
 
   /**
