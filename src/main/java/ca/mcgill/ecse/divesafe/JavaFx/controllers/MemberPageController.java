@@ -60,7 +60,7 @@ public class MemberPageController implements Initializable {
     private ComboBox<String> updateItemBox = new ComboBox<String>();
     @FXML
     private ComboBox<String> updateBundleBox = new ComboBox<String>();
-
+  
   @FXML
   private Button assignmentButton;
 
@@ -158,6 +158,9 @@ public class MemberPageController implements Initializable {
 
   private List<Integer> itemQuantities = new ArrayList<Integer>();
 
+ 
+ 
+ 
   /**
    * Reset member
    * 
@@ -285,10 +288,10 @@ public class MemberPageController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     errorMessage.setText("DiveSafe");
     errorMessage.setTextFill(Color.web("#0076a3"));
-    registerItemBox.addEventHandler(DiveSafeFxmlView.REFRESH_EVENT, e -> { registerItemBox.setItems(BundleController.getItems()); registerItemBox.setValue(null);});
-    registerBundleBox.addEventHandler(DiveSafeFxmlView.REFRESH_EVENT, e -> { registerBundleBox.setItems(BundleController.getBundles());  registerBundleBox.setValue(null);});
-    updateItemBox.addEventHandler(DiveSafeFxmlView.REFRESH_EVENT, e ->{updateItemBox.setItems(BundleController.getItems()); updateItemBox.setValue(null);});
-    updateBundleBox.addEventHandler(DiveSafeFxmlView.REFRESH_EVENT, e ->{ updateBundleBox.setItems(BundleController.getBundles());updateBundleBox.setValue(null);});
+    registerItemBox.getItems().addAll(BundleController.getItems());
+    updateItemBox.getItems().addAll(BundleController.getItems());
+    registerBundleBox.getItems().addAll(BundleController.getBundles());
+    updateBundleBox.getItems().addAll(BundleController.getBundles());
   }
 
   /**
@@ -379,8 +382,7 @@ public class MemberPageController implements Initializable {
     try {
       bundleQuantity = Integer.parseInt(bundleUpdateQuantity.getText());
     } catch (NumberFormatException e) {
-      errorMessage.setText("The value inserted must be an integer");
-      errorMessage.setTextFill(Color.web("#0076a3"));
+      
     }
     newItemQuantities.add(bundleQuantity);
     newItemNames.add(bundleName);

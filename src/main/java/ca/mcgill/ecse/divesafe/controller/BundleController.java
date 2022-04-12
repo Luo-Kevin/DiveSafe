@@ -11,8 +11,6 @@ import ca.mcgill.ecse.divesafe.model.Equipment;
 import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
 import ca.mcgill.ecse.divesafe.model.Item;
 import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class BundleController {
 
@@ -160,33 +158,33 @@ public class BundleController {
 
   /**
    * Helper method to put the bundles'name into an ObservableList<String>
-   * @return myBundles - list of bundles' name
+   * @author Zahra Landou
+   * @return myBundleList - list of bundles' name
    */
-  public static ObservableList<String> getBundles(){
+  public static ArrayList<String> getBundles(){
 
-   List<String> myBundleList= new ArrayList<String>() ;
+   ArrayList<String> myBundleList= new ArrayList<>() ;
     List<EquipmentBundle> systemBundles = diveSafe.getBundles();
    for (EquipmentBundle bundle : systemBundles) {
      myBundleList.add(bundle.getName());
      
    }
-   ObservableList<String> myBundles= FXCollections.observableList(myBundleList);
-   return myBundles;
+   return myBundleList;
   }
  
   /**
    * Helper method to put the items'name into an ObservableList<String>
-   * @return myItems - list of items' name
+   *@author Zahra Landou 
+   * @return myItemList - list of items' name
    */
-  public static ObservableList<String> getItems(){
+  public static ArrayList<String> getItems(){
 
-    List<String> myItemList= new ArrayList<String>() ;
+    ArrayList<String> myItemList= new ArrayList<String>() ;
      List<Equipment> systemItem = diveSafe.getEquipments();
     for (Equipment item : systemItem) {
       myItemList.add(item.getName());    
     }
-    ObservableList<String> myItems= FXCollections.observableList(myItemList);
-    return myItems;
+    return myItemList;
    }
 
 
