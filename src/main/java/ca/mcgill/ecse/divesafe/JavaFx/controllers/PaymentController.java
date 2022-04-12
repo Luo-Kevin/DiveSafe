@@ -157,6 +157,7 @@ public class PaymentController implements Initializable {
    * Method triggered when clicks a key in the email
    * 
    * @param event - mouse click
+   * @author Kevin Luo
    */
 
   @FXML
