@@ -50,16 +50,17 @@ public class MemberPageController implements Initializable {
   @FXML
   private Button addRegisterBundle;
 
-  
-    @FXML
-    private ComboBox<String> registerItemBox;
+  @FXML
+  private ComboBox<String> registerItemBox;
 
-    @FXML
-    private ComboBox<String> registerBundleBox = new ComboBox<String>();
-    @FXML
-    private ComboBox<String> updateItemBox = new ComboBox<String>();
-    @FXML
-    private ComboBox<String> updateBundleBox = new ComboBox<String>();
+  @FXML
+  private ComboBox<String> registerBundleBox = new ComboBox<String>();
+
+  @FXML
+  private ComboBox<String> updateItemBox = new ComboBox<String>();
+
+  @FXML
+  private ComboBox<String> updateBundleBox = new ComboBox<String>();
   
   @FXML
   private Button assignmentButton;
@@ -141,11 +142,12 @@ public class MemberPageController implements Initializable {
 
   @FXML
   private TextField bundleUpdateQuantity;
+
   @FXML
   private TableView<String> registeredItemTable;
+
   @FXML
   private TableView<String> registeredBundleTable;
-
 
   @FXML
   private Label errorMessage;
@@ -158,9 +160,6 @@ public class MemberPageController implements Initializable {
 
   private List<Integer> itemQuantities = new ArrayList<Integer>();
 
- 
- 
- 
   /**
    * Reset member
    * 
@@ -312,6 +311,7 @@ public class MemberPageController implements Initializable {
 
     String itemName = registerItemBox.getValue();
     itemNames.add(itemName);
+
     itemRegisterQuantity.setText("");
     registerItemBox.setValue(null);
 
@@ -327,16 +327,16 @@ public class MemberPageController implements Initializable {
   void updateItem(MouseEvent event) {
 
     int itemQuantity = 0;
-
     try {
       itemQuantity = Integer.parseInt(itemUpdateQuantity.getText());
     } catch (NumberFormatException e) {
       return;
     }
     newItemQuantities.add(itemQuantity);
-    String itemName = updateItemBox.getValue();
 
+    String itemName = updateItemBox.getValue();
     newItemNames.add(itemName);
+
     itemUpdateQuantity.setText("");
     updateItemBox.setValue(null);
 
@@ -363,7 +363,7 @@ public class MemberPageController implements Initializable {
     itemNames.add(bundleName);
 
     bundleRegisterQuantity.setText("");
-   registerBundleBox.setValue(null);
+    registerBundleBox.setValue(null);
   }
 
   /**
@@ -375,15 +375,16 @@ public class MemberPageController implements Initializable {
   @FXML
   void updateBundle(MouseEvent event) {
 
-    String bundleName = updateBundleBox.getValue();
+    
     int bundleQuantity = 0;
-
     try {
       bundleQuantity = Integer.parseInt(bundleUpdateQuantity.getText());
     } catch (NumberFormatException e) {
-      
+      return;
     }
     newItemQuantities.add(bundleQuantity);
+
+    String bundleName = updateBundleBox.getValue();
     newItemNames.add(bundleName);
 
     bundleUpdateQuantity.setText("");
