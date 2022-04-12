@@ -19,9 +19,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
@@ -41,6 +43,9 @@ public class StartTripController implements Initializable {
 
   @FXML
   private Button resetButton;
+
+  @FXML
+  private Label errorMessage;
 
   @FXML
   private TextFlow startTripResult;
@@ -80,6 +85,9 @@ public class StartTripController implements Initializable {
     });
 
     startTripResult_static = startTripResult;
+
+    errorMessage.setTextFill(Color.web("#0076a3"));
+    errorMessage.setText("DiveSafe");
   }
 
   /**
@@ -123,7 +131,7 @@ public class StartTripController implements Initializable {
       } else {
         for (String memberEmail : readyForTripMembers) {
 
-          if (MemberController.getMemberStatus(memberEmail).equals("Paid") ||MemberController.getMemberStatus(memberEmail).equals("Started") ) {
+          if (MemberController.getMemberStatus(memberEmail).equals("Paid")) {
 
             Text tripStarted = new Text("Member " + memberEmail + ": Trip started!\n");
             startTripResult.getChildren().add(tripStarted);

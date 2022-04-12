@@ -1,9 +1,13 @@
 package ca.mcgill.ecse.divesafe.JavaFx.controllers;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,7 +29,7 @@ import ca.mcgill.ecse.divesafe.controller.MemberController;
  * @author Kevin Luo
  */
 
-public class PaymentController {
+public class PaymentController implements Initializable {
   private Stage stage;
   private Scene scene;
   private Parent root;
@@ -56,9 +60,6 @@ public class PaymentController {
 
   @FXML
   private Text resultText;
-
-  @FXML
-  private Label watermark;
 
   @FXML
   private TextFlow paymentSummary;
@@ -116,7 +117,6 @@ public class PaymentController {
     }
 
     if (!userFound) {
-      watermark.setText("");
       errorMessage.setText(String.format("No payment associated with ") + userEmail);
       errorMessage.setTextFill(Color.RED);
     }
@@ -136,7 +136,6 @@ public class PaymentController {
       String userEmail = email.getText().strip();
       String paymentAuthorization = authorizationCode.getText().strip();
       String paymentMessage = AssignmentController.confirmPayment(userEmail, paymentAuthorization);
-      watermark.setText("");
       if (MemberController.getMemberStatus(userEmail).equals("Paid")) {
         errorMessage.setTextFill(Color.web("#0076a3"));
       } else {
@@ -203,6 +202,12 @@ public class PaymentController {
     scene = new Scene(root);
     stage.setScene(scene);
     stage.show();
+  }
+
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    errorMessage.setTextFill(Color.web("#0076a3"));
+    errorMessage.setText("DiveSafe");
   }
 
 }

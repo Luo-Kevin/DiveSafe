@@ -19,15 +19,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.MemberPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="911.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.MemberPageController">
    <children>
-      <BorderPane>
+      <BorderPane prefHeight="673.0" prefWidth="911.0">
          <top>
-            <VBox prefHeight="40.0" style="-fx-background-color: #004385#004385;" BorderPane.alignment="CENTER">
+            <VBox prefHeight="40.0" prefWidth="911.0" style="-fx-background-color: #004385#004385;" BorderPane.alignment="CENTER">
                <children>
-                  <Pane prefHeight="200.0">
+                  <Pane prefHeight="40.0" prefWidth="911.0">
                      <children>
-                        <Button fx:id="resetButton" layoutX="547.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#resetApp" text="Reset">
+                        <Button fx:id="resetButton" layoutX="854.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#resetApp" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 30;" text="Reset" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -38,9 +38,9 @@
             </VBox>
          </top>
          <left>
-            <AnchorPane BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="626.0" prefWidth="125.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox prefHeight="500.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;">
+                  <VBox prefHeight="613.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Button fx:id="memberButton" alignment="CENTER" minWidth="45.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Member" textAlignment="JUSTIFY" textFill="WHITE">
                            <font>
@@ -68,13 +68,13 @@
             </AnchorPane>
          </left>
          <center>
-            <TabPane tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <TabPane style="-fx-background-color: #F0F8FF; -fx-border-color: #F0F8FF;" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                <tabs>
-                  <Tab text="Register Member">
+                  <Tab style="-fx-background-color: #F0F8FF; -fx-background-color: #F0F8FF;" text="Register Member">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" style="-fx-background-color: #F0F8FF;">
                            <children>
-                              <GridPane>
+                              <GridPane prefHeight="584.0" prefWidth="786.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="81.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="175.0" minWidth="10.0" prefWidth="132.0" />
@@ -107,16 +107,19 @@
                                     <CheckBox fx:id="guideRequiredRegister" mnemonicParsing="false" onAction="#registerMember" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     <CheckBox fx:id="hotelRequiredRegister" mnemonicParsing="false" onAction="#registerMember" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.rowIndex="4" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Quantity :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Quantity :" textAlignment="RIGHT" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                     <TextField fx:id="itemRegisterQuantity" onAction="#registerItem" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                                    <Button fx:id="addRegisterItem" mnemonicParsing="false" onMouseClicked="#registerItem" text="Add Item" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Button fx:id="addRegisterItem" mnemonicParsing="false" onMouseClicked="#registerItem" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Add Item" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bundle Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.rowIndex="6" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bundle Quantity :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                                     <TextField fx:id="bundleRegisterQuantity" onAction="#registerBundle" prefHeight="10.0" prefWidth="185.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                                    <Button fx:id="addRegisterBundle" mnemonicParsing="false" onMouseClicked="#registerBundle" text="Add Bundle" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                    <Button fx:id="addRegisterBundle" mnemonicParsing="false" onMouseClicked="#registerBundle" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Add Bundle" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                     <TextField fx:id="addItemNameList" onAction="#registerItem" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                     <TextField fx:id="addBundleNameList" onAction="#registerBundle" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                    <Button fx:id="registerButton" mnemonicParsing="false" onMouseClicked="#registerMember" prefHeight="37.0" prefWidth="78.0" text="Register" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                                    <Button fx:id="registerButton" mnemonicParsing="false" onMouseClicked="#registerMember" prefHeight="37.0" prefWidth="78.0" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Register" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font></Button>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.rowIndex="1" />
                                     <TextField fx:id="memberName" onAction="#registerMember" prefHeight="26.0" prefWidth="148.0" promptText="Marwan Kanan" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  </children>
@@ -125,11 +128,11 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="Update Member">
+                  <Tab style="-fx-background-color: #F0F8FF;" text="Update Member">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" style="-fx-background-color: #F0F8FF;">
                            <children>
-                              <GridPane prefHeight="435.0" prefWidth="468.0">
+                              <GridPane prefHeight="584.0" prefWidth="786.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="85.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="175.0" minWidth="10.0" prefWidth="131.0" />
@@ -165,13 +168,16 @@
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.rowIndex="4" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Quantity :" textAlignment="CENTER" wrappingWidth="98.13671875" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                     <TextField fx:id="itemUpdateQuantity" onAction="#updateItem" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                                    <Button fx:id="addItemUpdate" mnemonicParsing="false" onMouseClicked="#updateItem" text="Add Item" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Button fx:id="addItemUpdate" mnemonicParsing="false" onMouseClicked="#updateItem" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Add Item" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bundle Name :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.rowIndex="6" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bundle Quantity :" textAlignment="CENTER" wrappingWidth="81.13671875" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                                     <TextField fx:id="bundleUpdateQuantity" onAction="#updateBundle" prefHeight="10.0" prefWidth="185.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                                    <Button fx:id="addBundleUpdate" mnemonicParsing="false" onMouseClicked="#updateBundle" text="Add Bundle" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                    <Button fx:id="updateMemberButton" mnemonicParsing="false" onMouseClicked="#updateMember" prefHeight="37.0" prefWidth="78.0" text="Update" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-                                    <Button fx:id="deleteMemberButton" mnemonicParsing="false" onMouseClicked="#deleteMember" prefHeight="36.0" prefWidth="103.0" text="Delete Member" textFill="#4a2121" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+                                    <Button fx:id="addBundleUpdate" mnemonicParsing="false" onMouseClicked="#updateBundle" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Add Bundle" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                    <Button fx:id="updateMemberButton" mnemonicParsing="false" onMouseClicked="#updateMember" prefHeight="37.0" prefWidth="78.0" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Update" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font></Button>
+                                    <Button fx:id="deleteMemberButton" mnemonicParsing="false" onMouseClicked="#deleteMember" prefHeight="36.0" prefWidth="103.0" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20;" text="Delete Member" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="10" />
                                     <TextField fx:id="currentEmail" onAction="#deleteMember" prefHeight="25.0" prefWidth="100.0" promptText="Current Email" GridPane.columnIndex="3" GridPane.rowIndex="9" />
                                     <TextField fx:id="updateItemList" onAction="#updateItem" prefHeight="24.0" prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                     <TextField fx:id="updateBundleList" onAction="#updateBundle" prefHeight="24.0" prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />

@@ -12,7 +12,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class SceneController implements Initializable {
@@ -31,11 +33,13 @@ public class SceneController implements Initializable {
   @FXML
   private Button resetButton;
 
+  @FXML
+  private Label errorMessage;
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    // ImageView img = new ImageView(image);
-    // img.setFitHeight(100);
-    // img.setFitWidth(100);
+    errorMessage.setTextFill(Color.web("#0076a3"));
+    errorMessage.setText("DiveSafe");
   }
 
   @FXML
