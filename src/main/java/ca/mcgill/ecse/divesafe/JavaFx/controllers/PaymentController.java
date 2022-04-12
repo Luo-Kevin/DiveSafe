@@ -161,9 +161,10 @@ public class PaymentController implements Initializable {
 
   @FXML
   void resetErrorMessage(KeyEvent event) {
-    //Resets the page for new entry if email field is blank
+    //Resets message if new entry
     errorMessage.setText("DiveSafe");
     errorMessage.setTextFill(Color.web("#0076a3"));
+    //Reset billing if new entry
     if(email.getText().isBlank()){
       paymentSummary.getChildren().clear();
       paymentDetail.getItems().clear();
