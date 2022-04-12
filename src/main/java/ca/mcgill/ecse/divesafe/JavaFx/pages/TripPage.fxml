@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane prefHeight="673.0" prefWidth="911.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.divesafe.JavaFx.controllers.StartTripController">
+   <BorderPane prefHeight="673.0" prefWidth="911.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <left>
+         <VBox prefHeight="673.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" BorderPane.alignment="CENTER">
+            <Button fx:id="memberButton" alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onMouseClicked="#switchToMember" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Member" textAlignment="JUSTIFY" textFill="WHITE">
+               <font>
+                  <Font name="System Font" size="11.0" />
+               </font>
+      
+                  
+                  </Button>
+            
+                        <Button fx:id="assignmentButton" alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onMouseClicked="#switchToAssignment" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Assignment" textAlignment="JUSTIFY" textFill="WHITE">
+               <font>
+                  <Font name="System Font" size="11.0" />
+               </font>
+            </Button>
+            <Button fx:id="paymentButton" alignment="CENTER" minWidth="45.0" mnemonicParsing="false" onMouseClicked="#switchToPayment" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Payment" textAlignment="JUSTIFY" textFill="WHITE">
+               <font>
+                  <Font name="System Font" size="11.0" />
+               </font>
+            </Button>
+            <Button alignment="CENTER" minWidth="45.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" style="-fx-background-color: #087ca7#087ca7;" text="Trip" textAlignment="JUSTIFY" textFill="WHITE">
+               <font>
+                  <Font name="System Font" size="11.0" />
+               </font>
+            </Button>
+         </VBox>
+      </left>
+      <center>
+         <SplitPane dividerPositions="0.5681159420289855" BorderPane.alignment="CENTER">
+            <items>
+               <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+                 <items>
+                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                        <children>
+                           <Pane prefHeight="313.0" prefWidth="442.0" style="-fx-background-color: #F0F8FF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <children>
+                                 <Text layoutX="20.0" layoutY="41.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Trips">
+                                    <font>
+                                       <Font name="System Bold" size="25.0" />
+                                    </font>
+                                 </Text>
+                                 <Spinner fx:id="daySpinner" editable="true" layoutX="62.0" layoutY="59.0" prefHeight="25.0" prefWidth="121.0" style="-fx-border-color: #000000; -fx-border-radius: 5;" />
+                                 <Text layoutX="20.0" layoutY="76.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Day:" />
+                                 <Button layoutX="233.0" layoutY="58.0" mnemonicParsing="false" onMouseClicked="#startTrip" prefHeight="27.0" prefWidth="61.0" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 20; " text="Start" textFill="WHITE">
+                                    <opaqueInsets>
+                                       <Insets />
+                                    </opaqueInsets>
+                                 </Button>
+                              </children>
+                           </Pane>
+                        </children>
+                     </AnchorPane>
+                     <AnchorPane style="-fx-background-color: #F0F8FF;">
+                        <children>
+                           <fx:include source="FinishTripSection.fxml" />
+                        </children>
+                     </AnchorPane>
+                 </items>
+               </SplitPane>
+               <AnchorPane prefHeight="671.0" prefWidth="375.0" style="-fx-background-color: #F0F8FF;">
+                  <children>
+                     <Text layoutX="7.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Member Status Log:" />
+                     <ScrollPane layoutX="7.0" layoutY="118.0" prefHeight="408.0" prefWidth="322.0">
+                        <content>
+                           <TextFlow fx:id="startTripResult" prefHeight="390.0" prefWidth="319.0" />
+                        </content>
+                     </ScrollPane>
+                  </children>
+               </AnchorPane>
+            </items>
+         </SplitPane>
+      </center>
+      <bottom>
+         <HBox id="HBox" alignment="CENTER_LEFT" maxHeight="20.0" minHeight="20.0" prefHeight="20.0" spacing="5.0" style="-fx-background-color: #f0d77f;" BorderPane.alignment="CENTER">
+            <children>
+               <Pane maxHeight="20.0" minHeight="20.0" prefHeight="20.0" HBox.hgrow="ALWAYS" />
+               <Label fx:id="errorMessage" maxWidth="-1.0" text="DiveSafe" HBox.hgrow="NEVER">
+                  <font>
+                     <Font size="11.0" fx:id="x3" />
+                  </font>
+                  <textFill>
+                     <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
+                  </textFill>
+               </Label>
+            </children>
+            <padding>
+               <Insets bottom="3.0" left="3.0" right="3.0" />
+            </padding>
+         </HBox>
+      </bottom>
+      <top>
+         <HBox maxHeight="40.0" minHeight="40.0" prefHeight="40.0" style="-fx-background-color: #004385#004385;" BorderPane.alignment="CENTER">
+            <children>
+               <Pane maxHeight="40.0" minHeight="40.0" prefHeight="40.0" HBox.hgrow="ALWAYS" />
+               <Button fx:id="resetButton" alignment="TOP_RIGHT" contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#resetApp" style="-fx-background-radius: 20; -fx-background-color: #087ca7#087ca7; -fx-border-color: #001a66; -fx-border-radius: 30;" text="Reset" textFill="WHITE" HBox.hgrow="NEVER">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font>
+                  <HBox.margin>
+                     <Insets top="5.0" />
+                  </HBox.margin>
+               </Button>
+            </children>
+         </HBox>
+      </top>
+   </BorderPane>
+</AnchorPane>

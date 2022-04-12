@@ -30,6 +30,7 @@ public class HotelController {
 
     try {
       diveSafe.addHotel(name, address, nrStars, hotelType);
+      DiveSafeApplication.save(diveSafe);
       DiveSafePersistence.save();
     } catch (RuntimeException e) {
       e.getMessage();
@@ -61,6 +62,7 @@ public class HotelController {
     aHotel.setType(hotelType);
 
     try {
+      DiveSafeApplication.save(diveSafe);
       DiveSafePersistence.save();
     } catch (RuntimeException e) {
       e.getMessage();
@@ -74,6 +76,7 @@ public class HotelController {
     if (hotel != null) {
       hotel.delete();
       try {
+        DiveSafeApplication.save(diveSafe);
         DiveSafePersistence.save();
       } catch (RuntimeException e) {
         e.getMessage();

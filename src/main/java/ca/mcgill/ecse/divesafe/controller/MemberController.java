@@ -1,5 +1,6 @@
 package ca.mcgill.ecse.divesafe.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
@@ -19,7 +20,7 @@ public class MemberController {
   /**
    * Registers members.
    *
-   * @author Joey Koay
+   * @author Joey Koay and Siger Ma
    * @param email
    * @param password
    * @param name
@@ -45,14 +46,21 @@ public class MemberController {
       error = "Invalid email";
     }
 
-    if (Member.hasWithEmail(email)) {
-      error = "A member with this email already exists";
+    for (Member member : DiveSafeApplication.getDiveSafe().getMembers()) {
+      if (member.getEmail().equals(email)) {
+        error = "A member with this email already exists";
+      }
     }
 
     if (email.equals("admin@ad.atl")) {
       error = "The email entered is not allowed for members";
     }
 
+    for (Guide guide : DiveSafeApplication.getDiveSafe().getGuides()) {
+      if (guide.getEmail().equals(email)) {
+        error = "A guide with this email already exists";
+      }
+    }
     if (Guide.hasWithEmail(email)) {
       error = "A guide with this email already exists";
     }
@@ -61,13 +69,14 @@ public class MemberController {
       return error.trim();
     }
 
-    Member member = diveSafe.addMember(email, password, name, emergencyContact, nrDays,
+    Member member = DiveSafeApplication.getDiveSafe().addMember(email, password, name, emergencyContact, nrDays,
         guideRequired, hotelRequired);
     for (int i = 0; i < itemNames.size(); i++) {
-      diveSafe.addItemBooking(itemQuantities.get(i), member, Item.getWithName(itemNames.get(i)));
+      DiveSafeApplication.getDiveSafe().addItemBooking(itemQuantities.get(i), member, Item.getWithName(itemNames.get(i)));
     }
 
     try {
+      DiveSafeApplication.save(DiveSafeApplication.getDiveSafe());
       DiveSafePersistence.save();
     } catch (RuntimeException e) {
       e.getMessage();
@@ -118,11 +127,12 @@ public class MemberController {
       member.getItemBookings().get(0).delete();
     }
     for (int i = 0; i < newItemNames.size(); i++) {
-      diveSafe.addItemBooking(newItemQuantities.get(i), member,
+      DiveSafeApplication.getDiveSafe().addItemBooking(newItemQuantities.get(i), member,
           Item.getWithName(newItemNames.get(i)));
     }
 
     try {
+      DiveSafeApplication.save(DiveSafeApplication.getDiveSafe());
       DiveSafePersistence.save();
     } catch (RuntimeException e) {
       e.getMessage();
@@ -136,6 +146,7 @@ public class MemberController {
     if (member != null) {
       member.delete();
       try {
+        DiveSafeApplication.save(DiveSafeApplication.getDiveSafe());
         DiveSafePersistence.save();
       } catch (RuntimeException e) {
         e.getMessage();
@@ -210,6 +221,56 @@ public class MemberController {
       }
     }
     return true;
+  }
+
+  /**
+   * Method to get all the assigned members in the app
+   * 
+   * @author Siger Ma
+   */
+  public static List<String> getAssignedMembers() {
+    List<Member> listOfMembers = DiveSafeApplication.getDiveSafe().getMembers();
+    List<String> listOfAssignedMembers = new ArrayList<String>();
+    for (Member member : listOfMembers) {
+      if (!member.getMemberStatusFullName().equals("Unassigned")) {
+        listOfAssignedMembers.add(member.getEmail());
+      }
+    }
+    return listOfAssignedMembers;
+  }
+
+  /**
+   * Method to get all the unassigned members in the app
+   * 
+   * @author Siger Ma
+   */
+  public static List<String> getUnassignedMembers() {
+    List<Member> listOfMembers = DiveSafeApplication.getDiveSafe().getMembers();
+    List<String> listOfUnassignedMembers = new ArrayList<String>();
+    for (Member member : listOfMembers) {
+      if (member.getMemberStatusFullName().equals("Unassigned")) {
+        listOfUnassignedMembers.add(member.getEmail());
+      }
+    }
+    return listOfUnassignedMembers;
+  }
+
+  /**
+   * Method to get the member's status
+   * 
+   * @param email - String representing email of user
+   * @return String representing the member's status
+   */
+
+  public static String getMemberStatus(String email) {
+    List<Member> divesafeMember = DiveSafeApplication.getDiveSafe().getMembers();
+    for (Member checkMember : divesafeMember) {
+      if (checkMember.getEmail().equals(email)) {
+        return checkMember.getMemberStatusFullName();
+      }
+    }
+
+    return "No status associated with " + email;
   }
 
   private static String checkCommonConditions(String password, String name, String emergencyContact,

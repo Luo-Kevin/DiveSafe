@@ -2,13 +2,16 @@ package ca.mcgill.ecse.divesafe.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import ca.mcgill.ecse.divesafe.application.DiveSafeApplication;
 import ca.mcgill.ecse.divesafe.model.Assignment;
+import ca.mcgill.ecse.divesafe.model.BundleItem;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
 import ca.mcgill.ecse.divesafe.model.Equipment;
 import ca.mcgill.ecse.divesafe.model.EquipmentBundle;
 import ca.mcgill.ecse.divesafe.model.Guide;
 import ca.mcgill.ecse.divesafe.model.Item;
+import ca.mcgill.ecse.divesafe.model.ItemBooking;
 import ca.mcgill.ecse.divesafe.model.Member;
 import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
 
@@ -20,8 +23,9 @@ public class AssignmentController {
 
   public static List<TOAssignment> getAssignments() {
     List<TOAssignment> assignments = new ArrayList<>();
+    List<Assignment> diveSafeAssignments = DiveSafeApplication.getDiveSafe().getAssignments();
 
-    for (var assignment : diveSafe.getAssignments()) {
+    for (var assignment : diveSafeAssignments) {
       var newTOAssignment = wrapAssignment(assignment);
       assignments.add(newTOAssignment);
     }
@@ -40,17 +44,18 @@ public class AssignmentController {
   public static String initiateAssignment() {
 
     // Assign members
-    List<Guide> currentGuides = diveSafe.getGuides();
+    List<Guide> currentGuides = DiveSafeApplication.getDiveSafe().getGuides();
 
     for (Guide guide : currentGuides) {
       guide.bookGuide();
+
     }
 
     // get all unassigned members and return error if not empty
-    List<Member> currentMemberList = diveSafe.getMembers();
+    List<Member> currentMemberList = DiveSafeApplication.getDiveSafe().getMembers();
     int count = 0;
     for (Member currentMember : currentMemberList) {
-      if (currentMember.getMemberStatusFullName() == "Unassigned") {
+      if (!currentMember.getMemberStatusFullName().equals("Assigned")) {
         count++;
       }
     }
@@ -59,6 +64,7 @@ public class AssignmentController {
     }
 
     try {
+      DiveSafeApplication.save(DiveSafeApplication.getDiveSafe());
       DiveSafePersistence.save();
     } catch (RuntimeException e) {
       e.getMessage();
@@ -83,16 +89,29 @@ public class AssignmentController {
     // Check if userEmail exist in system
     if (!Member.hasWithEmail(userEmail))
       return error = "Member with email address " + userEmail + " does not exist";
+    
+      
 
-    Member member = Member.getWithEmail(userEmail);
+    var divesafeMember = DiveSafeApplication.getDiveSafe().getMembers();
+
+    Member member = null;
+    for (Member checkMember : divesafeMember) {
+      if (checkMember.getEmail().equals(userEmail)) {
+        member = checkMember;
+      }
+    }
 
     // Check for invalid user status when attempting to refund
     if (member.getMemberStatusFullName().equals("Banned")) {
-      error = "Cannot cancel the trip due to a ban";
+      return error = "Cannot cancel the trip due to a ban";
+    }
+
+    if (member.getMemberStatusFullName().equals("Unassigned")) {
+      return error = "Cannot cancel a trip for an unassigned member";
     }
 
     else if (member.getMemberStatusFullName().equals("Finished")) {
-      error = "Cannot cancel a trip which has finished";
+      return error = "Cannot cancel a trip which has finished";
     }
 
     // Check for user status when allowed to refund
@@ -110,6 +129,7 @@ public class AssignmentController {
       // cancel member trip
       member.cancelTrip();
       // save changes with persistence
+      DiveSafeApplication.save(DiveSafeApplication.getDiveSafe());
       DiveSafePersistence.save();
     } catch (RuntimeException e) {
       return e.getMessage();
@@ -130,7 +150,15 @@ public class AssignmentController {
 
     String error = "";
 
-    Member member = Member.getWithEmail(userEmail);
+    // Member member = Member.getWithEmail(userEmail);
+    var divesafeMember = DiveSafeApplication.getDiveSafe().getMembers();
+
+    Member member = null;
+    for (Member checkMember : divesafeMember) {
+      if (checkMember.getEmail().equals(userEmail)) {
+        member = checkMember;
+      }
+    }
 
     // Check if userEmail exist in system
     if (!Member.hasWithEmail(userEmail)) {
@@ -141,15 +169,19 @@ public class AssignmentController {
 
     // Check for invalid user status when finishing trip
     if (statusMember.equals("Assigned") || statusMember.equals("Paid")) {
-      error = "Cannot finish a trip which has not started";
+      return error = "Cannot finish a trip which has not started";
     }
 
     else if (statusMember.equals("Banned")) {
-      error = "Cannot finish the trip due to a ban";
+      return error = "Cannot finish the trip due to a ban";
+    }
+
+    if (statusMember.equals("Unassigned")) {
+      return error = "Cannot finish a trip for an unassigned member";
     }
 
     else if (statusMember.equals("Cancelled")) {
-      error = "Cannot finish a trip which has been cancelled";
+      return error = "Cannot finish a trip which has been cancelled";
     }
 
     if (!error.isEmpty()) {
@@ -160,6 +192,7 @@ public class AssignmentController {
       // finish member's trip
       member.finishTrip();
       // save changes with persistence
+      DiveSafeApplication.save(DiveSafeApplication.getDiveSafe());
       DiveSafePersistence.save();
     } catch (RuntimeException e) {
 
@@ -184,7 +217,7 @@ public class AssignmentController {
 
     String error = "";
 
-    List<Member> currentMemberList = diveSafe.getMembers();
+    List<Member> currentMemberList = DiveSafeApplication.getDiveSafe().getMembers();
 
     // Checking all user status
     for (Member member : currentMemberList) {
@@ -202,14 +235,11 @@ public class AssignmentController {
         error = "Cannot start a trip which has finished";
       }
 
-      if (!error.isEmpty()) {
-        return error.trim();
-      }
-
       try {
         // start member's trip
         member.startTrip(day);
         // save changes with persistence
+        DiveSafeApplication.save(DiveSafeApplication.getDiveSafe());
         DiveSafePersistence.save();
       } catch (RuntimeException e) {
         return e.getMessage();
@@ -217,7 +247,7 @@ public class AssignmentController {
 
     }
 
-    return "";
+    return error;
   }
 
   /**
@@ -232,6 +262,7 @@ public class AssignmentController {
 
   public static String confirmPayment(String userEmail, String authorizationCode) {
     String error = "";
+    boolean success;
 
     // Checks email exist
     if (!Member.hasWithEmail(userEmail)) {
@@ -242,8 +273,15 @@ public class AssignmentController {
     else if (authorizationCode.isBlank()) {
       error = "Invalid authorization code";
     }
+    var divesafeMember = DiveSafeApplication.getDiveSafe().getMembers();
 
-    Member member = Member.getWithEmail(userEmail);
+    Member member = null;
+    for (Member checkMember : divesafeMember) {
+      if (checkMember.getEmail().equals(userEmail)) {
+        member = checkMember;
+        break;
+      }
+    }
 
     // Checking for invalid user status when confirming payment
     if (member.getMemberStatusFullName().equals("Paid")) {
@@ -272,13 +310,19 @@ public class AssignmentController {
     }
 
     try {
-      member.confirmPayment();
+      success = member.confirmPayment();
+      DiveSafeApplication.save(DiveSafeApplication.getDiveSafe());
       DiveSafePersistence.save();
     } catch (Exception e) {
       return e.getMessage();
     }
 
-    return authorizationCode;
+    if (success) {
+      return authorizationCode;
+    } else {
+      return "";
+    }
+
   }
 
   /**
@@ -288,6 +332,138 @@ public class AssignmentController {
 
   public static String toggleBan(String userEmail) {
     return null;
+  }
+
+  /**
+   * Method that gets all member's emails in diveSafe
+   * 
+   * @author Eric Joung
+   * @return List<Member> List of all members
+   */
+  public static ArrayList<String> getMemberEmails() {
+    ArrayList<String> memberEmails = new ArrayList<>();
+    List<Member> members = diveSafe.getMembers();
+    for (Member member : members) {
+      memberEmails.add(member.getEmail());
+    }
+    return memberEmails;
+  }
+
+  /**
+   * Method to get the assignment details of a member
+   * 
+   * @author Siger Ma
+   * @param email - Email of member
+   * @return List with assignment details
+   */
+  public static List<String> getAssignmentDetails(String email) {
+    List<String> assignmentDetails = new ArrayList<String>();
+    Member member = Member.getWithEmail(email);
+    Assignment assignment = member.getAssignment();
+    List<ItemBooking> itemBookings = member.getItemBookings();
+
+    assignmentDetails.add(String.valueOf(assignment.getStartDay()));
+    assignmentDetails.add(String.valueOf(assignment.getEndDay()));
+    if (member.getGuideRequired()) {
+      assignmentDetails.add(assignment.getGuide().getEmail());
+    } else {
+      assignmentDetails.add("No guide required");
+    }
+    if (itemBookings == null || itemBookings.size() == 0) {
+      assignmentDetails.add("No items required");
+    } else {
+      for (ItemBooking itemBooking : itemBookings) {
+        assignmentDetails.add(itemBooking.getItem().getName() + ": " + itemBooking.getQuantity());
+      }
+    }
+
+    return assignmentDetails;
+  }
+  
+  /**
+   * Method which gets the user's billable equipments
+   * 
+   * @param userBooking - List of billable equipment
+   * @param email       - user's email
+   * @return List of String representing the detailed information of user's bill
+   *         for equipments booked
+   * @author Kevin Luo
+   */
+  public static List<String> userBillBookedEquipmentDetails(String email) {
+    if (!Member.hasWithEmail(email)) {
+      return null;
+    } 
+  
+    List<String> bookingBill = new ArrayList<String>();
+    Member member = Member.getWithEmail(email);
+    List<ItemBooking> userBooking = member.getItemBookings();
+    int daysBooked = member.getNumDays();
+    //Get equipment and price for user
+    for (ItemBooking item : userBooking) {
+      Item itemBooked = item.getItem();
+      if (itemBooked instanceof Equipment) {
+        Equipment itemEquipment = (Equipment) itemBooked;
+        String itemName = itemBooked.getName();
+        int itemQuantity = item.getQuantity();
+        //calculate price
+        int itemPrice = itemEquipment.getPricePerDay() * itemQuantity * daysBooked;
+        String billingDetail = itemName + " [Quantity: " + itemQuantity + "]" + " $" + itemPrice;
+        bookingBill.add(billingDetail);
+
+      }
+    }
+    return bookingBill;
+  }
+
+  /**
+   * Method which gets the user's billable bundle
+   * 
+   * @param userBooking - List of billable equipment
+   * @param email       - user's email
+   * @return List of String representing the detailed information of user's bill
+   *         for bundle booked
+   * @author Kevin Luo
+   */
+
+  public static List<String> userBillBundleDetails(String email) {
+
+    if (!Member.hasWithEmail(email)) {
+      return null;
+    } 
+    Member member = Member.getWithEmail(email);
+    List<ItemBooking> userBooking = member.getItemBookings();
+  
+    List<String> bookingBill = new ArrayList<String>();
+
+    int daysBooked = member.getNumDays();
+    if (member.getAssignment() == null) {
+      return bookingBill;
+    }
+
+    for (ItemBooking item : userBooking) {
+      Item itemBooked = item.getItem();
+      //Get bundle assigned to user 
+      if (itemBooked instanceof EquipmentBundle) {
+        EquipmentBundle bundleBooked = (EquipmentBundle) itemBooked;
+        List<BundleItem> itemInBundle = bundleBooked.getBundleItems();
+        Integer bundlePrice = 0;
+        for (BundleItem bundleEquipment : itemInBundle) {
+          Integer bundleItemPrice = bundleEquipment.getEquipment().getPricePerDay() * bundleEquipment.getQuantity();
+          bundlePrice += bundleItemPrice;
+        }
+        if (member.getAssignment().hasGuide()) {
+          double discount = (double) (100 - bundleBooked.getDiscount()) / 100;
+          bundlePrice = (int) (bundlePrice * discount);
+        }
+        String bundleName = bundleBooked.getName();
+        int bundleQuantity = item.getQuantity();
+        //Calculate price
+        bundlePrice = bundlePrice * daysBooked * bundleQuantity;
+        String billingDetail = bundleName + " [Quantity: " + bundleQuantity + "]" + " $" + bundlePrice;
+        bookingBill.add(billingDetail);
+      }
+    }
+    return bookingBill;
   }
 
   /**

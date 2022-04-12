@@ -1,5 +1,6 @@
 package ca.mcgill.ecse.divesafe.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -49,6 +50,7 @@ public class BundleController {
       bundle.addBundleItem(bundleItem);
 
       try {
+        DiveSafeApplication.save(diveSafe);
         DiveSafePersistence.save();
       } catch (RuntimeException e) {
         e.getMessage();
@@ -100,7 +102,8 @@ public class BundleController {
     }
 
     try {
-      DiveSafePersistence.save();
+      DiveSafeApplication.save(diveSafe);
+        DiveSafePersistence.save();
     } catch (RuntimeException e) {
       e.getMessage();
     }
@@ -115,6 +118,7 @@ public class BundleController {
     if (foundBundle != null) {
       foundBundle.delete();
       try {
+        DiveSafeApplication.save(diveSafe);
         DiveSafePersistence.save();
       } catch (RuntimeException e) {
         e.getMessage();
@@ -150,5 +154,48 @@ public class BundleController {
 
     return ""; // no error
   }
+
+
+  /**
+   * Helper method to put the bundles'name into an ObservableList<String>
+   * @author Zahra Landou
+   * @return myBundleList - list of bundles' name
+   */
+  public static ArrayList<String> getBundles(){
+
+   ArrayList<String> myBundleList= new ArrayList<>() ;
+    List<EquipmentBundle> systemBundles = diveSafe.getBundles();
+   for (EquipmentBundle bundle : systemBundles) {
+     myBundleList.add(bundle.getName());
+     
+   }
+   return myBundleList;
+  }
+ 
+  /**
+   * Helper method to put the items'name into an ObservableList<String>
+   * @author Zahra Landou 
+   * @return myItemList - list of items' name
+   */
+  public static ArrayList<String> getItems(){
+
+    ArrayList<String> myItemList= new ArrayList<String>() ;
+     List<Equipment> systemItem = diveSafe.getEquipments();
+    for (Equipment item : systemItem) {
+      myItemList.add(item.getName());    
+    }
+    return myItemList;
+   }
+
+
+
+
+
+
+
+
+
+
+
 
 }

@@ -4,35 +4,69 @@
 package ca.mcgill.ecse.divesafe.application;
 
 import java.sql.Date;
+
+import ca.mcgill.ecse.divesafe.JavaFx.DiveSafeFxmlView;
 import ca.mcgill.ecse.divesafe.model.DiveSafe;
 import ca.mcgill.ecse.divesafe.persistence.DiveSafePersistence;
+import javafx.application.Application;
 
 public class DiveSafeApplication {
+
+  public static final boolean DARK_MODE = false;
+
   private static DiveSafe diveSafe;
 
   public static void main(String[] args) {
     // Launch UI here (For Iteration 4)
+    /**
+     * @author JZ
+     */
+    Application.launch(DiveSafeFxmlView.class, args);
   }
 
+  /**
+   * Method to get the current DiveSafe object from the data.json file
+   * 
+   * @author Jiahao Zhao
+   */
   public static DiveSafe getDiveSafe() {
     if (diveSafe == null) {
-      
+
       /**
        * @author Jiahao Zhao
        */
-      
+
       diveSafe = DiveSafePersistence.load();
     }
-    
     return diveSafe;
   }
 
   /**
-   * This is the setter to create a new Dive Safe season in the application with the required parameters.
+   * Method to reset DiveSafe application (persistence in data.json) to the data
+   * in DiveSafeData.json and initialize the states for guides and members.
    * 
    * @author Siger Ma
-   * @param aStartDate - Start date of the season
-   * @param aNumDays - Duration of the season
+   */
+  public static void reset() {
+    diveSafe = DiveSafePersistence.reset();
+  }
+
+  /**
+   * Method to save a DiveSafe object to the running application
+   * 
+   * @author Siger Ma
+   */
+  public static void save(DiveSafe diveSafeToSave) {
+    diveSafe = diveSafeToSave;
+  }
+
+  /**
+   * This is the setter to create a new Dive Safe season in the application with
+   * the required parameters.
+   * 
+   * @author Siger Ma
+   * @param aStartDate          - Start date of the season
+   * @param aNumDays            - Duration of the season
    * @param aPriceOfGuidePerDay - Price of a guide for the season
    */
 

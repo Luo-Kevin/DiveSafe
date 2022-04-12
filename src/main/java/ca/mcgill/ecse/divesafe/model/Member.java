@@ -4,7 +4,7 @@
 package ca.mcgill.ecse.divesafe.model;
 import java.util.*;
 
-// line 52 "../../../../../AssignmentStates.ump"
+// line 57 "../../../../../AssignmentStates.ump"
 // line 54 "../../../../../DiveSafe.ump"
 // line 192 "../../../../../DiveSafe.ump"
 public class Member extends NamedUser
@@ -422,7 +422,7 @@ public class Member extends NamedUser
    * @author Siger Ma
    * @param guide Guide to be assigned to the member if he asked for one
    */
-  // line 82 "../../../../../AssignmentStates.ump"
+  // line 87 "../../../../../AssignmentStates.ump"
    public boolean doAssign(Guide guide){
     int numDaysRequest = this.getNumDays();
     boolean needGuide = this.getGuideRequired();
@@ -437,6 +437,11 @@ public class Member extends NamedUser
       }
     }
     return false;
+  }
+
+  // line 104 "../../../../../AssignmentStates.ump"
+   public void publicSetMemberStatus(MemberStatus aMemberStatus){
+    setMemberStatus(aMemberStatus);
   }
 
   // line 61 "../../../../../DiveSafe.ump"

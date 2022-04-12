@@ -47,6 +47,11 @@ class Guide {
     }
   }
 
+  public void publicSetAvailableStatus(AvailableStatus aAvailableStatus)
+  {
+    setAvailableStatus(aAvailableStatus);
+  }
+
 }
 
 class Member {
@@ -92,6 +97,11 @@ class Member {
       }
     }
     return false;
+  }
+
+  public void publicSetMemberStatus(MemberStatus aMemberStatus)
+  {
+    setMemberStatus(aMemberStatus);
   }
 
 }
